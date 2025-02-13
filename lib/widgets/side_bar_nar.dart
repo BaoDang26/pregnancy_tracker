@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pregnancy_tracker/pregnancy_profile/pregnancy_profile_screen.dart';
 
 import '../Onboarding/blog_post/blog_post_guest.dart';
 import '../Onboarding/onboarding.dart';
@@ -15,6 +16,7 @@ class _SideBarNavScreenState extends State<SideBarNavScreen> {
   static final List<Widget> _widgetOptions = [
     const Onboarding(),
     const BlogPostGuest(),
+    PregnancyProfileScreen(),
     // const HomeScreen(),
     // WeeklyMenuScreen(),
     // const AdvisorScreen(),
@@ -45,16 +47,16 @@ class _SideBarNavScreenState extends State<SideBarNavScreen> {
                     color: Theme.of(context).primaryColor,
                   ),
                   child: Text(
-                    'Menu',
+                    'Pregnancy Tracker',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 24,
+                      fontSize: 26,
                     ),
                   ),
                 ),
                 ListTile(
                   leading: Icon(Icons.home),
-                  title: Text('Onboarding'),
+                  title: Text('Home'),
                   tileColor: _selectedIndex == 0
                       ? Colors.blueAccent
                       : Colors.transparent,
@@ -81,7 +83,7 @@ class _SideBarNavScreenState extends State<SideBarNavScreen> {
                 ),
                 ListTile(
                   leading: Icon(Icons.person),
-                  title: Text('Account'),
+                  title: Text('Pregnancy Profile'),
                   onTap: () {
                     _onItemTapped(2);
                   },

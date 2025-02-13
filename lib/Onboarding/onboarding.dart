@@ -11,7 +11,7 @@ class Onboarding extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text('Pregnancy Tracker'),
+        title: Text('Home Page'),
         actions: [
           IconButton(
             icon: Icon(Icons.settings),
@@ -216,6 +216,49 @@ class Onboarding extends StatelessWidget {
               'Frequently Asked Questions',
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
+            ),
+            Column(
+              children: [
+                ExpansionTile(
+                  title: Text(
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      'What is the best time to start tracking my pregnancy?'),
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          style: TextStyle(fontSize: 17),
+                          'It is best to start tracking your pregnancy as soon as you find out you are pregnant. This helps in monitoring your health and the baby development.',
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                ExpansionTile(
+                  title: Text(
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      'How often should I visit my doctor during pregnancy?'),
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          style: TextStyle(fontSize: 17),
+                          'It is best to start tracking your pregnancy as soon as you find out you are pregnant. This helps in monitoring your health and the baby development.',
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                // Add more ExpansionTile widgets for additional FAQs
+              ],
             ),
           ],
         ),
