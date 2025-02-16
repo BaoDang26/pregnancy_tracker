@@ -79,7 +79,7 @@ class SubscriptionPlanCard extends StatelessWidget {
               Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    Get.toNamed(AppRoutes.pregnancyprofile);
+                    Get.toNamed(AppRoutes.subscriptionplandetail);
                   },
                   child: Text(buttonText),
                 ),

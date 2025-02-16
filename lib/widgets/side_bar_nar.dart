@@ -5,6 +5,9 @@ import 'package:pregnancy_tracker/util/app_export.dart';
 
 import '../Onboarding/blog_post/blog_post_guest.dart';
 import '../Onboarding/onboarding.dart';
+import '../Onboarding/subscription_plan/subscription_plan_guest.dart';
+import '../account_profile/account_profile_screen.dart';
+import 'custom_elevated_button.dart';
 
 class SideBarNavScreen extends StatefulWidget {
   const SideBarNavScreen({super.key});
@@ -19,6 +22,8 @@ class _SideBarNavScreenState extends State<SideBarNavScreen> {
     const Onboarding(),
     const BlogPostGuest(),
     PregnancyProfileScreen(),
+    SubscriptionPlanGuest(),
+    AccountProfileScreen(),
     // const HomeScreen(),
     // WeeklyMenuScreen(),
     // const AdvisorScreen(),
@@ -37,11 +42,11 @@ class _SideBarNavScreenState extends State<SideBarNavScreen> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Color.fromARGB(255, 164, 219, 186),
-                  Color.fromARGB(255, 156, 227, 184),
-                  Color.fromARGB(255, 137, 214, 169),
-                  Color.fromARGB(255, 119, 209, 154),
-                  Color.fromARGB(255, 102, 204, 140),
+                  Color.fromARGB(255, 184, 239, 206),
+                  Color.fromARGB(255, 176, 247, 194),
+                  Color.fromARGB(255, 157, 234, 179),
+                  Color.fromARGB(255, 139, 229, 164),
+                  Color.fromARGB(255, 122, 224, 150),
                 ],
               ),
             ),
@@ -56,33 +61,91 @@ class _SideBarNavScreenState extends State<SideBarNavScreen> {
                   _selectedIndex = index;
                 });
               },
-              leading: const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text(
-                  'Pregnancy Tracker',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+              leading: Row(
+                children: [
+                  Image.asset(
+                    'assets/images/logo-removebg-preview.png',
+                    height: 85,
                   ),
-                ),
+                  // SizedBox(width: 8),
+                  Text(
+                    'Pregnancy Tracker',
+                    style: TextStyle(
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               destinations: const [
                 NavigationRailDestination(
-                  icon: Icon(Icons.home_outlined),
-                  selectedIcon: Icon(Icons.home),
-                  label: Text('Home'),
+                  icon: SizedBox(
+                    width: 24,
+                    child: Icon(Icons.home_outlined),
+                  ),
+                  selectedIcon: SizedBox(
+                    width: 24,
+                    child: Icon(Icons.home),
+                  ),
+                  label: Text('Home', style: TextStyle(fontSize: 15)),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(Icons.local_fire_department_outlined),
-                  selectedIcon: Icon(Icons.local_fire_department),
-                  label: Text('Blog Post'),
+                  icon: SizedBox(
+                    width: 24,
+                    child: Icon(Icons.local_fire_department_outlined),
+                  ),
+                  selectedIcon: SizedBox(
+                    width: 24,
+                    child: Icon(Icons.local_fire_department),
+                  ),
+                  label: Text('Blog Post', style: TextStyle(fontSize: 15)),
                 ),
                 NavigationRailDestination(
-                  icon: Icon(Icons.person_outline),
-                  selectedIcon: Icon(Icons.person),
-                  label: Text('Pregnancy Profile'),
+                  icon: SizedBox(
+                    width: 24,
+                    child: Icon(Icons.person_outline),
+                  ),
+                  selectedIcon: SizedBox(
+                    width: 24,
+                    child: Icon(Icons.person),
+                  ),
+                  label:
+                      Text('Pregnancy Profile', style: TextStyle(fontSize: 15)),
+                ),
+                NavigationRailDestination(
+                  icon: SizedBox(
+                    width: 24,
+                    child: Icon(Icons.shopify),
+                  ),
+                  selectedIcon: SizedBox(
+                    width: 24,
+                    child: Icon(Icons.shopify_outlined),
+                  ),
+                  label:
+                      Text('Subscription Plan', style: TextStyle(fontSize: 15)),
+                ),
+                NavigationRailDestination(
+                  icon: SizedBox(
+                    width: 24,
+                    child: Icon(Icons.person_outline),
+                  ),
+                  selectedIcon: SizedBox(
+                    width: 24,
+                    child: Icon(Icons.person),
+                  ),
+                  label:
+                      Text('Account Profile', style: TextStyle(fontSize: 15)),
                 ),
               ],
+              trailing: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: CustomElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, AppRoutes.login);
+                  },
+                  text: 'Login',
+                ),
+              ),
             ),
           ),
           const VerticalDivider(thickness: 1, width: 1),

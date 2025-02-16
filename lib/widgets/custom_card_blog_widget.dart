@@ -16,6 +16,7 @@ class CustomBlogCard extends StatelessWidget {
   final String? content2;
   final String? content3;
   final String? content4;
+  final int commentCount;
   final VoidCallback onTitleTap;
 
   CustomBlogCard({
@@ -26,6 +27,7 @@ class CustomBlogCard extends StatelessWidget {
     this.content2,
     this.content3,
     this.content4,
+    required this.commentCount,
     required this.onTitleTap,
   });
 
@@ -72,6 +74,10 @@ class CustomBlogCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
+            ),
+            Text(
+              '$commentCount comments',
+              style: TextStyle(fontSize: 16, color: Colors.grey),
             ),
             // if (content1 != null) ...[
             // Padding(

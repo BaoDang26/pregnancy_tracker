@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../routes/app_routes.dart';
+import '../util/app_export.dart';
+import '../widgets/custom_elevated_button.dart';
+
 class PregnancyProfileScreen extends StatelessWidget {
   // const PregnancyProfileScreen({super.key});
   final String nickname = 'Your Nickname';
@@ -11,13 +15,20 @@ class PregnancyProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Pregnancy Profile'),
-      ),
+      // appBar: AppBar(
+      //   title: Text('Pregnancy Profile'),
+      // ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            const Text(
+              'PREGNANCY PROFILE',
+              style: TextStyle(
+                fontSize: 48, // Adjust the font size as needed
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -96,16 +107,15 @@ class PregnancyProfileScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 20), // Space before the button
-                  ElevatedButton(
-                    onPressed: () {
-                      // Handle button press
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 100, vertical: 30), // Adjust padding
-                      textStyle: TextStyle(fontSize: 20), // Adjust font size
+                  SizedBox(
+                    width: 200, // Adjust width as needed
+                    height: 60, // Adjust height as needed
+                    child: CustomElevatedButton(
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.fetalgrowthstatistics);
+                      },
+                      text: 'Statistics',
                     ),
-                    child: Text('Statistics'),
                   ),
                 ],
               ),

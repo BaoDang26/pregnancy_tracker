@@ -65,6 +65,7 @@ class BlogPostGuest extends StatelessWidget {
                                 child: Stack(
                                   children: [
                                     CustomBlogCard(
+                                      commentCount: 2,
                                       photoUrl:
                                           'https://res.cloudinary.com/dlipvbdwi/image/upload/v1696896650/cld-sample.jpg',
                                       title: 'Blog title',

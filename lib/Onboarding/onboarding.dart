@@ -4,6 +4,7 @@ import 'package:pregnancy_tracker/util/app_export.dart';
 import 'package:pregnancy_tracker/widgets/custom_card_subscription_plan_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+import '../login/login_screen.dart';
 import '../widgets/custom_card_blog_widget.dart';
 
 class Onboarding extends StatelessWidget {
@@ -13,35 +14,21 @@ class Onboarding extends StatelessWidget {
   Widget build(BuildContext context) {
     final CarouselController _carouselController = CarouselController();
     return Scaffold(
-      appBar: AppBar(
-        // automaticallyImplyLeading: false,
-        title: Text('Home Page'),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.settings),
-            onPressed: () {
-              // Navigate to settings
-            },
-          ),
-          TextButton(
-            onPressed: () {
-              // Navigate to register
-            },
-            child: Text('Register',
-                style: TextStyle(color: Colors.black, fontSize: 20)),
-          ),
-          TextButton(
-            onPressed: () {
-              // Navigate to login
-            },
-            child: Text('Login',
-                style: TextStyle(color: Colors.black, fontSize: 20)),
-          ),
-        ],
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            // Header lớn
+            // Container(
+            //   padding: EdgeInsets.all(16.0),
+            //   alignment: Alignment.centerLeft,
+            //   child: Text(
+            //     'Home Page',
+            //     style: TextStyle(
+            //       fontSize: 48, // Kích thước chữ lớn
+            //       fontWeight: FontWeight.bold,
+            //     ),
+            //   ),
+            // ),
             Container(
               color: Color.fromARGB(255, 117, 196, 149),
               width: double.infinity,
@@ -67,7 +54,7 @@ class Onboarding extends StatelessWidget {
                 CarouselSlider(
                   carouselController: _carouselController,
                   options: CarouselOptions(
-                    height: 300.0,
+                    height: 500.0,
                     autoPlay: true,
                     autoPlayInterval: Duration(seconds: 3),
                     autoPlayAnimationDuration: Duration(milliseconds: 800),
@@ -169,6 +156,7 @@ class Onboarding extends StatelessWidget {
                                   onTitleTap: () {
                                     // Get.to(BlogDetailScreen());
                                   },
+                                  commentCount: 2,
                                 ),
                               ],
                             ),
