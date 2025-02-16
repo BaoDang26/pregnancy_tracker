@@ -14,9 +14,9 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _selectedIndex = index;
     });
-    if (index == 1) {
-      Get.to(() => SubscriptionPlansScreen());
-    }
+    // if (index == 1) {
+    //   Get.to(() => SubscriptionPlansScreen());
+    // }
   }
 
   @override

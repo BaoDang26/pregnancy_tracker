@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class PregnancyProfileScreen extends StatelessWidget {
+  // const PregnancyProfileScreen({super.key});
   final String nickname = 'Your Nickname';
   final DateTime dueDate = DateTime(2023, 12, 25);
   final DateTime conceptionDate = DateTime(2023, 3, 20);

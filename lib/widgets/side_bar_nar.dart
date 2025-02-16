@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pregnancy_tracker/pregnancy_profile/pregnancy_profile_screen.dart';
+import 'package:pregnancy_tracker/routes/app_routes.dart';
+import 'package:pregnancy_tracker/util/app_export.dart';
 
 import '../Onboarding/blog_post/blog_post_guest.dart';
 import '../Onboarding/onboarding.dart';
@@ -24,76 +26,69 @@ class _SideBarNavScreenState extends State<SideBarNavScreen> {
     // const UpdateProfileScreen(),
   ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Your App Title'),
-      // ),
       body: Row(
-        children: <Widget>[
-          Drawer(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: <Widget>[
-                DrawerHeader(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromARGB(255, 164, 219, 186),
+                  Color.fromARGB(255, 156, 227, 184),
+                  Color.fromARGB(255, 137, 214, 169),
+                  Color.fromARGB(255, 119, 209, 154),
+                  Color.fromARGB(255, 102, 204, 140),
+                ],
+              ),
+            ),
+            child: NavigationRail(
+              minWidth: 100,
+              elevation: 10,
+              extended: true,
+              backgroundColor: Colors.transparent,
+              selectedIndex: _selectedIndex,
+              onDestinationSelected: (int index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+              leading: const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Text(
+                  'Pregnancy Tracker',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
-                  child: Text(
-                    'Pregnancy Tracker',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 26,
-                    ),
-                  ),
                 ),
-                ListTile(
-                  leading: Icon(Icons.home),
-                  title: Text('Home'),
-                  tileColor: _selectedIndex == 0
-                      ? Colors.blueAccent
-                      : Colors.transparent,
-                  onTap: () {
-                    _onItemTapped(0);
-                  },
+              ),
+              destinations: const [
+                NavigationRailDestination(
+                  icon: Icon(Icons.home_outlined),
+                  selectedIcon: Icon(Icons.home),
+                  label: Text('Home'),
                 ),
-                // ListTile(
-                //   leading: Icon(Icons.menu_book),
-                //   title: Text('Weekly Menu'),
-                //   onTap: () {
-                //     _onItemTapped(1);
-                //   },
-                // ),
-                ListTile(
-                  leading: Icon(Icons.local_fire_department_rounded),
-                  title: Text('Blog Post'),
-                  tileColor: _selectedIndex == 1
-                      ? Colors.blueAccent
-                      : Colors.transparent,
-                  onTap: () {
-                    _onItemTapped(1);
-                  },
+                NavigationRailDestination(
+                  icon: Icon(Icons.local_fire_department_outlined),
+                  selectedIcon: Icon(Icons.local_fire_department),
+                  label: Text('Blog Post'),
                 ),
-                ListTile(
-                  leading: Icon(Icons.person),
-                  title: Text('Pregnancy Profile'),
-                  onTap: () {
-                    _onItemTapped(2);
-                  },
+                NavigationRailDestination(
+                  icon: Icon(Icons.person_outline),
+                  selectedIcon: Icon(Icons.person),
+                  label: Text('Pregnancy Profile'),
                 ),
               ],
             ),
           ),
+          const VerticalDivider(thickness: 1, width: 1),
           Expanded(
             child: Center(
-              child: _widgetOptions.elementAt(_selectedIndex),
+              child: _widgetOptions[_selectedIndex],
             ),
           ),
         ],

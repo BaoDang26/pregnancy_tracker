@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:pregnancy_tracker/subscription_plan.dart';
 import 'package:pregnancy_tracker/util/app_export.dart';
+import 'package:pregnancy_tracker/widgets/custom_card_subscription_plan_widget.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 import '../widgets/custom_card_blog_widget.dart';
 
 class Onboarding extends StatelessWidget {
   const Onboarding({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final CarouselController _carouselController = CarouselController();
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: false,
         title: Text('Home Page'),
         actions: [
           IconButton(
@@ -39,7 +43,7 @@ class Onboarding extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              color: Colors.pink,
+              color: Color.fromARGB(255, 117, 196, 149),
               width: double.infinity,
               padding: EdgeInsets.all(16.0),
               child: Column(
@@ -58,7 +62,67 @@ class Onboarding extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-
+            Stack(
+              children: [
+                CarouselSlider(
+                  carouselController: _carouselController,
+                  options: CarouselOptions(
+                    height: 300.0,
+                    autoPlay: true,
+                    autoPlayInterval: Duration(seconds: 3),
+                    autoPlayAnimationDuration: Duration(milliseconds: 800),
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                    enlargeCenterPage: true,
+                  ),
+                  items: [
+                    'https://res.cloudinary.com/dlipvbdwi/image/upload/v1739408433/zwibz1obvawg6u8b7ck0.jpg',
+                    'https://res.cloudinary.com/dlipvbdwi/image/upload/v1739408433/zwibz1obvawg6u8b7ck0.jpg',
+                    'https://res.cloudinary.com/dlipvbdwi/image/upload/v1739408433/zwibz1obvawg6u8b7ck0.jpg',
+                    'https://res.cloudinary.com/dlipvbdwi/image/upload/v1739408433/zwibz1obvawg6u8b7ck0.jpg',
+                  ].map((imageUrl) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return Container(
+                          width: MediaQuery.of(context).size.width,
+                          margin: EdgeInsets.symmetric(horizontal: 5.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            image: DecorationImage(
+                              image: NetworkImage(imageUrl),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }).toList(),
+                ),
+                Positioned(
+                  left: 20,
+                  top: 0,
+                  bottom: 0,
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+                    onPressed: () {
+                      // Implement previous slide
+                      _carouselController.previousPage();
+                    },
+                  ),
+                ),
+                Positioned(
+                  right: 20,
+                  top: 0,
+                  bottom: 0,
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_forward_ios, color: Colors.black),
+                    onPressed: () {
+                      // Implement next slide
+                      _carouselController.nextPage();
+                    },
+                  ),
+                ),
+              ],
+            ),
             SizedBox(height: 20),
             Text(
               'Latest Blog Posts',

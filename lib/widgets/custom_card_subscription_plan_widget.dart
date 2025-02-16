@@ -1,6 +1,8 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:pregnancy_tracker/pregnancy_profile/pregnancy_profile_screen.dart';
+import 'package:pregnancy_tracker/routes/app_routes.dart';
+
+import '../util/app_export.dart';
 
 class SubscriptionPlanCard extends StatelessWidget {
   final String title;
@@ -76,7 +78,9 @@ class SubscriptionPlanCard extends StatelessWidget {
               SizedBox(height: 10),
               Center(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.pregnancyprofile);
+                  },
                   child: Text(buttonText),
                 ),
               ),
