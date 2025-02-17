@@ -3,6 +3,7 @@ import 'package:pregnancy_tracker/pregnancy_profile/pregnancy_profile_screen.dar
 // import 'package:pregnancy_tracker/pregnancy_profile/pregnancy_profile_edit_screen.dart';
 import 'package:pregnancy_tracker/widgets/side_bar_nar.dart';
 
+import '../Onboarding/blog_post/blog_post_detail.dart';
 import '../Onboarding/subscription_plan/subscription_plan_detail.dart';
 import '../account_profile/account_profile_screen.dart';
 import '../fetal_growth_statistics/fetal_growth_statistics.dart';
@@ -20,6 +21,7 @@ class AppRoutes {
   static const String fetalgrowthstatistics = '/fetal-growth-statistics';
   static const String subscriptionplan = '/subscription-plan';
   static const String subscriptionplandetail = '/subscription-plan-detail';
+  static const String blogpostdetail = '/blog-post-detail';
   // static const String pregnancyprofileedit = '/pregnancy-profile-edit';
   // static const String signup = '/signup';
 
@@ -39,5 +41,24 @@ class AppRoutes {
     GetPage(
         name: subscriptionplandetail,
         page: () => SubscriptionPlanDetailScreen()),
+    GetPage(
+        name: blogpostdetail,
+        page: () => BlogPostDetail(
+              title: 'Blog Title',
+              content: 'This is a content',
+              imageUrl:
+                  'https://res.cloudinary.com/dlipvbdwi/image/upload/v1696896652/cld-sample-4.jpg',
+              commentCount: 3,
+              comments: [
+                {
+                  'userName': 'John Doe',
+                  'content': 'This is a comment',
+                },
+                {
+                  'userName': 'Jane Doe2',
+                  'content': 'This is a comment2',
+                },
+              ],
+            )),
   ];
 }

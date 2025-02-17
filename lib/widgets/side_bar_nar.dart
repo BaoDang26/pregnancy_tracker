@@ -143,7 +143,7 @@ class _SideBarNavScreenState extends State<SideBarNavScreen> {
                   onPressed: () {
                     Navigator.pushNamed(context, AppRoutes.login);
                   },
-                  text: 'Login',
+                  text: 'Log out',
                 ),
               ),
             ),

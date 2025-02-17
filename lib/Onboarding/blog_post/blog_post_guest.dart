@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pregnancy_tracker/util/app_export.dart';
 // import '../../widgets/blog_card_widget.dart';
+import '../../routes/app_routes.dart';
 import '../../widgets/custom_card_blog_widget.dart';
 
 class BlogPostGuest extends StatelessWidget {
@@ -73,7 +74,7 @@ class BlogPostGuest extends StatelessWidget {
                                       // photoUrl: controller.blogModel.value.blogPhoto,
                                       // title: controller.blogModel.value.blogName,
                                       onTitleTap: () {
-                                        // Get.to(BlogDetailScreen());
+                                        Get.toNamed(AppRoutes.blogpostdetail);
                                       },
                                     ),
                                   ],

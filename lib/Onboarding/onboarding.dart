@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pregnancy_tracker/routes/app_routes.dart';
 import 'package:pregnancy_tracker/subscription_plan.dart';
 import 'package:pregnancy_tracker/util/app_export.dart';
 import 'package:pregnancy_tracker/widgets/custom_card_subscription_plan_widget.dart';
@@ -154,6 +155,7 @@ class Onboarding extends StatelessWidget {
                                   // photoUrl: controller.blogModel.value.blogPhoto,
                                   // title: controller.blogModel.value.blogName,
                                   onTitleTap: () {
+                                    Get.toNamed(AppRoutes.blogpostdetail);
                                     // Get.to(BlogDetailScreen());
                                   },
                                   commentCount: 2,

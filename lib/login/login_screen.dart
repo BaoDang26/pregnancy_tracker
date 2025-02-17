@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pregnancy_tracker/routes/app_routes.dart';
+import 'package:pregnancy_tracker/util/app_export.dart';
 import 'package:pregnancy_tracker/widgets/custom_elevated_button.dart';
 import '../register/register_screen.dart'; // Import the signup screen
 
@@ -87,6 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: CustomElevatedButton(
                       onPressed: () {
                         // Handle login action
+                        Get.toNamed(AppRoutes.sidebarnar);
                       },
                       text: 'Login',
                     ),
