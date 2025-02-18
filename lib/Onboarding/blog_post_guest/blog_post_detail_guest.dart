@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:pregnancy_tracker/widgets/comment_widget.dart';
 import 'package:pregnancy_tracker/widgets/custom_elevated_button.dart';
 
-class BlogPostDetail extends StatelessWidget {
+class BlogPostDetailGuest extends StatelessWidget {
   final String title;
   final String content;
   final String imageUrl;
   final int commentCount;
   final List<Map<String, String>> comments;
 
-  BlogPostDetail({
+  BlogPostDetailGuest({
     required this.title,
     required this.content,
     required this.imageUrl,
@@ -67,32 +67,34 @@ class BlogPostDetail extends StatelessWidget {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 8.0),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        labelText: 'Write a comment',
-                        border: OutlineInputBorder(),
-                      ),
-                      onSubmitted: (String value) {
-                        // Xử lý khi người dùng gửi bình luận
-                        // if (value.isNotEmpty) {
-                        //   addComment(value);
-                        // }
-                      },
-                    ),
-                  ),
-                  SizedBox(width: 8.0), // Khoảng cách giữa TextField và nút
-                  CustomElevatedButton(
-                    onPressed: () {
-                      // Xử lý khi người dùng nhấn nút gửi
-                      // Bạn có thể thêm logic để lưu bình luận ở đây
-                    },
-                    text: 'Send',
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Expanded(
+              //       child: TextField(
+              //         decoration: InputDecoration(
+              //           labelText: 'Write a comment',
+              //           border: OutlineInputBorder(),
+              //           filled: true,
+              //           fillColor: Colors.white,
+              //         ),
+              //         onSubmitted: (String value) {
+              //           // Xử lý khi người dùng gửi bình luận
+              //           // if (value.isNotEmpty) {
+              //           //   addComment(value);
+              //           // }
+              //         },
+              //       ),
+              //     ),
+              //     SizedBox(width: 8.0), // Khoảng cách giữa TextField và nút
+              //     CustomElevatedButton(
+              //       onPressed: () {
+              //         // Xử lý khi người dùng nhấn nút gửi
+              //         // Bạn có thể thêm logic để lưu bình luận ở đây
+              //       },
+              //       text: 'Send',
+              //     ),
+              //   ],
+              // ),
               SizedBox(height: 8.0),
               // Sử dụng ListView để hiển thị bình luận
               Container(

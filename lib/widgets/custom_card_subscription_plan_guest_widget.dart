@@ -4,7 +4,7 @@ import 'package:pregnancy_tracker/routes/app_routes.dart';
 
 import '../util/app_export.dart';
 
-class SubscriptionPlanCard extends StatelessWidget {
+class SubscriptionPlanGuestCard extends StatelessWidget {
   final String title;
   final String price;
   final String details;
@@ -12,7 +12,7 @@ class SubscriptionPlanCard extends StatelessWidget {
   final String buttonText;
   final bool isPopular;
   // final Color backgroundColor;
-  SubscriptionPlanCard({
+  SubscriptionPlanGuestCard({
     required this.title,
     required this.price,
     required this.details,
@@ -90,7 +90,7 @@ class SubscriptionPlanCard extends StatelessWidget {
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      Get.toNamed(AppRoutes.subscriptionplandetail);
+                      Get.toNamed(AppRoutes.login);
                     },
                     child: Text(buttonText),
                   ),

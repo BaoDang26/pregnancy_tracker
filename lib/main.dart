@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'app.dart';
-import 'home_screen/home_screen.dart';
 
 // void main() {
 //   runApp(PregnancyTrackerApp());

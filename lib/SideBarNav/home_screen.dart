@@ -8,8 +8,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import '../login/login_screen.dart';
 import '../widgets/custom_card_blog_widget.dart';
 
-class Onboarding extends StatelessWidget {
-  const Onboarding({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class Onboarding extends StatelessWidget {
             //     style: TextStyle(
             //       fontSize: 48, // Kích thước chữ lớn
             //       fontWeight: FontWeight.bold,
-            //     ),
+            //     ),a
             //   ),
             // ),
             Container(

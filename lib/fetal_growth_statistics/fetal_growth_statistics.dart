@@ -188,7 +188,320 @@ class _FetalGrowthStatisticsState extends State<FetalGrowthStatistics> {
                     SizedBox(width: 16),
                     CustomElevatedButton(
                       onPressed: () {
-                        // Add your onPressed code here to change the information
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text(
+                                'Update Information',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              content: Container(
+                                width: 600,
+                                padding: EdgeInsets.all(16.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.1),
+                                      spreadRadius: 2,
+                                      blurRadius: 5,
+                                      offset: Offset(0, 3),
+                                    ),
+                                  ],
+                                ),
+                                child: SingleChildScrollView(
+                                  child: ListBody(
+                                    children: <Widget>[
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Colors.lightGreen[100]!,
+                                              Colors.lightGreen[200]!,
+                                            ],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: TextField(
+                                          decoration: InputDecoration(
+                                            labelText: 'Weight (g)',
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              borderSide: BorderSide(
+                                                  color: Colors.green[300]!),
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              borderSide: BorderSide(
+                                                  color: Colors.green[300]!),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              borderSide: BorderSide(
+                                                  color: Colors.green[500]!),
+                                            ),
+                                            filled: true,
+                                            fillColor: Colors.transparent,
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 5),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 12),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Colors.lightGreen[100]!,
+                                              Colors.lightGreen[200]!,
+                                            ],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: TextField(
+                                          decoration: InputDecoration(
+                                            labelText: 'Height (cm)',
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              borderSide: BorderSide(
+                                                  color: Colors.green[300]!),
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              borderSide: BorderSide(
+                                                  color: Colors.green[300]!),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              borderSide: BorderSide(
+                                                  color: Colors.green[500]!),
+                                            ),
+                                            filled: true,
+                                            fillColor: Colors.transparent,
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 5),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 12),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Colors.lightGreen[100]!,
+                                              Colors.lightGreen[200]!,
+                                            ],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: TextField(
+                                          decoration: InputDecoration(
+                                            labelText:
+                                                'Head Circumference (cm)',
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              borderSide: BorderSide(
+                                                  color: Colors.green[300]!),
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              borderSide: BorderSide(
+                                                  color: Colors.green[300]!),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              borderSide: BorderSide(
+                                                  color: Colors.green[500]!),
+                                            ),
+                                            filled: true,
+                                            fillColor: Colors.transparent,
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 5),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 12),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Colors.lightGreen[100]!,
+                                              Colors.lightGreen[200]!,
+                                            ],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: TextField(
+                                          decoration: InputDecoration(
+                                            labelText:
+                                                'Belly Circumference (cm)',
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              borderSide: BorderSide(
+                                                  color: Colors.green[300]!),
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              borderSide: BorderSide(
+                                                  color: Colors.green[300]!),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              borderSide: BorderSide(
+                                                  color: Colors.green[500]!),
+                                            ),
+                                            filled: true,
+                                            fillColor: Colors.transparent,
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 5),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 12),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Colors.lightGreen[100]!,
+                                              Colors.lightGreen[200]!,
+                                            ],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: TextField(
+                                          decoration: InputDecoration(
+                                            labelText: 'Heart Rate (bpm)',
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              borderSide: BorderSide(
+                                                  color: Colors.green[300]!),
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              borderSide: BorderSide(
+                                                  color: Colors.green[300]!),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              borderSide: BorderSide(
+                                                  color: Colors.green[500]!),
+                                            ),
+                                            filled: true,
+                                            fillColor: Colors.transparent,
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 5),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(height: 12),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            colors: [
+                                              Colors.lightGreen[100]!,
+                                              Colors.lightGreen[200]!,
+                                            ],
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: TextField(
+                                          decoration: InputDecoration(
+                                            labelText: 'Notes',
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              borderSide: BorderSide(
+                                                  color: Colors.green[300]!),
+                                            ),
+                                            enabledBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              borderSide: BorderSide(
+                                                  color: Colors.green[300]!),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              borderSide: BorderSide(
+                                                  color: Colors.green[500]!),
+                                            ),
+                                            filled: true,
+                                            fillColor: Colors.transparent,
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    horizontal: 10,
+                                                    vertical: 5),
+                                          ),
+                                          maxLines: 5,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: Text('Cancel'),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text('Update'),
+                                  onPressed: () {
+                                    // Thêm mã để xử lý cập nhật thông tin ở đây
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       },
                       text: 'Update',
                     ),

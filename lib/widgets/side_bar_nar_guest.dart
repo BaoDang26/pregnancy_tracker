@@ -3,28 +3,26 @@ import 'package:pregnancy_tracker/pregnancy_profile/pregnancy_profile_screen.dar
 import 'package:pregnancy_tracker/routes/app_routes.dart';
 import 'package:pregnancy_tracker/util/app_export.dart';
 
-import '../SideBarNav/home_screen.dart';
-import '../account_profile/account_profile_screen.dart';
-
+import '../Onboarding/blog_post_guest/blog_post_guest.dart';
+import '../Onboarding/home_screen_guest.dart';
+import '../Onboarding/subscription_plan/subscription_plan_guest.dart';
 import 'custom_elevated_button.dart';
-import '../SideBarNav/blog_post/blog_post.dart';
-import '../SideBarNav/subscription_plan/subscription_plan.dart';
 
-class SideBarNavScreen extends StatefulWidget {
-  const SideBarNavScreen({super.key});
+class SideBarNavGuestScreen extends StatefulWidget {
+  const SideBarNavGuestScreen({super.key});
 
   @override
-  State<SideBarNavScreen> createState() => _SideBarNavScreenState();
+  State<SideBarNavGuestScreen> createState() => _SideBarNavGuestScreenState();
 }
 
-class _SideBarNavScreenState extends State<SideBarNavScreen> {
+class _SideBarNavGuestScreenState extends State<SideBarNavGuestScreen> {
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = [
-    const HomeScreen(),
-    const BlogPost(),
-    PregnancyProfileScreen(),
-    SubscriptionPlan(),
-    AccountProfileScreen(),
+    const HomeScreenGuest(),
+    const BlogPostGuest(),
+    // PregnancyProfileScreen(),
+    SubscriptionPlanGuest(),
+    // AccountProfileScreen(),
     // const HomeScreen(),
     // WeeklyMenuScreen(),
     // const AdvisorScreen(),
@@ -101,18 +99,18 @@ class _SideBarNavScreenState extends State<SideBarNavScreen> {
                   ),
                   label: Text('Blog Post', style: TextStyle(fontSize: 15)),
                 ),
-                NavigationRailDestination(
-                  icon: SizedBox(
-                    width: 24,
-                    child: Icon(Icons.person_outline),
-                  ),
-                  selectedIcon: SizedBox(
-                    width: 24,
-                    child: Icon(Icons.person),
-                  ),
-                  label:
-                      Text('Pregnancy Profile', style: TextStyle(fontSize: 15)),
-                ),
+                // NavigationRailDestination(
+                //   icon: SizedBox(
+                //     width: 24,
+                //     child: Icon(Icons.person_outline),
+                //   ),
+                //   selectedIcon: SizedBox(
+                //     width: 24,
+                //     child: Icon(Icons.person),
+                //   ),
+                //   label:
+                //       Text('Pregnancy Profile', style: TextStyle(fontSize: 15)),
+                // ),
                 NavigationRailDestination(
                   icon: SizedBox(
                     width: 24,
@@ -125,18 +123,18 @@ class _SideBarNavScreenState extends State<SideBarNavScreen> {
                   label:
                       Text('Subscription Plan', style: TextStyle(fontSize: 15)),
                 ),
-                NavigationRailDestination(
-                  icon: SizedBox(
-                    width: 24,
-                    child: Icon(Icons.person_outline),
-                  ),
-                  selectedIcon: SizedBox(
-                    width: 24,
-                    child: Icon(Icons.person),
-                  ),
-                  label:
-                      Text('Account Profile', style: TextStyle(fontSize: 15)),
-                ),
+                // NavigationRailDestination(
+                //   icon: SizedBox(
+                //     width: 24,
+                //     child: Icon(Icons.person_outline),
+                //   ),
+                //   selectedIcon: SizedBox(
+                //     width: 24,
+                //     child: Icon(Icons.person),
+                //   ),
+                //   label:
+                //       Text('Account Profile', style: TextStyle(fontSize: 15)),
+                // ),
               ],
               trailing: Padding(
                 padding: const EdgeInsets.all(24.0),
@@ -144,7 +142,7 @@ class _SideBarNavScreenState extends State<SideBarNavScreen> {
                   onPressed: () {
                     Navigator.pushNamed(context, AppRoutes.login);
                   },
-                  text: 'Log out',
+                  text: 'Login',
                 ),
               ),
             ),

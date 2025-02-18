@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pregnancy_tracker/util/app_export.dart';
-import '../../widgets/custom_card_subscription_plan_guest_widget.dart';
 import '../../widgets/custom_card_subscription_plan_widget.dart';
 
-class SubscriptionPlanGuest extends StatelessWidget {
-  const SubscriptionPlanGuest({super.key});
+class SubscriptionPlan extends StatelessWidget {
+  const SubscriptionPlan({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +44,7 @@ class SubscriptionPlanGuest extends StatelessWidget {
                           1.0, // Adjust this ratio to fit the Container
                       child: Stack(
                         children: [
-                          SubscriptionPlanGuestCard(
+                          SubscriptionPlanCard(
                             title: 'Pro',
                             price: '\$25',
                             details:
@@ -57,7 +56,7 @@ class SubscriptionPlanGuest extends StatelessWidget {
                               'Hold queues',
                               'Zapier, Zendesk, Slack integrations',
                             ],
-                            buttonText: 'Get Started',
+                            buttonText: 'Subscribe',
                           )
                         ],
                       ),

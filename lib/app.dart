@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 import 'config/theme.dart';
-import 'home_screen/home_screen.dart';
 import 'routes/app_routes.dart';
 import 'util/initial_bindings.dart';
 
@@ -26,7 +25,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: theme(),
       // initialBinding: InitialBindings(),
-      initialRoute: AppRoutes.sidebarnar,
+      initialRoute: AppRoutes.sidebarnarguest,
       getPages: AppRoutes.pages,
       // home: HomeScreen(),
     );

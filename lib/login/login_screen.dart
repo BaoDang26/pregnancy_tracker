@@ -103,11 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Center(
                     child: CustomElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => RegisterScreen()),
-                        );
+                        Get.toNamed(AppRoutes.register);
                       },
                       text: 'Sign Up',
                     ),

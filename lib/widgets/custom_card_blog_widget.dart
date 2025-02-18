@@ -8,7 +8,7 @@ import 'package:pregnancy_tracker/util/app_export.dart';
 
 import 'custom_image_view.dart';
 
-class CustomBlogCard extends StatelessWidget {
+class CustomBlogCard extends StatefulWidget {
   final String photoUrl;
   final String title;
   // final BlogModel blog;
@@ -19,17 +19,26 @@ class CustomBlogCard extends StatelessWidget {
   final int commentCount;
   final VoidCallback onTitleTap;
 
-  CustomBlogCard({
-    // required this.blog,
-    required this.photoUrl,
-    required this.title,
-    this.content1,
-    this.content2,
-    this.content3,
-    this.content4,
-    required this.commentCount,
-    required this.onTitleTap,
-  });
+  const CustomBlogCard(
+      {
+      // required this.blog,
+      required this.photoUrl,
+      required this.title,
+      this.content1,
+      this.content2,
+      this.content3,
+      this.content4,
+      required this.commentCount,
+      required this.onTitleTap,
+      Key? key})
+      : super(key: key);
+
+  @override
+  _CustomBlogCardState createState() => _CustomBlogCardState();
+}
+
+class _CustomBlogCardState extends State<CustomBlogCard> {
+  bool _isHovering = false;
 
   @override
   Widget build(BuildContext context) {
@@ -61,22 +70,38 @@ class CustomBlogCard extends StatelessWidget {
             //   ),
             // ),
             SizedBox(height: 5.v),
-            Padding(
-              padding: EdgeInsets.only(bottom: 5.v),
-              child: GestureDetector(
-                onTap: onTitleTap,
-                child: Text(
-                  // '${blog.blogName}',
-                  'Blog Title',
-                  maxLines: 2,
-                  softWrap: true,
-                  style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
-                  overflow: TextOverflow.ellipsis,
+            MouseRegion(
+              onEnter: (_) {
+                setState(() {
+                  _isHovering = true;
+                });
+              },
+              onExit: (_) {
+                setState(() {
+                  _isHovering = false;
+                });
+              },
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 5.v),
+                child: GestureDetector(
+                  onTap: widget.onTitleTap,
+                  child: Text(
+                    // '${blog.blogName}',
+                    'Blog Title',
+                    maxLines: 2,
+                    softWrap: true,
+                    style: TextStyle(
+                      fontSize: 23,
+                      fontWeight: FontWeight.bold,
+                      decoration: _isHovering ? TextDecoration.underline : null,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ),
             ),
             Text(
-              '$commentCount comments',
+              '${widget.commentCount} comments',
               style: TextStyle(fontSize: 16, color: Colors.grey),
             ),
             // if (content1 != null) ...[

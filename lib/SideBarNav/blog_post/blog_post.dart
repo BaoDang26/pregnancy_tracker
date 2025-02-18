@@ -4,8 +4,15 @@ import 'package:pregnancy_tracker/util/app_export.dart';
 import '../../routes/app_routes.dart';
 import '../../widgets/custom_card_blog_widget.dart';
 
-class BlogPostGuest extends StatelessWidget {
-  const BlogPostGuest({super.key});
+class BlogPost extends StatefulWidget {
+  const BlogPost({super.key});
+
+  @override
+  State<BlogPost> createState() => _BlogPostState();
+}
+
+class _BlogPostState extends State<BlogPost> {
+  bool isHovered = false;
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +77,6 @@ class BlogPostGuest extends StatelessWidget {
                                       photoUrl:
                                           'https://res.cloudinary.com/dlipvbdwi/image/upload/v1696896650/cld-sample.jpg',
                                       title: 'Blog title',
-                                      // blog: controller.blogList[index],
-                                      // photoUrl: controller.blogModel.value.blogPhoto,
-                                      // title: controller.blogModel.value.blogName,
                                       onTitleTap: () {
                                         Get.toNamed(AppRoutes.blogpostdetail);
                                       },
