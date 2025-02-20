@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pregnancy_tracker/widgets/custom_elevated_button.dart';
 
 class SubscriptionPlanDetailScreen extends StatelessWidget {
   @override
@@ -35,17 +36,23 @@ class SubscriptionPlanDetailScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   Text(
-                    '150,000 VND\/month',
-                    style: TextStyle(color: Colors.white, fontSize: 32),
+                    'Unlocks unlimited Tab completions and additional features for a seamless experience.',
+                    style: TextStyle(color: Colors.white, fontSize: 20),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 20),
                   Text(
-                    'Unlocks unlimited Tab completions...',
-                    style: TextStyle(color: Colors.white70),
+                    'Total price',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  // SizedBox(height: 20),
+                  Text(
+                    '150,000 VND  \n30 days',
+                    style: TextStyle(color: Colors.white, fontSize: 32),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 20),
+
                   // SwitchListTile(
                   //   title: Text(
                   //     'Tiết kiệm 48 US\$ với thanh toán hàng năm',
@@ -55,24 +62,20 @@ class SubscriptionPlanDetailScreen extends StatelessWidget {
                   //   onChanged: (bool value) {},
                   //   activeColor: Colors.green,
                   // ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Tổng phụ',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  Text(
-                    '20,00 US\$',
-                    style: TextStyle(color: Colors.white, fontSize: 24),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Tổng tiền phải trả hôm nay',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  Text(
-                    '20,00 US\$',
-                    style: TextStyle(color: Colors.white, fontSize: 24),
-                  ),
+
+                  // Text(
+                  //   '20,00 US\$',
+                  //   style: TextStyle(color: Colors.white, fontSize: 24),
+                  // ),
+                  // SizedBox(height: 20),
+                  // Text(
+                  //   'Tổng tiền phải trả hôm nay',
+                  //   style: TextStyle(color: Colors.white),
+                  // ),
+                  // Text(
+                  //   '20,00 US\$',
+                  //   style: TextStyle(color: Colors.white, fontSize: 24),
+                  // ),
                 ],
               ),
             ),
@@ -87,47 +90,53 @@ class SubscriptionPlanDetailScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Thanh toán bằng',
+                    'Payment method',
                     style: TextStyle(fontSize: 24),
                   ),
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Email',
-                      border: OutlineInputBorder(),
+                  SizedBox(height: 20),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.blueAccent, width: 2),
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          blurRadius: 5,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 50,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                  'https://res.cloudinary.com/dlipvbdwi/image/upload/v1740010783/VNPay.png'),
+                              fit: BoxFit.cover,
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Text(
+                          'VNPay',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: RadioListTile(
-                          title: Text('Thẻ'),
-                          value: 'card',
-                          groupValue: 'paymentMethod',
-                          onChanged: (value) {},
-                        ),
-                      ),
-                      Expanded(
-                        child: RadioListTile(
-                          title: Text('Cash App Pay'),
-                          value: 'cashApp',
-                          groupValue: 'paymentMethod',
-                          onChanged: (value) {},
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
+                  CustomElevatedButton(
                     onPressed: () {
                       // Logic để đăng ký
                     },
-                    child: Text('Đăng ký'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
-                    ),
+                    text: 'Subscribe',
+                    // backgroundColor: Colors.blue,
+                    // padding: EdgeInsets.symmetric(vertical: 16.0),
                   ),
                 ],
               ),

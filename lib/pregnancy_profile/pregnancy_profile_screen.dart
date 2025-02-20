@@ -1,126 +1,79 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart'; // Nhập thư viện intl
 
-import '../routes/app_routes.dart';
 import '../util/app_export.dart';
-import '../widgets/custom_elevated_button.dart';
+import '../widgets/pregnancy_profile_card.dart';
 
 class PregnancyProfileScreen extends StatelessWidget {
-  // const PregnancyProfileScreen({super.key});
-  final String nickname = 'Your Nickname';
-  final DateTime dueDate = DateTime(2023, 12, 25);
-  final DateTime conceptionDate = DateTime(2023, 3, 20);
-  final int pregnancyWeek = 30;
-  final String notes = 'These are some additional notes about the pregnancy.';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Pregnancy Profile'),
-      // ),
-      body: SingleChildScrollView(
+      body: Center(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'PREGNANCY PROFILE',
-              style: TextStyle(
-                fontSize: 48, // Adjust the font size as needed
-                fontWeight: FontWeight.bold,
-              ),
+            Text(
+              "Who's using Chrome?",
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 1000,
-                  height: 500, // Adjust height as needed
-                  child: Image.network(
-                    'https://res.cloudinary.com/dlipvbdwi/image/upload/v1739408433/zwibz1obvawg6u8b7ck0.jpg', // Replace with your image URL
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Container(
-                  width: 600,
-                  height: 300, // Adjust height as needed
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SelectableText(
-                        'Pregnancy',
-                        style: TextStyle(
-                          fontSize: 50, // Larger font size for the title
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 20), // Space between title and content
-                      SelectableText(
-                        '''Welcome to pregnancy! This is the start of an incredible journey. To help you along, we offer info on pregnancy aches and pains, weight gain and nutrition, what's safe during pregnancy and what's not, pregnancy stages, labor and delivery, and more — plus how to sift through all those baby names to find the perfect one.''',
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+            SizedBox(height: 20), // Khoảng cách giữa tiêu đề và nội dung
+            Text(
+              'With Chrome profiles you can separate all your Chrome stuff. Create profiles for friends and family, or split between work and fun.',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
+            SizedBox(height: 20), // Khoảng cách giữa nội dung và lưới
+            Expanded(
+              child: GridView.count(
+                crossAxisCount: 4,
+                childAspectRatio: 1,
+                padding: EdgeInsets.all(50),
                 children: [
-                  Card(
-                    child: ListTile(
-                      leading: Icon(Icons.person),
-                      title: Text('Nickname'),
-                      subtitle: Text(nickname),
-                    ),
+                  PregnancyProfileCard(
+                    nickname: 'Bao',
+                    dueDate: DateTime.parse(
+                        '2023-12-01'), // Đảm bảo truyền vào DateTime
+                    pregnancyWeek: 12,
                   ),
-                  Card(
-                    child: ListTile(
-                      leading: Icon(Icons.calendar_today),
-                      title: SelectableText('Due Date'),
-                      subtitle:
-                          Text(dueDate.toLocal().toString().split(' ')[0]),
-                    ),
+                  PregnancyProfileCard(
+                    nickname: 'Bảo',
+                    dueDate: DateTime.parse('2023-11-15'),
+                    pregnancyWeek: 10,
                   ),
-                  Card(
-                    child: ListTile(
-                      leading: Icon(Icons.calendar_today),
-                      title: Text('Conception Date'),
-                      subtitle: Text(
-                          conceptionDate.toLocal().toString().split(' ')[0]),
-                    ),
+                  PregnancyProfileCard(
+                    nickname: 'Dang B',
+                    dueDate: DateTime.parse('2024-01-10'),
+                    pregnancyWeek: 8,
                   ),
-                  Card(
-                    child: ListTile(
-                      leading: Icon(Icons.pregnant_woman),
-                      title: Text('Pregnancy Week'),
-                      subtitle: Text('$pregnancyWeek weeks'),
-                    ),
+                  PregnancyProfileCard(
+                    nickname: 'fpt.edu.vn',
+                    dueDate: DateTime.parse('2023-10-20'),
+                    pregnancyWeek: 14,
                   ),
-                  Card(
-                    child: ListTile(
-                      leading: Icon(Icons.note),
-                      title: Text('Notes'),
-                      subtitle: Text(notes),
-                    ),
+                  PregnancyProfileCard(
+                    nickname: 'Work',
+                    dueDate: DateTime.parse('2024-02-05'),
+                    pregnancyWeek: 6,
                   ),
-                  SizedBox(height: 20), // Space before the button
-                  SizedBox(
-                    width: 200, // Adjust width as needed
-                    height: 60, // Adjust height as needed
-                    child: CustomElevatedButton(
-                      onPressed: () {
-                        Get.toNamed(AppRoutes.fetalgrowthstatistics);
-                      },
-                      text: 'Statistics',
-                    ),
-                  ),
+                  _buildAddProfileCard(),
                 ],
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAddProfileCard() {
+    return Card(
+      elevation: 4,
+      child: InkWell(
+        onTap: () {
+          Get.toNamed(AppRoutes.createpregnancyprofile);
+        },
+        child: Center(
+          child: Icon(Icons.add, size: 30),
         ),
       ),
     );

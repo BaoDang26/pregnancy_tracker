@@ -13,15 +13,19 @@ import '../SideBarNav/blog_post/blog_post_detail.dart';
 import '../SideBarNav/subscription_plan/subscription_plan.dart';
 import '../SideBarNav/subscription_plan/subscription_plan_detail.dart';
 import '../account_profile/account_profile_screen.dart';
+import '../create_pregnancy_profile/create_pregnancy_profile_screen.dart';
 import '../fetal_growth_statistics/fetal_growth_statistics.dart';
 import '../login/login_screen.dart';
+// import '../pregnancy_profile_details/pregnancy_profile_details.dart';
+import '../pregnancy_profile/pregnancy_profile_details.dart';
 import '../register/register_screen.dart';
 import '../widgets/side_bar_nar_guest.dart';
 
 class AppRoutes {
+  static const String pregnancyprofile = '/pregnancy-profile';
   static const String sidebarnar = '/sidebarnar';
   static const String home = '/home';
-  static const String pregnancyprofile = '/pregnancy-profile';
+  static const String pregnancyprofiledetails = '/pregnancy-profile-details';
   static const String login = '/login';
   static const String register = '/register';
   static const String accountprofile = '/account-profile';
@@ -37,11 +41,16 @@ class AppRoutes {
   static const String subscriptionplanguest = '/subscription-plan-guest';
   static const String homeguest = '/home-guest';
   static const String sidebarnarguest = '/sidebarnar-guest';
+  static const String createpregnancyprofile = '/create-pregnancy-profile';
 
   // static const String pregnancyprofileedit = '/pregnancy-profile-edit';
   // static const String signup = '/signup';
 
   static List<GetPage> pages = [
+    GetPage(
+        name: createpregnancyprofile,
+        page: () => CreatePregnancyProfileScreen()),
+    GetPage(name: pregnancyprofile, page: () => PregnancyProfileScreen()),
     GetPage(name: sidebarnarguest, page: () => SideBarNavGuestScreen()),
     GetPage(name: homeguest, page: () => HomeScreenGuest()),
     // GetPage(name: blogpostguest, page: () => BlogPostGuest()),
@@ -53,8 +62,8 @@ class AppRoutes {
     // GetPage(name: initialRoute, page: () => const InitialRoute()),
     GetPage(name: sidebarnar, page: () => SideBarNavScreen()),
     GetPage(
-        name: pregnancyprofile,
-        page: () => PregnancyProfileScreen(),
+        name: pregnancyprofiledetails,
+        page: () => PregnancyProfileDetailsScreen(),
         transition: Transition.noTransition),
     // GetPage(name: pregnancyprofileedit, page: () => PregnancyProfileEditScreen()),
     GetPage(name: login, page: () => LoginScreen()),
