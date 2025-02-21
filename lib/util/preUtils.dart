@@ -39,8 +39,7 @@ class PrefUtils {
   static Future<bool>? setInt(String key, int value) =>
       _sharedPreferences?.setInt(key, value);
 
-  static Future<bool>? removeInt(String key) =>
-      _sharedPreferences?.remove(key);
+  static Future<bool>? removeInt(String key) => _sharedPreferences?.remove(key);
 
   static String? getString(String key) => _sharedPreferences?.getString(key);
 
@@ -60,10 +59,11 @@ class PrefUtils {
   }
 
   String getThemeData() {
-    try {
-      return _sharedPreferences!.getString('themeData')!;
-    } catch (e) {
-      return 'primary';
+    if (_sharedPreferences == null) {
+      // Handle the case where _sharedPreferences is not initialized
+      return 'primary'; // or any default theme you want to return
     }
+    return _sharedPreferences!.getString('themeData') ??
+        'primary'; // Fallback to 'primary' if null
   }
 }
