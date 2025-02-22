@@ -119,6 +119,7 @@ class LoginScreen extends GetView<LoginController> {
                           text: 'Login',
                         ),
                       ),
+                      const SizedBox(height: 20),
                       Center(
                         child: Obx(
                           () => Text(

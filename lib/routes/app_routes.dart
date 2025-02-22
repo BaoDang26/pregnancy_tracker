@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:pregnancy_tracker/bindings/side_bar_nav_binding.dart';
 import 'package:pregnancy_tracker/pregnancy_profile/pregnancy_profile_screen.dart';
 // import 'package:pregnancy_tracker/pregnancy_profile/pregnancy_profile_edit_screen.dart';
 import 'package:pregnancy_tracker/widgets/side_bar_nar.dart';
@@ -61,7 +62,10 @@ class AppRoutes {
         page: () => SubscriptionPlanDetailGuestScreen()),
 
     // GetPage(name: initialRoute, page: () => const InitialRoute()),
-    GetPage(name: sidebarnar, page: () => SideBarNavScreen()),
+    GetPage(
+        name: sidebarnar,
+        page: () => SideBarNavScreen(),
+        binding: SideBarNavBinding()),
     GetPage(
         name: pregnancyprofiledetails,
         page: () => PregnancyProfileDetailsScreen(),

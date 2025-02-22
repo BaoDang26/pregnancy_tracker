@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // Nhập thư viện intl
 
+import '../controllers/pregnancy_profile_controller.dart';
 import '../util/app_export.dart';
 import '../widgets/pregnancy_profile_card.dart';
 
 class PregnancyProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final pregnancyProfileController = Get.put(PregnancyProfileController());
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -23,42 +26,35 @@ class PregnancyProfileScreen extends StatelessWidget {
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 20), // Khoảng cách giữa nội dung và lưới
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 4,
-                childAspectRatio: 1,
-                padding: EdgeInsets.all(50),
-                children: [
-                  PregnancyProfileCard(
-                    nickname: 'Bao',
-                    dueDate: DateTime.parse(
-                        '2023-12-01'), // Đảm bảo truyền vào DateTime
-                    pregnancyWeek: 12,
+            Obx(() {
+              if (pregnancyProfileController.isLoading.value) {
+                return const CircularProgressIndicator();
+              } else {
+                return Expanded(
+                  child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2, // Set the number of columns as needed
+                      childAspectRatio: 1,
+                    ),
+                    padding: EdgeInsets.all(50),
+                    itemCount:
+                        pregnancyProfileController.pregnancyProfileList.length,
+                    itemBuilder: (context, index) {
+                      if (index <
+                          pregnancyProfileController
+                              .pregnancyProfileList.length) {
+                        return PregnancyProfileCard(
+                          pregnancyProfile: pregnancyProfileController
+                              .pregnancyProfileList[index],
+                        );
+                      } else {
+                        return _buildAddProfileCard(); // Add profile card
+                      }
+                    },
                   ),
-                  PregnancyProfileCard(
-                    nickname: 'Bảo',
-                    dueDate: DateTime.parse('2023-11-15'),
-                    pregnancyWeek: 10,
-                  ),
-                  PregnancyProfileCard(
-                    nickname: 'Dang B',
-                    dueDate: DateTime.parse('2024-01-10'),
-                    pregnancyWeek: 8,
-                  ),
-                  PregnancyProfileCard(
-                    nickname: 'fpt.edu.vn',
-                    dueDate: DateTime.parse('2023-10-20'),
-                    pregnancyWeek: 14,
-                  ),
-                  PregnancyProfileCard(
-                    nickname: 'Work',
-                    dueDate: DateTime.parse('2024-02-05'),
-                    pregnancyWeek: 6,
-                  ),
-                  _buildAddProfileCard(),
-                ],
-              ),
-            ),
+                );
+              }
+            }),
           ],
         ),
       ),

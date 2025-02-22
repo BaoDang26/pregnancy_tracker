@@ -86,7 +86,7 @@ class LoginController extends GetxController {
 
       errorString.value = "";
 
-      Get.offAllNamed(AppRoutes.home);
+      Get.toNamed(AppRoutes.sidebarnar);
     } else {
       // Cập nhật errorString khi bắt được lỗi
       errorString.value = 'Your email or password is incorrect!!';
