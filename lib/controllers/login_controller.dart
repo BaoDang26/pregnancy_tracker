@@ -80,8 +80,14 @@ class LoginController extends GetxController {
       //   isDismissible: true,
       // );
     } else if (response.statusCode == 200) {
-      // String jsonResult = utf8.decode(response.bodyBytes);
-      // var data = json.decode(jsonResult);
+      String jsonResult = utf8.decode(response.bodyBytes);
+      var data = json.decode(jsonResult);
+      // lưu accessToken và refresh token vào SharedPreferences
+
+      PrefUtils.setAccessToken(data["accessToken"]);
+      // log('a:${data["accessToken"]}');
+      PrefUtils.setRefreshToken(data["refreshToken"]);
+
       // print('data:$data');
 
       errorString.value = "";

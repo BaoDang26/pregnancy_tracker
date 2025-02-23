@@ -15,6 +15,7 @@ import '../SideBarNav/subscription_plan/subscription_plan.dart';
 import '../SideBarNav/subscription_plan/subscription_plan_detail.dart';
 import '../account_profile/account_profile_screen.dart';
 import '../bindings/login_binding.dart';
+import '../bindings/register_binding.dart';
 import '../create_pregnancy_profile/create_pregnancy_profile_screen.dart';
 import '../fetal_growth_statistics/fetal_growth_statistics.dart';
 import '../login/login_screen.dart';
@@ -72,7 +73,10 @@ class AppRoutes {
         transition: Transition.noTransition),
     // GetPage(name: pregnancyprofileedit, page: () => PregnancyProfileEditScreen()),
     GetPage(name: login, page: () => LoginScreen(), binding: LoginBinding()),
-    GetPage(name: register, page: () => RegisterScreen()),
+    GetPage(
+        name: register,
+        page: () => RegisterScreen(),
+        binding: RegisterBinding()),
     GetPage(name: accountprofile, page: () => AccountProfileScreen()),
     GetPage(name: fetalgrowthstatistics, page: () => FetalGrowthStatistics()),
     GetPage(name: subscriptionplan, page: () => SubscriptionPlan()),

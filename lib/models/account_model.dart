@@ -17,6 +17,7 @@ class AccountModel {
   String? password;
   String? accountPhoto;
   String? fullName;
+  String? address;
   DateTime? dateOfBirth;
 
   AccountModel({
@@ -26,6 +27,7 @@ class AccountModel {
     this.accountPhoto,
     this.fullName,
     this.dateOfBirth,
+    this.address,
   });
 
   factory AccountModel.fromJson(Map<String, dynamic> json) => AccountModel(
@@ -37,6 +39,7 @@ class AccountModel {
         fullName: json["fullName"],
         dateOfBirth: DateTimeExtension.parseWithFormat(json["dateOfBirth"],
             format: "yyyy-MM-dd"),
+        address: json["address"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -45,6 +48,7 @@ class AccountModel {
         "password": password,
         "accountPhoto": accountPhoto,
         "fullName": fullName,
+        "address": address,
         "dateOfBirth":
             "${dateOfBirth?.year.toString().padLeft(4, '0')}-${dateOfBirth?.month.toString().padLeft(2, '0')}-${dateOfBirth?.day.toString().padLeft(2, '0')}",
       };
