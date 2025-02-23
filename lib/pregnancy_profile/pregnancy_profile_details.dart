@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../controllers/pregnancy_profile_details_controller.dart';
 import '../routes/app_routes.dart';
 import '../util/app_export.dart';
 import '../widgets/custom_elevated_button.dart';
 
-class PregnancyProfileDetailsScreen extends StatelessWidget {
-  // const PregnancyProfileScreen({super.key});
-  final String nickname = 'Your Nickname';
-  final DateTime dueDate = DateTime(2023, 12, 25);
-  final DateTime conceptionDate = DateTime(2023, 3, 20);
-  final int pregnancyWeek = 30;
-  final String notes = 'These are some additional notes about the pregnancy.';
+class PregnancyProfileDetailsScreen
+    extends GetView<PregnancyProfileDetailsController> {
+  const PregnancyProfileDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -73,37 +70,45 @@ class PregnancyProfileDetailsScreen extends StatelessWidget {
                     child: ListTile(
                       leading: Icon(Icons.person),
                       title: Text('Nickname'),
-                      subtitle: Text(nickname),
+                      subtitle: Text(
+                          controller.pregnancyProfileModel.value.nickName ??
+                              ''),
                     ),
                   ),
                   Card(
                     child: ListTile(
                       leading: Icon(Icons.calendar_today),
                       title: SelectableText('Due Date'),
-                      subtitle:
-                          Text(dueDate.toLocal().toString().split(' ')[0]),
+                      subtitle: Text(controller
+                              .pregnancyProfileModel.value.dueDate
+                              ?.format() ??
+                          ''),
                     ),
                   ),
                   Card(
                     child: ListTile(
                       leading: Icon(Icons.calendar_today),
                       title: Text('Conception Date'),
-                      subtitle: Text(
-                          conceptionDate.toLocal().toString().split(' ')[0]),
+                      subtitle: Text(controller
+                              .pregnancyProfileModel.value.conceptionDate
+                              ?.format() ??
+                          ''),
                     ),
                   ),
                   Card(
                     child: ListTile(
                       leading: Icon(Icons.pregnant_woman),
                       title: Text('Pregnancy Week'),
-                      subtitle: Text('$pregnancyWeek weeks'),
+                      subtitle: Text(
+                          '${controller.pregnancyProfileModel.value.pregnancyWeek} weeks'),
                     ),
                   ),
                   Card(
                     child: ListTile(
                       leading: Icon(Icons.note),
                       title: Text('Notes'),
-                      subtitle: Text(notes),
+                      subtitle: Text(
+                          controller.pregnancyProfileModel.value.notes ?? ''),
                     ),
                   ),
                   SizedBox(height: 20), // Space before the button

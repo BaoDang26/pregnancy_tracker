@@ -5,51 +5,88 @@ import '../controllers/pregnancy_profile_controller.dart';
 import '../util/app_export.dart';
 import '../widgets/pregnancy_profile_card.dart';
 
-class PregnancyProfileScreen extends StatelessWidget {
+class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
+  const PregnancyProfileScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    final pregnancyProfileController = Get.put(PregnancyProfileController());
-
     return Scaffold(
+      backgroundColor: Color(0xFFE0F2E9), // Màu xanh lá pastel
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Who's using Chrome?",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              "Do you have a Pregnancy Profile yet?",
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 20), // Khoảng cách giữa tiêu đề và nội dung
             Text(
-              'With Chrome profiles you can separate all your Chrome stuff. Create profiles for friends and family, or split between work and fun.',
+              'You can manage multiple Pregnancy Profiles in case of multiple pregnancies. If you don\'t have a Pregnancy Profile yet, create one for yourself and start tracking your pregnancy journey!',
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 20),
             ),
             SizedBox(height: 20), // Khoảng cách giữa nội dung và lưới
             Obx(() {
-              if (pregnancyProfileController.isLoading.value) {
+              if (controller.isLoading.value) {
                 return const CircularProgressIndicator();
-              } else {
+              }
+              // else if (controller.pregnancyProfileList.isEmpty ||
+              //     controller.pregnancyProfileList.any((profile) =>
+              //         profile.dueDate != null &&
+              //         profile.dueDate!.isBefore(DateTime.now()))) {
+              //   return _buildAddProfileCard(); // Hiển thị thẻ thêm nếu điều kiện thỏa mãn
+              // }
+              else {
                 return Expanded(
                   child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, // Set the number of columns as needed
-                      childAspectRatio: 1,
+                    padding: const EdgeInsets.all(10.0),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 5, // Number of columns
+                      crossAxisSpacing: 1.0,
+                      mainAxisSpacing: 5.0,
+                      childAspectRatio:
+                          1.2, // Adjust the aspect ratio as needed
                     ),
-                    padding: EdgeInsets.all(50),
-                    itemCount:
-                        pregnancyProfileController.pregnancyProfileList.length,
+                    itemCount: controller.pregnancyProfileList.length,
                     itemBuilder: (context, index) {
-                      if (index <
-                          pregnancyProfileController
-                              .pregnancyProfileList.length) {
-                        return PregnancyProfileCard(
-                          pregnancyProfile: pregnancyProfileController
-                              .pregnancyProfileList[index],
-                        );
-                      } else {
-                        return _buildAddProfileCard(); // Add profile card
-                      }
+                      return GestureDetector(
+                        onTap: () {
+                          // controller.onSelectFood(index);
+                        },
+                        child: Stack(
+                          children: [
+                            PregnancyProfileCard(
+                              // photoUrl: controller
+                              //         .pregnancyProfileList[index].photoUrl ??
+                              //     "https://i.ytimg.com/vi/XowvxiGYsRI/maxresdefault.jpg",
+                              title:
+                                  "${controller.pregnancyProfileList[index].nickName}",
+                              content1:
+                                  "Pregnancy Week: ${controller.pregnancyProfileList[index].pregnancyWeek}",
+                              // content2:
+                              //     "${controller.foodModels[index].serving}",
+                              content3:
+                                  "Due Date: ${controller.pregnancyProfileList[index].dueDate?.format()}",
+                              onTitleTap: () {
+                                controller.goToPregnancyProfileDetail(index);
+                              },
+                            ),
+                            // Positioned(
+                            //   top: 10,
+                            //   right: 10,
+                            //   child: Obx(
+                            //     () => Checkbox(
+                            //       value: controller.foodSelected[index],
+                            //       onChanged: (bool? value) {
+                            //         controller.onSelectFood(index);
+                            //       },
+                            //     ),
+                            //   ),
+                            // ),
+                          ],
+                        ),
+                      );
                     },
                   ),
                 );
@@ -63,13 +100,18 @@ class PregnancyProfileScreen extends StatelessWidget {
 
   Widget _buildAddProfileCard() {
     return Card(
+      color: Color.fromARGB(255, 48, 168, 78),
       elevation: 4,
       child: InkWell(
         onTap: () {
           Get.toNamed(AppRoutes.createpregnancyprofile);
         },
-        child: Center(
-          child: Icon(Icons.add, size: 30),
+        child: Container(
+          width: 300, // Chiều rộng của ô vuông
+          height: 300, // Chiều cao của ô vuông
+          child: Center(
+            child: Icon(Icons.add, size: 60),
+          ),
         ),
       ),
     );

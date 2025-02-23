@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:http/http.dart' as http;
 
 import '../config/build_server.dart';
+import '../config/jwt_interceptor.dart';
 
 class AuthenticationRepository {
   static final client = http.Client();
@@ -13,7 +14,7 @@ class AuthenticationRepository {
     Map<String, String> header = {
       "Content-type": "application/json",
     };
-    response = await client.post(
+    response = await interceptedClient.post(
       BuildServer.buildUrl("auth/login"),
       body: body,
       headers: header,
@@ -27,7 +28,7 @@ class AuthenticationRepository {
     Map<String, String> header = {
       "Content-type": "application/json",
     };
-    response = await client.post(
+    response = await interceptedClient.post(
       BuildServer.buildUrl("auth/register"),
       body: body,
       headers: header,
@@ -40,7 +41,7 @@ class AuthenticationRepository {
       Map<String, String> header = {
         "Content-type": "application/json",
       };
-      var response = await client
+      var response = await interceptedClient
           .post(
             BuildServer.buildUrl("auth/logout"),
             headers: header,
