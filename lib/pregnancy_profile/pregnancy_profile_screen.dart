@@ -57,9 +57,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                         child: Stack(
                           children: [
                             PregnancyProfileCard(
-                              // photoUrl: controller
-                              //         .pregnancyProfileList[index].photoUrl ??
-                              //     "https://i.ytimg.com/vi/XowvxiGYsRI/maxresdefault.jpg",
+                              photoUrl: "assets/images/pregnancy-profile.png",
                               title:
                                   "${controller.pregnancyProfileList[index].nickName}",
                               content1:

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../util/app_export.dart';
 
 class PregnancyProfileCard extends StatelessWidget {
+  final String photoUrl;
   final String title;
   final String? content1;
   final String? content2;
@@ -10,6 +11,7 @@ class PregnancyProfileCard extends StatelessWidget {
   final VoidCallback onTitleTap;
 
   PregnancyProfileCard({
+    required this.photoUrl,
     required this.title,
     this.content1,
     this.content2,
@@ -32,16 +34,15 @@ class PregnancyProfileCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            // ClipRRect(
-            //   borderRadius: BorderRadius.circular(10.0),
-            //   child: Image.network(
-            //     photoUrl,
-            //     height: 80.v,
-            //     width: double.infinity,
-            //     fit: BoxFit.cover,
-            //   ),
-            // ),
-            // SizedBox(height: 5.v),
+            ClipOval(
+              child: Image.asset(
+                photoUrl,
+                height: 80.v,
+                width: 80.v,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(height: 5.v),
             Padding(
               padding: EdgeInsets.only(bottom: 5.v),
               child: GestureDetector(

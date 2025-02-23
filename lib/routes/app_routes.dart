@@ -14,11 +14,12 @@ import '../SideBarNav/blog_post/blog_post_detail.dart';
 import '../SideBarNav/subscription_plan/subscription_plan.dart';
 import '../SideBarNav/subscription_plan/subscription_plan_detail.dart';
 import '../account_profile/account_profile_screen.dart';
+import '../bindings/fetal_growth_measurement_binding.dart';
 import '../bindings/login_binding.dart';
 import '../bindings/pregnancy_profile_details_binding.dart';
 import '../bindings/register_binding.dart';
 import '../create_pregnancy_profile/create_pregnancy_profile_screen.dart';
-import '../fetal_growth_statistics/fetal_growth_statistics.dart';
+import '../fetal_growth_measurement/fetal_growth_measurement_screen.dart';
 import '../login/login_screen.dart';
 // import '../pregnancy_profile_details/pregnancy_profile_details.dart';
 import '../pregnancy_profile/pregnancy_profile_details.dart';
@@ -46,6 +47,7 @@ class AppRoutes {
   static const String homeguest = '/home-guest';
   static const String sidebarnarguest = '/sidebarnar-guest';
   static const String createpregnancyprofile = '/create-pregnancy-profile';
+  static const String fetalgrowthmeasurement = '/fetal-growth-measurement';
 
   // static const String pregnancyprofileedit = '/pregnancy-profile-edit';
   // static const String signup = '/signup';
@@ -80,7 +82,10 @@ class AppRoutes {
         page: () => RegisterScreen(),
         binding: RegisterBinding()),
     GetPage(name: accountprofile, page: () => AccountProfileScreen()),
-    GetPage(name: fetalgrowthstatistics, page: () => FetalGrowthStatistics()),
+    GetPage(
+        name: fetalgrowthmeasurement,
+        page: () => FetalGrowthMeasurementScreen(),
+        binding: FetalGrowthMeasurementBinding()),
     GetPage(name: subscriptionplan, page: () => SubscriptionPlan()),
     GetPage(
         name: subscriptionplandetail,

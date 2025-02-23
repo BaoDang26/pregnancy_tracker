@@ -117,7 +117,7 @@ class PregnancyProfileDetailsScreen
                     height: 60, // Adjust height as needed
                     child: CustomElevatedButton(
                       onPressed: () {
-                        Get.toNamed(AppRoutes.fetalgrowthstatistics);
+                        controller.goToFetalGrowthMeasurement();
                       },
                       text: 'Statistics',
                     ),
