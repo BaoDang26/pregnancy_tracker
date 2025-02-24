@@ -53,4 +53,18 @@ class FetalGrowthMeasurementRepository {
         .timeout(const Duration(seconds: 30));
     return response;
   }
+
+  static Future<http.Response> postFetalGrowthMeasurement(var body) async {
+    http.Response response;
+
+    Map<String, String> header = {
+      "Content-type": "application/json",
+    };
+    response = await interceptedClient.post(
+      BuildServer.buildUrl("fetal-growth/create"),
+      body: body,
+      headers: header,
+    );
+    return response;
+  }
 }

@@ -143,9 +143,9 @@ class FetalGrowthMeasurementScreen
                                           .firstWhere(
                                             (element) =>
                                                 element.week ==
-                                                'Week ${data.weekNumber}',
-                                            orElse: () => HeightData(
-                                                'Week ${data.weekNumber}', 0),
+                                                data.weekNumber!,
+                                            orElse: () =>
+                                                HeightData(data.weekNumber!, 0),
                                           )
                                           .height;
 
@@ -183,12 +183,13 @@ class FetalGrowthMeasurementScreen
                             ),
                             LineSeries<HeightData, String>(
                               dataSource: getReferenceHeightData(),
-                              xValueMapper: (HeightData data, _) => data.week,
+                              xValueMapper: (HeightData data, _) =>
+                                  data.week.toString(),
                               yValueMapper: (HeightData data, _) => data.height,
                               name: 'Height (Reference Data)',
                               dataLabelSettings:
                                   DataLabelSettings(isVisible: true),
-                              color: Colors.blue,
+                              color: Colors.purple,
                               dashArray: <double>[5, 5],
                             ),
                           ],
@@ -218,7 +219,7 @@ class FetalGrowthMeasurementScreen
                                 }
                                 if (controller
                                     .fetalGrowthMeasurementModel.isEmpty) {
-                                  return Text('No measurement data available');
+                                  return Text('No data available');
                                 }
                                 return Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -286,276 +287,436 @@ class FetalGrowthMeasurementScreen
                                       ),
                                     ],
                                   ),
-                                  child: SingleChildScrollView(
-                                    child: ListBody(
-                                      children: <Widget>[
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                Colors.lightGreen[100]!,
-                                                Colors.lightGreen[200]!,
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
+                                  child: Form(
+                                    key: controller
+                                        .fetalGrowthMeasurementFormKey,
+                                    child: SingleChildScrollView(
+                                      child: ListBody(
+                                        children: <Widget>[
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Colors.lightGreen[100]!,
+                                                  Colors.lightGreen[200]!,
+                                                ],
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          child: TextField(
-                                            decoration: InputDecoration(
-                                              labelText: 'Weight (g)',
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                borderSide: BorderSide(
-                                                    color: Colors.green[300]!),
+                                            child: TextFormField(
+                                              controller: controller
+                                                  .weekNumberController,
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return 'Please enter week number';
+                                                }
+                                                if (int.tryParse(value) ==
+                                                    null) {
+                                                  return 'Please enter a valid number';
+                                                }
+                                                final week = int.parse(value);
+                                                if (week < 1 || week > 42) {
+                                                  return 'Week must be between 1 and 42';
+                                                }
+                                                return null;
+                                              },
+                                              decoration: InputDecoration(
+                                                labelText: 'Week Number',
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[300]!),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[300]!),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[500]!),
+                                                ),
+                                                filled: true,
+                                                fillColor: Colors.transparent,
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 5),
                                               ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                borderSide: BorderSide(
-                                                    color: Colors.green[300]!),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                borderSide: BorderSide(
-                                                    color: Colors.green[500]!),
-                                              ),
-                                              filled: true,
-                                              fillColor: Colors.transparent,
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 5),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 12),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                Colors.lightGreen[100]!,
-                                                Colors.lightGreen[200]!,
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          child: TextField(
-                                            decoration: InputDecoration(
-                                              labelText: 'Height (cm)',
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                borderSide: BorderSide(
-                                                    color: Colors.green[300]!),
-                                              ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                borderSide: BorderSide(
-                                                    color: Colors.green[300]!),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                borderSide: BorderSide(
-                                                    color: Colors.green[500]!),
-                                              ),
-                                              filled: true,
-                                              fillColor: Colors.transparent,
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 5),
+                                              keyboardType:
+                                                  TextInputType.number,
                                             ),
                                           ),
-                                        ),
-                                        SizedBox(height: 12),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                Colors.lightGreen[100]!,
-                                                Colors.lightGreen[200]!,
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
+                                          SizedBox(height: 12),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Colors.lightGreen[100]!,
+                                                  Colors.lightGreen[200]!,
+                                                ],
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          child: TextField(
-                                            decoration: InputDecoration(
-                                              labelText:
-                                                  'Head Circumference (cm)',
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                borderSide: BorderSide(
-                                                    color: Colors.green[300]!),
+                                            child: TextFormField(
+                                              controller:
+                                                  controller.weightController,
+                                              validator: (value) {
+                                                return controller
+                                                    .validateWeight(value!);
+                                              },
+                                              onSaved: (value) {
+                                                controller.weight = value!;
+                                              },
+                                              decoration: InputDecoration(
+                                                labelText: 'Weight (g)',
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[300]!),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[300]!),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[500]!),
+                                                ),
+                                                filled: true,
+                                                fillColor: Colors.transparent,
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 5),
                                               ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                borderSide: BorderSide(
-                                                    color: Colors.green[300]!),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                borderSide: BorderSide(
-                                                    color: Colors.green[500]!),
-                                              ),
-                                              filled: true,
-                                              fillColor: Colors.transparent,
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 5),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 12),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                Colors.lightGreen[100]!,
-                                                Colors.lightGreen[200]!,
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          child: TextField(
-                                            decoration: InputDecoration(
-                                              labelText:
-                                                  'Belly Circumference (cm)',
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                borderSide: BorderSide(
-                                                    color: Colors.green[300]!),
-                                              ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                borderSide: BorderSide(
-                                                    color: Colors.green[300]!),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                borderSide: BorderSide(
-                                                    color: Colors.green[500]!),
-                                              ),
-                                              filled: true,
-                                              fillColor: Colors.transparent,
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 5),
                                             ),
                                           ),
-                                        ),
-                                        SizedBox(height: 12),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                Colors.lightGreen[100]!,
-                                                Colors.lightGreen[200]!,
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
+                                          SizedBox(height: 12),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Colors.lightGreen[100]!,
+                                                  Colors.lightGreen[200]!,
+                                                ],
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          child: TextField(
-                                            decoration: InputDecoration(
-                                              labelText: 'Heart Rate (bpm)',
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                borderSide: BorderSide(
-                                                    color: Colors.green[300]!),
+                                            child: TextFormField(
+                                              controller:
+                                                  controller.heightController,
+                                              validator: (value) {
+                                                return controller
+                                                    .validateHeight(value!);
+                                              },
+                                              onSaved: (value) {
+                                                controller.height = value!;
+                                              },
+                                              decoration: InputDecoration(
+                                                labelText: 'Height (cm)',
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[300]!),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[300]!),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[500]!),
+                                                ),
+                                                filled: true,
+                                                fillColor: Colors.transparent,
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 5),
                                               ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                borderSide: BorderSide(
-                                                    color: Colors.green[300]!),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                borderSide: BorderSide(
-                                                    color: Colors.green[500]!),
-                                              ),
-                                              filled: true,
-                                              fillColor: Colors.transparent,
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 5),
                                             ),
                                           ),
-                                        ),
-                                        SizedBox(height: 12),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                Colors.lightGreen[100]!,
-                                                Colors.lightGreen[200]!,
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
+                                          SizedBox(height: 12),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Colors.lightGreen[100]!,
+                                                  Colors.lightGreen[200]!,
+                                                ],
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          child: TextField(
-                                            decoration: InputDecoration(
-                                              labelText: 'Notes',
-                                              border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                borderSide: BorderSide(
-                                                    color: Colors.green[300]!),
+                                            child: TextFormField(
+                                              controller: controller
+                                                  .headCircumferenceController,
+                                              validator: (value) {
+                                                return controller
+                                                    .validateHeadCircumference(
+                                                        value!);
+                                              },
+                                              onSaved: (value) {
+                                                controller.headCircumference =
+                                                    value!;
+                                              },
+                                              decoration: InputDecoration(
+                                                labelText:
+                                                    'Head Circumference (cm)',
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[300]!),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[300]!),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[500]!),
+                                                ),
+                                                filled: true,
+                                                fillColor: Colors.transparent,
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 5),
                                               ),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                borderSide: BorderSide(
-                                                    color: Colors.green[300]!),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                borderSide: BorderSide(
-                                                    color: Colors.green[500]!),
-                                              ),
-                                              filled: true,
-                                              fillColor: Colors.transparent,
-                                              contentPadding:
-                                                  EdgeInsets.symmetric(
-                                                      horizontal: 10,
-                                                      vertical: 5),
                                             ),
-                                            maxLines: 5,
                                           ),
-                                        ),
-                                      ],
+                                          SizedBox(height: 12),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Colors.lightGreen[100]!,
+                                                  Colors.lightGreen[200]!,
+                                                ],
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                            child: TextFormField(
+                                              controller: controller
+                                                  .bellyCircumferenceController,
+                                              validator: (value) {
+                                                return controller
+                                                    .validateBellyCircumference(
+                                                        value!);
+                                              },
+                                              onSaved: (value) {
+                                                controller.bellyCircumference =
+                                                    value!;
+                                              },
+                                              decoration: InputDecoration(
+                                                labelText:
+                                                    'Belly Circumference (cm)',
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[300]!),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[300]!),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[500]!),
+                                                ),
+                                                filled: true,
+                                                fillColor: Colors.transparent,
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 5),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 12),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Colors.lightGreen[100]!,
+                                                  Colors.lightGreen[200]!,
+                                                ],
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                            child: TextFormField(
+                                              controller: controller
+                                                  .heartRateController,
+                                              validator: (value) {
+                                                return controller
+                                                    .validateHeartRate(value!);
+                                              },
+                                              onSaved: (value) {
+                                                controller.heartRate = value!;
+                                              },
+                                              decoration: InputDecoration(
+                                                labelText: 'Heart Rate (bpm)',
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[300]!),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[300]!),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[500]!),
+                                                ),
+                                                filled: true,
+                                                fillColor: Colors.transparent,
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 5),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 12),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Colors.lightGreen[100]!,
+                                                  Colors.lightGreen[200]!,
+                                                ],
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                            child: TextFormField(
+                                              controller:
+                                                  controller.notesController,
+                                              // validator: (value) {
+                                              //   return controller
+                                              //       .validateNotes(value!);
+                                              // },
+                                              onSaved: (value) {
+                                                controller.notes = value!;
+                                              },
+                                              decoration: InputDecoration(
+                                                labelText: 'Notes',
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[300]!),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[300]!),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[500]!),
+                                                ),
+                                                filled: true,
+                                                fillColor: Colors.transparent,
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 5),
+                                              ),
+                                              maxLines: 5,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -568,9 +729,14 @@ class FetalGrowthMeasurementScreen
                                   ),
                                   TextButton(
                                     child: Text('Update'),
-                                    onPressed: () {
-                                      // Thêm mã để xử lý cập nhật thông tin ở đây
-                                      Navigator.of(context).pop();
+                                    onPressed: () async {
+                                      await controller
+                                          .addFetalGrowthMeasurement();
+
+                                      // TODO: Update the data using your controller
+                                      // controller.updateMeasurements(...)
+
+                                      // Navigator.of(context).pop();
                                     },
                                   ),
                                 ],
@@ -603,22 +769,31 @@ class FetalGrowthMeasurementScreen
       WeightData('Week 8', 200),
       WeightData('Week 9', 300),
       WeightData('Week 10', 400),
+
       // Add more data as needed
     ];
   }
 
   List<HeightData> getHeightData() {
     return [
-      HeightData('Week 1', 5),
-      HeightData('Week 2', 6),
-      HeightData('Week 3', 8),
-      HeightData('Week 4', 10),
-      HeightData('Week 5', 12),
-      HeightData('Week 6', 15),
-      HeightData('Week 7', 18),
-      HeightData('Week 8', 20),
-      HeightData('Week 9', 25),
-      HeightData('Week 10', 30),
+      HeightData(1, 5),
+      HeightData(2, 6),
+      HeightData(3, 8),
+      HeightData(4, 10),
+      HeightData(5, 12),
+      HeightData(6, 15),
+      HeightData(7, 18),
+      HeightData(8, 20),
+      HeightData(9, 25),
+      HeightData(10, 30),
+      HeightData(11, 35),
+      HeightData(12, 40),
+      HeightData(13, 45),
+      HeightData(14, 50),
+      HeightData(15, 55),
+      HeightData(16, 60),
+      HeightData(40, 65),
+
       // Add more data as needed
     ];
   }
@@ -641,16 +816,23 @@ class FetalGrowthMeasurementScreen
 
   List<HeightData> getReferenceHeightData() {
     return [
-      HeightData('Week 1', 6),
-      HeightData('Week 2', 7),
-      HeightData('Week 3', 9),
-      HeightData('Week 4', 12),
-      HeightData('Week 5', 14),
-      HeightData('Week 6', 18),
-      HeightData('Week 7', 22),
-      HeightData('Week 8', 25),
-      HeightData('Week 9', 30),
-      HeightData('Week 10', 35),
+      HeightData(1, 6),
+      HeightData(2, 7),
+      HeightData(3, 9),
+      HeightData(4, 12),
+      HeightData(5, 14),
+      HeightData(6, 18),
+      HeightData(7, 22),
+      HeightData(8, 25),
+      HeightData(9, 30),
+      HeightData(10, 35),
+      HeightData(11, 35),
+      HeightData(12, 40),
+      HeightData(13, 45),
+      HeightData(14, 50),
+      HeightData(15, 55),
+      HeightData(16, 60),
+      HeightData(40, 65),
       // Thêm dữ liệu tham khảo khác nếu cần
     ];
   }
@@ -670,6 +852,6 @@ class WeightData {
 
 class HeightData {
   HeightData(this.week, this.height);
-  final String week;
+  final int week;
   final double height;
 }

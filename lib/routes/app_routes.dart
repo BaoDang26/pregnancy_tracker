@@ -13,11 +13,13 @@ import '../SideBarNav/blog_post/blog_post.dart';
 import '../SideBarNav/blog_post/blog_post_detail.dart';
 import '../SideBarNav/subscription_plan/subscription_plan.dart';
 import '../SideBarNav/subscription_plan/subscription_plan_detail.dart';
+import '../SideBarNavSub/user_subscription/user_subscription_screen.dart';
 import '../account_profile/account_profile_screen.dart';
 import '../bindings/fetal_growth_measurement_binding.dart';
 import '../bindings/login_binding.dart';
 import '../bindings/pregnancy_profile_details_binding.dart';
 import '../bindings/register_binding.dart';
+import '../bindings/user_subscription_binding.dart';
 import '../create_pregnancy_profile/create_pregnancy_profile_screen.dart';
 import '../fetal_growth_measurement/fetal_growth_measurement_screen.dart';
 import '../login/login_screen.dart';
@@ -48,11 +50,16 @@ class AppRoutes {
   static const String sidebarnarguest = '/sidebarnar-guest';
   static const String createpregnancyprofile = '/create-pregnancy-profile';
   static const String fetalgrowthmeasurement = '/fetal-growth-measurement';
+  static const String usersubscription = '/user-subscription';
 
   // static const String pregnancyprofileedit = '/pregnancy-profile-edit';
   // static const String signup = '/signup';
 
   static List<GetPage> pages = [
+    GetPage(
+        name: usersubscription,
+        page: () => UserSubscriptionScreen(),
+        binding: UserSubscriptionBinding()),
     GetPage(
         name: createpregnancyprofile,
         page: () => CreatePregnancyProfileScreen()),
