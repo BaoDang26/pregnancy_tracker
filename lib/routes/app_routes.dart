@@ -15,6 +15,7 @@ import '../SideBarNav/subscription_plan/subscription_plan.dart';
 import '../SideBarNav/subscription_plan/subscription_plan_detail.dart';
 import '../SideBarNavSub/user_subscription/user_subscription_screen.dart';
 import '../account_profile/account_profile_screen.dart';
+import '../bindings/create_pregnancy_profile_binding.dart';
 import '../bindings/fetal_growth_measurement_binding.dart';
 import '../bindings/login_binding.dart';
 import '../bindings/pregnancy_profile_details_binding.dart';
@@ -62,7 +63,8 @@ class AppRoutes {
         binding: UserSubscriptionBinding()),
     GetPage(
         name: createpregnancyprofile,
-        page: () => CreatePregnancyProfileScreen()),
+        page: () => CreatePregnancyProfileScreen(),
+        binding: CreatePregnancyProfileBinding()),
     GetPage(name: pregnancyprofile, page: () => PregnancyProfileScreen()),
     GetPage(name: sidebarnarguest, page: () => SideBarNavGuestScreen()),
     GetPage(name: homeguest, page: () => HomeScreenGuest()),

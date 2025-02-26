@@ -88,9 +88,9 @@ class PregnancyProfileDetailsScreen
                   Card(
                     child: ListTile(
                       leading: Icon(Icons.calendar_today),
-                      title: Text('Conception Date'),
+                      title: Text('Last Period Date'),
                       subtitle: Text(controller
-                              .pregnancyProfileModel.value.conceptionDate
+                              .pregnancyProfileModel.value.lastPeriodDate
                               ?.format() ??
                           ''),
                     ),

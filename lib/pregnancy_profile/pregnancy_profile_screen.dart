@@ -29,14 +29,12 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
             Obx(() {
               if (controller.isLoading.value) {
                 return const CircularProgressIndicator();
-              }
-              // else if (controller.pregnancyProfileList.isEmpty ||
-              //     controller.pregnancyProfileList.any((profile) =>
-              //         profile.dueDate != null &&
-              //         profile.dueDate!.isBefore(DateTime.now()))) {
-              //   return _buildAddProfileCard(); // Hiển thị thẻ thêm nếu điều kiện thỏa mãn
-              // }
-              else {
+              } else if (controller.pregnancyProfileList.isEmpty ||
+                  controller.pregnancyProfileList.last.dueDate != null &&
+                      controller.pregnancyProfileList.last.dueDate!
+                          .isBefore(DateTime.now())) {
+                return _buildAddProfileCard(); // Hiển thị thẻ thêm nếu điều kiện thỏa mãn
+              } else {
                 return Expanded(
                   child: GridView.builder(
                     padding: const EdgeInsets.all(10.0),
@@ -102,7 +100,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
       elevation: 4,
       child: InkWell(
         onTap: () {
-          Get.toNamed(AppRoutes.createpregnancyprofile);
+          controller.goToCreatePregnancyProfile();
         },
         child: Container(
           width: 300, // Chiều rộng của ô vuông

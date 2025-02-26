@@ -3,6 +3,7 @@ import 'dart:developer';
 // import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../fetal_growth_measurement/fetal_growth_measurement_screen.dart';
 import '../models/fetal_growth_measurement_model.dart';
@@ -28,6 +29,7 @@ class FetalGrowthMeasurementController extends GetxController {
   late TextEditingController headCircumferenceController;
   late TextEditingController movementCountController;
   late TextEditingController notesController;
+  late TextEditingController measurementDateController;
 
   late int pregnancyId;
 
@@ -54,6 +56,7 @@ class FetalGrowthMeasurementController extends GetxController {
     headCircumferenceController = TextEditingController();
     movementCountController = TextEditingController();
     notesController = TextEditingController();
+    measurementDateController = TextEditingController();
     isLoading.value = false;
   }
 
@@ -67,6 +70,7 @@ class FetalGrowthMeasurementController extends GetxController {
     headCircumferenceController.dispose();
     movementCountController.dispose();
     notesController.dispose();
+    measurementDateController.dispose();
     super.onClose();
   }
 
@@ -274,9 +278,13 @@ class FetalGrowthMeasurementController extends GetxController {
     }
     fetalGrowthMeasurementFormKey.currentState!.save();
 
+    DateTime measurementDate =
+        DateFormat('yyyy-MM-dd').parse(measurementDateController.text);
+
     FetalGrowthMeasurementModel fetalGrowthMeasurement =
         FetalGrowthMeasurementModel(
       pregnancyProfileId: pregnancyId,
+      measurementDate: measurementDate,
       weekNumber: int.parse(weekNumberController.text),
       height: double.parse(heightController.text),
       weight: double.parse(weightController.text),
@@ -288,13 +296,15 @@ class FetalGrowthMeasurementController extends GetxController {
     );
 
     var response =
-        await FetalGrowthMeasurementRepository.postFetalGrowthMeasurement(
-            fetalGrowthMeasurementModelToJson([fetalGrowthMeasurement]));
+        await FetalGrowthMeasurementRepository.createFetalGrowthMeasurement(
+            fetalGrowthMeasurement);
 
     if (response.statusCode == 200) {
-      List<FetalGrowthMeasurementModel> fetalGrowthMeasurement =
-          fetalGrowthMeasurementModelFromJson(response.body);
-      Get.back();
+      // List<FetalGrowthMeasurementModel> fetalGrowthMeasurement =
+      //     fetalGrowthMeasurementModelFromJson(response.body);
+
+      await fetchFetalGrowthMeasurementData();
+      Get.back(result: true);
       Get.snackbar('Success', 'Fetal growth measurement added successfully');
     } else if (response.statusCode == 401) {
       String message = jsonDecode(response.body)['message'];

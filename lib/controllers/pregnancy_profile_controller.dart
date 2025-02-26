@@ -48,6 +48,12 @@ class PregnancyProfileController extends GetxController {
         arguments: pregnancyProfileList[index]);
   }
 
+  void goToCreatePregnancyProfile() {
+    Get.toNamed(AppRoutes.createpregnancyprofile)?.then((value) => {
+          if (value != null && value) {getPregnancyProfileList()}
+        });
+  }
+
   void getBack() {
     Get.back();
   }

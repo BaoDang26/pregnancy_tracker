@@ -15,7 +15,7 @@ class PregnancyProfileModel {
   int? id;
   String? nickName;
   DateTime? dueDate;
-  DateTime? conceptionDate;
+  // DateTime? conceptionDate;
   DateTime? lastPeriodDate;
   int? pregnancyWeek;
   String? notes;
@@ -25,7 +25,7 @@ class PregnancyProfileModel {
     this.id,
     this.nickName,
     this.dueDate,
-    this.conceptionDate,
+    // this.conceptionDate,
     this.lastPeriodDate,
     this.pregnancyWeek,
     this.notes,
@@ -38,9 +38,9 @@ class PregnancyProfileModel {
         nickName: json["nickName"] ?? '',
         dueDate:
             json["dueDate"] != null ? DateTime.parse(json["dueDate"]) : null,
-        conceptionDate: json["conceptionDate"] != null
-            ? DateTime.parse(json["conceptionDate"])
-            : null,
+        // conceptionDate: json["conceptionDate"] != null
+        //     ? DateTime.parse(json["conceptionDate"])
+        //     : null,
         lastPeriodDate: json["lastPeriodDate"] != null
             ? DateTime.parse(json["lastPeriodDate"])
             : null,
@@ -56,12 +56,33 @@ class PregnancyProfileModel {
         "nickName": nickName,
         "dueDate":
             "${dueDate?.year.toString().padLeft(4, '0')}-${dueDate?.month.toString().padLeft(2, '0')}-${dueDate?.day.toString().padLeft(2, '0')}",
-        "conceptionDate":
-            "${conceptionDate?.year.toString().padLeft(4, '0')}-${conceptionDate?.month.toString().padLeft(2, '0')}-${conceptionDate?.day.toString().padLeft(2, '0')}",
+        // "conceptionDate":
+        //     "${conceptionDate?.year.toString().padLeft(4, '0')}-${conceptionDate?.month.toString().padLeft(2, '0')}-${conceptionDate?.day.toString().padLeft(2, '0')}",
         "lastPeriodDate":
             "${lastPeriodDate?.year.toString().padLeft(4, '0')}-${lastPeriodDate?.month.toString().padLeft(2, '0')}-${lastPeriodDate?.day.toString().padLeft(2, '0')}",
         "pregnancyWeek": pregnancyWeek,
         "notes": notes,
         "createdDate": createdDate?.toIso8601String(),
+      };
+
+  Map<String, dynamic> toCreateJson() => {
+        "nickName": nickName,
+        "dueDate":
+            "${dueDate?.year.toString().padLeft(4, '0')}-${dueDate?.month.toString().padLeft(2, '0')}-${dueDate?.day.toString().padLeft(2, '0')}",
+        "lastPeriodDate":
+            "${lastPeriodDate?.year.toString().padLeft(4, '0')}-${lastPeriodDate?.month.toString().padLeft(2, '0')}-${lastPeriodDate?.day.toString().padLeft(2, '0')}",
+        "notes": notes,
+      };
+
+  Map<String, dynamic> toUpdateJson() => {
+        "id": id,
+        "nickName": nickName,
+        "dueDate":
+            "${dueDate?.year.toString().padLeft(4, '0')}-${dueDate?.month.toString().padLeft(2, '0')}-${dueDate?.day.toString().padLeft(2, '0')}",
+        "lastPeriodDate":
+            "${lastPeriodDate?.year.toString().padLeft(4, '0')}-${lastPeriodDate?.month.toString().padLeft(2, '0')}-${lastPeriodDate?.day.toString().padLeft(2, '0')}",
+        "pregnancyWeek": pregnancyWeek,
+        "notes": notes,
+        "createdDate": createdDate,
       };
 }

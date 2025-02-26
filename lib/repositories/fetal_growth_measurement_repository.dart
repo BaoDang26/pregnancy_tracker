@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:pregnancy_tracker/models/fetal_growth_measurement_model.dart';
 
 import '../config/build_server.dart';
 import '../util/app_export.dart';
@@ -54,7 +56,7 @@ class FetalGrowthMeasurementRepository {
     return response;
   }
 
-  static Future<http.Response> postFetalGrowthMeasurement(var body) async {
+  static Future<http.Response> createFetalGrowthMeasurement(FetalGrowthMeasurementModel fetalGrowthMeasurementModel) async {
     http.Response response;
 
     Map<String, String> header = {
@@ -62,9 +64,25 @@ class FetalGrowthMeasurementRepository {
     };
     response = await interceptedClient.post(
       BuildServer.buildUrl("fetal-growth/create"),
-      body: body,
       headers: header,
-    );
+      body: json.encode(fetalGrowthMeasurementModel.toCreateJson()));
+      
+    
+    return response;
+  }
+
+  static Future<http.Response> updateFetalGrowthMeasurement(FetalGrowthMeasurementModel fetalGrowthMeasurementModel) async {
+    http.Response response;
+
+    Map<String, String> header = {
+      "Content-type": "application/json",
+    };
+    response = await interceptedClient.post(
+      BuildServer.buildUrl("fetal-growth/update"),
+      headers: header,
+      body: json.encode(fetalGrowthMeasurementModel.toUpdateJson()));
+      
+    
     return response;
   }
 }

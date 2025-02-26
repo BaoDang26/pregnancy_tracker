@@ -326,6 +326,110 @@ class FetalGrowthMeasurementScreen
                                             ),
                                             child: TextFormField(
                                               controller: controller
+                                                  .measurementDateController,
+                                              readOnly: true,
+                                              onTap: () async {
+                                                DateTime? pickedDate =
+                                                    await showDatePicker(
+                                                  context: context,
+                                                  initialDate: DateTime.now(),
+                                                  firstDate: DateTime(2000),
+                                                  lastDate: DateTime.now(),
+                                                  builder: (context, child) {
+                                                    return Theme(
+                                                      data: Theme.of(context)
+                                                          .copyWith(
+                                                        colorScheme:
+                                                            ColorScheme.light(
+                                                          primary: Colors.green,
+                                                          onPrimary:
+                                                              Colors.white,
+                                                          onSurface:
+                                                              Colors.black,
+                                                        ),
+                                                        textButtonTheme:
+                                                            TextButtonThemeData(
+                                                          style: TextButton
+                                                              .styleFrom(
+                                                            foregroundColor:
+                                                                Colors.green,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      child: child!,
+                                                    );
+                                                  },
+                                                );
+
+                                                if (pickedDate != null) {
+                                                  String formattedDate =
+                                                      DateFormat('yyyy-MM-dd')
+                                                          .format(pickedDate);
+                                                  controller
+                                                      .measurementDateController
+                                                      .text = formattedDate;
+                                                }
+                                              },
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return 'Please select measurement date';
+                                                }
+                                                return null;
+                                              },
+                                              decoration: InputDecoration(
+                                                labelText: 'Measurement Date',
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[300]!),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[300]!),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  borderSide: BorderSide(
+                                                      color:
+                                                          Colors.green[500]!),
+                                                ),
+                                                filled: true,
+                                                fillColor: Colors.transparent,
+                                                contentPadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 10,
+                                                        vertical: 5),
+                                                suffixIcon: Icon(
+                                                    Icons.calendar_today,
+                                                    color: Colors.green),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(height: 12),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                colors: [
+                                                  Colors.lightGreen[100]!,
+                                                  Colors.lightGreen[200]!,
+                                                ],
+                                                begin: Alignment.topLeft,
+                                                end: Alignment.bottomRight,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                            child: TextFormField(
+                                              controller: controller
                                                   .weekNumberController,
                                               validator: (value) {
                                                 if (value == null ||
@@ -750,6 +854,9 @@ class FetalGrowthMeasurementScreen
                                     onPressed: () async {
                                       await controller
                                           .addFetalGrowthMeasurement();
+                                      Navigator.of(context).pop();
+                                      // await controller
+                                      //     .fetchFetalGrowthMeasurementData();
 
                                       // TODO: Update the data using your controller
                                       // controller.updateMeasurements(...)

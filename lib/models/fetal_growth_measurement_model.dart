@@ -73,4 +73,31 @@ class FetalGrowthMeasurementModel {
         "createdDate": createdDate?.toIso8601String(),
         "pregnancyProfileId": pregnancyProfileId,
       };
+
+  Map<String, dynamic> toCreateJson() => {
+        "weekNumber": weekNumber,
+        "measurementDate":
+            "${measurementDate?.year.toString().padLeft(4, '0')}-${measurementDate?.month.toString().padLeft(2, '0')}-${measurementDate?.day.toString().padLeft(2, '0')}",
+        "weight": weight,
+        "pregnancyProfileId": pregnancyProfileId,
+        "height": height,
+        "headCircumference": headCircumference,
+        "bellyCircumference": bellyCircumference,
+        "heartRate": heartRate,
+        "movementCount": movementCount,
+        "notes": notes
+      };
+  Map<String, dynamic> toUpdateJson() => {
+        "id": id,
+        "weekNumber": weekNumber,
+        "measurementDate": measurementDate,
+        "weight": weight,
+        "pregnancyProfileId": pregnancyProfileId,
+        "height": height,
+        "headCircumference": headCircumference,
+        "bellyCircumference": bellyCircumference,
+        "heartRate": heartRate,
+        "movementCount": movementCount,
+        "notes": notes
+      };
 }
