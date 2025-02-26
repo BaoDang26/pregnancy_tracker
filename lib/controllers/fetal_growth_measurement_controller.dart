@@ -1,16 +1,22 @@
 import 'dart:convert';
 import 'dart:developer';
+// import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 
+import '../fetal_growth_measurement/fetal_growth_measurement_screen.dart';
 import '../models/fetal_growth_measurement_model.dart';
+import '../models/height_summary_model.dart';
 import '../models/pregnancy_profile_model.dart';
+import '../models/weight_summary_model.dart';
 import '../repositories/fetal_growth_measurement_repository.dart';
 import '../util/app_export.dart';
 
 class FetalGrowthMeasurementController extends GetxController {
   RxList<FetalGrowthMeasurementModel> fetalGrowthMeasurementModel =
       RxList.empty();
+  RxList<HeightData> heightData = RxList.empty();
+  RxList<WeightData> weightData = RxList.empty();
   Rx<PregnancyProfileModel> pregnancyProfileModel = PregnancyProfileModel().obs;
   final GlobalKey<FormState> fetalGrowthMeasurementFormKey =
       GlobalKey<FormState>();
@@ -140,8 +146,9 @@ class FetalGrowthMeasurementController extends GetxController {
       pregnancyId = Get.arguments;
       // Get both height and general measurements
       await Future.wait([
-        getFetalGrowthMeasurement(pregnancyId),
+        // getFetalGrowthMeasurement(pregnancyId),
         getHeightMeasurements(pregnancyId),
+        getWeightMeasurements(pregnancyId),
       ]);
 
       // Sort measurements by date if needed
@@ -160,29 +167,29 @@ class FetalGrowthMeasurementController extends GetxController {
     }
   }
 
-  Future<void> getFetalGrowthMeasurement(int pregnancyId) async {
-    var response =
-        await FetalGrowthMeasurementRepository.getFetalGrowthMeasurementList(
-            pregnancyId);
+  // Future<void> getFetalGrowthMeasurement(int pregnancyId) async {
+  //   var response =
+  //       await FetalGrowthMeasurementRepository.getFetalGrowthMeasurementList(
+  //           pregnancyId);
 
-    print('General measurements response: ${response.statusCode}');
-    print('Response body: ${response.body}');
+  //   print('General measurements response: ${response.statusCode}');
+  //   print('Response body: ${response.body}');
 
-    if (response.statusCode == 200) {
-      fetalGrowthMeasurementModel.value =
-          fetalGrowthMeasurementModelFromJson(response.body);
-    } else if (response.statusCode == 401) {
-      String message = jsonDecode(response.body)['message'];
-      if (message.contains("JWT token is expired")) {
-        Get.snackbar('Session Expired', 'Please login again');
-      }
-    } else {
-      Get.snackbar(
-        "Error ${response.statusCode}",
-        jsonDecode(response.body)['message'],
-      );
-    }
-  }
+  //   if (response.statusCode == 200) {
+  //     fetalGrowthMeasurementModel.value =
+  //         fetalGrowthMeasurementModelFromJson(response.body);
+  //   } else if (response.statusCode == 401) {
+  //     String message = jsonDecode(response.body)['message'];
+  //     if (message.contains("JWT token is expired")) {
+  //       Get.snackbar('Session Expired', 'Please login again');
+  //     }
+  //   } else {
+  //     Get.snackbar(
+  //       "Error ${response.statusCode}",
+  //       jsonDecode(response.body)['message'],
+  //     );
+  //   }
+  // }
 
   Future<void> getHeightMeasurements(int pregnancyId) async {
     var response = await FetalGrowthMeasurementRepository
@@ -192,25 +199,64 @@ class FetalGrowthMeasurementController extends GetxController {
     print('Height response body: ${response.body}');
 
     if (response.statusCode == 200) {
-      var heightData = fetalGrowthMeasurementModelFromJson(response.body);
+      var heightDataList = heightSummaryModelFromJson(response.body);
+      print('Height data list: $heightDataList');
 
       // Update existing measurements with height data
-      for (var heightMeasurement in heightData) {
-        var existingIndex = fetalGrowthMeasurementModel.indexWhere(
-            (element) => element.weekNumber == heightMeasurement.weekNumber);
-
-        if (existingIndex != -1) {
-          // Update existing measurement with height data
-          fetalGrowthMeasurementModel[existingIndex].height =
-              heightMeasurement.height;
-        } else {
-          // Add new measurement if none exists for this week
-          fetalGrowthMeasurementModel.add(heightMeasurement);
-        }
+      for (var heightMeasurement in heightDataList) {
+        heightData.add(HeightData(heightMeasurement.weekNumber!,
+            heightMeasurement.height!.toDouble()));
+        print('Height data: $heightData');
       }
+
+      print('Height data: $heightData');
+      heightData.refresh();
+
+      // for (var measurement in fetalGrowthMeasurementModel) {
+      //   if (measurement.weekNumber != null && measurement.height != null) {
+      //     heightData
+      //         .add(HeightData(measurement.weekNumber!, measurement.height!));
+      //   }
+      // }
 
       // Trigger UI update
       fetalGrowthMeasurementModel.refresh();
+    } else if (response.statusCode == 401) {
+      String message = jsonDecode(response.body)['message'];
+      if (message.contains("JWT token is expired")) {
+        Get.snackbar('Session Expired', 'Please login again');
+      }
+    }
+  }
+
+  Future<void> getWeightMeasurements(int pregnancyId) async {
+    var response = await FetalGrowthMeasurementRepository
+        .getWeightFetalGrowthMeasurementList(pregnancyId);
+
+    print('Weight measurements response: ${response.statusCode}');
+    print('Weight response body: ${response.body}');
+
+    if (response.statusCode == 200) {
+      var weightDataList = weightSummaryModelFromJson(response.body);
+      print('Weight data list: $weightDataList');
+
+      // Update existing measurements with weight data
+      for (var weightMeasurement in weightDataList) {
+        weightData.add(WeightData(weightMeasurement.weekNumber!,
+            weightMeasurement.weight!.toDouble()));
+        print('Weight data: $weightData');
+        weightData.refresh();
+
+        // for (var measurement in fetalGrowthMeasurementModel) {
+        //   if (measurement.weekNumber != null && measurement.height != null) {
+        //     heightData
+        //         .add(HeightData(measurement.weekNumber!, measurement.height!));
+        //   }
+        // }
+
+        // Trigger UI update
+        fetalGrowthMeasurementModel.refresh();
+      }
     } else if (response.statusCode == 401) {
       String message = jsonDecode(response.body)['message'];
       if (message.contains("JWT token is expired")) {
@@ -227,7 +273,7 @@ class FetalGrowthMeasurementController extends GetxController {
       return null;
     }
     fetalGrowthMeasurementFormKey.currentState!.save();
-    pregnancyId = Get.arguments;
+
     FetalGrowthMeasurementModel fetalGrowthMeasurement =
         FetalGrowthMeasurementModel(
       pregnancyProfileId: pregnancyId,
@@ -243,7 +289,7 @@ class FetalGrowthMeasurementController extends GetxController {
 
     var response =
         await FetalGrowthMeasurementRepository.postFetalGrowthMeasurement(
-            fetalGrowthMeasurement);
+            fetalGrowthMeasurementModelToJson([fetalGrowthMeasurement]));
 
     if (response.statusCode == 200) {
       List<FetalGrowthMeasurementModel> fetalGrowthMeasurement =

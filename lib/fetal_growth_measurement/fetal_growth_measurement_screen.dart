@@ -13,6 +13,9 @@ class FetalGrowthMeasurementScreen
 
   @override
   Widget build(BuildContext context) {
+    // Kiểm tra dữ liệu
+    print('Height Data: ${controller.heightData}');
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -58,38 +61,48 @@ class FetalGrowthMeasurementScreen
                             ),
                           ],
                         ),
-                        child: SfCartesianChart(
-                          title:
-                              ChartTitle(text: 'Weight Over Gestational Weeks'),
-                          legend: Legend(isVisible: true),
-                          tooltipBehavior: TooltipBehavior(enable: true),
-                          primaryXAxis: CategoryAxis(
-                            title: AxisTitle(text: 'Gestational Weeks'),
-                          ),
-                          primaryYAxis: NumericAxis(
-                            title: AxisTitle(text: 'Weight (grams)'),
-                          ),
-                          series: <CartesianSeries>[
-                            LineSeries<WeightData, String>(
-                              dataSource: getWeightData(),
-                              xValueMapper: (WeightData data, _) => data.week,
-                              yValueMapper: (WeightData data, _) => data.weight,
-                              name: 'Weight (User Data)',
-                              dataLabelSettings:
-                                  DataLabelSettings(isVisible: true),
+                        child: Obx(() {
+                          if (controller.weightData.isEmpty) {
+                            return Center(
+                                child: Text('No weight data available.'));
+                          }
+                          return SfCartesianChart(
+                            title: ChartTitle(
+                                text: 'Weight Over Gestational Weeks'),
+                            legend: Legend(isVisible: true),
+                            tooltipBehavior: TooltipBehavior(enable: true),
+                            primaryXAxis: CategoryAxis(
+                              title: AxisTitle(text: 'Gestational Weeks'),
                             ),
-                            LineSeries<WeightData, String>(
-                              dataSource: getReferenceWeightData(),
-                              xValueMapper: (WeightData data, _) => data.week,
-                              yValueMapper: (WeightData data, _) => data.weight,
-                              name: 'Weight (Reference Data)',
-                              dataLabelSettings:
-                                  DataLabelSettings(isVisible: true),
-                              color: Colors.red,
-                              dashArray: <double>[5, 5],
+                            primaryYAxis: NumericAxis(
+                              title: AxisTitle(text: 'Height (cm)'),
                             ),
-                          ],
-                        ),
+                            series: <CartesianSeries>[
+                              LineSeries<WeightData, String>(
+                                dataSource: controller.weightData,
+                                xValueMapper: (WeightData data, _) =>
+                                    data.week.toString(),
+                                yValueMapper: (WeightData data, _) =>
+                                    data.weight,
+                                name: 'Weight (User Data)',
+                                dataLabelSettings:
+                                    DataLabelSettings(isVisible: true),
+                              ),
+                              LineSeries<WeightData, String>(
+                                dataSource: getReferenceWeightData(),
+                                xValueMapper: (WeightData data, _) =>
+                                    data.week.toString(),
+                                yValueMapper: (WeightData data, _) =>
+                                    data.weight,
+                                name: 'Weight (Reference Data)',
+                                dataLabelSettings:
+                                    DataLabelSettings(isVisible: true),
+                                color: Colors.purple,
+                                dashArray: <double>[5, 5],
+                              ),
+                            ],
+                          );
+                        }),
                       ),
                     ),
                     SizedBox(width: 16),
@@ -108,92 +121,97 @@ class FetalGrowthMeasurementScreen
                             ),
                           ],
                         ),
-                        child: SfCartesianChart(
-                          title:
-                              ChartTitle(text: 'Height Over Gestational Weeks'),
-                          legend: Legend(isVisible: true),
-                          tooltipBehavior: TooltipBehavior(enable: true),
-                          primaryXAxis: CategoryAxis(
-                            title: AxisTitle(text: 'Gestational Weeks'),
-                          ),
-                          primaryYAxis: NumericAxis(
-                            title: AxisTitle(text: 'Height (cm)'),
-                          ),
-                          series: <CartesianSeries>[
-                            LineSeries<FetalGrowthMeasurementModel, String>(
-                              dataSource:
-                                  controller.fetalGrowthMeasurementModel,
-                              xValueMapper:
-                                  (FetalGrowthMeasurementModel data, _) =>
-                                      data.weekNumber!.toString(),
-                              yValueMapper:
-                                  (FetalGrowthMeasurementModel data, _) =>
-                                      data.height!,
-                              name: 'Height (User Data)',
-                              dataLabelSettings: DataLabelSettings(
-                                isVisible: true,
-                                builder: (dynamic data,
-                                    dynamic point,
-                                    dynamic series,
-                                    int pointIndex,
-                                    int seriesIndex) {
-                                  // Find reference height for this week
-                                  double referenceHeight =
-                                      getReferenceHeightData()
-                                          .firstWhere(
-                                            (element) =>
-                                                element.week ==
-                                                data.weekNumber!,
-                                            orElse: () =>
-                                                HeightData(data.weekNumber!, 0),
-                                          )
-                                          .height;
+                        child: Obx(() {
+                          if (controller.heightData.isEmpty) {
+                            return Center(
+                                child: Text('No height data available.'));
+                          }
+                          return SfCartesianChart(
+                            title: ChartTitle(
+                                text: 'Height Over Gestational Weeks'),
+                            legend: Legend(isVisible: true),
+                            tooltipBehavior: TooltipBehavior(enable: true),
+                            primaryXAxis: CategoryAxis(
+                              title: AxisTitle(text: 'Gestational Weeks'),
+                            ),
+                            primaryYAxis: NumericAxis(
+                              title: AxisTitle(text: 'Height (cm)'),
+                            ),
+                            series: <CartesianSeries>[
+                              LineSeries<HeightData, String>(
+                                dataSource: controller.heightData,
+                                xValueMapper: (HeightData data, _) =>
+                                    data.week.toString(),
+                                yValueMapper: (HeightData data, _) =>
+                                    data.height,
+                                name: 'Height (User Data)',
+                                dataLabelSettings: DataLabelSettings(
+                                  isVisible: true,
+                                  builder: (dynamic data,
+                                      dynamic point,
+                                      dynamic series,
+                                      int pointIndex,
+                                      int seriesIndex) {
+                                    // Find reference height for this week
+                                    double referenceHeight =
+                                        getReferenceHeightData()
+                                            .firstWhere(
+                                              (element) =>
+                                                  element.week == data.week!,
+                                              orElse: () =>
+                                                  HeightData(data.week!, 0),
+                                            )
+                                            .height;
 
-                                  // Check if height deviation is more than 3cm
-                                  double deviation =
-                                      (data.height! - referenceHeight).abs();
-                                  if (deviation > 3) {
-                                    return Container(
-                                      padding: EdgeInsets.all(4),
-                                      decoration: BoxDecoration(
-                                        color: Colors.red.withOpacity(0.8),
-                                        borderRadius: BorderRadius.circular(4),
-                                      ),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                            '${data.height!.toStringAsFixed(1)}',
-                                            style:
-                                                TextStyle(color: Colors.white),
-                                          ),
-                                          Text(
-                                            '⚠️ ${deviation.toStringAsFixed(1)}cm',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 10),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  }
-                                  return Text(data.height!.toStringAsFixed(1));
-                                },
+                                    // Check if height deviation is more than 3cm
+                                    double deviation =
+                                        (data.height! - referenceHeight).abs();
+                                    if (deviation > 3) {
+                                      return Container(
+                                        padding: EdgeInsets.all(4),
+                                        decoration: BoxDecoration(
+                                          color: Colors.red.withOpacity(0.8),
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                        ),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text(
+                                              '${data.height!.toStringAsFixed(1)}',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                            Text(
+                                              '⚠️ ${deviation.toStringAsFixed(1)}cm',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 10),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }
+                                    return Text(
+                                        data.height!.toStringAsFixed(1));
+                                  },
+                                ),
                               ),
-                            ),
-                            LineSeries<HeightData, String>(
-                              dataSource: getReferenceHeightData(),
-                              xValueMapper: (HeightData data, _) =>
-                                  data.week.toString(),
-                              yValueMapper: (HeightData data, _) => data.height,
-                              name: 'Height (Reference Data)',
-                              dataLabelSettings:
-                                  DataLabelSettings(isVisible: true),
-                              color: Colors.purple,
-                              dashArray: <double>[5, 5],
-                            ),
-                          ],
-                        ),
+                              LineSeries<HeightData, String>(
+                                dataSource: getReferenceHeightData(),
+                                xValueMapper: (HeightData data, _) =>
+                                    data.week.toString(),
+                                yValueMapper: (HeightData data, _) =>
+                                    data.height,
+                                name: 'Height (Reference Data)',
+                                dataLabelSettings:
+                                    DataLabelSettings(isVisible: true),
+                                color: Colors.purple,
+                                dashArray: <double>[5, 5],
+                              ),
+                            ],
+                          );
+                        }),
                       ),
                     ),
                   ],
@@ -757,28 +775,28 @@ class FetalGrowthMeasurementScreen
     );
   }
 
-  List<WeightData> getWeightData() {
-    return [
-      WeightData('Week 1', 14),
-      WeightData('Week 2', 20),
-      WeightData('Week 3', 30),
-      WeightData('Week 4', 50),
-      WeightData('Week 5', 70),
-      WeightData('Week 6', 100),
-      WeightData('Week 7', 150),
-      WeightData('Week 8', 200),
-      WeightData('Week 9', 300),
-      WeightData('Week 10', 400),
+  // List<WeightData> getWeightData() {
+  //   return [
+  //     WeightData('Week 1', 14),
+  //     WeightData('Week 2', 20),
+  //     WeightData('Week 3', 30),
+  //     WeightData('Week 4', 50),
+  //     WeightData('Week 5', 70),
+  //     WeightData('Week 6', 100),
+  //     WeightData('Week 7', 150),
+  //     WeightData('Week 8', 200),
+  //     WeightData('Week 9', 300),
+  //     WeightData('Week 10', 400),
 
-      // Add more data as needed
-    ];
-  }
+  //     // Add more data as needed
+  //   ];
+  // }
 
   List<HeightData> getHeightData() {
     return [
       HeightData(1, 5),
       HeightData(2, 6),
-      HeightData(3, 8),
+      // HeightData(3, 8),
       HeightData(4, 10),
       HeightData(5, 12),
       HeightData(6, 15),
@@ -800,16 +818,16 @@ class FetalGrowthMeasurementScreen
 
   List<WeightData> getReferenceWeightData() {
     return [
-      WeightData('Week 1', 20),
-      WeightData('Week 2', 30),
-      WeightData('Week 3', 40),
-      WeightData('Week 4', 60),
-      WeightData('Week 5', 80),
-      WeightData('Week 6', 130),
-      WeightData('Week 7', 180),
-      WeightData('Week 8', 240),
-      WeightData('Week 9', 350),
-      WeightData('Week 10', 490),
+      WeightData(1, 20),
+      WeightData(2, 30),
+      WeightData(3, 40),
+      WeightData(4, 60),
+      WeightData(5, 80),
+      WeightData(6, 130),
+      WeightData(7, 180),
+      WeightData(8, 240),
+      WeightData(9, 350),
+      WeightData(9, 490),
       // Thêm dữ liệu tham khảo khác nếu cần
     ];
   }
@@ -846,7 +864,7 @@ class FetalGrowthMeasurementScreen
 
 class WeightData {
   WeightData(this.week, this.weight);
-  final String week;
+  final int week;
   final double weight;
 }
 
@@ -854,4 +872,9 @@ class HeightData {
   HeightData(this.week, this.height);
   final int week;
   final double height;
+
+  @override
+  String toString() {
+    return 'HeightData(week: $week, height: $height)';
+  }
 }
