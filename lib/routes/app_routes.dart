@@ -25,6 +25,8 @@ import '../create_pregnancy_profile/create_pregnancy_profile_screen.dart';
 import '../fetal_growth_measurement/fetal_growth_measurement_screen.dart';
 import '../login/login_screen.dart';
 // import '../pregnancy_profile_details/pregnancy_profile_details.dart';
+import '../payment/payment_failed_screen.dart';
+import '../payment/payment_success_screen.dart';
 import '../pregnancy_profile/pregnancy_profile_details.dart';
 import '../register/register_screen.dart';
 import '../widgets/side_bar_nar_guest.dart';
@@ -52,6 +54,8 @@ class AppRoutes {
   static const String createpregnancyprofile = '/create-pregnancy-profile';
   static const String fetalgrowthmeasurement = '/fetal-growth-measurement';
   static const String usersubscription = '/user-subscription';
+  static const String paymentSuccess = '/payment-success';
+  static const String paymentFailed = '/payment-failed';
 
   // static const String pregnancyprofileedit = '/pregnancy-profile-edit';
   // static const String signup = '/signup';
@@ -137,5 +141,15 @@ class AppRoutes {
                 },
               ],
             )),
+    GetPage(
+      name: paymentSuccess,
+      page: () => PaymentSuccessScreen(),
+      // binding: PaymentSuccessBinding()),
+    ),
+    GetPage(
+      name: paymentFailed,
+      page: () => PaymentFailedScreen(),
+      // binding: PaymentFailedBinding()),
+    ),
   ];
 }

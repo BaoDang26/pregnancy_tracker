@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: theme(),
       // initialBinding: InitialBindings(),
-      initialRoute: AppRoutes.sidebarnarguest,
+      initialRoute: AppRoutes.paymentSuccess,
       getPages: AppRoutes.pages,
       // home: HomeScreen(),
     );
