@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:pregnancy_tracker/bindings/side_bar_nav_binding.dart';
 import 'package:pregnancy_tracker/pregnancy_profile/pregnancy_profile_screen.dart';
+
 // import 'package:pregnancy_tracker/pregnancy_profile/pregnancy_profile_edit_screen.dart';
 import 'package:pregnancy_tracker/widgets/side_bar_nar.dart';
 
@@ -21,9 +22,11 @@ import '../bindings/login_binding.dart';
 import '../bindings/pregnancy_profile_details_binding.dart';
 import '../bindings/register_binding.dart';
 import '../bindings/user_subscription_binding.dart';
+import '../bindings/user_subscription_details_binding.dart';
 import '../create_pregnancy_profile/create_pregnancy_profile_screen.dart';
 import '../fetal_growth_measurement/fetal_growth_measurement_screen.dart';
 import '../login/login_screen.dart';
+
 // import '../pregnancy_profile_details/pregnancy_profile_details.dart';
 import '../payment/payment_failed_screen.dart';
 import '../payment/payment_success_screen.dart';
@@ -102,7 +105,9 @@ class AppRoutes {
     GetPage(name: subscriptionplan, page: () => SubscriptionPlan()),
     GetPage(
         name: subscriptionplandetail,
-        page: () => SubscriptionPlanDetailScreen()),
+        page: () => SubscriptionPlanDetailScreen(),
+        binding: UserSubscriptionDetailsBinding()
+    ),
     GetPage(
         name: blogpostdetail,
         page: () => BlogPostDetail(

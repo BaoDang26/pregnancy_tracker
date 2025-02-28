@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_view.dart';
 import 'package:pregnancy_tracker/widgets/custom_elevated_button.dart';
 
-class SubscriptionPlanDetailScreen extends StatelessWidget {
+import '../../controllers/user_subscription_details_controller.dart';
+
+class SubscriptionPlanDetailScreen   extends GetView<UserSubscriptionDetailsController> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,6 +136,8 @@ class SubscriptionPlanDetailScreen extends StatelessWidget {
                   SizedBox(height: 20),
                   CustomElevatedButton(
                     onPressed: () {
+                      // print('aaaaaaaaaaaaaaa');
+                      controller.subscribesPlan();
                       // Logic để đăng ký
                     },
                     text: 'Subscribe',

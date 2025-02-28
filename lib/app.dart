@@ -24,8 +24,8 @@ class _MyAppState extends State<MyApp> {
       title: 'Pregnancy Tracker',
       debugShowCheckedModeBanner: false,
       theme: theme(),
-      // initialBinding: InitialBindings(),
-      initialRoute: AppRoutes.paymentSuccess,
+      initialBinding: InitialBindings(),
+      initialRoute: AppRoutes.login,
       getPages: AppRoutes.pages,
       // home: HomeScreen(),
     );
