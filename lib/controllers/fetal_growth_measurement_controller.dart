@@ -42,12 +42,15 @@ class FetalGrowthMeasurementController extends GetxController {
   var notes = '';
   var isLoading = false.obs;
 
+  // Thêm một RxBool để theo dõi trạng thái refresh
+  RxBool needsRefresh = false.obs;
+
   @override
   void onInit() {
-    fetchFetalGrowthMeasurementData();
     super.onInit();
     isLoading.value = true;
 
+    // Khởi tạo các controller
     weekNumberController = TextEditingController();
     heightController = TextEditingController();
     weightController = TextEditingController();
@@ -57,6 +60,13 @@ class FetalGrowthMeasurementController extends GetxController {
     movementCountController = TextEditingController();
     notesController = TextEditingController();
     measurementDateController = TextEditingController();
+
+    // Fetch dữ liệu ban đầu
+    fetchFetalGrowthMeasurementData();
+
+    // Thiết lập interval để kiểm tra và refresh dữ liệu
+    setupRefreshListener();
+
     isLoading.value = false;
   }
 
@@ -144,56 +154,69 @@ class FetalGrowthMeasurementController extends GetxController {
   //   return null;
   // }
 
+  // Thêm hàm để setup refresh listener
+  void setupRefreshListener() {
+    ever(needsRefresh, (bool needsRefresh) {
+      if (needsRefresh) {
+        fetchFetalGrowthMeasurementData();
+        this.needsRefresh.value = false;
+      }
+    });
+  }
+
   Future<void> fetchFetalGrowthMeasurementData() async {
     try {
       isLoading.value = true;
       pregnancyId = Get.arguments;
-      // Get both height and general measurements
+
+      // Fetch tất cả dữ liệu cần thiết
       await Future.wait([
-        // getFetalGrowthMeasurement(pregnancyId),
+        getFetalGrowthMeasurement(pregnancyId),
         getHeightMeasurements(pregnancyId),
         getWeightMeasurements(pregnancyId),
       ]);
 
-      // Sort measurements by date if needed
+      // Sort measurements by date
       fetalGrowthMeasurementModel.sort(
-        (a, b) => a.measurementDate!.compareTo(b.measurementDate!),
+        (a, b) => b.measurementDate!
+            .compareTo(a.measurementDate!), // Sắp xếp mới nhất lên đầu
       );
+
+      // Refresh các RxList
+      fetalGrowthMeasurementModel.refresh();
+      heightData.refresh();
+      weightData.refresh();
     } catch (e) {
       print('Error fetching measurements: $e');
-      Get.snackbar(
-        'Error',
-        'Failed to fetch measurements',
-        snackPosition: SnackPosition.TOP,
-      );
+      Get.snackbar('Error', 'Failed to fetch measurements');
     } finally {
       isLoading.value = false;
     }
   }
 
-  // Future<void> getFetalGrowthMeasurement(int pregnancyId) async {
-  //   var response =
-  //       await FetalGrowthMeasurementRepository.getFetalGrowthMeasurementList(
-  //           pregnancyId);
+  Future<void> getFetalGrowthMeasurement(int pregnancyId) async {
+    var response =
+        await FetalGrowthMeasurementRepository.getFetalGrowthMeasurementList(
+            pregnancyId);
 
-  //   print('General measurements response: ${response.statusCode}');
-  //   print('Response body: ${response.body}');
+    print('General measurements response: ${response.statusCode}');
+    print('Response body: ${response.body}');
 
-  //   if (response.statusCode == 200) {
-  //     fetalGrowthMeasurementModel.value =
-  //         fetalGrowthMeasurementModelFromJson(response.body);
-  //   } else if (response.statusCode == 401) {
-  //     String message = jsonDecode(response.body)['message'];
-  //     if (message.contains("JWT token is expired")) {
-  //       Get.snackbar('Session Expired', 'Please login again');
-  //     }
-  //   } else {
-  //     Get.snackbar(
-  //       "Error ${response.statusCode}",
-  //       jsonDecode(response.body)['message'],
-  //     );
-  //   }
-  // }
+    if (response.statusCode == 200) {
+      fetalGrowthMeasurementModel.value =
+          fetalGrowthMeasurementModelFromJson(response.body);
+    } else if (response.statusCode == 401) {
+      String message = jsonDecode(response.body)['message'];
+      if (message.contains("JWT token is expired")) {
+        Get.snackbar('Session Expired', 'Please login again');
+      }
+    } else {
+      Get.snackbar(
+        "Error ${response.statusCode}",
+        jsonDecode(response.body)['message'],
+      );
+    }
+  }
 
   Future<void> getHeightMeasurements(int pregnancyId) async {
     var response = await FetalGrowthMeasurementRepository
@@ -270,54 +293,104 @@ class FetalGrowthMeasurementController extends GetxController {
   }
 
   Future<void> addFetalGrowthMeasurement() async {
-    isLoading.value = true;
-    final isValid = fetalGrowthMeasurementFormKey.currentState!.validate();
-    if (!isValid) {
-      isLoading.value = false;
-      return null;
-    }
-    fetalGrowthMeasurementFormKey.currentState!.save();
-
-    DateTime measurementDate =
-        DateFormat('yyyy-MM-dd').parse(measurementDateController.text);
-
-    FetalGrowthMeasurementModel fetalGrowthMeasurement =
-        FetalGrowthMeasurementModel(
-      pregnancyProfileId: pregnancyId,
-      measurementDate: measurementDate,
-      weekNumber: int.parse(weekNumberController.text),
-      height: double.parse(heightController.text),
-      weight: double.parse(weightController.text),
-      heartRate: double.parse(heartRateController.text),
-      bellyCircumference: double.parse(bellyCircumferenceController.text),
-      headCircumference: double.parse(headCircumferenceController.text),
-      // movementCount: int.parse(movementCountController.text),
-      notes: notesController.text,
-    );
-
-    var response =
-        await FetalGrowthMeasurementRepository.createFetalGrowthMeasurement(
-            fetalGrowthMeasurement);
-
-    if (response.statusCode == 200) {
-      // List<FetalGrowthMeasurementModel> fetalGrowthMeasurement =
-      //     fetalGrowthMeasurementModelFromJson(response.body);
-
-      await fetchFetalGrowthMeasurementData();
-      Get.back(result: true);
-      Get.snackbar('Success', 'Fetal growth measurement added successfully');
-    } else if (response.statusCode == 401) {
-      String message = jsonDecode(response.body)['message'];
-      if (message.contains("JWT token is expired")) {
-        Get.snackbar('Session Expired', 'Please login again');
+    try {
+      isLoading.value = true;
+      final isValid = fetalGrowthMeasurementFormKey.currentState!.validate();
+      if (!isValid) {
+        return;
       }
-    } else if (response.statusCode == 500) {
-      log(jsonDecode(response.body)['message']);
-    } else {
-      Get.snackbar(
-        "Error ${response.statusCode}",
-        jsonDecode(response.body)['message'],
+      fetalGrowthMeasurementFormKey.currentState!.save();
+
+      DateTime measurementDate =
+          DateFormat('yyyy-MM-dd').parse(measurementDateController.text);
+
+      FetalGrowthMeasurementModel fetalGrowthMeasurement =
+          FetalGrowthMeasurementModel(
+        pregnancyProfileId: pregnancyId,
+        measurementDate: measurementDate,
+        weekNumber: int.parse(weekNumberController.text),
+        height: double.parse(heightController.text),
+        weight: double.parse(weightController.text),
+        heartRate: double.parse(heartRateController.text),
+        bellyCircumference: double.parse(bellyCircumferenceController.text),
+        headCircumference: double.parse(headCircumferenceController.text),
+        notes: notesController.text,
       );
+
+      var response =
+          await FetalGrowthMeasurementRepository.createFetalGrowthMeasurement(
+              fetalGrowthMeasurement);
+
+      if (response.statusCode == 200) {
+        // Trigger refresh
+        await fetchFetalGrowthMeasurementData();
+        clearFormFields(); // Thêm hàm này để clear form
+        Get.back(result: true);
+        Get.snackbar('Success', 'Fetal growth measurement added successfully');
+      } else if (response.statusCode == 401) {
+        handleUnauthorized(response as Response<dynamic>);
+      } else {
+        handleError(response as Response<dynamic>);
+      }
+    } catch (e) {
+      print('Error adding measurement: $e');
+      Get.snackbar('Error', 'Failed to add measurement');
+    } finally {
+      isLoading.value = false;
     }
+  }
+
+  // Thêm hàm để xóa measurement
+  // Future<void> deleteMeasurement(int measurementId) async {
+  //   try {
+  //     isLoading.value = true;
+  //     var response =
+  //         await FetalGrowthMeasurementRepository.deleteFetalGrowthMeasurement(
+  //             measurementId);
+
+  //     if (response.statusCode == 200) {
+  //       // Trigger refresh sau khi xóa
+  //       await fetchFetalGrowthMeasurementData();
+  //       Get.snackbar('Success', 'Measurement deleted successfully');
+  //     } else if (response.statusCode == 401) {
+  //       handleUnauthorized(response);
+  //     } else {
+  //       handleError(response);
+  //     }
+  //   } catch (e) {
+  //     print('Error deleting measurement: $e');
+  //     Get.snackbar('Error', 'Failed to delete measurement');
+  //   } finally {
+  //     isLoading.value = false;
+  //   }
+  // }
+
+  // Hàm để clear form fields
+  void clearFormFields() {
+    weekNumberController.clear();
+    heightController.clear();
+    weightController.clear();
+    heartRateController.clear();
+    bellyCircumferenceController.clear();
+    headCircumferenceController.clear();
+    movementCountController.clear();
+    notesController.clear();
+    measurementDateController.clear();
+  }
+
+  // Hàm xử lý lỗi unauthorized
+  void handleUnauthorized(Response response) {
+    String message = jsonDecode(response.body)['message'];
+    if (message.contains("JWT token is expired")) {
+      Get.snackbar('Session Expired', 'Please login again');
+    }
+  }
+
+  // Hàm xử lý lỗi chung
+  void handleError(Response response) {
+    Get.snackbar(
+      "Error ${response.statusCode}",
+      jsonDecode(response.body)['message'],
+    );
   }
 }

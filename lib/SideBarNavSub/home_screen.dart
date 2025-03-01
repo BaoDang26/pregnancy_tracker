@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:pregnancy_tracker/routes/app_routes.dart';
-import 'package:pregnancy_tracker/subscription_plan.dart';
 import 'package:pregnancy_tracker/util/app_export.dart';
 import 'package:pregnancy_tracker/widgets/custom_card_subscription_plan_widget.dart';
 import 'package:carousel_slider/carousel_slider.dart';

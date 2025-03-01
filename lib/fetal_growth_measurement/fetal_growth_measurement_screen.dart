@@ -228,51 +228,131 @@ class FetalGrowthMeasurementScreen
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(24.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Obx(() {
-                                if (controller.isLoading.value) {
-                                  return CircularProgressIndicator();
-                                }
-                                if (controller
-                                    .fetalGrowthMeasurementModel.isEmpty) {
-                                  return Text('No data available');
-                                }
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Measurement Date: ${DateFormat('yyyy-MM-dd').format(controller.fetalGrowthMeasurementModel.last.measurementDate!)}',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
+                          child: Obx(() {
+                            if (controller.isLoading.value) {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            }
+                            if (controller
+                                .fetalGrowthMeasurementModel.isEmpty) {
+                              return const Center(
+                                  child: Text('No data available'));
+                            }
+                            return Container(
+                              // Thêm Container bọc ListView
+                              height: 600, // Đặt chiều cao cố định
+                              child: ListView.separated(
+                                shrinkWrap: true, // Thêm thuộc tính này
+                                physics:
+                                    AlwaysScrollableScrollPhysics(), // Thêm physics để có thể scroll
+                                itemCount: controller
+                                    .fetalGrowthMeasurementModel.length,
+                                separatorBuilder: (context, index) =>
+                                    const Divider(height: 20),
+                                itemBuilder: (context, index) {
+                                  final measurement = controller
+                                      .fetalGrowthMeasurementModel[index];
+                                  return Container(
+                                    padding: const EdgeInsets.all(16),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                          color: Colors.grey.shade200),
                                     ),
-                                    SizedBox(height: 12),
-                                    Text(
-                                      'Head Circumference: ${controller.fetalGrowthMeasurementModel.last.headCircumference} cm',
-                                      style: TextStyle(fontSize: 18),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Measurement Date: ${DateFormat('yyyy-MM-dd').format(measurement.measurementDate!)}',
+                                              style: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.green,
+                                              ),
+                                            ),
+                                            IconButton(
+                                              icon: const Icon(Icons.delete,
+                                                  color: Colors.red),
+                                              onPressed: () {
+                                                // Thêm logic xóa ở đây
+                                                // controller.deleteMeasurement(measurement.id);
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 12),
+                                        Row(
+                                          children: [
+                                            const Icon(Icons.height,
+                                                color: Colors.blue),
+                                            const SizedBox(width: 8),
+                                            Text(
+                                              'Head Circumference: ${measurement.headCircumference} cm',
+                                              style:
+                                                  const TextStyle(fontSize: 16),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                                Icons.radio_button_checked,
+                                                color: Colors.orange),
+                                            const SizedBox(width: 8),
+                                            Text(
+                                              'Belly Circumference: ${measurement.bellyCircumference} cm',
+                                              style:
+                                                  const TextStyle(fontSize: 16),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                          children: [
+                                            const Icon(Icons.favorite,
+                                                color: Colors.red),
+                                            const SizedBox(width: 8),
+                                            Text(
+                                              'Heart Rate: ${measurement.heartRate} bpm',
+                                              style:
+                                                  const TextStyle(fontSize: 16),
+                                            ),
+                                          ],
+                                        ),
+                                        if (measurement.notes?.isNotEmpty ??
+                                            false) ...[
+                                          const SizedBox(height: 8),
+                                          Row(
+                                            children: [
+                                              const Icon(Icons.note,
+                                                  color: Colors.purple),
+                                              const SizedBox(width: 8),
+                                              Expanded(
+                                                child: Text(
+                                                  'Notes: ${measurement.notes}',
+                                                  style: const TextStyle(
+                                                    fontSize: 16,
+                                                    fontStyle: FontStyle.italic,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ],
                                     ),
-                                    SizedBox(height: 12),
-                                    Text(
-                                      'Belly Circumference: ${controller.fetalGrowthMeasurementModel.last.bellyCircumference} cm',
-                                      style: TextStyle(fontSize: 18),
-                                    ),
-                                    SizedBox(height: 12),
-                                    Text(
-                                      'Heart Rate: ${controller.fetalGrowthMeasurementModel.last.heartRate} bpm',
-                                      style: TextStyle(fontSize: 18),
-                                    ),
-                                    SizedBox(height: 12),
-                                    Text(
-                                      'Notes: ${controller.fetalGrowthMeasurementModel.last.notes}',
-                                      style: TextStyle(fontSize: 18),
-                                    ),
-                                  ],
-                                );
-                              }),
-                            ],
-                          ),
+                                  );
+                                },
+                              ),
+                            );
+                          }),
                         ),
                       ),
                     ),
@@ -846,6 +926,7 @@ class FetalGrowthMeasurementScreen
                                   TextButton(
                                     child: Text('Cancel'),
                                     onPressed: () {
+                                      controller.clearFormFields();
                                       Navigator.of(context).pop();
                                     },
                                   ),

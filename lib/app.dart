@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
 import 'config/theme.dart';
 import 'routes/app_routes.dart';
@@ -16,6 +18,9 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    if (kIsWeb) {
+      setUrlStrategy(PathUrlStrategy());
+    }
   }
 
   @override
