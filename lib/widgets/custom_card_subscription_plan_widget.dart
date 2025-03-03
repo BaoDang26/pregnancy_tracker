@@ -76,7 +76,7 @@ class SubscriptionPlanCard extends StatelessWidget {
                   ),
                 ),
                 Center(
-                  child: Text(
+                  child: SelectableText(
                     "${price.round().formatWithThousandSeparator()} VND",
                     style: TextStyle(
                       fontSize: 32,
@@ -85,7 +85,7 @@ class SubscriptionPlanCard extends StatelessWidget {
                   ),
                 ),
                 Center(
-                  child: Text(
+                  child: SelectableText(
                     '${duration} days',
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -96,7 +96,7 @@ class SubscriptionPlanCard extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Center(
-                  child: Text(
+                  child: SelectableText(
                     description,
                     textAlign: TextAlign.center,
                     style: TextStyle(

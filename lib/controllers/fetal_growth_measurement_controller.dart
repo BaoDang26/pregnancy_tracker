@@ -323,10 +323,11 @@ class FetalGrowthMeasurementController extends GetxController {
 
       if (response.statusCode == 200) {
         // Trigger refresh
-        await fetchFetalGrowthMeasurementData();
+
         clearFormFields(); // Thêm hàm này để clear form
         Get.back(result: true);
         Get.snackbar('Success', 'Fetal growth measurement added successfully');
+        await fetchFetalGrowthMeasurementData();
       } else if (response.statusCode == 401) {
         handleUnauthorized(response as Response<dynamic>);
       } else {

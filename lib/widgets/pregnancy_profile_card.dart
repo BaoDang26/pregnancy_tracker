@@ -9,6 +9,7 @@ class PregnancyProfileCard extends StatelessWidget {
   final String? content3;
   final String? content4;
   final VoidCallback onTitleTap;
+  final VoidCallback onEditTap;
 
   PregnancyProfileCard({
     required this.photoUrl,
@@ -18,6 +19,7 @@ class PregnancyProfileCard extends StatelessWidget {
     this.content3,
     this.content4,
     required this.onTitleTap,
+    required this.onEditTap,
   });
 
   @override
@@ -37,24 +39,35 @@ class PregnancyProfileCard extends StatelessWidget {
             ClipOval(
               child: Image.asset(
                 photoUrl,
-                height: 80.v,
-                width: 80.v,
+                height: 100.v,
+                width: 100.v,
                 fit: BoxFit.cover,
               ),
             ),
             SizedBox(height: 5.v),
-            Padding(
-              padding: EdgeInsets.only(bottom: 5.v),
-              child: GestureDetector(
-                onTap: onTitleTap,
-                child: Text(
-                  title,
-                  maxLines: 2,
-                  softWrap: true,
-                  style: CustomTextStyles.titleMediumWhite,
-                  overflow: TextOverflow.ellipsis,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: InkWell(
+                    onTap: onTitleTap,
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 ),
-              ),
+                // IconButton(
+                //   icon: Icon(Icons.edit, color: Colors.green[700]),
+                //   onPressed: onEditTap,
+                //   iconSize: 18,
+                //   padding: EdgeInsets.all(4),
+                // ),
+              ],
             ),
             if (content1 != null) ...[
               Padding(

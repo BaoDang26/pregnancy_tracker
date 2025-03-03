@@ -39,24 +39,24 @@ class SubscriptionPlanDetailScreen
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
+                    SelectableText(
                       '${controller.subscriptionPlan.value.name}',
                       style: TextStyle(color: Colors.white, fontSize: 24),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 20),
-                    Text(
+                    SelectableText(
                       '${controller.subscriptionPlan.value.description}',
                       style: TextStyle(color: Colors.white, fontSize: 20),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 20),
-                    Text(
+                    SelectableText(
                       'Total price',
                       style: TextStyle(color: Colors.white),
                     ),
                     // SizedBox(height: 20),
-                    Text(
+                    SelectableText(
                       '${controller.subscriptionPlan.value.price?.round().formatWithThousandSeparator()} VND  \n${controller.subscriptionPlan.value.duration} days',
                       style: TextStyle(color: Colors.white, fontSize: 32),
                       textAlign: TextAlign.center,
@@ -99,7 +99,7 @@ class SubscriptionPlanDetailScreen
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    SelectableText(
                       'Payment method',
                       style: TextStyle(fontSize: 24),
                     ),

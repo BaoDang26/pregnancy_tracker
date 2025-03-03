@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pregnancy_tracker/widgets/custom_elevated_button.dart';
+import 'package:get/get.dart';
 
 class AccountProfileScreen extends StatefulWidget {
   @override
@@ -181,11 +182,29 @@ class _AccountProfileScreenState extends State<AccountProfileScreen> {
                       ),
                     ),
                     SizedBox(height: 20),
-                    CustomElevatedButton(
-                      onPressed: () {
-                        // Logic để cập nhật thông tin
-                      },
-                      text: 'Update Profile',
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 150,
+                          child: CustomElevatedButton(
+                            onPressed: () {
+                              // Logic để cập nhật thông tin
+                            },
+                            text: 'Update Profile',
+                          ),
+                        ),
+                        SizedBox(width: 300),
+                        SizedBox(
+                          width: 150,
+                          child: CustomElevatedButton(
+                            onPressed: () {
+                              // Get.find<AuthController>().logout();
+                            },
+                            text: 'Logout',
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

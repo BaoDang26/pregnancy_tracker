@@ -67,19 +67,30 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                               onTitleTap: () {
                                 controller.goToPregnancyProfileDetail(index);
                               },
+                              onEditTap: () {
+                                // controller.goToEditPregnancyProfile(index);
+                              },
                             ),
-                            // Positioned(
-                            //   top: 10,
-                            //   right: 10,
-                            //   child: Obx(
-                            //     () => Checkbox(
-                            //       value: controller.foodSelected[index],
-                            //       onChanged: (bool? value) {
-                            //         controller.onSelectFood(index);
-                            //       },
-                            //     ),
-                            //   ),
-                            // ),
+                            // Thêm nút edit ở góc phải trên
+                            Positioned(
+                              top: 8,
+                              right: 8,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white.withOpacity(0.8),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: IconButton(
+                                  icon: Icon(Icons.edit,
+                                      color: Colors.green[700]),
+                                  onPressed: () {
+                                    // controller.goToEditPregnancyProfile(index);
+                                  },
+                                  iconSize: 30,
+                                  padding: EdgeInsets.all(4),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       );

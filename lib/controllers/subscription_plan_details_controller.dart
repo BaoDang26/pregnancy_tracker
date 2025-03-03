@@ -84,8 +84,8 @@ class SubscriptionPlanDetailsController extends GetxController {
       String message = jsonDecode(response.body)['message'];
       Get.snackbar("Error server ${response.statusCode}", message);
     } else if (response.statusCode == 403) {
-      String message = jsonDecode(response.body)['message'];
-      Get.snackbar('Error', 'You have already subscribed a plan');
+      // String message = jsonDecode(response.body)['message'];
+      Get.snackbar('Already subscribed', 'You have already subscribed a plan');
     } else {
       Get.snackbar("Error server ${response.statusCode}",
           jsonDecode(response.body)['message']);

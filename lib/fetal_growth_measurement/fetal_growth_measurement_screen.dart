@@ -4,6 +4,7 @@ import 'package:pregnancy_tracker/models/fetal_growth_measurement_model.dart';
 import 'package:pregnancy_tracker/widgets/custom_elevated_button.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/fetal_growth_measurement_controller.dart';
 
@@ -217,6 +218,41 @@ class FetalGrowthMeasurementScreen
                   ],
                 ),
                 SizedBox(height: 16),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SelectableText(
+                      'Height Alert: Values outside 3rd-97th percentile range require medical attention',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.red[700],
+                      ),
+                    ),
+                    SizedBox(height: 8),
+                    SelectableText(
+                      'Note: Dotted line represents standard growth curve',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontStyle: FontStyle.italic,
+                        color: Colors.purple,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    InkWell(
+                      onTap: () => launchUrl(Uri.parse(
+                          'https://www.vinmec.com/vie/bai-viet/bang-can-nang-va-chieu-dai-thai-nhi-theo-tieu-chuan-cua-who-vi')),
+                      child: SelectableText(
+                        'Reference: WHO Fetal Growth Standards (Vinmec)',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 Row(
                   children: [
                     Expanded(
@@ -287,6 +323,34 @@ class FetalGrowthMeasurementScreen
                                           ],
                                         ),
                                         const SizedBox(height: 12),
+                                        Row(
+                                          children: [
+                                            const Icon(Icons.monitor_weight,
+                                                color: Colors.green),
+                                            const SizedBox(width: 8),
+                                            Text(
+                                              'Weight: ${measurement.weight} g',
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                          children: [
+                                            const Icon(Icons.height_sharp,
+                                                color: Colors.purple),
+                                            const SizedBox(width: 8),
+                                            Text(
+                                              'Height: ${measurement.height} cm',
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 8),
                                         Row(
                                           children: [
                                             const Icon(Icons.height,
@@ -1022,23 +1086,23 @@ class FetalGrowthMeasurementScreen
 
   List<HeightData> getReferenceHeightData() {
     return [
-      HeightData(1, 6),
-      HeightData(2, 7),
-      HeightData(3, 9),
-      HeightData(4, 12),
-      HeightData(5, 14),
-      HeightData(6, 18),
-      HeightData(7, 22),
-      HeightData(8, 25),
-      HeightData(9, 30),
-      HeightData(10, 35),
-      HeightData(11, 35),
-      HeightData(12, 40),
-      HeightData(13, 45),
-      HeightData(14, 50),
-      HeightData(15, 55),
-      HeightData(16, 60),
-      HeightData(40, 65),
+      HeightData(1, 1.6),
+      HeightData(2, 2.3),
+      HeightData(3, 3.1),
+      HeightData(4, 4.1),
+      HeightData(5, 5.4),
+      HeightData(6, 6.7),
+      HeightData(7, 14.7),
+      HeightData(8, 16.7),
+      HeightData(9, 18.6),
+      HeightData(10, 20.4),
+      // HeightData(11, 35.0),
+      // HeightData(12, 40.0),
+      // HeightData(13, 45.0),
+      // HeightData(14, 50.0),
+      // HeightData(15, 55.0),
+      // HeightData(16, 60.0),
+      // HeightData(40, 65.0),
       // Thêm dữ liệu tham khảo khác nếu cần
     ];
   }

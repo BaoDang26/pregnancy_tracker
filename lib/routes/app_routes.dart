@@ -32,7 +32,7 @@ import '../login/login_screen.dart';
 // import '../pregnancy_profile_details/pregnancy_profile_details.dart';
 import '../payment/payment_failed_screen.dart';
 import '../payment/payment_success_screen.dart';
-import '../pregnancy_profile/pregnancy_profile_details.dart';
+import '../pregnancy_profile/pregnancy_profile_details_screen.dart';
 import '../register/register_screen.dart';
 import '../widgets/side_bar_nar_guest.dart';
 

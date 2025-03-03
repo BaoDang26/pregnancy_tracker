@@ -138,15 +138,15 @@ class _SideBarNavScreenState extends State<SideBarNavScreen> {
                       Text('Account Profile', style: TextStyle(fontSize: 15)),
                 ),
               ],
-              trailing: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: CustomElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, AppRoutes.login);
-                  },
-                  text: 'Log out',
-                ),
-              ),
+              // trailing: Padding(
+              //   padding: const EdgeInsets.all(24.0),
+              //   child: CustomElevatedButton(
+              //     onPressed: () {
+              //       Navigator.pushNamed(context, AppRoutes.login);
+              //     },
+              //     text: 'Log out',
+              //   ),
+              // ),
             ),
           ),
           const VerticalDivider(thickness: 1, width: 1),
