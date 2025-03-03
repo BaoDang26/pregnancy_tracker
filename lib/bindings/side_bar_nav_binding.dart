@@ -1,5 +1,6 @@
 import 'package:pregnancy_tracker/controllers/pregnancy_profile_controller.dart';
 
+import '../controllers/subscription_plan_controller.dart';
 import '../util/app_export.dart';
 
 class SideBarNavBinding extends Bindings {
@@ -7,8 +8,7 @@ class SideBarNavBinding extends Bindings {
   Future<void> dependencies() async {
     // Khởi tạo các controller
     Get.lazyPut(() => PregnancyProfileController());
-    // Get.lazyPut(() => ProfileController());
-    // Get.lazyPut(() => AdvisorController());
+    Get.lazyPut(() => SubscriptionPlanController());
 
     // Khởi tạo dịch vụ Firebase Messaging và đăng ký với GetX
     // final firebaseMessagingService = FirebaseMessagingService();

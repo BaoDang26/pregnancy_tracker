@@ -45,18 +45,13 @@ class UserSubscriptionScreen extends StatelessWidget {
                       child: Stack(
                         children: [
                           SubscriptionPlanCard(
-                            title: 'Pro',
-                            price: '\$25',
-                            details:
+                            name: 'Pro',
+                            price: 25.0,
+                            description:
                                 '\$30 USD if billed monthly\n3 Licenses Minimum',
-                            features: [
-                              'All Standard plan features, plus:',
-                              'CRM integrations',
-                              'Unlimited meetings',
-                              'Hold queues',
-                              'Zapier, Zendesk, Slack integrations',
-                            ],
+                            duration: '1 month',
                             buttonText: 'Subscribe',
+                            index: index,
                           )
                         ],
                       ),

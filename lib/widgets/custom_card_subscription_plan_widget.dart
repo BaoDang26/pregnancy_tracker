@@ -1,29 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pregnancy_tracker/pregnancy_profile/pregnancy_profile_screen.dart';
 import 'package:pregnancy_tracker/routes/app_routes.dart';
+import 'package:pregnancy_tracker/util/num_utils.dart';
 
+import '../controllers/subscription_plan_controller.dart';
 import '../util/app_export.dart';
 
 class SubscriptionPlanCard extends StatelessWidget {
-  final String title;
-  final String price;
-  final String details;
-  final List<String> features;
+  final String name;
+  final double price;
+  final String description;
+  final String duration;
   final String buttonText;
   final bool isPopular;
+  final int index;
   // final Color backgroundColor;
   SubscriptionPlanCard({
-    required this.title,
+    required this.name,
     required this.price,
-    required this.details,
-    required this.features,
+    required this.description,
+    required this.duration,
     required this.buttonText,
+    required this.index,
     this.isPopular = false,
     // this.backgroundColor = Colors.white,
   });
 
+  // Hàm format giá tiền
+  // String formatPrice() {
+  //   final formatter = NumberFormat('#,###', 'vi_VN');
+  //   return '${formatter.format(price)} VND';
+  // }
+
   @override
   Widget build(BuildContext context) {
+    Get.put(SubscriptionPlanController());
     return Expanded(
       child: Card(
         elevation: 4,
@@ -56,7 +68,7 @@ class SubscriptionPlanCard extends StatelessWidget {
                   ),
                 Center(
                   child: Text(
-                    title,
+                    name,
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -65,7 +77,7 @@ class SubscriptionPlanCard extends StatelessWidget {
                 ),
                 Center(
                   child: Text(
-                    price,
+                    "${price.round().formatWithThousandSeparator()} VND",
                     style: TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
@@ -74,23 +86,35 @@ class SubscriptionPlanCard extends StatelessWidget {
                 ),
                 Center(
                   child: Text(
-                    details,
+                    '${duration} days',
                     textAlign: TextAlign.center,
                     style: TextStyle(
+                      fontSize: 25,
                       color: Colors.black54,
                     ),
                   ),
                 ),
                 SizedBox(height: 10),
-                ...features.map((feature) => ListTile(
-                      leading: Icon(Icons.check, color: Colors.lightGreen),
-                      title: Text(feature),
-                    )),
+                Center(
+                  child: Text(
+                    description,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+                // ...features.map((feature) => ListTile(
+                //       leading: Icon(Icons.check, color: Colors.lightGreen),
+                //       title: Text(feature),
+                //     )),
                 SizedBox(height: 10),
                 Center(
                   child: ElevatedButton(
                     onPressed: () {
-                      Get.toNamed(AppRoutes.subscriptionplandetail);
+                      final controller = Get.find<SubscriptionPlanController>();
+                      controller.goToSubscriptionPlanDetail(index);
                     },
                     child: Text(buttonText),
                   ),

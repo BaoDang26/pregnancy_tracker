@@ -40,7 +40,7 @@ class SubscriptionPlanController extends GetxController {
   }
 
   void goToSubscriptionPlanDetail(int index) {
-    Get.toNamed(AppRoutes.subscriptionplan,
+    Get.toNamed(AppRoutes.subscriptionplandetail,
         arguments: subscriptionPlanList[index].id);
   }
 

@@ -13,8 +13,6 @@ class PregnancyProfileController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    // Nhận advisor ID từ Argument từ Advisor screen
-
     await getPregnancyProfileList();
 
     super.onInit();

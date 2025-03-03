@@ -931,7 +931,7 @@ class FetalGrowthMeasurementScreen
                                     },
                                   ),
                                   TextButton(
-                                    child: Text('Update'),
+                                    child: Text('Add Measurement'),
                                     onPressed: () async {
                                       await controller
                                           .addFetalGrowthMeasurement();
@@ -950,7 +950,7 @@ class FetalGrowthMeasurementScreen
                             },
                           );
                         },
-                        text: 'Update',
+                        text: 'Add Measurement',
                       ),
                     ),
                   ],

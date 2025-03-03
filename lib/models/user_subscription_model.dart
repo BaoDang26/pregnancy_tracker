@@ -16,7 +16,7 @@ class UserSubscriptionModel {
   String? subscriptionPlanName;
   DateTime? startDate;
   DateTime? endDate;
-  int? amount;
+  double? amount;
   String? subscriptionCode;
   String? bankCode;
   String? transactionNo;

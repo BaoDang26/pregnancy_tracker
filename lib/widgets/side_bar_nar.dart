@@ -8,7 +8,7 @@ import '../account_profile/account_profile_screen.dart';
 
 import 'custom_elevated_button.dart';
 import '../SideBarNav/blog_post/blog_post.dart';
-import '../SideBarNav/subscription_plan/subscription_plan.dart';
+import '../SideBarNav/subscription_plan/subscription_plan_screen.dart';
 
 class SideBarNavScreen extends StatefulWidget {
   const SideBarNavScreen({super.key});
@@ -22,8 +22,8 @@ class _SideBarNavScreenState extends State<SideBarNavScreen> {
   static final List<Widget> _widgetOptions = [
     const HomeScreen(),
     const BlogPost(),
-    PregnancyProfileScreen(),
-    SubscriptionPlan(),
+    const PregnancyProfileScreen(),
+    const SubscriptionPlan(),
     AccountProfileScreen(),
     // const HomeScreen(),
     // WeeklyMenuScreen(),
