@@ -16,7 +16,7 @@ class UserSubscriptionModel {
   String? subscriptionPlanName;
   DateTime? startDate;
   DateTime? endDate;
-  double? amount;
+  int? amount;
   String? subscriptionCode;
   String? bankCode;
   String? transactionNo;
@@ -41,31 +41,36 @@ class UserSubscriptionModel {
   factory UserSubscriptionModel.fromJson(Map<String, dynamic> json) =>
       UserSubscriptionModel(
         id: json["id"],
-        subscriptionPlanName: json["subscriptionPlanName"],
-        startDate: DateTime.parse(json["startDate"]),
-        endDate: DateTime.parse(json["endDate"]),
+        subscriptionPlanName: json["subscriptionPlanName"] ?? "",
+        startDate: json["startDate"] != null
+            ? DateTime.parse(json["startDate"])
+            : null,
+        endDate:
+            json["endDate"] != null ? DateTime.parse(json["endDate"]) : null,
         amount: json["amount"],
-        subscriptionCode: json["subscriptionCode"],
-        bankCode: json["bankCode"],
-        transactionNo: json["transactionNo"],
-        paymentDate: DateTime.parse(json["paymentDate"]),
-        status: json["status"],
-        createdDate: DateTime.parse(json["createdDate"]),
+        subscriptionCode: json["subscriptionCode"] ?? "",
+        bankCode: json["bankCode"] ?? "",
+        transactionNo: json["transactionNo"] ?? "",
+        paymentDate: json["paymentDate"] != null
+            ? DateTime.parse(json["paymentDate"])
+            : null,
+        status: json["status"] ?? "",
+        createdDate: json["createdDate"] != null
+            ? DateTime.parse(json["createdDate"])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "subscriptionPlanName": subscriptionPlanName,
-        "startDate":
-            "${startDate?.year.toString().padLeft(4, '0')}-${startDate?.month.toString().padLeft(2, '0')}-${startDate?.day.toString().padLeft(2, '0')}",
-        "endDate":
-            "${endDate?.year.toString().padLeft(4, '0')}-${endDate?.month.toString().padLeft(2, '0')}-${endDate?.day.toString().padLeft(2, '0')}",
+        "subscriptionPlanName": subscriptionPlanName ?? "",
+        "startDate": startDate?.toIso8601String() ?? "",
+        "endDate": endDate?.toIso8601String() ?? "",
         "amount": amount,
-        "subscriptionCode": subscriptionCode,
-        "bankCode": bankCode,
-        "transactionNo": transactionNo,
-        "paymentDate": paymentDate?.toIso8601String(),
-        "status": status,
-        "createdDate": createdDate?.toIso8601String(),
+        "subscriptionCode": subscriptionCode ?? "",
+        "bankCode": bankCode ?? "",
+        "transactionNo": transactionNo ?? "",
+        "paymentDate": paymentDate?.toIso8601String() ?? "",
+        "status": status ?? "",
+        "createdDate": createdDate?.toIso8601String() ?? "",
       };
 }

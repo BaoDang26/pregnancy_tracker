@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pregnancy_tracker/controllers/fetal_growth_measurement_controller.dart';
 
 import '../fetal_growth_measurement/fetal_growth_measurement_screen.dart';
 import '../models/fetal_growth_measurement_model.dart';
@@ -12,15 +12,14 @@ import '../models/weight_summary_model.dart';
 import '../repositories/fetal_growth_measurement_repository.dart';
 import '../util/app_export.dart';
 
-class FetalGrowthMeasurementController extends GetxController {
+class CreateFetalGrowthMeasurementController extends GetxController {
+  Rx<PregnancyProfileModel> pregnancyProfileModel = PregnancyProfileModel().obs;
+  final GlobalKey<FormState> fetalGrowthMeasurementFormKey =
+      GlobalKey<FormState>();
   RxList<FetalGrowthMeasurementModel> fetalGrowthMeasurementModel =
       RxList.empty();
   RxList<HeightData> heightData = RxList.empty();
   RxList<WeightData> weightData = RxList.empty();
-  Rx<PregnancyProfileModel> pregnancyProfileModel = PregnancyProfileModel().obs;
-  final GlobalKey<FormState> fetalGrowthMeasurementFormKey =
-      GlobalKey<FormState>();
-  late TextEditingController weekNumberController;
   late TextEditingController heightController;
   late TextEditingController weightController;
   late TextEditingController heartRateController;
@@ -31,7 +30,6 @@ class FetalGrowthMeasurementController extends GetxController {
   late TextEditingController measurementDateController;
 
   late int pregnancyId;
-  late int measurementId;
 
   var height = '';
   var weight = '';
@@ -45,13 +43,15 @@ class FetalGrowthMeasurementController extends GetxController {
   // Thêm một RxBool để theo dõi trạng thái refresh
   RxBool needsRefresh = false.obs;
 
+  // Thêm biến để lưu error message
+  RxString errorMessage = ''.obs;
+
   @override
   void onInit() {
     super.onInit();
     isLoading.value = true;
     pregnancyId = Get.arguments;
     // Khởi tạo các controller
-    weekNumberController = TextEditingController();
     heightController = TextEditingController();
     weightController = TextEditingController();
     heartRateController = TextEditingController();
@@ -62,7 +62,7 @@ class FetalGrowthMeasurementController extends GetxController {
     measurementDateController = TextEditingController();
 
     // Fetch dữ liệu ban đầu
-    fetchFetalGrowthMeasurementData();
+    // fetchFetalGrowthMeasurementData();
 
     // Thiết lập interval để kiểm tra và refresh dữ liệu
     setupRefreshListener();
@@ -72,7 +72,6 @@ class FetalGrowthMeasurementController extends GetxController {
 
   @override
   void onClose() {
-    weekNumberController.dispose();
     heightController.dispose();
     weightController.dispose();
     heartRateController.dispose();
@@ -84,13 +83,10 @@ class FetalGrowthMeasurementController extends GetxController {
     super.onClose();
   }
 
-  String? validateWeekNumber(String value) {
-    if (value.isEmpty) return "Week number is required";
-    if (!RegExp(r'^\d+$').hasMatch(value))
-      return "Week number must be a number";
-    int? number = int.tryParse(value);
-    if (number == null || number < 1 || number > 45)
-      return "Week number must be between 1 and 45";
+  String? validateMeasurementDate(String value) {
+    if (value.isEmpty) return "Measurement date is required";
+    if (!RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(value))
+      return "Invalid date format. Please use YYYY-MM-DD";
     return null;
   }
 
@@ -111,48 +107,6 @@ class FetalGrowthMeasurementController extends GetxController {
     if (number == null || number <= 0) return "Weight must be greater than 0";
     return null;
   }
-
-  String? validateHeartRate(String value) {
-    if (!RegExp(r'^\d+$').hasMatch(value)) return "Heart rate must be a number";
-    int? number = int.tryParse(value);
-    if (number == null || number < 60 || number > 200)
-      return "Heart rate must be between 60 and 200";
-    return null;
-  }
-
-  String? validateBellyCircumference(String value) {
-    if (!RegExp(r'^\d*\.?\d+$').hasMatch(value))
-      return "Belly circumference must be a number";
-    double? number = double.tryParse(value);
-    if (number == null || number <= 0)
-      return "Belly circumference must be greater than 0";
-    return null;
-  }
-
-  String? validateHeadCircumference(String value) {
-    if (!RegExp(r'^\d*\.?\d+$').hasMatch(value))
-      return "Head circumference must be a number";
-    double? number = double.tryParse(value);
-    if (number == null || number <= 0)
-      return "Head circumference must be greater than 0";
-    return null;
-  }
-
-  String? validateMovementCount(String value) {
-    if (!RegExp(r'^\d+$').hasMatch(value))
-      return "Movement count must be a number";
-    int? number = int.tryParse(value);
-    if (number == null || number < 0)
-      return "Movement count must be greater than or equal to 0";
-    return null;
-  }
-
-  // String? validateNotes(String value) {
-  //   if (value.isEmpty || value.length < 2) {
-  //     return "Notes is not valid";
-  //   }
-  //   return null;
-  // }
 
   // Thêm hàm để setup refresh listener
   void setupRefreshListener() {
@@ -344,92 +298,127 @@ class FetalGrowthMeasurementController extends GetxController {
   Future<void> addFetalGrowthMeasurement() async {
     try {
       isLoading.value = true;
+
+      // Validate form
       final isValid = fetalGrowthMeasurementFormKey.currentState!.validate();
       if (!isValid) {
+        isLoading.value = false;
         return;
       }
-      fetalGrowthMeasurementFormKey.currentState!.save();
 
-      DateTime measurementDate =
-          DateFormat('yyyy-MM-dd').parse(measurementDateController.text);
+      // Validate measurement date
+      if (measurementDateController.text.isEmpty) {
+        errorMessage.value = "Measurement date is required";
+        isLoading.value = false;
+        return;
+      }
 
+      // Parse date with error handling
+      DateTime measurementDate;
+      try {
+        measurementDate =
+            DateFormat('yyyy-MM-dd').parse(measurementDateController.text);
+      } catch (e) {
+        errorMessage.value = "Invalid date format. Please use YYYY-MM-DD";
+        isLoading.value = false;
+        return;
+      }
+
+      // Parse other values with null checks and error handling
+      double? height = double.tryParse(heightController.text);
+      double? weight = double.tryParse(weightController.text);
+      int? heartRate = int.tryParse(heartRateController.text);
+      double? bellyCircumference =
+          double.tryParse(bellyCircumferenceController.text);
+      double? headCircumference =
+          double.tryParse(headCircumferenceController.text);
+      int? movementCount = int.tryParse(movementCountController.text ?? '0');
+
+      // Validate required fields
+      if (height == null || weight == null) {
+        errorMessage.value = "Height and weight must be valid numbers";
+        isLoading.value = false;
+        return;
+      }
+
+      // Create model with validated data
       FetalGrowthMeasurementModel fetalGrowthMeasurement =
           FetalGrowthMeasurementModel(
         pregnancyProfileId: pregnancyId,
         measurementDate: measurementDate,
-        weekNumber: int.parse(weekNumberController.text),
-        height: double.parse(heightController.text),
-        weight: double.parse(weightController.text),
-        heartRate: int.parse(heartRateController.text),
-        bellyCircumference: double.parse(bellyCircumferenceController.text),
-        headCircumference: double.parse(headCircumferenceController.text),
+        height: height,
+        weight: weight,
+        heartRate: heartRate ?? 0, // Use default value if null
+        bellyCircumference: bellyCircumference ?? 0,
+        headCircumference: headCircumference ?? 0,
+        movementCount: movementCount ?? 0,
         notes: notesController.text,
       );
 
+      // Call API
       var response =
           await FetalGrowthMeasurementRepository.createFetalGrowthMeasurement(
               fetalGrowthMeasurement);
 
       if (response.statusCode == 200) {
-        // Trigger refresh
-
-        clearFormFields(); // Thêm hàm này để clear form
+        clearFormFields();
         Get.back(result: true);
-        Get.snackbar('Success', 'Fetal growth measurement added successfully');
-        await fetchFetalGrowthMeasurementData();
+        // Đưa result về true để màn hình trước biết là đã tạo thành công
+        await showDialog(
+          context: Get.context!,
+          builder: (BuildContext context) {
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Container(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'Success',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Text('Fetal growth measurement added successfully!'),
+                    SizedBox(height: 20),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('OK'),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+
+        Get.find<FetalGrowthMeasurementController>()
+            .fetchFetalGrowthMeasurementData();
       } else if (response.statusCode == 401) {
         handleUnauthorized(response as Response<dynamic>);
+      } else if (response.statusCode == 400) {
+        var errorData = jsonDecode(response.body);
+        errorMessage.value = errorData['message'] ?? 'Bad Request';
       } else {
         handleError(response as Response<dynamic>);
       }
     } catch (e) {
-      print('Error adding measurement: $e');
-      Get.snackbar('Error', 'Failed to add measurement');
+      print('Error in addFetalGrowthMeasurement: $e');
+      errorMessage.value = 'An error occurred while saving the measurement';
     } finally {
       isLoading.value = false;
     }
   }
 
-  // Thêm hàm để qua màn hình update measurement
-  void navigateToUpdateMeasurement(int index) {
-    var measurement = fetalGrowthMeasurementModel[index];
-    Get.toNamed(
-      AppRoutes.updatefetalgrowthmeasurement,
-      arguments: {
-        'measurementId': measurement.id,
-        // 'pregnancyId': pregnancyId,
-      },
-    );
-  }
-
-  // Thêm hàm để xóa measurement
-  // Future<void> deleteMeasurement(int measurementId) async {
-  //   try {
-  //     isLoading.value = true;
-  //     var response =
-  //         await FetalGrowthMeasurementRepository.deleteFetalGrowthMeasurement(
-  //             measurementId);
-
-  //     if (response.statusCode == 200) {
-  //       // Trigger refresh sau khi xóa
-  //       await fetchFetalGrowthMeasurementData();
-  //       Get.snackbar('Success', 'Measurement deleted successfully');
-  //     } else if (response.statusCode == 401) {
-  //       handleUnauthorized(response);
-  //     } else {
-  //       handleError(response);
-  //     }
-  //   } catch (e) {
-  //     print('Error deleting measurement: $e');
-  //     Get.snackbar('Error', 'Failed to delete measurement');
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
-
   // Hàm để clear form fields
   void clearFormFields() {
-    weekNumberController.clear();
     heightController.clear();
     weightController.clear();
     heartRateController.clear();

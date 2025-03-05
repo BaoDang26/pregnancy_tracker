@@ -26,11 +26,20 @@ class LoginController extends GetxController {
   }
 
   @override
-  void onClose() {
+  void dispose() {
+    emailController.clear();
+    passwordController.clear();
     emailController.dispose();
     passwordController.dispose();
-    super.onClose();
+    super.dispose();
   }
+
+  // @override
+  // void onClose() {
+  //   emailController.dispose();
+  //   passwordController.dispose();
+  //   super.onClose();
+  // }
 
   String? validateEmail(String value) {
     if (value.isEmpty || !value.contains('@gmail.com')) {

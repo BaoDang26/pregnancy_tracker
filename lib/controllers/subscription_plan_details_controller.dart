@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:ui' as ui;
 import 'dart:html' as html;
@@ -70,10 +71,10 @@ class SubscriptionPlanDetailsController extends GetxController {
       String paymentUrl = jsonDecode(jsonResult)["paymentUrl"];
       Uri url = Uri.parse(paymentUrl); // Sử dụng url_launcher để mở URL
       if (await canLaunchUrl(url)) {
-        await launchUrl(url, webOnlyWindowName: '_self');
+        await launchUrl(url, webOnlyWindowName: '_blank');
       } else {
-        // Fallback sử dụng window.open
-        html.window.open(paymentUrl, '_self');
+        // Fallback cũng sử dụng '_blank' để mở tab mới
+        html.window.open(paymentUrl, '_blank');
       }
     } else if (response.statusCode == 401) {
       String message = jsonDecode(response.body)['message'];
@@ -82,7 +83,25 @@ class SubscriptionPlanDetailsController extends GetxController {
       }
     } else if (response.statusCode == 400) {
       String message = jsonDecode(response.body)['message'];
-      Get.snackbar("Error server ${response.statusCode}", message);
+
+      // Kiểm tra nếu là thông báo "User already have an active subscription"
+      if (message.contains("User already has an active subscription.")) {
+        Get.dialog(
+          AlertDialog(
+            title: Text("Notification"),
+            content: Text("You already have an active subscription."),
+            actions: [
+              TextButton(
+                onPressed: () => Get.back(),
+                child:
+                    Text("Close", style: TextStyle(color: Colors.green[700])),
+              ),
+            ],
+          ),
+        );
+      } else {
+        Get.snackbar("Error server ${response.statusCode}", message);
+      }
     } else if (response.statusCode == 403) {
       // String message = jsonDecode(response.body)['message'];
       Get.snackbar('Already subscribed', 'You have already subscribed a plan');

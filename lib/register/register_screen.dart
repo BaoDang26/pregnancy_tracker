@@ -110,7 +110,7 @@ class RegisterScreen extends GetView<RegisterController> {
                         validator: (value) {
                           return controller.validateRePassword(value!);
                         },
-                        hintTxt: 'Enter your password',
+                        hintTxt: 'Enter confirm password',
                         isObscure: controller.confirmPasswordVisible.value,
                         suffixIcon: IconButton(
                           icon: controller.confirmPasswordVisible.value

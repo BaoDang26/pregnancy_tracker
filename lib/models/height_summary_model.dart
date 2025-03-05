@@ -15,7 +15,7 @@ class HeightSummaryModel {
   int? id;
   int? weekNumber;
   DateTime? measurementDate;
-  int? height;
+  double? height;
   int? pregnancyProfileId;
 
   HeightSummaryModel({

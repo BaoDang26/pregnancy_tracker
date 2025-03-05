@@ -118,9 +118,13 @@ class RegisterController extends GetxController {
       address: address,
     );
 
-    var response = await AuthenticationRepository.postRegister(registerAccount);
+    var response = await AuthenticationRepository.postRegister(
+        accountModelToJson(registerAccount));
     // kiểm tra kết quả
     if (response.statusCode == 200) {
+      String jsonResult = utf8.decode(response.bodyBytes);
+      var data = json.decode(jsonResult);
+      Get.snackbar("Success", "Please verify your email");
       Get.toNamed(AppRoutes.login);
     } else if (response.statusCode == 400) {
       print('register failed!!!!');

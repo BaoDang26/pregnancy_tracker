@@ -56,33 +56,33 @@ class FetalGrowthMeasurementRepository {
     return response;
   }
 
-  static Future<http.Response> createFetalGrowthMeasurement(FetalGrowthMeasurementModel fetalGrowthMeasurementModel) async {
+  static Future<http.Response> createFetalGrowthMeasurement(
+      FetalGrowthMeasurementModel fetalGrowthMeasurementModel) async {
     http.Response response;
 
     Map<String, String> header = {
       "Content-type": "application/json",
     };
     response = await interceptedClient.post(
-      BuildServer.buildUrl("fetal-growth/create"),
-      headers: header,
-      body: json.encode(fetalGrowthMeasurementModel.toCreateJson()));
-      
-    
+        BuildServer.buildUrl("fetal-growth/create"),
+        headers: header,
+        body: json.encode(fetalGrowthMeasurementModel.toCreateJson()));
+
     return response;
   }
 
-  static Future<http.Response> updateFetalGrowthMeasurement(FetalGrowthMeasurementModel fetalGrowthMeasurementModel) async {
+  static Future<http.Response> updateFetalGrowthMeasurement(
+      FetalGrowthMeasurementModel fetalGrowthMeasurementModel) async {
     http.Response response;
 
     Map<String, String> header = {
       "Content-type": "application/json",
     };
-    response = await interceptedClient.post(
-      BuildServer.buildUrl("fetal-growth/update"),
-      headers: header,
-      body: json.encode(fetalGrowthMeasurementModel.toUpdateJson()));
-      
-    
+    response = await interceptedClient.put(
+        BuildServer.buildUrl("fetal-growth/update"),
+        headers: header,
+        body: json.encode(fetalGrowthMeasurementModel.toUpdateJson()));
+
     return response;
   }
 }

@@ -4,9 +4,10 @@ import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:pregnancy_tracker/widgets/custom_elevated_button.dart';
 
+import '../controllers/payment_success_controller.dart';
 import '../util/app_export.dart';
 
-class PaymentSuccessScreen extends StatelessWidget {
+class PaymentSuccessScreen extends GetView<PaymentSuccessController> {
   PaymentSuccessScreen({Key? key}) : super(key: key) {
     _confettiController = ConfettiController();
   }
@@ -79,14 +80,21 @@ class PaymentSuccessScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 32),
-
-                  // Nút Back to Home
-                  CustomElevatedButton(
-                    text: 'Back to Home',
-                    onPressed: () {
-                      Get.offAllNamed('/home');
-                    },
+                  //Text thông báo trở về tab trước
+                  Text(
+                    'Back to previous tab to enable the features',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[600],
+                    ),
                   ),
+                  // Nút Back to Home
+                  // CustomElevatedButton(
+                  //   text: 'Back to Home',
+                  //   onPressed: () {
+                  //     controller.goToHomeScreen();
+                  //   },
+                  // ),
                 ],
               ),
             ),

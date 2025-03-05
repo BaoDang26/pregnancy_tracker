@@ -1,12 +1,13 @@
-import 'dart:async';
+import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:pregnancy_tracker/models/schedule_model.dart';
+import 'dart:async';
 
-import '../config/build_server.dart';
 import '../util/app_export.dart';
 
-class SubscriptionPlanRepository {
-  static Future<http.Response> getSubscriptionPlanList() async {
+class ScheduleRepository {
+  static Future<http.Response> getScheduleList() async {
     http.Response response;
 
     Map<String, String> header = {
@@ -14,40 +15,42 @@ class SubscriptionPlanRepository {
     };
     response = await interceptedClient
         .get(
-          BuildServer.buildUrl("subscription-plans/all"),
-          // body: body,
+          BuildServer.buildUrl("schedules/all"),
           headers: header,
         )
         .timeout(const Duration(seconds: 30));
     return response;
   }
 
-  static Future<http.Response> getSubscriptionGuestPlanList() async {
+  static Future<http.Response> createSchedule(
+      ScheduleModel scheduleModel) async {
     http.Response response;
 
     Map<String, String> header = {
       "Content-type": "application/json",
     };
     response = await interceptedClient
-        .get(
-          BuildServer.buildUrl("guest/subscription-plans/all"),
-          // body: body,
+        .post(
+          BuildServer.buildUrl("schedules/create"),
           headers: header,
+          body: json.encode(scheduleModel.toCreateJson()),
         )
         .timeout(const Duration(seconds: 30));
     return response;
   }
 
-  static Future<http.Response> getSubscriptionPlanDetail(int id) async {
+  static Future<http.Response> updateSchedule(
+      Map<String, dynamic> scheduleData, int scheduleId) async {
     http.Response response;
 
     Map<String, String> header = {
       "Content-type": "application/json",
     };
     response = await interceptedClient
-        .get(
-          BuildServer.buildUrl("subscription-plans/$id"),
+        .put(
+          BuildServer.buildUrl("schedules/update/$scheduleId"),
           headers: header,
+          body: json.encode(scheduleData),
         )
         .timeout(const Duration(seconds: 30));
     return response;

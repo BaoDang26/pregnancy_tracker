@@ -21,7 +21,7 @@ class _SideBarNavGuestScreenState extends State<SideBarNavGuestScreen> {
     const HomeScreenGuest(),
     const BlogPostGuest(),
     // PregnancyProfileScreen(),
-    SubscriptionPlanGuest(),
+    SubscriptionPlanGuestScreen(),
     // AccountProfileScreen(),
     // const HomeScreen(),
     // WeeklyMenuScreen(),

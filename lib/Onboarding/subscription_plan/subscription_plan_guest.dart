@@ -1,74 +1,503 @@
 import 'package:flutter/material.dart';
 import 'package:pregnancy_tracker/util/app_export.dart';
-import '../../widgets/custom_card_subscription_plan_guest_widget.dart';
-import '../../widgets/custom_card_subscription_plan_widget.dart';
+import 'package:pregnancy_tracker/util/num_utils.dart';
+import '../../controllers/subscription_plan_guest_controller.dart';
+import '../../widgets/custom_elevated_button.dart';
+import 'package:intl/intl.dart';
 
-class SubscriptionPlanGuest extends StatelessWidget {
-  const SubscriptionPlanGuest({super.key});
+class SubscriptionPlanGuestScreen
+    extends GetView<SubscriptionPlanGuestController> {
+  const SubscriptionPlanGuestScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Subscription Plans'),
-      // ),
-      body: Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'SUBSCRIPTION PLANS',
-              style: TextStyle(
-                fontSize: 47, // Adjust the font size as needed
-                fontWeight: FontWeight.bold,
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xFFE8F5E9),
+                  Color(0xFFC8E6C9),
+                ],
               ),
             ),
-            Expanded(
-              // Ensure GridView takes available space
-              child: GridView.builder(
-                padding: const EdgeInsets.all(10.0),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3, // Số cột
-                  crossAxisSpacing: 10.0,
-                  mainAxisSpacing: 10.0,
-                  childAspectRatio: 1.1, // Tỉ lệ chiều rộng/chiều cao
+            child: Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.green[700]!),
+              ),
+            ),
+          );
+        }
+
+        return Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xFFE8F5E9),
+                Color(0xFFC8E6C9),
+                Color(0xFFB2DFDB),
+              ],
+            ),
+          ),
+          child: SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header Section
+                _buildHeaderSection(context),
+
+                // Info Banner
+                _buildInfoBanner(),
+
+                // Subscription Plans Section
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: controller.subscriptionPlanList.isEmpty
+                        ? _buildEmptyState()
+                        : _buildPlansList(),
+                  ),
                 ),
-                itemCount: 5, // Số lượng gói
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      // controller.goToBlogDetail(index);
-                    },
-                    child: AspectRatio(
-                      aspectRatio:
-                          1.0, // Adjust this ratio to fit the Container
-                      child: Stack(
-                        children: [
-                          SubscriptionPlanGuestCard(
-                            title: 'Pro',
-                            price: '\$25',
-                            details:
-                                '\$30 USD if billed monthly\n3 Licenses Minimum',
-                            features: [
-                              'All Standard plan features, plus:',
-                              'CRM integrations',
-                              'Unlimited meetings',
-                              'Hold queues',
-                              'Zapier, Zendesk, Slack integrations',
-                            ],
-                            buttonText: 'Get Started',
-                          )
-                        ],
+              ],
+            ),
+          ),
+        );
+      }),
+    );
+  }
+
+  Widget _buildHeaderSection(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.fromLTRB(20, 20, 20, 15),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFF66BB6A),
+            Color(0xFF4CAF50),
+          ],
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 8,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.2),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.card_membership,
+                      color: Colors.white,
+                      size: 26,
+                    ),
+                  ),
+                  SizedBox(width: 12),
+                  Text(
+                    'Subscription Plans',
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      letterSpacing: 0.5,
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.85),
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 4,
+                      offset: Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.history,
+                    color: Colors.green[700],
+                  ),
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.usersubscription);
+                  },
+                  tooltip: 'Subscription History',
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 8),
+          Text(
+            'Enhance your pregnancy journey with premium features',
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.white.withOpacity(0.9),
+              fontStyle: FontStyle.italic,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoBanner() {
+    return Container(
+      margin: EdgeInsets.fromLTRB(16, 16, 16, 8),
+      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Colors.blue[50]!,
+            Colors.blue[100]!,
+          ],
+        ),
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 4,
+            offset: Offset(0, 2),
+          ),
+        ],
+        border: Border.all(
+          color: Colors.blue[300]!.withOpacity(0.5),
+          width: 1,
+        ),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            Icons.info_outline,
+            color: Colors.blue[700],
+            size: 22,
+          ),
+          SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              'Choose a subscription plan to access all premium features and content',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.blue[800],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.payments_outlined,
+            size: 80,
+            color: Colors.grey[400],
+          ),
+          SizedBox(height: 16),
+          Text(
+            'No subscription plans available',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey[600],
+            ),
+          ),
+          SizedBox(height: 8),
+          Text(
+            'Please check back later',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey[500],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPlansList() {
+    return ListView.builder(
+      padding: EdgeInsets.only(top: 8, bottom: 20),
+      itemCount: controller.subscriptionPlanList.length,
+      itemBuilder: (context, index) {
+        final plan = controller.subscriptionPlanList[index];
+        return _buildSubscriptionCard(plan, index, context);
+      },
+    );
+  }
+
+  Widget _buildSubscriptionCard(dynamic plan, int index, BuildContext context) {
+    // Define color schemes for different plans (alternating)
+    final List<Color> cardColors = [
+      Colors.blue[50]!,
+      Colors.purple[50]!,
+      Colors.amber[50]!,
+    ];
+
+    final List<Color> accentColors = [
+      Colors.blue[700]!,
+      Colors.purple[700]!,
+      Colors.amber[700]!,
+    ];
+
+    final Color cardColor = cardColors[index % cardColors.length];
+    final Color accentColor = accentColors[index % accentColors.length];
+
+    final bool isPopular =
+        index == 1; // Mark the second plan as popular for example
+
+    return Container(
+      margin: EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.06),
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Column(
+          children: [
+            // Popular tag if applicable
+            if (isPopular)
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(vertical: 6),
+                color: Colors.orange[400],
+                child: Center(
+                  child: Text(
+                    'MOST POPULAR',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                      letterSpacing: 1,
+                    ),
+                  ),
+                ),
+              ),
+
+            // Card Content
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    cardColor,
+                    Colors.white,
+                  ],
+                ),
+              ),
+              child: Stack(
+                children: [
+                  // Decorative element
+                  Positioned(
+                    right: -20,
+                    top: -20,
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: accentColor.withOpacity(0.08),
+                        shape: BoxShape.circle,
                       ),
                     ),
-                  );
-                },
+                  ),
+
+                  // Main content
+                  Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Plan name and icon
+                        Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: accentColor.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Icon(
+                                _getIconForPlan(plan.name ?? ''),
+                                color: accentColor,
+                                size: 24,
+                              ),
+                            ),
+                            SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    plan.name ?? 'Premium Plan',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey[800],
+                                    ),
+                                  ),
+                                  Text(
+                                    '${plan.duration} days access',
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      color: Colors.grey[600],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        SizedBox(height: 16),
+
+                        // Price
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              '${NumberFormat('#,###').format((plan.price ?? 0).round())}',
+                              style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: accentColor,
+                              ),
+                            ),
+                            SizedBox(width: 4),
+                            Text(
+                              'VND',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: accentColor,
+                              ),
+                            ),
+                          ],
+                        ),
+
+                        SizedBox(height: 16),
+
+                        // Description
+                        Text(
+                          plan.description ?? 'No description available',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey[700],
+                            height: 1.4,
+                          ),
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+
+                        SizedBox(height: 20),
+
+                        // Subscribe button
+                        SizedBox(
+                          width: double.infinity,
+                          height: 46,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                  title: Text('Login Required'),
+                                  content: Text('You must login to subscribe.'),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: Text('Cancel'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                        Get.toNamed(AppRoutes.login);
+                                      },
+                                      child: Text('Login',
+                                          style: TextStyle(
+                                              color: Colors.green[700])),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: accentColor,
+                              foregroundColor: Colors.white,
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            child: Text(
+                              'Subscribe Now',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  // Helper method to get appropriate icon based on plan name
+  IconData _getIconForPlan(String planName) {
+    final name = planName.toLowerCase();
+
+    if (name.contains('basic')) return Icons.star_outline;
+    if (name.contains('standard')) return Icons.star_half;
+    if (name.contains('premium')) return Icons.star;
+    if (name.contains('pro')) return Icons.workspace_premium;
+    if (name.contains('family')) return Icons.family_restroom;
+    if (name.contains('monthly')) return Icons.calendar_month;
+    if (name.contains('yearly')) return Icons.calendar_today;
+
+    // Default icon if no match
+    return Icons.card_membership;
   }
 }

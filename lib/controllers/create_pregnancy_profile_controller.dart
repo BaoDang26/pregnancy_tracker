@@ -126,6 +126,40 @@ class CreatePregnancyProfileController extends GetxController {
       // convert list exercises from json
       await getPregnancyProfileList();
       Get.back(result: true);
+      showDialog(
+        context: Get.context!,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Container(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Success',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text('Pregnancy profile created successfully!'),
+                  SizedBox(height: 20),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
       // Get.snackbar("Success", jsonDecode(response.body)["message"]);
     } else if (response.statusCode == 400) {
       // thông báo lỗi

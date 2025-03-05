@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: theme(),
       initialBinding: InitialBindings(),
-      initialRoute: AppRoutes.login,
+      initialRoute: AppRoutes.sidebarnarguest,
       getPages: AppRoutes.pages,
       // home: HomeScreen(),
     );

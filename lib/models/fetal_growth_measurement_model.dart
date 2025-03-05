@@ -3,6 +3,7 @@
 //     final fetalGrowthMeasurementModel = fetalGrowthMeasurementModelFromJson(jsonString);
 
 import 'dart:convert';
+// import 'dart:ffi';
 
 List<FetalGrowthMeasurementModel> fetalGrowthMeasurementModelFromJson(
         String str) =>
@@ -21,7 +22,7 @@ class FetalGrowthMeasurementModel {
   double? height;
   double? headCircumference;
   double? bellyCircumference;
-  double? heartRate;
+  int? heartRate;
   int? movementCount;
   String? notes;
   int? pregnancyProfileId;
@@ -90,7 +91,8 @@ class FetalGrowthMeasurementModel {
   Map<String, dynamic> toUpdateJson() => {
         "id": id,
         "weekNumber": weekNumber,
-        "measurementDate": measurementDate,
+        "measurementDate":
+            "${measurementDate?.year.toString().padLeft(4, '0')}-${measurementDate?.month.toString().padLeft(2, '0')}-${measurementDate?.day.toString().padLeft(2, '0')}",
         "weight": weight,
         "pregnancyProfileId": pregnancyProfileId,
         "height": height,

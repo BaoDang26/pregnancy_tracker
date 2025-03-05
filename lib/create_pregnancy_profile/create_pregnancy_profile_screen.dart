@@ -335,40 +335,40 @@ class CreatePregnancyProfileScreen
                               controller.pregnancyProfileFormKey.currentState!
                                   .save();
                               await controller.createPregnancyProfile();
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return Dialog(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Container(
-                                      padding: EdgeInsets.all(20),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Text(
-                                            'Success',
-                                            style: TextStyle(
-                                              fontSize: 24,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                          SizedBox(height: 10),
-                                          Text('Profile created successfully!'),
-                                          SizedBox(height: 20),
-                                          TextButton(
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: Text('OK'),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
+                              // showDialog(
+                              //   context: context,
+                              //   builder: (BuildContext context) {
+                              //     return Dialog(
+                              //       shape: RoundedRectangleBorder(
+                              //         borderRadius: BorderRadius.circular(12),
+                              //       ),
+                              //       child: Container(
+                              //         padding: EdgeInsets.all(20),
+                              //         child: Column(
+                              //           mainAxisSize: MainAxisSize.min,
+                              //           children: [
+                              //             Text(
+                              //               'Success',
+                              //               style: TextStyle(
+                              //                 fontSize: 24,
+                              //                 fontWeight: FontWeight.bold,
+                              //               ),
+                              //             ),
+                              //             SizedBox(height: 10),
+                              //             Text('Profile created successfully!'),
+                              //             SizedBox(height: 20),
+                              //             TextButton(
+                              //               onPressed: () {
+                              //                 Navigator.of(context).pop();
+                              //               },
+                              //               child: Text('OK'),
+                              //             ),
+                              //           ],
+                              //         ),
+                              //       ),
+                              //     );
+                              //   },
+                              // );
                             }
                           },
                           text: 'Create Profile',

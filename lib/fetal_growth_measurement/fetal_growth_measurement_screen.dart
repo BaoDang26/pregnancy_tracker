@@ -7,6 +7,8 @@ import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/fetal_growth_measurement_controller.dart';
+import '../routes/app_routes.dart';
+import '../util/app_export.dart';
 
 class FetalGrowthMeasurementScreen
     extends GetView<FetalGrowthMeasurementController> {
@@ -37,12 +39,27 @@ class FetalGrowthMeasurementScreen
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                Text(
-                  'Fetal Growth Statistics',
-                  style: TextStyle(
-                    fontSize: 48,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Fetal Growth Statistics',
+                      style: TextStyle(
+                        fontSize: 48,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 300, // Giới hạn chiều rộng của nút
+                      child: CustomElevatedButton(
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.createfetalgrowthmeasurement,
+                              arguments: controller.pregnancyId);
+                        },
+                        text: 'Add Measurement',
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 16),
                 Row(
@@ -72,34 +89,43 @@ class FetalGrowthMeasurementScreen
                                 text: 'Weight Over Gestational Weeks'),
                             legend: Legend(isVisible: true),
                             tooltipBehavior: TooltipBehavior(enable: true),
-                            primaryXAxis: CategoryAxis(
+                            primaryXAxis: NumericAxis(
                               title: AxisTitle(text: 'Gestational Weeks'),
+                              minimum: 0,
+                              maximum: 45,
+                              interval: 5,
                             ),
                             primaryYAxis: NumericAxis(
-                              title: AxisTitle(text: 'Height (cm)'),
+                              title: AxisTitle(text: 'Weight (g)'),
                             ),
                             series: <CartesianSeries>[
-                              LineSeries<WeightData, String>(
-                                dataSource: controller.weightData,
-                                xValueMapper: (WeightData data, _) =>
-                                    data.week.toString(),
-                                yValueMapper: (WeightData data, _) =>
-                                    data.weight,
-                                name: 'Weight (User Data)',
-                                dataLabelSettings:
-                                    DataLabelSettings(isVisible: true),
-                              ),
-                              LineSeries<WeightData, String>(
+                              LineSeries<WeightData, num>(
                                 dataSource: getReferenceWeightData(),
-                                xValueMapper: (WeightData data, _) =>
-                                    data.week.toString(),
+                                xValueMapper: (WeightData data, _) => data.week,
                                 yValueMapper: (WeightData data, _) =>
                                     data.weight,
-                                name: 'Weight (Reference Data)',
-                                dataLabelSettings:
-                                    DataLabelSettings(isVisible: true),
-                                color: Colors.purple,
-                                dashArray: <double>[5, 5],
+                                name: 'Reference Weight',
+                                color: Colors.grey[300],
+                                width: 2,
+                              ),
+                              LineSeries<WeightData, num>(
+                                dataSource: controller.weightData,
+                                xValueMapper: (WeightData data, _) => data.week,
+                                yValueMapper: (WeightData data, _) =>
+                                    data.weight,
+                                name: 'Your Baby\'s Weight',
+                                color: Colors.green,
+                                width: 3,
+                                markerSettings: MarkerSettings(
+                                  isVisible: true,
+                                  shape: DataMarkerType.circle,
+                                  height: 8,
+                                  width: 8,
+                                ),
+                                dataLabelSettings: DataLabelSettings(
+                                  isVisible: true,
+                                  labelAlignment: ChartDataLabelAlignment.top,
+                                ),
                               ),
                             ],
                           );
@@ -132,41 +158,63 @@ class FetalGrowthMeasurementScreen
                                 text: 'Height Over Gestational Weeks'),
                             legend: Legend(isVisible: true),
                             tooltipBehavior: TooltipBehavior(enable: true),
-                            primaryXAxis: CategoryAxis(
+                            primaryXAxis: NumericAxis(
                               title: AxisTitle(text: 'Gestational Weeks'),
+                              minimum: 0,
+                              maximum: 45,
+                              interval: 5,
                             ),
                             primaryYAxis: NumericAxis(
                               title: AxisTitle(text: 'Height (cm)'),
                             ),
                             series: <CartesianSeries>[
-                              LineSeries<HeightData, String>(
-                                dataSource: controller.heightData,
-                                xValueMapper: (HeightData data, _) =>
-                                    data.week.toString(),
+                              LineSeries<HeightData, num>(
+                                dataSource: getReferenceHeightData(),
+                                xValueMapper: (HeightData data, _) => data.week,
                                 yValueMapper: (HeightData data, _) =>
                                     data.height,
-                                name: 'Height (User Data)',
+                                name: 'Reference Height',
+                                color: Colors.grey[300],
+                                width: 2,
+                              ),
+                              LineSeries<HeightData, num>(
+                                dataSource: controller.heightData,
+                                xValueMapper: (HeightData data, _) => data.week,
+                                yValueMapper: (HeightData data, _) =>
+                                    data.height,
+                                dataLabelMapper: (HeightData data, _) =>
+                                    'Week: ${data.week}\nHeight: ${data.height.toStringAsFixed(1)} cm',
+                                name: 'Your Baby\'s Height',
+                                color: Colors.purple,
+                                width: 3,
+                                markerSettings: MarkerSettings(
+                                  isVisible: true,
+                                  shape: DataMarkerType.circle,
+                                  height: 8,
+                                  width: 8,
+                                ),
                                 dataLabelSettings: DataLabelSettings(
                                   isVisible: true,
+                                  labelAlignment: ChartDataLabelAlignment.top,
                                   builder: (dynamic data,
                                       dynamic point,
                                       dynamic series,
                                       int pointIndex,
                                       int seriesIndex) {
-                                    // Find reference height for this week
+                                    // Tìm chiều cao tham chiếu cho tuần này
                                     double referenceHeight =
                                         getReferenceHeightData()
                                             .firstWhere(
                                               (element) =>
-                                                  element.week == data.week!,
+                                                  element.week == data.week,
                                               orElse: () =>
-                                                  HeightData(data.week!, 0),
+                                                  HeightData(data.week, 0),
                                             )
                                             .height;
 
-                                    // Check if height deviation is more than 3cm
+                                    // Kiểm tra độ chênh lệch
                                     double deviation =
-                                        (data.height! - referenceHeight).abs();
+                                        (data.height - referenceHeight).abs();
                                     if (deviation > 3) {
                                       return Container(
                                         padding: EdgeInsets.all(4),
@@ -179,36 +227,40 @@ class FetalGrowthMeasurementScreen
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Text(
-                                              '${data.height!.toStringAsFixed(1)}',
+                                              'Week: ${data.week}',
                                               style: TextStyle(
-                                                  color: Colors.white),
+                                                color: Colors.white,
+                                                fontSize: 10,
+                                              ),
                                             ),
+                                            // Text(
+                                            //   '${data.height.toStringAsFixed(1)}',
+                                            //   style: TextStyle(
+                                            //       color: Colors.white),
+                                            // ),
                                             Text(
                                               '⚠️ ${deviation.toStringAsFixed(1)}cm',
                                               style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 10),
+                                                color: Colors.white,
+                                                fontSize: 10,
+                                              ),
                                             ),
                                           ],
                                         ),
                                       );
                                     }
-                                    return Text(
-                                        data.height!.toStringAsFixed(1));
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          'Week: ${data.week}',
+                                          style: TextStyle(fontSize: 10),
+                                        ),
+                                        Text(data.height.toStringAsFixed(1)),
+                                      ],
+                                    );
                                   },
                                 ),
-                              ),
-                              LineSeries<HeightData, String>(
-                                dataSource: getReferenceHeightData(),
-                                xValueMapper: (HeightData data, _) =>
-                                    data.week.toString(),
-                                yValueMapper: (HeightData data, _) =>
-                                    data.height,
-                                name: 'Height (Reference Data)',
-                                dataLabelSettings:
-                                    DataLabelSettings(isVisible: true),
-                                color: Colors.purple,
-                                dashArray: <double>[5, 5],
                               ),
                             ],
                           );
@@ -313,11 +365,12 @@ class FetalGrowthMeasurementScreen
                                               ),
                                             ),
                                             IconButton(
-                                              icon: const Icon(Icons.delete,
+                                              icon: const Icon(Icons.update,
                                                   color: Colors.red),
                                               onPressed: () {
-                                                // Thêm logic xóa ở đây
-                                                // controller.deleteMeasurement(measurement.id);
+                                                controller
+                                                    .navigateToUpdateMeasurement(
+                                                        index);
                                               },
                                             ),
                                           ],
@@ -325,11 +378,25 @@ class FetalGrowthMeasurementScreen
                                         const SizedBox(height: 12),
                                         Row(
                                           children: [
+                                            const Icon(Icons.timelapse,
+                                                color: Colors.green),
+                                            const SizedBox(width: 8),
+                                            Text(
+                                              'Pregnancy Week: ${measurement.weekNumber} ',
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Row(
+                                          children: [
                                             const Icon(Icons.monitor_weight,
                                                 color: Colors.green),
                                             const SizedBox(width: 8),
                                             Text(
-                                              'Weight: ${measurement.weight} g',
+                                              'Weight (g): ${measurement.weight}',
                                               style: const TextStyle(
                                                 fontSize: 16,
                                               ),
@@ -343,7 +410,7 @@ class FetalGrowthMeasurementScreen
                                                 color: Colors.purple),
                                             const SizedBox(width: 8),
                                             Text(
-                                              'Height: ${measurement.height} cm',
+                                              'Height (cm): ${measurement.height}',
                                               style: const TextStyle(
                                                 fontSize: 16,
                                               ),
@@ -357,7 +424,7 @@ class FetalGrowthMeasurementScreen
                                                 color: Colors.blue),
                                             const SizedBox(width: 8),
                                             Text(
-                                              'Head Circumference: ${measurement.headCircumference} cm',
+                                              'Head Circumference (cm): ${measurement.headCircumference}',
                                               style:
                                                   const TextStyle(fontSize: 16),
                                             ),
@@ -371,7 +438,7 @@ class FetalGrowthMeasurementScreen
                                                 color: Colors.orange),
                                             const SizedBox(width: 8),
                                             Text(
-                                              'Belly Circumference: ${measurement.bellyCircumference} cm',
+                                              'Belly Circumference (cm): ${measurement.bellyCircumference}',
                                               style:
                                                   const TextStyle(fontSize: 16),
                                             ),
@@ -384,7 +451,7 @@ class FetalGrowthMeasurementScreen
                                                 color: Colors.red),
                                             const SizedBox(width: 8),
                                             Text(
-                                              'Heart Rate: ${measurement.heartRate} bpm',
+                                              'Heart Rate (bpm): ${measurement.heartRate}',
                                               style:
                                                   const TextStyle(fontSize: 16),
                                             ),
@@ -418,603 +485,6 @@ class FetalGrowthMeasurementScreen
                             );
                           }),
                         ),
-                      ),
-                    ),
-                    SizedBox(width: 24),
-                    Expanded(
-                      flex: 1,
-                      child: CustomElevatedButton(
-                        // width: 100,
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: Text(
-                                  'Update Information',
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                                content: Container(
-                                  width: 600,
-                                  padding: EdgeInsets.all(16.0),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.black.withOpacity(0.1),
-                                        spreadRadius: 2,
-                                        blurRadius: 5,
-                                        offset: Offset(0, 3),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Form(
-                                    key: controller
-                                        .fetalGrowthMeasurementFormKey,
-                                    child: SingleChildScrollView(
-                                      child: ListBody(
-                                        children: <Widget>[
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  Colors.lightGreen[100]!,
-                                                  Colors.lightGreen[200]!,
-                                                ],
-                                                begin: Alignment.topLeft,
-                                                end: Alignment.bottomRight,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: TextFormField(
-                                              controller: controller
-                                                  .measurementDateController,
-                                              readOnly: true,
-                                              onTap: () async {
-                                                DateTime? pickedDate =
-                                                    await showDatePicker(
-                                                  context: context,
-                                                  initialDate: DateTime.now(),
-                                                  firstDate: DateTime(2000),
-                                                  lastDate: DateTime.now(),
-                                                  builder: (context, child) {
-                                                    return Theme(
-                                                      data: Theme.of(context)
-                                                          .copyWith(
-                                                        colorScheme:
-                                                            ColorScheme.light(
-                                                          primary: Colors.green,
-                                                          onPrimary:
-                                                              Colors.white,
-                                                          onSurface:
-                                                              Colors.black,
-                                                        ),
-                                                        textButtonTheme:
-                                                            TextButtonThemeData(
-                                                          style: TextButton
-                                                              .styleFrom(
-                                                            foregroundColor:
-                                                                Colors.green,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      child: child!,
-                                                    );
-                                                  },
-                                                );
-
-                                                if (pickedDate != null) {
-                                                  String formattedDate =
-                                                      DateFormat('yyyy-MM-dd')
-                                                          .format(pickedDate);
-                                                  controller
-                                                      .measurementDateController
-                                                      .text = formattedDate;
-                                                }
-                                              },
-                                              validator: (value) {
-                                                if (value == null ||
-                                                    value.isEmpty) {
-                                                  return 'Please select measurement date';
-                                                }
-                                                return null;
-                                              },
-                                              decoration: InputDecoration(
-                                                labelText: 'Measurement Date',
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[300]!),
-                                                ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[300]!),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[500]!),
-                                                ),
-                                                filled: true,
-                                                fillColor: Colors.transparent,
-                                                contentPadding:
-                                                    EdgeInsets.symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 5),
-                                                suffixIcon: Icon(
-                                                    Icons.calendar_today,
-                                                    color: Colors.green),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(height: 12),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  Colors.lightGreen[100]!,
-                                                  Colors.lightGreen[200]!,
-                                                ],
-                                                begin: Alignment.topLeft,
-                                                end: Alignment.bottomRight,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: TextFormField(
-                                              controller: controller
-                                                  .weekNumberController,
-                                              validator: (value) {
-                                                if (value == null ||
-                                                    value.isEmpty) {
-                                                  return 'Please enter week number';
-                                                }
-                                                if (int.tryParse(value) ==
-                                                    null) {
-                                                  return 'Please enter a valid number';
-                                                }
-                                                final week = int.parse(value);
-                                                if (week < 1 || week > 42) {
-                                                  return 'Week must be between 1 and 42';
-                                                }
-                                                return null;
-                                              },
-                                              decoration: InputDecoration(
-                                                labelText: 'Week Number',
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[300]!),
-                                                ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[300]!),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[500]!),
-                                                ),
-                                                filled: true,
-                                                fillColor: Colors.transparent,
-                                                contentPadding:
-                                                    EdgeInsets.symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 5),
-                                              ),
-                                              keyboardType:
-                                                  TextInputType.number,
-                                            ),
-                                          ),
-                                          SizedBox(height: 12),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  Colors.lightGreen[100]!,
-                                                  Colors.lightGreen[200]!,
-                                                ],
-                                                begin: Alignment.topLeft,
-                                                end: Alignment.bottomRight,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: TextFormField(
-                                              controller:
-                                                  controller.weightController,
-                                              validator: (value) {
-                                                return controller
-                                                    .validateWeight(value!);
-                                              },
-                                              onSaved: (value) {
-                                                controller.weight = value!;
-                                              },
-                                              decoration: InputDecoration(
-                                                labelText: 'Weight (g)',
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[300]!),
-                                                ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[300]!),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[500]!),
-                                                ),
-                                                filled: true,
-                                                fillColor: Colors.transparent,
-                                                contentPadding:
-                                                    EdgeInsets.symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 5),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(height: 12),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  Colors.lightGreen[100]!,
-                                                  Colors.lightGreen[200]!,
-                                                ],
-                                                begin: Alignment.topLeft,
-                                                end: Alignment.bottomRight,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: TextFormField(
-                                              controller:
-                                                  controller.heightController,
-                                              validator: (value) {
-                                                return controller
-                                                    .validateHeight(value!);
-                                              },
-                                              onSaved: (value) {
-                                                controller.height = value!;
-                                              },
-                                              decoration: InputDecoration(
-                                                labelText: 'Height (cm)',
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[300]!),
-                                                ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[300]!),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[500]!),
-                                                ),
-                                                filled: true,
-                                                fillColor: Colors.transparent,
-                                                contentPadding:
-                                                    EdgeInsets.symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 5),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(height: 12),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  Colors.lightGreen[100]!,
-                                                  Colors.lightGreen[200]!,
-                                                ],
-                                                begin: Alignment.topLeft,
-                                                end: Alignment.bottomRight,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: TextFormField(
-                                              controller: controller
-                                                  .headCircumferenceController,
-                                              validator: (value) {
-                                                return controller
-                                                    .validateHeadCircumference(
-                                                        value!);
-                                              },
-                                              onSaved: (value) {
-                                                controller.headCircumference =
-                                                    value!;
-                                              },
-                                              decoration: InputDecoration(
-                                                labelText:
-                                                    'Head Circumference (cm)',
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[300]!),
-                                                ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[300]!),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[500]!),
-                                                ),
-                                                filled: true,
-                                                fillColor: Colors.transparent,
-                                                contentPadding:
-                                                    EdgeInsets.symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 5),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(height: 12),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  Colors.lightGreen[100]!,
-                                                  Colors.lightGreen[200]!,
-                                                ],
-                                                begin: Alignment.topLeft,
-                                                end: Alignment.bottomRight,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: TextFormField(
-                                              controller: controller
-                                                  .bellyCircumferenceController,
-                                              validator: (value) {
-                                                return controller
-                                                    .validateBellyCircumference(
-                                                        value!);
-                                              },
-                                              onSaved: (value) {
-                                                controller.bellyCircumference =
-                                                    value!;
-                                              },
-                                              decoration: InputDecoration(
-                                                labelText:
-                                                    'Belly Circumference (cm)',
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[300]!),
-                                                ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[300]!),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[500]!),
-                                                ),
-                                                filled: true,
-                                                fillColor: Colors.transparent,
-                                                contentPadding:
-                                                    EdgeInsets.symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 5),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(height: 12),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  Colors.lightGreen[100]!,
-                                                  Colors.lightGreen[200]!,
-                                                ],
-                                                begin: Alignment.topLeft,
-                                                end: Alignment.bottomRight,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: TextFormField(
-                                              controller: controller
-                                                  .heartRateController,
-                                              validator: (value) {
-                                                return controller
-                                                    .validateHeartRate(value!);
-                                              },
-                                              onSaved: (value) {
-                                                controller.heartRate = value!;
-                                              },
-                                              decoration: InputDecoration(
-                                                labelText: 'Heart Rate (bpm)',
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[300]!),
-                                                ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[300]!),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[500]!),
-                                                ),
-                                                filled: true,
-                                                fillColor: Colors.transparent,
-                                                contentPadding:
-                                                    EdgeInsets.symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 5),
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(height: 12),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                colors: [
-                                                  Colors.lightGreen[100]!,
-                                                  Colors.lightGreen[200]!,
-                                                ],
-                                                begin: Alignment.topLeft,
-                                                end: Alignment.bottomRight,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                            ),
-                                            child: TextFormField(
-                                              controller:
-                                                  controller.notesController,
-                                              // validator: (value) {
-                                              //   return controller
-                                              //       .validateNotes(value!);
-                                              // },
-                                              onSaved: (value) {
-                                                controller.notes = value!;
-                                              },
-                                              decoration: InputDecoration(
-                                                labelText: 'Notes',
-                                                border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[300]!),
-                                                ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[300]!),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  borderSide: BorderSide(
-                                                      color:
-                                                          Colors.green[500]!),
-                                                ),
-                                                filled: true,
-                                                fillColor: Colors.transparent,
-                                                contentPadding:
-                                                    EdgeInsets.symmetric(
-                                                        horizontal: 10,
-                                                        vertical: 5),
-                                              ),
-                                              maxLines: 5,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                actions: <Widget>[
-                                  TextButton(
-                                    child: Text('Cancel'),
-                                    onPressed: () {
-                                      controller.clearFormFields();
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                  TextButton(
-                                    child: Text('Add Measurement'),
-                                    onPressed: () async {
-                                      await controller
-                                          .addFetalGrowthMeasurement();
-                                      Navigator.of(context).pop();
-                                      // await controller
-                                      //     .fetchFetalGrowthMeasurementData();
-
-                                      // TODO: Update the data using your controller
-                                      // controller.updateMeasurements(...)
-
-                                      // Navigator.of(context).pop();
-                                    },
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        text: 'Add Measurement',
                       ),
                     ),
                   ],
@@ -1070,40 +540,81 @@ class FetalGrowthMeasurementScreen
 
   List<WeightData> getReferenceWeightData() {
     return [
-      WeightData(1, 20),
-      WeightData(2, 30),
-      WeightData(3, 40),
-      WeightData(4, 60),
-      WeightData(5, 80),
-      WeightData(6, 130),
-      WeightData(7, 180),
-      WeightData(8, 240),
-      WeightData(9, 350),
-      WeightData(9, 490),
-      // Thêm dữ liệu tham khảo khác nếu cần
+      WeightData(8, 1),
+      WeightData(9, 2),
+      WeightData(10, 4),
+      WeightData(11, 45),
+      WeightData(12, 58),
+      WeightData(13, 73),
+      WeightData(14, 93),
+      WeightData(15, 117),
+      WeightData(16, 146),
+      WeightData(17, 181),
+      WeightData(18, 222),
+      WeightData(19, 272),
+      WeightData(20, 330),
+      WeightData(21, 400),
+      WeightData(22, 476),
+      WeightData(23, 565),
+      WeightData(24, 665),
+      WeightData(25, 756),
+      WeightData(26, 900),
+      WeightData(27, 1000),
+      WeightData(28, 1100),
+      WeightData(29, 1239),
+      WeightData(30, 1396),
+      WeightData(31, 1568),
+      WeightData(32, 1755),
+      WeightData(33, 2000),
+      WeightData(34, 2200),
+      WeightData(35, 2378),
+      WeightData(36, 2600),
+      WeightData(37, 2800),
+      WeightData(38, 3000),
+      WeightData(39, 3186),
+      WeightData(40, 3338),
+      WeightData(41, 3600),
+      WeightData(42, 3700),
     ];
   }
 
   List<HeightData> getReferenceHeightData() {
     return [
-      HeightData(1, 1.6),
-      HeightData(2, 2.3),
-      HeightData(3, 3.1),
-      HeightData(4, 4.1),
-      HeightData(5, 5.4),
-      HeightData(6, 6.7),
-      HeightData(7, 14.7),
-      HeightData(8, 16.7),
-      HeightData(9, 18.6),
-      HeightData(10, 20.4),
-      // HeightData(11, 35.0),
-      // HeightData(12, 40.0),
-      // HeightData(13, 45.0),
-      // HeightData(14, 50.0),
-      // HeightData(15, 55.0),
-      // HeightData(16, 60.0),
-      // HeightData(40, 65.0),
-      // Thêm dữ liệu tham khảo khác nếu cần
+      HeightData(8, 1.6),
+      HeightData(9, 2.3),
+      HeightData(10, 3.1),
+      HeightData(11, 4.1),
+      HeightData(12, 5.4),
+      HeightData(13, 6.7),
+      HeightData(14, 14.7),
+      HeightData(15, 16.7),
+      HeightData(16, 18.6),
+      HeightData(17, 20.4),
+      HeightData(18, 22.2),
+      HeightData(19, 24.0),
+      HeightData(20, 25.7),
+      HeightData(21, 27.4),
+      HeightData(22, 29.0),
+      HeightData(23, 30.6),
+      HeightData(24, 32.2),
+      HeightData(25, 33.7),
+      HeightData(26, 35.1),
+      HeightData(27, 36.6),
+      HeightData(28, 37.6),
+      HeightData(29, 39.3),
+      HeightData(30, 40.5),
+      HeightData(31, 41.8),
+      HeightData(32, 43.0),
+      HeightData(33, 44.1),
+      HeightData(34, 45.3),
+      HeightData(35, 46.3),
+      HeightData(36, 47.3),
+      HeightData(37, 48.3),
+      HeightData(38, 49.3),
+      HeightData(39, 50.1),
+      HeightData(40, 51.0),
+      HeightData(41, 51.5),
+      HeightData(42, 51.7),
     ];
   }
 

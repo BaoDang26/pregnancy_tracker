@@ -12,19 +12,29 @@ import '../Onboarding/subscription_plan/subscription_plan_detail_guest.dart';
 import '../Onboarding/subscription_plan/subscription_plan_guest.dart';
 import '../SideBarNav/blog_post/blog_post.dart';
 import '../SideBarNav/blog_post/blog_post_detail.dart';
+import '../SideBarNav/home_screen.dart';
 import '../SideBarNav/subscription_plan/subscription_plan_screen.dart';
 import '../SideBarNav/subscription_plan/subscription_plan_details_screen.dart';
 import '../SideBarNavSub/user_subscription/user_subscription_screen.dart';
 import '../account_profile/account_profile_screen.dart';
+import '../bindings/create_fetal_growth_measurement_binding.dart';
 import '../bindings/create_pregnancy_profile_binding.dart';
+import '../bindings/create_schedule_binding.dart';
 import '../bindings/fetal_growth_measurement_binding.dart';
+import '../bindings/home_screen_binding.dart';
 import '../bindings/login_binding.dart';
 import '../bindings/pregnancy_profile_details_binding.dart';
 import '../bindings/register_binding.dart';
+import '../bindings/schedule_binding.dart';
+import '../bindings/side_bar_nav_guest_binding.dart';
 import '../bindings/subscription_plan_binding.dart';
 import '../bindings/subscription_plan_details_binding.dart';
+import '../bindings/subscription_plan_guest_binding.dart';
+import '../bindings/update_fetal_growth_measurement_binding.dart';
+import '../bindings/update_schedule_binding.dart';
 import '../bindings/user_subscription_binding.dart';
 import '../bindings/user_subscription_details_binding.dart';
+import '../create_fetal_growth_measurement/create_fetal_growth_measurement_screen.dart';
 import '../create_pregnancy_profile/create_pregnancy_profile_screen.dart';
 import '../fetal_growth_measurement/fetal_growth_measurement_screen.dart';
 import '../login/login_screen.dart';
@@ -34,6 +44,10 @@ import '../payment/payment_failed_screen.dart';
 import '../payment/payment_success_screen.dart';
 import '../pregnancy_profile/pregnancy_profile_details_screen.dart';
 import '../register/register_screen.dart';
+import '../schedule/create_schedule_screen.dart';
+import '../schedule/schedule_screen.dart';
+import '../schedule/update_schedule_screen.dart';
+import '../update_fetal_growth_measurement/update_fetal_growth_measurement_screen.dart';
 import '../widgets/side_bar_nar_guest.dart';
 
 class AppRoutes {
@@ -61,11 +75,39 @@ class AppRoutes {
   static const String usersubscription = '/user-subscription';
   static const String paymentSuccess = '/payment-success';
   static const String paymentFailed = '/payment-failed';
+  static const String createfetalgrowthmeasurement =
+      '/create-fetal-growth-measurement';
+  static const String updatefetalgrowthmeasurement =
+      '/update-fetal-growth-measurement';
+  static const String schedule = '/schedule';
+  static const String createSchedule = '/create-schedule';
+  static const String updateSchedule = '/update-schedule';
 
   // static const String pregnancyprofileedit = '/pregnancy-profile-edit';
   // static const String signup = '/signup';
 
   static List<GetPage> pages = [
+    GetPage(name: home, page: () => HomeScreen(), binding: HomeScreenBinding()),
+    GetPage(
+        name: updateSchedule,
+        page: () => UpdateScheduleScreen(),
+        binding: UpdateScheduleBinding()),
+    GetPage(
+        name: createSchedule,
+        page: () => CreateScheduleScreen(),
+        binding: CreateScheduleBinding()),
+    GetPage(
+        name: schedule,
+        page: () => ScheduleScreen(),
+        binding: ScheduleBinding()),
+    GetPage(
+        name: updatefetalgrowthmeasurement,
+        page: () => UpdateFetalGrowthMeasurementScreen(),
+        binding: UpdateFetalGrowthMeasurementBinding()),
+    GetPage(
+        name: createfetalgrowthmeasurement,
+        page: () => CreateFetalGrowthMeasurementScreen(),
+        binding: CreateFetalGrowthMeasurementBinding()),
     GetPage(
         name: usersubscription,
         page: () => UserSubscriptionScreen(),
@@ -75,10 +117,16 @@ class AppRoutes {
         page: () => CreatePregnancyProfileScreen(),
         binding: CreatePregnancyProfileBinding()),
     GetPage(name: pregnancyprofile, page: () => PregnancyProfileScreen()),
-    GetPage(name: sidebarnarguest, page: () => SideBarNavGuestScreen()),
+    GetPage(
+        name: sidebarnarguest,
+        page: () => SideBarNavGuestScreen(),
+        binding: SideBarNavGuestBinding()),
     GetPage(name: homeguest, page: () => HomeScreenGuest()),
     // GetPage(name: blogpostguest, page: () => BlogPostGuest()),
-    GetPage(name: subscriptionplanguest, page: () => SubscriptionPlanGuest()),
+    GetPage(
+        name: subscriptionplanguest,
+        page: () => SubscriptionPlanGuestScreen(),
+        binding: SubscriptionPlanGuestBinding()),
     GetPage(
         name: subscriptionplandetailguest,
         page: () => SubscriptionPlanDetailGuestScreen()),
