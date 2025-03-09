@@ -15,9 +15,10 @@ class RegisterController extends GetxController {
   late TextEditingController fullNameController;
   late TextEditingController addressController;
   late TextEditingController rePasswordController;
+  final confirmPasswordController = TextEditingController();
 
   RxBool passwordVisible = true.obs;
-  RxBool confirmPasswordVisible = true.obs;
+  RxBool confirmPasswordVisible = false.obs;
 
   var fullName = '';
   var email = '';
@@ -26,6 +27,7 @@ class RegisterController extends GetxController {
 
   var password = '';
   var rePassword = '';
+  var confirmPassword = '';
   var errorString = ''.obs;
   var isLoading = false.obs;
   var registeredAccount = AccountModel().obs;
@@ -96,6 +98,16 @@ class RegisterController extends GetxController {
       return "Password can't be empty";
     } else if (value != passwordController.text) {
       return "Password does not match";
+    }
+    return null;
+  }
+
+  String? validateConfirmPassword(String value) {
+    if (value.isEmpty) {
+      return "Please confirm your password";
+    }
+    if (value != passwordController.text) {
+      return "Passwords do not match";
     }
     return null;
   }

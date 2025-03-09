@@ -82,6 +82,7 @@ class AppRoutes {
   static const String schedule = '/schedule';
   static const String createSchedule = '/create-schedule';
   static const String updateSchedule = '/update-schedule';
+  static const String sidebarnavguest = '/sidebarnavguest';
 
   // static const String pregnancyprofileedit = '/pregnancy-profile-edit';
   // static const String signup = '/signup';
@@ -121,7 +122,6 @@ class AppRoutes {
         name: sidebarnarguest,
         page: () => SideBarNavGuestScreen(),
         binding: SideBarNavGuestBinding()),
-    GetPage(name: homeguest, page: () => HomeScreenGuest()),
     // GetPage(name: blogpostguest, page: () => BlogPostGuest()),
     GetPage(
         name: subscriptionplanguest,
@@ -146,7 +146,9 @@ class AppRoutes {
     GetPage(
         name: register,
         page: () => RegisterScreen(),
-        binding: RegisterBinding()),
+        binding: RegisterBinding(),
+        transition: Transition.rightToLeft,
+        transitionDuration: Duration(milliseconds: 500)),
     GetPage(name: accountprofile, page: () => AccountProfileScreen()),
     GetPage(
         name: fetalgrowthmeasurement,

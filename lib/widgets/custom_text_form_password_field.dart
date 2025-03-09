@@ -18,6 +18,8 @@ class CustomTextPasswordField extends StatelessWidget {
 
   bool isObscure;
 
+  final EdgeInsetsGeometry? contentPadding;
+
   CustomTextPasswordField({
     Key? key,
     this.hintTxt,
@@ -33,6 +35,7 @@ class CustomTextPasswordField extends StatelessWidget {
     this.enable = true,
     this.borderRadius = 15,
     this.fillColor = const Color(0xfff5f5f5),
+    this.contentPadding,
   }) : super(key: key);
 
   @override
@@ -101,7 +104,8 @@ class CustomTextPasswordField extends StatelessWidget {
           suffixIcon: suffixIcon,
           hintText: hintTxt,
           labelText: labelText,
-          suffixIconColor: Theme.of(context).primaryColor),
+          suffixIconColor: Theme.of(context).primaryColor,
+          contentPadding: contentPadding),
     );
   }
 }

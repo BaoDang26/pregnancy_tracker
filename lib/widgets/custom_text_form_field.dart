@@ -16,6 +16,8 @@ class CustomTextFormField extends StatelessWidget {
   bool? enable;
   double? borderRadius;
   Color fillColor;
+  final String? helperText;
+  final EdgeInsetsGeometry? contentPadding;
 
   // bool isObscure;
 
@@ -34,6 +36,8 @@ class CustomTextFormField extends StatelessWidget {
     this.enable,
     this.borderRadius = 15,
     this.fillColor = const Color(0xfff5f5f5),
+    this.helperText,
+    this.contentPadding,
   }) : super(key: key);
 
   @override
@@ -103,7 +107,9 @@ class CustomTextFormField extends StatelessWidget {
           suffixIcon: suffixIcon,
           hintText: hintTxt,
           labelText: labelText,
-          suffixIconColor: Theme.of(context).primaryColor),
+          suffixIconColor: Theme.of(context).primaryColor,
+          helperText: helperText,
+          contentPadding: contentPadding),
     );
   }
 }
