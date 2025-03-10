@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:pregnancy_tracker/pregnancy_profile/pregnancy_profile_screen.dart';
-import 'package:pregnancy_tracker/routes/app_routes.dart';
-import 'package:pregnancy_tracker/util/app_export.dart';
 
 import '../Onboarding/blog_post_guest/blog_post_guest.dart';
 import '../Onboarding/home_screen_guest.dart';
 import '../Onboarding/subscription_plan/subscription_plan_guest.dart';
-import 'custom_elevated_button.dart';
 
 class SideBarNavGuestScreen extends StatefulWidget {
   const SideBarNavGuestScreen({super.key});
@@ -136,15 +132,6 @@ class _SideBarNavGuestScreenState extends State<SideBarNavGuestScreen> {
                 //       Text('Account Profile', style: TextStyle(fontSize: 15)),
                 // ),
               ],
-              trailing: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: CustomElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, AppRoutes.login);
-                  },
-                  text: 'Login',
-                ),
-              ),
             ),
           ),
           const VerticalDivider(thickness: 1, width: 1),

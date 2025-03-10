@@ -3,14 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:pregnancy_tracker/controllers/account_profile_controller.dart';
 
 import '../models/account_profile_model.dart';
 import '../repositories/account_profile_repository.dart';
-import '../repositories/authentication_repository.dart';
-import '../routes/app_routes.dart';
-import '../util/preUtils.dart';
 
-class AccountProfileController extends GetxController {
+class UpdateAccountProfileController extends GetxController {
   final GlobalKey<FormState> accountProfileFormKey = GlobalKey<FormState>();
 
   late TextEditingController fullNameController;
@@ -25,7 +23,6 @@ class AccountProfileController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    await getAccountProfile();
     fullNameController = TextEditingController();
     addressController = TextEditingController();
     dateOfBirthController = TextEditingController();
@@ -119,14 +116,22 @@ class AccountProfileController extends GetxController {
   }
 
   void showDatePicker() {
-    DateTime initialDate = DateTime.now();
+    // Thiết lập ngày mặc định là 20 năm trước (thay vì ngày hiện tại)
+    DateTime defaultDate = DateTime.now().subtract(Duration(days: 365 * 20));
+    DateTime initialDate;
+
+    // Nếu đã có ngày sinh được lưu, sử dụng ngày đó
     if (dateOfBirthController.text.isNotEmpty) {
       try {
         initialDate =
             DateFormat('yyyy-MM-dd').parse(dateOfBirthController.text);
       } catch (_) {
-        // Keep default initialDate if parsing fails
+        // Nếu parse lỗi, sử dụng ngày mặc định
+        initialDate = defaultDate;
       }
+    } else {
+      // Nếu chưa có ngày sinh, sử dụng ngày mặc định
+      initialDate = defaultDate;
     }
 
     Get.dialog(
@@ -162,8 +167,10 @@ class AccountProfileController extends GetxController {
                   ),
                   child: CalendarDatePicker(
                     initialDate: initialDate,
-                    firstDate: DateTime.now().subtract(Duration(days: 1)),
-                    lastDate: DateTime.now().add(Duration(days: 365 * 2)),
+                    // Cho phép chọn ngày từ 100 năm trước
+                    firstDate: DateTime(DateTime.now().year - 100),
+                    // Chỉ cho phép chọn đến ngày hiện tại (không cho phép chọn ngày sinh trong tương lai)
+                    lastDate: DateTime.now(),
                     onDateChanged: (date) {
                       dateOfBirthController.text =
                           DateFormat('yyyy-MM-dd').format(date);
@@ -230,7 +237,7 @@ class AccountProfileController extends GetxController {
       var request = {
         'fullName': fullNameController.text,
         'address': addressController.text,
-        'dateOfBirth': dateOfBirth.toString(),
+        'dateOfBirth': dateOfBirthController.text,
         'avatarUrl': accountProfileModel.value.avatarUrl,
       };
 
@@ -242,7 +249,6 @@ class AccountProfileController extends GetxController {
 
       // Handle response
       if (response.statusCode == 200) {
-        // Update success
         // Show success dialog
         await showDialog(
           context: Get.context!,
@@ -279,7 +285,9 @@ class AccountProfileController extends GetxController {
           },
         );
         // Refresh account profile
-        await getAccountProfile();
+        Get.find<AccountProfileController>().getAccountProfile();
+        // Navigate back with success result
+        Get.back(result: true);
       } else if (response.statusCode == 401) {
         String message = jsonDecode(response.body)['message'];
         if (message.contains("JWT token is expired")) {
@@ -299,40 +307,5 @@ class AccountProfileController extends GetxController {
     } finally {
       isLoading.value = false;
     }
-  }
-
-  Future<void> getAccountProfile() async {
-    isLoading.value = true;
-    var response = await AccountProfileRepository.getAccountProfile();
-    // Log thông tin response để debug
-    print("Response Status: ${response.statusCode}");
-    print("Response Body: ${response.body}");
-    if (response.statusCode == 200) {
-      String jsonResult = utf8.decode(response.bodyBytes);
-      // Log kết quả JSON
-      print("JSON Result: $jsonResult");
-      //chuyển đổi từ JSON sang model
-      accountProfileModel.value = accountProfileModelFromJson(jsonResult);
-    } else {
-      Get.snackbar("Error server ${response.statusCode}",
-          jsonDecode(response.body)['message']);
-    }
-    isLoading.value = false;
-    update();
-  }
-
-  void goToUpdateAccountProfile() {
-    var userId = accountProfileModel.value.id;
-
-    Get.toNamed(AppRoutes.updateAccountProfile, arguments: userId);
-    print("goToUpdateAccountProfile: $userId");
-  }
-
-  Future<void> logout() async {
-    // Alert.showLoadingIndicatorDialog(context);
-    await AuthenticationRepository.logout();
-    PrefUtils.clearPreferencesData();
-
-    Get.offAllNamed(AppRoutes.sidebarnarguest);
   }
 }

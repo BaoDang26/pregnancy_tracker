@@ -55,6 +55,9 @@ class SubscriptionPlanGuestScreen
                 // Info Banner
                 _buildInfoBanner(),
 
+                // Premium Features Section
+                _buildPremiumFeatures(),
+
                 // Subscription Plans Section
                 Expanded(
                   child: Padding(
@@ -499,5 +502,163 @@ class SubscriptionPlanGuestScreen
 
     // Default icon if no match
     return Icons.card_membership;
+  }
+
+  Widget _buildPremiumFeatures() {
+    // List of premium features
+    final List<Map<String, dynamic>> premiumFeatures = [
+      {
+        'icon': Icons.favorite,
+        'color': Colors.redAccent,
+        'title': 'Advanced Health Tracking',
+        'description': 'Detailed monitoring of baby health metrics'
+      },
+      // {
+      //   'icon': Icons.article,
+      //   'color': Colors.blueAccent,
+      //   'title': 'Expert Content Access',
+      //   'description': ''
+      // },
+      {
+        'icon': Icons.monitor,
+        'color': Colors.greenAccent[700]!,
+        'title': 'Fetal Growth Charts',
+        'description':
+            'Visual tracking of your baby\'s development week by week'
+      },
+      {
+        'icon': Icons.calendar_month,
+        'color': Colors.teal,
+        'title': 'Doctor Appointment Reminders',
+        'description':
+            'Schedule and get notified about upcoming prenatal checkups'
+      },
+      {
+        'icon': Icons.edit,
+        'color': Colors.amber[700]!,
+        'title': 'Create Blog Posts',
+        'description':
+            'Share your pregnancy experiences and insights with others'
+      },
+      // {
+      //   'icon': Icons.show_chart,
+      //   'color': Colors.purpleAccent,
+      //   'title': 'Share Growth Charts',
+      //   'description':
+      //       'Easily share your baby\'s growth charts with family and friends'
+      // },
+    ];
+
+    return Container(
+      margin: EdgeInsets.fromLTRB(16, 8, 16, 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.06),
+            blurRadius: 10,
+            offset: Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFF81C784), // Light Green
+                  Color(0xFF388E3C), // Dark Green
+                ],
+              ),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.stars,
+                  color: Colors.white,
+                  size: 24,
+                ),
+                SizedBox(width: 10),
+                Text(
+                  'Premium Features',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Features list
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: premiumFeatures.map((feature) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 12),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: feature['color'].withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Icon(
+                          feature['icon'],
+                          color: feature['color'],
+                          size: 22,
+                        ),
+                      ),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              feature['title'],
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey[800],
+                              ),
+                            ),
+                            SizedBox(height: 2),
+                            Text(
+                              feature['description'],
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.grey[600],
+                                height: 1.3,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

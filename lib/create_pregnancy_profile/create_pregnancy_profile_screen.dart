@@ -70,7 +70,7 @@ class CreatePregnancyProfileScreen
                           return controller.validateNickName(value!);
                         },
                         decoration: InputDecoration(
-                          labelText: 'Nick name',
+                          labelText: 'Baby\'s nickname',
                           border: OutlineInputBorder(),
                           filled: true,
                           fillColor: Colors.white,

@@ -17,6 +17,8 @@ import '../SideBarNav/subscription_plan/subscription_plan_screen.dart';
 import '../SideBarNav/subscription_plan/subscription_plan_details_screen.dart';
 import '../SideBarNavSub/user_subscription/user_subscription_screen.dart';
 import '../account_profile/account_profile_screen.dart';
+import '../account_profile/update_account_profile_screen.dart';
+import '../bindings/account_profile_binding.dart';
 import '../bindings/create_fetal_growth_measurement_binding.dart';
 import '../bindings/create_pregnancy_profile_binding.dart';
 import '../bindings/create_schedule_binding.dart';
@@ -30,6 +32,7 @@ import '../bindings/side_bar_nav_guest_binding.dart';
 import '../bindings/subscription_plan_binding.dart';
 import '../bindings/subscription_plan_details_binding.dart';
 import '../bindings/subscription_plan_guest_binding.dart';
+import '../bindings/update_account_profile_binding.dart';
 import '../bindings/update_fetal_growth_measurement_binding.dart';
 import '../bindings/update_schedule_binding.dart';
 import '../bindings/user_subscription_binding.dart';
@@ -82,11 +85,16 @@ class AppRoutes {
   static const String schedule = '/schedule';
   static const String createSchedule = '/create-schedule';
   static const String updateSchedule = '/update-schedule';
+  static const String updateAccountProfile = '/update-account-profile';
 
   // static const String pregnancyprofileedit = '/pregnancy-profile-edit';
   // static const String signup = '/signup';
 
   static List<GetPage> pages = [
+    GetPage(
+        name: updateAccountProfile,
+        page: () => UpdateAccountProfileScreen(),
+        binding: UpdateAccountProfileBinding()),
     GetPage(name: home, page: () => HomeScreen(), binding: HomeScreenBinding()),
     GetPage(
         name: updateSchedule,
@@ -147,7 +155,10 @@ class AppRoutes {
         name: register,
         page: () => RegisterScreen(),
         binding: RegisterBinding()),
-    GetPage(name: accountprofile, page: () => AccountProfileScreen()),
+    GetPage(
+        name: accountprofile,
+        page: () => AccountProfileScreen(),
+        binding: AccountProfileBinding()),
     GetPage(
         name: fetalgrowthmeasurement,
         page: () => FetalGrowthMeasurementScreen(),

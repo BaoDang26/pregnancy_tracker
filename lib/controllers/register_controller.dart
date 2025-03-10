@@ -101,44 +101,44 @@ class RegisterController extends GetxController {
   }
 
   Future<String?> registerEmail(BuildContext context) async {
-    isLoading.value = true;
-    final isValid = registerFormKey.currentState!.validate();
-    if (!isValid) {
-      isLoading.value = false;
-      return null;
+    if (registerFormKey.currentState!.validate()) {
+      registerFormKey.currentState!.save();
+      try {
+        final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+        AccountModel registerAccount = AccountModel(
+          fullName: fullName,
+          email: email,
+          password: password,
+          dateOfBirth: dateFormat.parse(dateOfBirth.value),
+          address: address,
+        );
+
+        var response = await AuthenticationRepository.postRegister(
+            accountModelToJson(registerAccount));
+        // kiểm tra kết quả
+        if (response.statusCode == 200) {
+          String jsonResult = utf8.decode(response.bodyBytes);
+          var data = json.decode(jsonResult);
+          Get.snackbar("Success", "Please verify your email");
+          Get.toNamed(AppRoutes.login);
+        } else if (response.statusCode == 400) {
+          print('register failed!!!!');
+        } else if (response.statusCode == 500) {
+          log(jsonDecode(response.body)['message']);
+        } else {
+          log(jsonDecode(response.body)['message']);
+          Get.snackbar("Error server ${response.statusCode}",
+              jsonDecode(response.body)['message']);
+        }
+
+        errorString.value = '';
+
+        return null;
+      } catch (e) {
+        errorString.value = e.toString();
+        return null;
+      }
     }
-    registerFormKey.currentState!.save();
-
-    final DateFormat dateFormat = DateFormat('yyyy-MM-dd');
-    AccountModel registerAccount = AccountModel(
-      fullName: fullName,
-      email: email,
-      password: password,
-      dateOfBirth: dateFormat.parse(dateOfBirth.value),
-      address: address,
-    );
-
-    var response = await AuthenticationRepository.postRegister(
-        accountModelToJson(registerAccount));
-    // kiểm tra kết quả
-    if (response.statusCode == 200) {
-      String jsonResult = utf8.decode(response.bodyBytes);
-      var data = json.decode(jsonResult);
-      Get.snackbar("Success", "Please verify your email");
-      Get.toNamed(AppRoutes.login);
-    } else if (response.statusCode == 400) {
-      print('register failed!!!!');
-    } else if (response.statusCode == 500) {
-      log(jsonDecode(response.body)['message']);
-    } else {
-      log(jsonDecode(response.body)['message']);
-      Get.snackbar("Error server ${response.statusCode}",
-          jsonDecode(response.body)['message']);
-    }
-
-    errorString.value = '';
-
-    isLoading.value = false;
     return null;
   }
 }

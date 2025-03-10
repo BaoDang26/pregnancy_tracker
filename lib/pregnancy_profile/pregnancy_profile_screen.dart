@@ -442,7 +442,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "${profile.nickName}",
+                          "Baby's nickname: ${profile.nickName}",
                           style: TextStyle(
                             fontSize: 17,
                             fontWeight: FontWeight.bold,

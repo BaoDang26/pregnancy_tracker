@@ -44,7 +44,7 @@ class UpdateScheduleController extends GetxController {
       // Handle if arguments is a single value (assuming it's scheduleId)
       else if (Get.arguments != null) {
         scheduleId = Get.arguments is int ? Get.arguments : 0;
-        pregnancyProfileId = 0; // Default value since we don't have it
+        pregnancyProfileId = Get.arguments['pregnancyId'] ?? 0;
       }
 
       // If we have a valid scheduleId, find the data

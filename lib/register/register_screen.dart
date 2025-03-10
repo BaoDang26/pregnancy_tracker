@@ -170,12 +170,54 @@ class RegisterScreen extends GetView<RegisterController> {
                     ),
                     const SizedBox(height: 20),
                     Center(
-                      child: CustomElevatedButton(
-                        onPressed: () async {
-                          // Handle signup action
-                          await controller.registerEmail(context);
-                        },
-                        text: 'Sign Up',
+                      child: Obx(
+                        () => controller.isLoading.value
+                            ? Container(
+                                width: double.infinity,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: Colors.green[600],
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width: 24,
+                                        height: 24,
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                          strokeWidth: 2.5,
+                                        ),
+                                      ),
+                                      SizedBox(width: 12),
+                                      Text(
+                                        'Processing...',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            : CustomElevatedButton(
+                                onPressed: () async {
+                                  if (controller.registerFormKey.currentState!
+                                      .validate()) {
+                                    controller.isLoading.value = true;
+                                    try {
+                                      await controller.registerEmail(context);
+                                    } finally {
+                                      controller.isLoading.value = false;
+                                    }
+                                  }
+                                },
+                                text: 'Sign Up',
+                              ),
                       ),
                     ),
                   ],

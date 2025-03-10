@@ -260,7 +260,7 @@ class PregnancyProfileDetailsScreen
               icon: Icons.person,
               iconColor: Colors.blue[700]!,
               iconBgColor: Colors.blue[50]!,
-              title: 'Nickname',
+              title: 'Baby\'s nickname',
               value: profile.nickName ?? 'Not set',
             ),
 
