@@ -145,7 +145,28 @@ class SubscriptionPlanGuestScreen
                     color: Colors.green[700],
                   ),
                   onPressed: () {
-                    Get.toNamed(AppRoutes.usersubscription);
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: Text('Login Required'),
+                        content: Text(
+                            'You must login to see your subscription history.'),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Get.toNamed(AppRoutes.login);
+                            },
+                            child: Text('Login',
+                                style: TextStyle(color: Colors.green[700])),
+                          ),
+                        ],
+                      ),
+                    );
                   },
                   tooltip: 'Subscription History',
                 ),

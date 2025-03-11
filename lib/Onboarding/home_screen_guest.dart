@@ -776,7 +776,7 @@ class HomeScreenGuest extends GetView<HomeScreenGuestController> {
                           ),
                           SizedBox(height: 24),
                           ElevatedButton.icon(
-                            onPressed: () => Get.toNamed(AppRoutes.register),
+                            onPressed: () => Get.toNamed(AppRoutes.login),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
                               foregroundColor: Colors.pink[500],

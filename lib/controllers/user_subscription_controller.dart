@@ -29,8 +29,8 @@ class UserSubscriptionController extends GetxController {
       //convert json to model
       userSubscriptionList.value = userSubscriptionModelFromJson(jsonResult);
     } else {
-      Get.snackbar("Error server ${response.statusCode}",
-          jsonDecode(response.body)['message']);
+      // Get.snackbar("Error server ${response.statusCode}",
+      //     jsonDecode(response.body)['message']);
     }
     isLoading.value = false;
     update();

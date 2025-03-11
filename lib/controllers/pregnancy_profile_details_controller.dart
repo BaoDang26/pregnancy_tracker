@@ -61,10 +61,10 @@ class PregnancyProfileDetailsController extends GetxController {
             ],
           ),
           actions: [
-            // TextButton(
-            //   onPressed: () => Get.back(),
-            //   child: Text('Cancel'),
-            // ),
+            TextButton(
+              onPressed: () => Get.back(),
+              child: Text('Cancel'),
+            ),
             ElevatedButton(
               onPressed: () {
                 // Chuyển về sidebar và chọn tab subscription plan
@@ -76,7 +76,7 @@ class PregnancyProfileDetailsController extends GetxController {
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
               child: Text(
-                'Back to Subscription Plans',
+                'Go to Subscription Plans',
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -195,10 +195,10 @@ class PregnancyProfileDetailsController extends GetxController {
             ],
           ),
           actions: [
-            // TextButton(
-            //   onPressed: () => Get.back(),
-            //   child: Text('Cancel'),
-            // ),
+            TextButton(
+              onPressed: () => Get.back(),
+              child: Text('Cancel'),
+            ),
             ElevatedButton(
               onPressed: () {
                 // Chuyển về sidebar và chọn tab subscription plan
@@ -210,7 +210,7 @@ class PregnancyProfileDetailsController extends GetxController {
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
               child: Text(
-                'Back to Subscription Plans',
+                'Go to Subscription Plans',
                 style: TextStyle(color: Colors.white),
               ),
             ),
