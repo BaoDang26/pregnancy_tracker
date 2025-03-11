@@ -69,7 +69,7 @@ class PregnancyProfileDetailsController extends GetxController {
               onPressed: () {
                 // Chuyển về sidebar và chọn tab subscription plan
                 Get.offAllNamed(AppRoutes.sidebarnar,
-                    arguments: {'selectedIndex': 2});
+                    arguments: {'selectedIndex': 3});
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green[600],
@@ -203,7 +203,7 @@ class PregnancyProfileDetailsController extends GetxController {
               onPressed: () {
                 // Chuyển về sidebar và chọn tab subscription plan
                 Get.offAllNamed(AppRoutes.sidebarnar,
-                    arguments: {'selectedTab': 2});
+                    arguments: {'selectedIndex': 3});
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green[600],

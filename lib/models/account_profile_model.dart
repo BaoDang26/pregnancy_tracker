@@ -18,6 +18,7 @@ class AccountProfileModel {
   DateTime? dateOfBirth;
   String? avatarUrl;
   String? message;
+  String? roleName;
 
   AccountProfileModel({
     this.id,
@@ -27,6 +28,7 @@ class AccountProfileModel {
     this.dateOfBirth,
     this.avatarUrl,
     this.message,
+    this.roleName,
   });
 
   factory AccountProfileModel.fromJson(Map<String, dynamic> json) =>
@@ -38,6 +40,7 @@ class AccountProfileModel {
         dateOfBirth: DateTime.parse(json["dateOfBirth"]),
         avatarUrl: json["avatarUrl"],
         message: json["message"],
+        roleName: json["roleName"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -49,6 +52,7 @@ class AccountProfileModel {
             "${dateOfBirth?.year.toString().padLeft(4, '0')}-${dateOfBirth?.month.toString().padLeft(2, '0')}-${dateOfBirth?.day.toString().padLeft(2, '0')}",
         "avatarUrl": avatarUrl,
         "message": message,
+        "roleName": roleName,
       };
 
   Map<String, dynamic> toUpdateJson() => {

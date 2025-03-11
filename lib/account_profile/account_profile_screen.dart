@@ -142,15 +142,15 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                                           ),
                                         ],
                                       ),
-                                      child: CircleAvatar(
-                                        radius: 18,
-                                        backgroundColor: Colors.blue[600],
-                                        child: Icon(
-                                          Icons.camera_alt,
-                                          color: Colors.white,
-                                          size: 18,
-                                        ),
-                                      ),
+                                      // child: CircleAvatar(
+                                      //   radius: 18,
+                                      //   backgroundColor: Colors.blue[600],
+                                      //   child: Icon(
+                                      //     Icons.camera_alt,
+                                      //     color: Colors.white,
+                                      //     size: 18,
+                                      //   ),
+                                      // ),
                                     ),
                                   ),
                                 ],
@@ -232,27 +232,39 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                               SizedBox(height: 24),
 
                               // Quick Stats
-                              _buildQuickStatItem(
-                                icon: Icons.calendar_today,
-                                label: 'Member Since',
-                                value: 'May 2023',
-                              ),
+                              // _buildQuickStatItem(
+                              //   icon: Icons.calendar_today,
+                              //   label: 'Member Since',
+                              //   value: 'May 2023',
+                              // ),
 
                               SizedBox(height: 12),
 
-                              _buildQuickStatItem(
-                                icon: Icons.pregnant_woman,
-                                label: 'Pregnancy Profiles',
-                                value: '1',
-                              ),
+                              // _buildQuickStatItem(
+                              //   icon: Icons.pregnant_woman,
+                              //   label: 'Pregnancy Profiles',
+                              //   value: '1',
+                              // ),
 
-                              SizedBox(height: 12),
+                              // SizedBox(height: 12),
 
                               _buildQuickStatItem(
                                 icon: Icons.star,
                                 label: 'Premium Status',
-                                value: 'Active',
-                                valueColor: Colors.green[600],
+                                value: controller.accountProfileModel.value
+                                            .roleName ==
+                                        'ROLE_USER_PREMIUM'
+                                    ? 'Active'
+                                    : (controller.accountProfileModel.value
+                                                .roleName ==
+                                            'ROLE_USER'
+                                        ? 'Deactive'
+                                        : 'Not set'),
+                                valueColor: controller.accountProfileModel.value
+                                            .roleName ==
+                                        'ROLE_USER_PREMIUM'
+                                    ? Colors.green[600]
+                                    : Colors.grey[600],
                               ),
                             ],
                           ),

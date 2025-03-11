@@ -431,26 +431,47 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
                         SizedBox(height: 20),
 
                         // Subscribe button
-                        SizedBox(
-                          width: double.infinity,
-                          height: 46,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              controller.goToSubscriptionPlanDetail(index);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: accentColor,
-                              foregroundColor: Colors.white,
-                              elevation: 2,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
+                        Visibility(
+                          visible: !(controller.userRole.value ==
+                              'ROLE_USER_PREMIUM'),
+                          replacement: Container(
+                            width: double.infinity,
+                            height: 46,
+                            decoration: BoxDecoration(
+                              color: Colors.grey[200],
+                              borderRadius: BorderRadius.circular(8),
                             ),
+                            alignment: Alignment.center,
                             child: Text(
-                              'Subscribe Now',
+                              'Already Subscribed',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ),
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 46,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                controller.goToSubscriptionPlanDetail(index);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: accentColor,
+                                foregroundColor: Colors.white,
+                                elevation: 2,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              child: Text(
+                                'Subscribe Now',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),

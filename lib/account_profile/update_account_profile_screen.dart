@@ -76,7 +76,7 @@ class UpdateAccountProfileScreen
                     child: Stack(
                       children: [
                         Container(
-                          padding: EdgeInsets.all(4),
+                          padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             gradient: LinearGradient(
@@ -89,7 +89,7 @@ class UpdateAccountProfileScreen
                             ),
                           ),
                           child: CircleAvatar(
-                            radius: 70,
+                            radius: 120,
                             backgroundColor: Colors.white,
                             backgroundImage: NetworkImage(controller
                                     .accountProfileModel.value.avatarUrl ??
@@ -97,33 +97,33 @@ class UpdateAccountProfileScreen
                           ),
                         ),
                         Positioned(
-                          bottom: 0,
-                          right: 0,
+                          bottom: 5,
+                          right: 5,
                           child: GestureDetector(
                             onTap: () {
                               // Show image picker options
                               _showImagePickerOptions(context);
                             },
                             child: Container(
-                              padding: EdgeInsets.all(4),
+                              padding: EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: Colors.black.withOpacity(0.1),
-                                    blurRadius: 5,
+                                    color: Colors.black.withOpacity(0.15),
+                                    blurRadius: 6,
                                     offset: Offset(0, 2),
                                   ),
                                 ],
                               ),
                               child: CircleAvatar(
-                                radius: 18,
+                                radius: 22,
                                 backgroundColor: Colors.purple[600],
                                 child: Icon(
                                   Icons.camera_alt,
                                   color: Colors.white,
-                                  size: 18,
+                                  size: 22,
                                 ),
                               ),
                             ),
@@ -589,14 +589,14 @@ class UpdateAccountProfileScreen
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   // Camera option
-                  _buildImagePickerOption(
-                    icon: Icons.camera_alt,
-                    label: 'Camera',
-                    onTap: () {
-                      Navigator.pop(context);
-                      // Add camera image picker logic
-                    },
-                  ),
+                  // _buildImagePickerOption(
+                  //   icon: Icons.camera_alt,
+                  //   label: 'Camera',
+                  //   onTap: () {
+                  //     Navigator.pop(context);
+                  //     // Add camera image picker logic
+                  //   },
+                  // ),
 
                   // Gallery option
                   _buildImagePickerOption(
@@ -612,15 +612,15 @@ class UpdateAccountProfileScreen
                   ),
 
                   // Remove option
-                  _buildImagePickerOption(
-                    icon: Icons.delete,
-                    label: 'Remove',
-                    iconColor: Colors.red[400]!,
-                    onTap: () {
-                      Navigator.pop(context);
-                      // Add remove image logic
-                    },
-                  ),
+                  // _buildImagePickerOption(
+                  //   icon: Icons.delete,
+                  //   label: 'Remove',
+                  //   iconColor: Colors.red[400]!,
+                  //   onTap: () {
+                  //     Navigator.pop(context);
+                  //     // Add remove image logic
+                  //   },
+                  // ),
                 ],
               ),
               SizedBox(height: 16),

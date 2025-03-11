@@ -3,20 +3,23 @@ import 'dart:convert';
 import 'package:pregnancy_tracker/util/app_export.dart';
 
 import '../models/subscription_plan_model.dart';
+import '../repositories/account_profile_repository.dart';
 import '../repositories/subscription_plan_repository.dart';
 
 class SubscriptionPlanController extends GetxController {
   var isLoading = true.obs;
   var subscriptionPlanList = <SubscriptionPlanModel>[].obs;
   var subscriptionPlanModel = SubscriptionPlanModel().obs;
+  var userRole = ''.obs;
 
   @override
-  Future<void> onInit() async {
-    await getSubscriptionPlanList();
+  void onInit() {
     super.onInit();
+    getSubscriptionPlans();
+    getUserRole();
   }
 
-  Future<void> getSubscriptionPlanList() async {
+  Future<void> getSubscriptionPlans() async {
     isLoading.value = true;
     var response = await SubscriptionPlanRepository.getSubscriptionPlanList();
 
@@ -37,6 +40,22 @@ class SubscriptionPlanController extends GetxController {
     }
     isLoading.value = false;
     update();
+  }
+
+  Future<void> getUserRole() async {
+    try {
+      var response = await AccountProfileRepository.getAccountProfile();
+
+      if (response.statusCode == 200) {
+        var userData = json.decode(response.body);
+
+        if (userData != null && userData['roleName'] != null) {
+          userRole.value = userData['roleName'];
+        }
+      }
+    } catch (e) {
+      print('Error getting user role: $e');
+    }
   }
 
   void goToSubscriptionPlanDetail(int index) {
