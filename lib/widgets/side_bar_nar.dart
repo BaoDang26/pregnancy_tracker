@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pregnancy_tracker/pregnancy_profile/pregnancy_profile_screen.dart';
 import 'package:pregnancy_tracker/routes/app_routes.dart';
 import 'package:pregnancy_tracker/util/app_export.dart';
+import 'package:get/get.dart';
 
 import '../SideBarNav/home_screen.dart';
 import '../account_profile/account_profile_screen.dart';
@@ -24,13 +25,31 @@ class _SideBarNavScreenState extends State<SideBarNavScreen> {
     const BlogPost(),
     const PregnancyProfileScreen(),
     const SubscriptionPlan(),
-    AccountProfileScreen(),
+    const AccountProfileScreen(),
     // const HomeScreen(),
     // WeeklyMenuScreen(),
     // const AdvisorScreen(),
     // const ProfileScreen(),
     // const UpdateProfileScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Đợi đến khi widget được build hoàn chỉnh
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Nhận tham số và cập nhật selectedIndex
+      if (Get.arguments != null && Get.arguments is Map) {
+        final args = Get.arguments as Map;
+        if (args.containsKey('selectedIndex')) {
+          setState(() {
+            _selectedIndex = args['selectedIndex'];
+          });
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

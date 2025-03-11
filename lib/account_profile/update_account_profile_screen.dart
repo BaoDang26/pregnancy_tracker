@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:pregnancy_tracker/widgets/custom_elevated_button.dart';
 import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../controllers/update_account_profile_controller.dart';
 
@@ -601,9 +602,12 @@ class UpdateAccountProfileScreen
                   _buildImagePickerOption(
                     icon: Icons.photo_library,
                     label: 'Gallery',
-                    onTap: () {
+                    onTap: () async {
                       Navigator.pop(context);
-                      // Add gallery image picker logic
+                      final XFile? image = await controller.pickImage();
+                      if (image != null) {
+                        await controller.processAndUpdateAvatar(image);
+                      }
                     },
                   ),
 

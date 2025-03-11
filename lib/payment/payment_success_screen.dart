@@ -89,12 +89,12 @@ class PaymentSuccessScreen extends GetView<PaymentSuccessController> {
                     ),
                   ),
                   // Nút Back to Home
-                  // CustomElevatedButton(
-                  //   text: 'Back to Home',
-                  //   onPressed: () {
-                  //     controller.goToHomeScreen();
-                  //   },
-                  // ),
+                  CustomElevatedButton(
+                    text: 'Back to Home',
+                    onPressed: () {
+                      controller.goToHomeScreen();
+                    },
+                  ),
                 ],
               ),
             ),

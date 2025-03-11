@@ -268,6 +268,7 @@ class FetalGrowthMeasurementController extends GetxController {
   }
 
   Future<void> getHeightMeasurements(int pregnancyId) async {
+    heightData.clear();
     var response = await FetalGrowthMeasurementRepository
         .getHeightFetalGrowthMeasurementList(pregnancyId);
 
@@ -306,6 +307,7 @@ class FetalGrowthMeasurementController extends GetxController {
   }
 
   Future<void> getWeightMeasurements(int pregnancyId) async {
+    weightData.clear();
     var response = await FetalGrowthMeasurementRepository
         .getWeightFetalGrowthMeasurementList(pregnancyId);
 

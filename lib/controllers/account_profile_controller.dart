@@ -231,14 +231,13 @@ class AccountProfileController extends GetxController {
         'fullName': fullNameController.text,
         'address': addressController.text,
         'dateOfBirth': dateOfBirth.toString(),
-        'avatarUrl': accountProfileModel.value.avatarUrl,
       };
 
       // Show loading indicator
 
       // Call API to update account profile
       var response =
-          await AccountProfileRepository.updateAccountProfile(request, userId);
+          await AccountProfileRepository.updateAccountProfile(request);
 
       // Handle response
       if (response.statusCode == 200) {

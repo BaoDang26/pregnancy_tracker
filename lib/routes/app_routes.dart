@@ -25,6 +25,7 @@ import '../bindings/create_schedule_binding.dart';
 import '../bindings/fetal_growth_measurement_binding.dart';
 import '../bindings/home_screen_binding.dart';
 import '../bindings/login_binding.dart';
+import '../bindings/payment_success_binding.dart';
 import '../bindings/pregnancy_profile_details_binding.dart';
 import '../bindings/register_binding.dart';
 import '../bindings/schedule_binding.dart';
@@ -210,10 +211,9 @@ class AppRoutes {
               ],
             )),
     GetPage(
-      name: paymentSuccess,
-      page: () => PaymentSuccessScreen(),
-      // binding: PaymentSuccessBinding()),
-    ),
+        name: paymentSuccess,
+        page: () => PaymentSuccessScreen(),
+        binding: PaymentSuccessBinding()),
     GetPage(
       name: paymentFailed,
       page: () => PaymentFailedScreen(),

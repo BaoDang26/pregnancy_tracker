@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:html';
 
 import 'package:http/http.dart' as http;
 
@@ -24,7 +25,7 @@ class AccountProfileRepository {
   }
 
   static Future<http.Response> updateAccountProfile(
-      Map<String, dynamic> accountData, int userId) async {
+      Map<String, dynamic> accountData) async {
     http.Response response;
 
     Map<String, String> header = {
@@ -32,11 +33,29 @@ class AccountProfileRepository {
     };
     response = await interceptedClient
         .put(
-          BuildServer.buildUrl("users/update/$userId"),
+          BuildServer.buildUrl("users/update"),
           headers: header,
           body: json.encode(accountData),
         )
         .timeout(const Duration(seconds: 30));
+    return response;
+  }
+
+  static Future<http.Response> updateAvatar(Map<String, dynamic> data) async {
+    http.Response response;
+
+    Map<String, String> header = {
+      "Content-type": "application/json",
+    };
+
+    response = await interceptedClient
+        .post(
+          BuildServer.buildUrl("users/update-avatar"),
+          headers: header,
+          body: json.encode(data),
+        )
+        .timeout(const Duration(seconds: 30));
+
     return response;
   }
 }

@@ -67,15 +67,16 @@ class PregnancyProfileDetailsController extends GetxController {
             // ),
             ElevatedButton(
               onPressed: () {
-                Get.back();
-                // Get.toNamed(AppRoutes.sidebarnar);
+                // Chuyển về sidebar và chọn tab subscription plan
+                Get.offAllNamed(AppRoutes.sidebarnar,
+                    arguments: {'selectedIndex': 2});
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green[600],
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
               child: Text(
-                'Get back',
+                'Back to Subscription Plans',
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -200,15 +201,16 @@ class PregnancyProfileDetailsController extends GetxController {
             // ),
             ElevatedButton(
               onPressed: () {
-                Get.back();
-                // Get.toNamed(AppRoutes.sidebarnar);
+                // Chuyển về sidebar và chọn tab subscription plan
+                Get.offAllNamed(AppRoutes.sidebarnar,
+                    arguments: {'selectedTab': 2});
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green[600],
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
               child: Text(
-                'Get back',
+                'Back to Subscription Plans',
                 style: TextStyle(color: Colors.white),
               ),
             ),
