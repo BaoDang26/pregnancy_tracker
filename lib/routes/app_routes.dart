@@ -10,15 +10,16 @@ import '../Onboarding/blog_post_guest/blog_post_guest.dart';
 import '../Onboarding/home_screen_guest.dart';
 import '../Onboarding/subscription_plan/subscription_plan_detail_guest.dart';
 import '../Onboarding/subscription_plan/subscription_plan_guest.dart';
-import '../SideBarNav/blog_post/blog_post.dart';
 import '../SideBarNav/blog_post/blog_post_detail.dart';
 import '../SideBarNav/home_screen.dart';
 import '../SideBarNav/subscription_plan/subscription_plan_screen.dart';
 import '../SideBarNav/subscription_plan/subscription_plan_details_screen.dart';
+import '../SideBarNavSub/community_post/community_post_screen.dart';
 import '../SideBarNavSub/user_subscription/user_subscription_screen.dart';
 import '../account_profile/account_profile_screen.dart';
 import '../account_profile/update_account_profile_screen.dart';
 import '../bindings/account_profile_binding.dart';
+import '../bindings/community_post_binding.dart';
 import '../bindings/create_fetal_growth_measurement_binding.dart';
 import '../bindings/create_pregnancy_profile_binding.dart';
 import '../bindings/create_schedule_binding.dart';
@@ -65,7 +66,6 @@ class AppRoutes {
   static const String fetalgrowthstatistics = '/fetal-growth-statistics';
   static const String subscriptionplan = '/subscription-plan';
   static const String subscriptionplandetail = '/subscription-plan-detail';
-  static const String blogpost = '/blog-post';
   static const String blogpostdetail = '/blog-post-detail';
   static const String blogpostdetailguest = '/blog-post-detail-guest';
   static const String blogpostguest = '/blog-post-guest';
@@ -87,11 +87,16 @@ class AppRoutes {
   static const String createSchedule = '/create-schedule';
   static const String updateSchedule = '/update-schedule';
   static const String updateAccountProfile = '/update-account-profile';
+  static const String communitypost = '/community-post';
 
   // static const String pregnancyprofileedit = '/pregnancy-profile-edit';
   // static const String signup = '/signup';
 
   static List<GetPage> pages = [
+    GetPage(
+        name: communitypost,
+        page: () => CommunityPostScreen(),
+        binding: CommunityPostBinding()),
     GetPage(
         name: updateAccountProfile,
         page: () => UpdateAccountProfileScreen(),

@@ -37,11 +37,11 @@ class _SideBarNavGuestScreenState extends State<SideBarNavGuestScreen> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Color.fromARGB(255, 184, 239, 206),
-                  Color.fromARGB(255, 176, 247, 194),
-                  Color.fromARGB(255, 157, 234, 179),
-                  Color.fromARGB(255, 139, 229, 164),
-                  Color.fromARGB(255, 122, 224, 150),
+                  Color(0xFFF8EEF6), // Hồng pastel nhạt
+                  Color(0xFFF5E1EB), // Hồng pastel
+                  Color(0xFFEBD7E6), // Hồng nhạt pha tím
+                  Color(0xFFE5D1E8), // Tím lavender nhạt
+                  Color(0xFFDBC5DE), // Tím lavender đậm hơn một chút
                 ],
               ),
             ),

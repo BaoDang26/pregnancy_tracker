@@ -1,5 +1,6 @@
 import 'package:pregnancy_tracker/controllers/pregnancy_profile_controller.dart';
 
+import '../controllers/community_post_controller.dart';
 import '../controllers/home_screen_controller.dart';
 import '../controllers/subscription_plan_controller.dart';
 import '../controllers/account_profile_controller.dart';
@@ -13,6 +14,7 @@ class SideBarNavBinding extends Bindings {
     Get.lazyPut(() => SubscriptionPlanController());
     Get.lazyPut(() => HomeScreenController());
     Get.lazyPut(() => AccountProfileController());
+    Get.lazyPut(() => CommunityPostController());
 
     // Khởi tạo dịch vụ Firebase Messaging và đăng ký với GetX
     // final firebaseMessagingService = FirebaseMessagingService();

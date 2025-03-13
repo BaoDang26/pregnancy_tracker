@@ -25,6 +25,7 @@ class FetalGrowthMeasurementModel {
   int? heartRate;
   int? movementCount;
   String? notes;
+  String? status;
   int? pregnancyProfileId;
   DateTime? createdDate;
 
@@ -41,6 +42,7 @@ class FetalGrowthMeasurementModel {
     this.notes,
     this.createdDate,
     this.pregnancyProfileId,
+    this.status,
   });
 
   factory FetalGrowthMeasurementModel.fromJson(Map<String, dynamic> json) =>
@@ -57,6 +59,7 @@ class FetalGrowthMeasurementModel {
         notes: json["notes"],
         createdDate: DateTime.parse(json["createdDate"]),
         pregnancyProfileId: json["pregnancyProfileId"],
+        status: json["status"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -73,6 +76,7 @@ class FetalGrowthMeasurementModel {
         "notes": notes,
         "createdDate": createdDate?.toIso8601String(),
         "pregnancyProfileId": pregnancyProfileId,
+        "status": status,
       };
 
   Map<String, dynamic> toCreateJson() => {

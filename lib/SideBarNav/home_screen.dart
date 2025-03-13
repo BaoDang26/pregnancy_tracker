@@ -381,7 +381,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                                   child: CarouselSlider(
                                     carouselController: _carouselController,
                                     options: CarouselOptions(
-                                      height: 400.0,
+                                      height: 600.0,
                                       autoPlay: true,
                                       autoPlayInterval: Duration(seconds: 5),
                                       autoPlayAnimationDuration:

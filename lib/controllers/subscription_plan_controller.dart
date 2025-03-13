@@ -11,6 +11,7 @@ class SubscriptionPlanController extends GetxController {
   var subscriptionPlanList = <SubscriptionPlanModel>[].obs;
   var subscriptionPlanModel = SubscriptionPlanModel().obs;
   var userRole = ''.obs;
+  var userId = 0.obs;
 
   @override
   void onInit() {
@@ -55,6 +56,22 @@ class SubscriptionPlanController extends GetxController {
       }
     } catch (e) {
       print('Error getting user role: $e');
+    }
+  }
+
+  Future<void> getUserId() async {
+    try {
+      var response = await AccountProfileRepository.getAccountProfile();
+
+      if (response.statusCode == 200) {
+        var userData = json.decode(response.body);
+
+        if (userData != null && userData['userId'] != null) {
+          userId.value = userData['userId'];
+        }
+      }
+    } catch (e) {
+      print('Error getting user id: $e');
     }
   }
 

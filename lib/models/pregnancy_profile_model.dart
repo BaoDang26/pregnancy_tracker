@@ -19,6 +19,7 @@ class PregnancyProfileModel {
   DateTime? lastPeriodDate;
   int? pregnancyWeek;
   String? notes;
+  String? status;
   DateTime? createdDate;
 
   PregnancyProfileModel({
@@ -30,6 +31,7 @@ class PregnancyProfileModel {
     this.pregnancyWeek,
     this.notes,
     this.createdDate,
+    this.status,
   });
 
   factory PregnancyProfileModel.fromJson(Map<String, dynamic> json) =>
@@ -49,6 +51,7 @@ class PregnancyProfileModel {
         createdDate: json["createdDate"] != null
             ? DateTime.parse(json["createdDate"])
             : null,
+        status: json["status"] ?? '',
       );
 
   Map<String, dynamic> toJson() => {
@@ -63,6 +66,7 @@ class PregnancyProfileModel {
         "pregnancyWeek": pregnancyWeek,
         "notes": notes,
         "createdDate": createdDate?.toIso8601String(),
+        "status": status,
       };
 
   Map<String, dynamic> toCreateJson() => {

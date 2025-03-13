@@ -5,6 +5,7 @@ import 'package:pregnancy_tracker/util/app_export.dart';
 import 'package:get/get.dart';
 
 import '../SideBarNav/home_screen.dart';
+import '../SideBarNavSub/community_post/community_post_screen.dart';
 import '../account_profile/account_profile_screen.dart';
 
 import 'custom_elevated_button.dart';
@@ -22,7 +23,7 @@ class _SideBarNavScreenState extends State<SideBarNavScreen> {
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = [
     const HomeScreen(),
-    const BlogPost(),
+    const CommunityPostScreen(),
     const PregnancyProfileScreen(),
     const SubscriptionPlan(),
     const AccountProfileScreen(),
@@ -62,11 +63,11 @@ class _SideBarNavScreenState extends State<SideBarNavScreen> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Color.fromARGB(255, 184, 239, 206),
-                  Color.fromARGB(255, 176, 247, 194),
-                  Color.fromARGB(255, 157, 234, 179),
-                  Color.fromARGB(255, 139, 229, 164),
-                  Color.fromARGB(255, 122, 224, 150),
+                  Color(0xFFF8EEF6), // Hồng pastel nhạt
+                  Color(0xFFF5E1EB), // Hồng pastel
+                  Color(0xFFEBD7E6), // Hồng nhạt pha tím
+                  Color(0xFFE5D1E8), // Tím lavender nhạt
+                  Color(0xFFDBC5DE), // Tím lavender đậm hơn một chút
                 ],
               ),
             ),
