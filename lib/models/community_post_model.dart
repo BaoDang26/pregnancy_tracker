@@ -70,7 +70,7 @@ class CommunityPostModel {
       };
 
   Map<String, dynamic> toUpdateJson() => {
-        "id": id,
+        "userId": userId,
         "title": title,
         "content": content,
         "attachmentUrl": attachmentUrl,

@@ -7,6 +7,8 @@ import 'package:pregnancy_tracker/widgets/side_bar_nar.dart';
 
 import '../Onboarding/blog_post_guest/blog_post_detail_guest.dart';
 import '../Onboarding/blog_post_guest/blog_post_guest.dart';
+import '../Onboarding/community_post_guest/community_post_guest_details_screen.dart';
+import '../Onboarding/community_post_guest/community_post_guest_screen.dart';
 import '../Onboarding/home_screen_guest.dart';
 import '../Onboarding/subscription_plan/subscription_plan_detail_guest.dart';
 import '../Onboarding/subscription_plan/subscription_plan_guest.dart';
@@ -14,12 +16,19 @@ import '../SideBarNav/blog_post/blog_post_detail.dart';
 import '../SideBarNav/home_screen.dart';
 import '../SideBarNav/subscription_plan/subscription_plan_screen.dart';
 import '../SideBarNav/subscription_plan/subscription_plan_details_screen.dart';
+import '../SideBarNavSub/community_post/community_post_details_screen.dart';
 import '../SideBarNavSub/community_post/community_post_screen.dart';
+import '../SideBarNavSub/community_post/create_community_post_screen.dart';
+import '../SideBarNavSub/community_post/update_community_post_screen.dart';
 import '../SideBarNavSub/user_subscription/user_subscription_screen.dart';
 import '../account_profile/account_profile_screen.dart';
 import '../account_profile/update_account_profile_screen.dart';
 import '../bindings/account_profile_binding.dart';
 import '../bindings/community_post_binding.dart';
+import '../bindings/community_post_details_binding.dart';
+import '../bindings/community_post_guest_binding.dart';
+import '../bindings/community_post_guest_details_binding.dart';
+import '../bindings/create_community_post_binding.dart';
 import '../bindings/create_fetal_growth_measurement_binding.dart';
 import '../bindings/create_pregnancy_profile_binding.dart';
 import '../bindings/create_schedule_binding.dart';
@@ -35,6 +44,7 @@ import '../bindings/subscription_plan_binding.dart';
 import '../bindings/subscription_plan_details_binding.dart';
 import '../bindings/subscription_plan_guest_binding.dart';
 import '../bindings/update_account_profile_binding.dart';
+import '../bindings/update_community_post_binding.dart';
 import '../bindings/update_fetal_growth_measurement_binding.dart';
 import '../bindings/update_schedule_binding.dart';
 import '../bindings/user_subscription_binding.dart';
@@ -88,15 +98,41 @@ class AppRoutes {
   static const String updateSchedule = '/update-schedule';
   static const String updateAccountProfile = '/update-account-profile';
   static const String communitypost = '/community-post';
+  static const String createcommunitypost = '/create-community-post';
+  static const String communitypostdetails = '/community-post-details';
+  static const String updatecommunitypost = '/update-community-post';
+  static const String communitypostguest = '/community-post-guest';
+  static const String communitypostguestdetails =
+      '/community-post-guest-details';
 
   // static const String pregnancyprofileedit = '/pregnancy-profile-edit';
   // static const String signup = '/signup';
 
   static List<GetPage> pages = [
     GetPage(
+        name: communitypostguest,
+        page: () => CommunityPostGuestScreen(),
+        binding: CommunityPostGuestBinding()),
+    GetPage(
+        name: communitypostguestdetails,
+        page: () => CommunityPostGuestDetailsScreen(),
+        binding: CommunityPostGuestDetailsBinding()),
+    GetPage(
+        name: updatecommunitypost,
+        page: () => UpdateCommunityPostScreen(),
+        binding: UpdateCommunityPostBinding()),
+    GetPage(
         name: communitypost,
         page: () => CommunityPostScreen(),
         binding: CommunityPostBinding()),
+    GetPage(
+        name: createcommunitypost,
+        page: () => CreateCommunityPostScreen(),
+        binding: CreateCommunityPostBinding()),
+    GetPage(
+        name: communitypostdetails,
+        page: () => CommunityPostDetailsScreen(),
+        binding: CommunityPostDetailsBinding()),
     GetPage(
         name: updateAccountProfile,
         page: () => UpdateAccountProfileScreen(),

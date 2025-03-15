@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../Onboarding/blog_post_guest/blog_post_guest.dart';
+import '../Onboarding/community_post_guest/community_post_guest_screen.dart';
 import '../Onboarding/home_screen_guest.dart';
 import '../Onboarding/subscription_plan/subscription_plan_guest.dart';
 
@@ -15,8 +16,8 @@ class _SideBarNavGuestScreenState extends State<SideBarNavGuestScreen> {
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = [
     const HomeScreenGuest(),
-    const BlogPostGuest(),
-    // PregnancyProfileScreen(),
+    // const BlogPostGuest(),
+    const CommunityPostGuestScreen(),
     SubscriptionPlanGuestScreen(),
     // AccountProfileScreen(),
     // const HomeScreen(),

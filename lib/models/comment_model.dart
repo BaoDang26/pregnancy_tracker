@@ -44,4 +44,14 @@ class CommentModel {
         "status": status,
         "createdDate": createdDate?.toIso8601String(),
       };
+
+  Map<String, dynamic> toCreateJson() => {
+        "userId": userId,
+        "content": content,
+      };
+
+  Map<String, dynamic> toUpdateJson() => {
+        "userId": userId,
+        "content": content,
+      };
 }

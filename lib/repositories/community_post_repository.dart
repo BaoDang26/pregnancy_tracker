@@ -8,6 +8,30 @@ import '../config/jwt_interceptor.dart';
 import '../models/community_post_model.dart';
 
 class CommunityPostRepository {
+  static Future<http.Response> getCommunityPostGuestList() async {
+    http.Response response;
+
+    Map<String, String> header = {
+      "Content-type": "application/json",
+    };
+    response = await interceptedClient.get(
+        BuildServer.buildUrl("guest/community-posts/all"),
+        headers: header);
+    return response;
+  }
+
+  static Future<http.Response> getCommunityPostGuestById(int postId) async {
+    http.Response response;
+
+    Map<String, String> header = {
+      "Content-type": "application/json",
+    };
+    response = await interceptedClient.get(
+        BuildServer.buildUrl("guest/community-posts/getPostById/$postId"),
+        headers: header);
+    return response;
+  }
+
   static Future<http.Response> getCommunityPostList() async {
     http.Response response;
 
@@ -15,11 +39,19 @@ class CommunityPostRepository {
       "Content-type": "application/json",
     };
     response = await interceptedClient
-        .get(
-          BuildServer.buildUrl("community-post/listAll"),
-          headers: header,
-        )
-        .timeout(const Duration(seconds: 30));
+        .get(BuildServer.buildUrl("community-post/listAll"), headers: header);
+    return response;
+  }
+
+  static Future<http.Response> getCommunityPostById(int postId) async {
+    http.Response response;
+
+    Map<String, String> header = {
+      "Content-type": "application/json",
+    };
+    response = await interceptedClient.get(
+        BuildServer.buildUrl("community-post/getPostById/$postId"),
+        headers: header);
     return response;
   }
 

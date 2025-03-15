@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:pregnancy_tracker/util/app_export.dart';
 import 'package:intl/intl.dart';
-// import '../../widgets/blog_card_widget.dart';
-import '../../controllers/account_profile_controller.dart';
-import '../../controllers/community_post_controller.dart';
+import '../../controllers/community_post_guest_controller.dart';
 import '../../models/community_post_model.dart';
 import '../../routes/app_routes.dart';
-import '../../widgets/custom_card_blog_widget.dart';
 
-class CommunityPostScreen extends GetView<CommunityPostController> {
-  const CommunityPostScreen({super.key});
+class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
+  const CommunityPostGuestScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final accountProfileController = Get.find<AccountProfileController>();
-    final userId = accountProfileController.accountProfileModel.value.id;
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -76,26 +71,18 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                         ),
                       ),
                       Spacer(),
-                      // Create Post button
-                      // _buildActionButton(
-                      //   icon: Icons.add_circle_outline,
-                      //   label: 'Create Post',
-                      //   color: Color(0xFF8E6C88), // Soft purple
-                      //   onTap: () => controller.goToCreateCommunityPost(),
-                      // ),
-                      SizedBox(width: 16),
-                      // My Posts button
-                      // _buildActionButton(
-                      //   icon: Icons.person_outline,
-                      //   label: 'My Posts',
-                      //   color: Color(0xFF6F9EAF), // Soft blue/teal
-                      //   onTap: () => controller.goToCommunityPostOfUser(),
-                      // ),
+                      // Join Community button for guests
+                      _buildActionButton(
+                        icon: Icons.login_rounded,
+                        label: 'Join Community',
+                        color: Color(0xFF8E6C88), // Soft purple
+                        onTap: () => controller.navigateToLogin(),
+                      ),
                     ],
                   ),
                   SizedBox(height: 15),
                   Text(
-                    'The community post is a place to share your journey, connect with other expecting parents, and find support.',
+                    'Browse our community posts and see what expecting parents are talking about. Sign up to join the conversation!',
                     style: TextStyle(
                       fontSize: 16,
                       color: Color(0xFF8E6C88).withOpacity(0.8),
@@ -179,6 +166,84 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
               ),
             ),
 
+            // Banner to encourage sign up
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Container(
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFFAD6E8C).withOpacity(0.8),
+                      Color(0xFF8E6C88).withOpacity(0.9),
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 10,
+                      offset: Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.favorite_border,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                    SizedBox(width: 15),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Join our pregnancy community!',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(height: 5),
+                          Text(
+                            'Create posts, comment, and connect with other expecting parents',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.white.withOpacity(0.9),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => controller.navigateToSignUp(),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        foregroundColor: Color(0xFFAD6E8C),
+                        elevation: 0,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      child: Text(
+                        'Sign Up',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
             // Grid of community posts
             Expanded(
               child: Obx(() {
@@ -196,7 +261,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                 }
 
                 return Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: GridView.builder(
                     padding: const EdgeInsets.all(5),
                     scrollDirection: Axis.vertical,
@@ -220,22 +285,24 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
           ],
         ),
       ),
-      // Floating action button for quick post creation
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () => controller.goToCreateCommunityPost(),
-      //   backgroundColor: Color(0xFFAD6E8C),
-      //   child: Icon(Icons.add, color: Colors.white),
-      //   tooltip: 'Create New Post',
-      // ),
+      // Floating action button for quick registration
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => controller.navigateToSignUp(),
+        backgroundColor: Color(0xFFAD6E8C),
+        icon: Icon(Icons.person_add, color: Colors.white),
+        label: Text('Join Now', style: TextStyle(color: Colors.white)),
+        tooltip: 'Sign up to join the community',
+      ),
     );
   }
 
   // Helper method to build action buttons
-  Widget _buildActionButton(
-      {required IconData icon,
-      required String label,
-      required Color color,
-      required VoidCallback onTap}) {
+  Widget _buildActionButton({
+    required IconData icon,
+    required String label,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(8),
@@ -291,7 +358,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
           ),
           SizedBox(height: 8),
           Text(
-            'Be the first to share your journey',
+            'Check back later for community content',
             style: TextStyle(
               fontSize: 16,
               color: Colors.grey[500],
@@ -299,9 +366,9 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
           ),
           SizedBox(height: 24),
           ElevatedButton.icon(
-            onPressed: () => controller.goToCreateCommunityPost(),
-            icon: Icon(Icons.add),
-            label: Text('Create Post'),
+            onPressed: () => controller.navigateToLogin(),
+            icon: Icon(Icons.login),
+            label: Text('Sign in to join'),
             style: ElevatedButton.styleFrom(
               backgroundColor: Color(0xFF8E6C88),
               foregroundColor: Colors.white,
@@ -346,13 +413,13 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                   post.attachmentUrl != null && post.attachmentUrl!.isNotEmpty
                       ? Image.network(
                           post.attachmentUrl!,
-                          height: 300,
+                          height: 140,
                           width: double.infinity,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
                             return Image.network(
                               'https://res.cloudinary.com/dlipvbdwi/image/upload/v1696896650/cld-sample.jpg',
-                              height: 300,
+                              height: 140,
                               width: double.infinity,
                               fit: BoxFit.cover,
                             );
@@ -360,7 +427,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                         )
                       : Image.network(
                           'https://res.cloudinary.com/dlipvbdwi/image/upload/v1696896650/cld-sample.jpg',
-                          height: 300,
+                          height: 140,
                           width: double.infinity,
                           fit: BoxFit.cover,
                         ),
@@ -422,26 +489,27 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                     ],
                   ),
 
-                  // Thêm nút Xem chi tiết
-                  // Spacer(),
-                  // SizedBox(
-                  //   width: double.infinity,
-                  //   child: ElevatedButton.icon(
-                  //     onPressed: () =>
-                  //         controller.goToCommunityPostDetail(index),
-                  //     icon: Icon(Icons.visibility, size: 16),
-                  //     label: Text('Details', style: TextStyle(fontSize: 12)),
-                  //     style: ElevatedButton.styleFrom(
-                  //       backgroundColor: Color(0xFFAD6E8C),
-                  //       foregroundColor: Colors.white,
-                  //       padding: EdgeInsets.symmetric(vertical: 6),
-                  //       minimumSize: Size(0, 30),
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(8),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
+                  // View details button
+                  Spacer(),
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton.icon(
+                      onPressed: () =>
+                          controller.goToCommunityPostDetail(index),
+                      icon: Icon(Icons.visibility, size: 16),
+                      label:
+                          Text('View Details', style: TextStyle(fontSize: 12)),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: Color(0xFFAD6E8C),
+                        side: BorderSide(color: Color(0xFFAD6E8C)),
+                        padding: EdgeInsets.symmetric(vertical: 6),
+                        minimumSize: Size(0, 30),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:pregnancy_tracker/widgets/custom_elevated_button.dart';
+
 import 'package:get/get.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../controllers/update_account_profile_controller.dart';
@@ -28,7 +26,7 @@ class UpdateAccountProfileScreen
           ),
           child: SafeArea(
             child: SingleChildScrollView(
-              padding: EdgeInsets.all(24),
+              padding: const EdgeInsets.all(24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -38,7 +36,7 @@ class UpdateAccountProfileScreen
                       IconButton(
                         onPressed: () => Get.back(),
                         icon: Container(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             shape: BoxShape.circle,
@@ -46,7 +44,7 @@ class UpdateAccountProfileScreen
                               BoxShadow(
                                 color: Colors.black.withOpacity(0.1),
                                 blurRadius: 10,
-                                offset: Offset(0, 4),
+                                offset: const Offset(0, 4),
                               ),
                             ],
                           ),
@@ -57,7 +55,7 @@ class UpdateAccountProfileScreen
                           ),
                         ),
                       ),
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       Text(
                         'Edit Profile',
                         style: TextStyle(
@@ -69,14 +67,14 @@ class UpdateAccountProfileScreen
                     ],
                   ),
 
-                  SizedBox(height: 32),
+                  const SizedBox(height: 32),
 
                   // Avatar Section
                   Center(
                     child: Stack(
                       children: [
                         Container(
-                          padding: EdgeInsets.all(5),
+                          padding: const EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             gradient: LinearGradient(
@@ -105,7 +103,7 @@ class UpdateAccountProfileScreen
                               _showImagePickerOptions(context);
                             },
                             child: Container(
-                              padding: EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 shape: BoxShape.circle,
@@ -113,7 +111,7 @@ class UpdateAccountProfileScreen
                                   BoxShadow(
                                     color: Colors.black.withOpacity(0.15),
                                     blurRadius: 6,
-                                    offset: Offset(0, 2),
+                                    offset: const Offset(0, 2),
                                   ),
                                 ],
                               ),
