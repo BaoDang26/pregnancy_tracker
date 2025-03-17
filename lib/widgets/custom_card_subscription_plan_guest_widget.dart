@@ -27,7 +27,7 @@ class SubscriptionPlanGuestCard extends StatelessWidget {
     return Expanded(
       child: Card(
         elevation: 4,
-        margin: EdgeInsets.symmetric(horizontal: 8),
+        margin: const EdgeInsets.symmetric(horizontal: 8),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),
@@ -45,8 +45,8 @@ class SubscriptionPlanGuestCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (isPopular)
-                  Center(
-                    child: Text(
+                  const Center(
+                    child: const Text(
                       'MOST POPULAR!',
                       style: TextStyle(
                         color: Colors.purple,
@@ -57,7 +57,7 @@ class SubscriptionPlanGuestCard extends StatelessWidget {
                 Center(
                   child: Text(
                     title,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
@@ -66,7 +66,7 @@ class SubscriptionPlanGuestCard extends StatelessWidget {
                 Center(
                   child: Text(
                     price,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
                     ),
@@ -76,17 +76,18 @@ class SubscriptionPlanGuestCard extends StatelessWidget {
                   child: Text(
                     details,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.black54,
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 ...features.map((feature) => ListTile(
-                      leading: Icon(Icons.check, color: Colors.lightGreen),
+                      leading:
+                          const Icon(Icons.check, color: Colors.lightGreen),
                       title: Text(feature),
                     )),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Center(
                   child: ElevatedButton(
                     onPressed: () {

@@ -31,8 +31,8 @@ class CustomElevatedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     // Gradient colors mặc định
     final defaultGradientColors = [
-      Color(0xFF81C784), // Light Green
-      Color(0xFF388E3C), // Dark Green
+      const Color(0xFF81C784), // Light Green
+      const Color(0xFF388E3C), // Dark Green
     ];
 
     // Sử dụng gradient tùy chỉnh hoặc mặc định nếu không được cung cấp
@@ -67,7 +67,7 @@ class CustomElevatedButton extends StatelessWidget {
                         : backgroundColor ?? Theme.of(context).primaryColor)
                     .withOpacity(0.3),
                 blurRadius: 8,
-                offset: Offset(0, 3),
+                offset: const Offset(0, 3),
               ),
             ],
           ),
@@ -82,7 +82,7 @@ class CustomElevatedButton extends StatelessWidget {
                     color: textColor ?? Colors.white,
                     size: 20,
                   ),
-                  SizedBox(width: 8),
+                  const SizedBox(width: 8),
                 ],
                 Text(
                   text,

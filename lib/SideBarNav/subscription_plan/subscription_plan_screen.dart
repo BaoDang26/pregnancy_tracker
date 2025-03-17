@@ -13,10 +13,10 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Subscription Plans'),
+        title: const Text('Subscription Plans'),
         actions: [
           IconButton(
-            icon: Icon(Icons.refresh),
+            icon: const Icon(Icons.refresh),
             onPressed: () {
               // Call the method to refresh the subscription plans
               controller.getSubscriptionPlans(); // Assuming this method exists
@@ -28,7 +28,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
       body: Obx(() {
         if (controller.isLoading.value) {
           return Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -47,14 +47,14 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
         }
 
         return Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
                 Color(0xFFE8F5E9),
                 Color(0xFFC8E6C9),
-                Color(0xFFB2DFDB),
+                const Color(0xFFB2DFDB),
               ],
             ),
           ),
@@ -90,9 +90,9 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
 
   Widget _buildHeaderSection(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(20, 20, 20, 15),
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 15),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
@@ -104,7 +104,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
             blurRadius: 8,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -117,19 +117,19 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
               Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.2),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.card_membership,
                       color: Colors.white,
                       size: 26,
                     ),
                   ),
-                  SizedBox(width: 12),
-                  Text(
+                  const SizedBox(width: 12),
+                  const Text(
                     'Subscription Plans',
                     style: TextStyle(
                       fontSize: 28,
@@ -148,7 +148,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
                     BoxShadow(
                       color: Colors.black.withOpacity(0.1),
                       blurRadius: 4,
-                      offset: Offset(0, 2),
+                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),
@@ -165,7 +165,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
               ),
             ],
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             'Enhance your pregnancy journey with premium features',
             style: TextStyle(
@@ -181,8 +181,8 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
 
   Widget _buildInfoBanner() {
     return Container(
-      margin: EdgeInsets.fromLTRB(16, 16, 16, 8),
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      margin: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -197,7 +197,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
             blurRadius: 4,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
         border: Border.all(
@@ -212,7 +212,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
             color: Colors.blue[700],
             size: 22,
           ),
-          SizedBox(width: 12),
+          const SizedBox(width: 12),
           Expanded(
             child: Text(
               'Choose a subscription plan to access all premium features and content',
@@ -237,7 +237,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
             size: 80,
             color: Colors.grey[400],
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text(
             'No subscription plans available',
             style: TextStyle(
@@ -246,7 +246,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
               color: Colors.grey[600],
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             'Please check back later',
             style: TextStyle(
@@ -261,7 +261,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
 
   Widget _buildPlansList() {
     return ListView.builder(
-      padding: EdgeInsets.only(top: 8, bottom: 20),
+      padding: const EdgeInsets.only(top: 8, bottom: 20),
       itemCount: controller.subscriptionPlanList.length,
       itemBuilder: (context, index) {
         final plan = controller.subscriptionPlanList[index];
@@ -291,7 +291,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
         index == 1; // Mark the second plan as popular for example
 
     return Container(
-      margin: EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
@@ -299,7 +299,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
           BoxShadow(
             color: Colors.black.withOpacity(0.06),
             blurRadius: 10,
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -311,9 +311,9 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
             if (isPopular)
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 6),
+                padding: const EdgeInsets.symmetric(vertical: 6),
                 color: Colors.orange[400],
-                child: Center(
+                child: const Center(
                   child: Text(
                     'MOST POPULAR',
                     style: TextStyle(
@@ -356,7 +356,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
 
                   // Main content
                   Padding(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -364,7 +364,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
                         Row(
                           children: [
                             Container(
-                              padding: EdgeInsets.all(8),
+                              padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 color: accentColor.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(10),
@@ -375,7 +375,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
                                 size: 24,
                               ),
                             ),
-                            SizedBox(width: 12),
+                            const SizedBox(width: 12),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -401,7 +401,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
                           ],
                         ),
 
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
 
                         // Price
                         Row(
@@ -415,7 +415,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
                                 color: accentColor,
                               ),
                             ),
-                            SizedBox(width: 4),
+                            const SizedBox(width: 4),
                             Text(
                               'VND',
                               style: TextStyle(
@@ -427,7 +427,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
                           ],
                         ),
 
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
 
                         // Description
                         Text(
@@ -441,7 +441,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
                           overflow: TextOverflow.ellipsis,
                         ),
 
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
 
                         // Subscribe button
                         Visibility(
@@ -479,7 +479,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                               ),
-                              child: Text(
+                              child: const Text(
                                 'Subscribe Now',
                                 style: TextStyle(
                                   fontSize: 16,
@@ -563,7 +563,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
     ];
 
     return Container(
-      margin: EdgeInsets.fromLTRB(16, 8, 16, 16),
+      margin: const EdgeInsets.fromLTRB(16, 8, 16, 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
@@ -571,7 +571,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
           BoxShadow(
             color: Colors.black.withOpacity(0.06),
             blurRadius: 10,
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -581,8 +581,8 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
           // Header
           Container(
             width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -596,7 +596,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
                 topRight: Radius.circular(16),
               ),
             ),
-            child: Row(
+            child: const Row(
               children: [
                 Icon(
                   Icons.stars,
@@ -628,7 +628,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           color: feature['color'].withOpacity(0.1),
                           borderRadius: BorderRadius.circular(10),
@@ -639,7 +639,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
                           size: 22,
                         ),
                       ),
-                      SizedBox(width: 12),
+                      const SizedBox(width: 12),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -652,7 +652,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
                                 color: Colors.grey[800],
                               ),
                             ),
-                            SizedBox(height: 2),
+                            const SizedBox(height: 2),
                             Text(
                               feature['description'],
                               style: TextStyle(

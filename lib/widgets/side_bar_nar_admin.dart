@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../admin/manage_subscription_plan_screen.dart';
 import '../admin/manage_user_screen.dart';
+import '../admin/manage_user_subscription_screen.dart';
 import 'custom_elevated_button.dart';
 
 class SideBarNavAdmin extends StatefulWidget {
@@ -17,6 +18,7 @@ class _SideBarNavAdminState extends State<SideBarNavAdmin> {
   static final List<Widget> _widgetOptions = [
     const ManageUserScreen(),
     const ManageSubscriptionPlanScreen(),
+    const ManageUserSubscriptionScreen(),
     // const HomeScreen(),
     // WeeklyMenuScreen(),
     // const AdvisorScreen(),
@@ -111,6 +113,18 @@ class _SideBarNavAdminState extends State<SideBarNavAdmin> {
                   ),
                   label:
                       Text('Subscription Plan', style: TextStyle(fontSize: 15)),
+                ),
+                NavigationRailDestination(
+                  icon: SizedBox(
+                    width: 24,
+                    child: Icon(Icons.subscriptions),
+                  ),
+                  selectedIcon: SizedBox(
+                    width: 24,
+                    child: Icon(Icons.subscriptions),
+                  ),
+                  label:
+                      Text('User Subscription', style: TextStyle(fontSize: 15)),
                 ),
               ],
               // trailing: Padding(

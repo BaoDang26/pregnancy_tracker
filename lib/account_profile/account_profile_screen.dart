@@ -45,13 +45,13 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
             ),
           ),
           child: SingleChildScrollView(
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Header
                 Container(
-                  margin: EdgeInsets.only(bottom: 30),
+                  margin: const EdgeInsets.only(bottom: 30),
                   child: Row(
                     children: [
                       Icon(
@@ -59,7 +59,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                         size: 32,
                         color: Colors.blue[700],
                       ),
-                      SizedBox(width: 12),
+                      const SizedBox(width: 12),
                       Text(
                         'My Profile',
                         style: TextStyle(
@@ -86,7 +86,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                         ),
                         shadowColor: Colors.blue.withOpacity(0.2),
                         child: Container(
-                          padding: EdgeInsets.all(24),
+                          padding: const EdgeInsets.all(24),
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
                               begin: Alignment.topLeft,
@@ -104,7 +104,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                               Stack(
                                 children: [
                                   Container(
-                                    padding: EdgeInsets.all(4),
+                                    padding: const EdgeInsets.all(4),
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       gradient: LinearGradient(
@@ -130,8 +130,8 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                                     bottom: 0,
                                     right: 0,
                                     child: Container(
-                                      padding: EdgeInsets.all(4),
-                                      decoration: BoxDecoration(
+                                      padding: const EdgeInsets.all(4),
+                                      decoration: const BoxDecoration(
                                         color: Colors.white,
                                         shape: BoxShape.circle,
                                         boxShadow: [
@@ -155,7 +155,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 24),
+                              const SizedBox(height: 24),
 
                               // Name
                               Text(
@@ -169,11 +169,11 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                                 textAlign: TextAlign.center,
                               ),
 
-                              SizedBox(height: 8),
+                              const SizedBox(height: 8),
 
                               // Email badge
                               Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 12, vertical: 6),
                                 decoration: BoxDecoration(
                                   color: Colors.blue[50],
@@ -190,7 +190,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                                       size: 16,
                                       color: Colors.blue[700],
                                     ),
-                                    SizedBox(width: 6),
+                                    const SizedBox(width: 6),
                                     Text(
                                       controller.accountProfileModel.value
                                               .email ??
@@ -204,7 +204,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                                 ),
                               ),
 
-                              SizedBox(height: 32),
+                              const SizedBox(height: 32),
 
                               // Divider with Info label
                               Row(
@@ -213,8 +213,8 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                                     child: Divider(color: Colors.blue[200]),
                                   ),
                                   Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 12),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12),
                                     child: Text(
                                       'Quick Stats',
                                       style: TextStyle(
@@ -229,7 +229,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                                 ],
                               ),
 
-                              SizedBox(height: 24),
+                              const SizedBox(height: 24),
 
                               // Quick Stats
                               // _buildQuickStatItem(
@@ -238,7 +238,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                               //   value: 'May 2023',
                               // ),
 
-                              SizedBox(height: 12),
+                              const SizedBox(height: 12),
 
                               // _buildQuickStatItem(
                               //   icon: Icons.pregnant_woman,
@@ -272,7 +272,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                       ),
                     ),
 
-                    SizedBox(width: 24),
+                    const SizedBox(width: 24),
 
                     // Right Column - Detailed Info & Forms
                     Expanded(
@@ -294,7 +294,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                                           .accountProfileModel.value.fullName ??
                                       'Not set',
                                 ),
-                                SizedBox(height: 16),
+                                const SizedBox(height: 16),
                                 _buildInfoRow(
                                   label: 'Address',
                                   icon: Icons.home,
@@ -302,7 +302,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                                           .accountProfileModel.value.address ??
                                       'Not set',
                                 ),
-                                SizedBox(height: 16),
+                                const SizedBox(height: 16),
                                 _buildInfoRow(
                                   label: 'Birthday',
                                   icon: Icons.cake,
@@ -318,7 +318,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                             ),
                           ),
 
-                          SizedBox(height: 24),
+                          const SizedBox(height: 24),
 
                           // Security Panel
                           _buildInfoPanel(
@@ -334,7 +334,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                                       .accountProfileModel.value.email,
                                   readOnly: true,
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 _buildFormField(
                                   label: 'Password',
                                   icon: Icons.lock,
@@ -358,7 +358,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                             ),
                           ),
 
-                          SizedBox(height: 30),
+                          const SizedBox(height: 30),
 
                           // Action Buttons - Updated Save Changes button
                           Row(
@@ -419,7 +419,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
     return Row(
       children: [
         Container(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             color: Colors.blue[50],
             borderRadius: BorderRadius.circular(8),
@@ -430,7 +430,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
             color: Colors.blue[700],
           ),
         ),
-        SizedBox(width: 12),
+        const SizedBox(width: 12),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -472,10 +472,10 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
         children: [
           // Panel Header
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             decoration: BoxDecoration(
               color: color.withOpacity(0.1),
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(16),
                 topRight: Radius.circular(16),
               ),
@@ -486,7 +486,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                   icon,
                   color: color,
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Text(
                   title,
                   style: TextStyle(
@@ -501,7 +501,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
 
           // Panel Content
           Container(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             child: content,
           ),
         ],
@@ -533,14 +533,14 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
             color: Colors.grey[700],
           ),
         ),
-        SizedBox(height: 6),
+        const SizedBox(height: 6),
         Container(
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
                 color: Colors.blue.withOpacity(0.05),
                 blurRadius: 4,
-                offset: Offset(0, 2),
+                offset: const Offset(0, 2),
               ),
             ],
           ),
@@ -596,7 +596,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                   width: 2,
                 ),
               ),
-              contentPadding: EdgeInsets.symmetric(
+              contentPadding: const EdgeInsets.symmetric(
                 vertical: 16,
                 horizontal: 16,
               ),
@@ -614,8 +614,8 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
       initialDate: controller.accountProfileModel.value.dateOfBirth != null
           ? DateTime.parse(
               controller.accountProfileModel.value.dateOfBirth!.toString())
-          : DateTime.now()
-              .subtract(Duration(days: 365 * 18)), // Default to 18 years ago
+          : DateTime.now().subtract(
+              const Duration(days: 365 * 18)), // Default to 18 years ago
       firstDate: DateTime(1940),
       lastDate: DateTime.now(),
       builder: (context, child) {
@@ -655,7 +655,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
           size: 18,
           color: Colors.blue[700],
         ),
-        SizedBox(width: 12),
+        const SizedBox(width: 12),
         Text(
           value,
           style: TextStyle(

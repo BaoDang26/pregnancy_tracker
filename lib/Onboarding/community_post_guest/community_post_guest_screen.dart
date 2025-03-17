@@ -12,12 +12,12 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFFF8F0F8), // Soft pink/lavender background
+              const Color(0xFFF8F0F8), // Soft pink/lavender background
               Colors.white,
             ],
           ),
@@ -29,7 +29,7 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
             Container(
               padding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
+                gradient: const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
@@ -37,7 +37,7 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                     Color(0xFFE5D1E8), // Soft lavender
                   ],
                 ),
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20),
                 ),
@@ -45,14 +45,14 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                   BoxShadow(
                     color: Colors.black.withOpacity(0.05),
                     blurRadius: 10,
-                    offset: Offset(0, 5),
+                    offset: const Offset(0, 5),
                   ),
                 ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
+                  const Row(
                     children: [
                       Icon(
                         Icons.forum_rounded,
@@ -80,12 +80,12 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                       // ),
                     ],
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   Text(
                     'Browse our community posts and see what expecting parents are talking about. Sign up to join the conversation!',
                     style: TextStyle(
                       fontSize: 16,
-                      color: Color(0xFF8E6C88).withOpacity(0.8),
+                      color: const Color(0xFF8E6C88).withOpacity(0.8),
                     ),
                   ),
                 ],
@@ -100,7 +100,7 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                   Expanded(
                     child: Container(
                       height: 45,
-                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
@@ -108,17 +108,17 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                           BoxShadow(
                             color: Colors.black.withOpacity(0.05),
                             blurRadius: 5,
-                            offset: Offset(0, 2),
+                            offset: const Offset(0, 2),
                           ),
                         ],
                       ),
                       child: Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.search,
                             color: Color(0xFF8E6C88),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Expanded(
                             child: TextField(
                               decoration: InputDecoration(
@@ -132,10 +132,10 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 15),
+                  const SizedBox(width: 15),
                   Container(
                     height: 45,
-                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
@@ -143,14 +143,15 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                         BoxShadow(
                           color: Colors.black.withOpacity(0.05),
                           blurRadius: 5,
-                          offset: Offset(0, 2),
+                          offset: const Offset(0, 2),
                         ),
                       ],
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
                         value: 'Recent',
-                        icon: Icon(Icons.filter_list, color: Color(0xFF8E6C88)),
+                        icon: const Icon(Icons.filter_list,
+                            color: Color(0xFF8E6C88)),
                         items: ['Recent', 'Most Comments', 'Oldest']
                             .map((String value) {
                           return DropdownMenuItem<String>(
@@ -170,14 +171,14 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
             Padding(
               padding: const EdgeInsets.all(20),
               child: Container(
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      Color(0xFFAD6E8C).withOpacity(0.8),
-                      Color(0xFF8E6C88).withOpacity(0.9),
+                      const Color(0xFFAD6E8C).withOpacity(0.8),
+                      const Color(0xFF8E6C88).withOpacity(0.9),
                     ],
                   ),
                   borderRadius: BorderRadius.circular(15),
@@ -185,23 +186,23 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                     BoxShadow(
                       color: Colors.black.withOpacity(0.1),
                       blurRadius: 10,
-                      offset: Offset(0, 5),
+                      offset: const Offset(0, 5),
                     ),
                   ],
                 ),
                 child: Row(
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.favorite_border,
                       color: Colors.white,
                       size: 40,
                     ),
-                    SizedBox(width: 15),
+                    const SizedBox(width: 15),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
+                          const Text(
                             'Join our pregnancy community!',
                             style: TextStyle(
                               fontSize: 18,
@@ -209,7 +210,7 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                               color: Colors.white,
                             ),
                           ),
-                          SizedBox(height: 5),
+                          const SizedBox(height: 5),
                           Text(
                             'Create posts, comment, and connect with other expecting parents',
                             style: TextStyle(
@@ -224,15 +225,15 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                       onPressed: () => controller.navigateToSignUp(),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
-                        foregroundColor: Color(0xFFAD6E8C),
+                        foregroundColor: const Color(0xFFAD6E8C),
                         elevation: 0,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      child: Text(
+                      child: const Text(
                         'Sign Up',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
@@ -248,7 +249,7 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
             Expanded(
               child: Obx(() {
                 if (controller.isLoading.value) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(
                       valueColor:
                           AlwaysStoppedAnimation<Color>(Color(0xFFAD6E8C)),
@@ -288,9 +289,9 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
       // Floating action button for quick registration
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => controller.navigateToLogin(),
-        backgroundColor: Color(0xFFAD6E8C),
-        icon: Icon(Icons.person_add, color: Colors.white),
-        label: Text('Join Now', style: TextStyle(color: Colors.white)),
+        backgroundColor: const Color(0xFFAD6E8C),
+        icon: const Icon(Icons.person_add, color: Colors.white),
+        label: const Text('Join Now', style: TextStyle(color: Colors.white)),
         tooltip: 'Sign up to join the community',
       ),
     );
@@ -307,7 +308,7 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
       onTap: onTap,
       borderRadius: BorderRadius.circular(8),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
@@ -315,14 +316,14 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
             BoxShadow(
               color: color.withOpacity(0.2),
               blurRadius: 4,
-              offset: Offset(0, 2),
+              offset: const Offset(0, 2),
             ),
           ],
         ),
         child: Row(
           children: [
             Icon(icon, color: color, size: 20),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Text(
               label,
               style: TextStyle(
@@ -347,7 +348,7 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
             size: 80,
             color: Colors.grey[300],
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text(
             'No community posts yet',
             style: TextStyle(
@@ -356,7 +357,7 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
               color: Colors.grey[700],
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             'Check back later for community content',
             style: TextStyle(
@@ -364,15 +365,15 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
               color: Colors.grey[500],
             ),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           ElevatedButton.icon(
             onPressed: () => controller.navigateToLogin(),
-            icon: Icon(Icons.login),
-            label: Text('Sign in to join'),
+            icon: const Icon(Icons.login),
+            label: const Text('Sign in to join'),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF8E6C88),
+              backgroundColor: const Color(0xFF8E6C88),
               foregroundColor: Colors.white,
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -394,7 +395,7 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -405,7 +406,7 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
           GestureDetector(
             onTap: () => controller.goToCommunityPostDetail(index),
             child: ClipRRect(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(15),
                 topRight: Radius.circular(15),
               ),
@@ -452,7 +453,7 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: 6),
+                  const SizedBox(height: 6),
                   // Post info row
                   Row(
                     children: [
@@ -461,7 +462,7 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                         size: 14,
                         color: Colors.grey[500],
                       ),
-                      SizedBox(width: 4),
+                      const SizedBox(width: 4),
                       Text(
                         post.createdDate != null
                             ? DateFormat('MMM d, yyyy')
@@ -472,13 +473,13 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                           color: Colors.grey[500],
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Icon(
                         Icons.comment,
                         size: 14,
                         color: Colors.grey[500],
                       ),
-                      SizedBox(width: 4),
+                      const SizedBox(width: 4),
                       Text(
                         '${post.commentCount ?? 0}',
                         style: TextStyle(

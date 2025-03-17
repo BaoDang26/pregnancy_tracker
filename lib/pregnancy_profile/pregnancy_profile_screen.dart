@@ -12,7 +12,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -28,11 +28,11 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
             children: [
               _buildHeader(),
               _buildInfoSection(),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Expanded(
                 child: _buildProfilesSection(),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
             ],
           ),
         ),
@@ -42,11 +42,11 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
 
   Widget _buildHeader() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
         children: [
           Container(
-            padding: EdgeInsets.all(12),
+            padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: Colors.white,
               shape: BoxShape.circle,
@@ -55,7 +55,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                   color: Colors.green.withOpacity(0.2),
                   spreadRadius: 2,
                   blurRadius: 6,
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
@@ -65,7 +65,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
               color: Colors.green[700],
             ),
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           Expanded(
             child: Text(
               "Pregnancy Profiles",
@@ -92,8 +92,8 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
 
   Widget _buildInfoSection() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 24),
-      padding: EdgeInsets.all(20),
+      margin: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -102,7 +102,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
             color: Colors.black.withOpacity(0.05),
             spreadRadius: 1,
             blurRadius: 10,
-            offset: Offset(0, 5),
+            offset: const Offset(0, 5),
           ),
         ],
       ),
@@ -112,7 +112,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: EdgeInsets.all(12),
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: Colors.pink[50],
                   borderRadius: BorderRadius.circular(12),
@@ -123,7 +123,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                   size: 30,
                 ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,7 +136,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                         color: Colors.pink[800],
                       ),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 8),
                     Text(
                       'You can manage multiple Pregnancy Profiles in case of multiple pregnancies. If you don\'t have a Pregnancy Profile yet, create one for yourself and start tracking your pregnancy journey!',
                       style: TextStyle(
@@ -181,7 +181,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
         return Column(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -198,8 +198,8 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                       onPressed: () {
                         controller.goToCreatePregnancyProfile();
                       },
-                      icon: Icon(Icons.add_circle_outline, size: 24),
-                      label: Text(
+                      icon: const Icon(Icons.add_circle_outline, size: 24),
+                      label: const Text(
                         "Add New Profile",
                         style: TextStyle(
                           fontSize: 16,
@@ -213,8 +213,8 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 12),
                       ),
                     ),
                 ],
@@ -247,7 +247,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                   color: Colors.green.withOpacity(0.1),
                   spreadRadius: 1,
                   blurRadius: 20,
-                  offset: Offset(0, 10),
+                  offset: const Offset(0, 10),
                 ),
               ],
             ),
@@ -257,7 +257,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
               color: Colors.green[300],
             ),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           Text(
             "Create Your First Profile",
             style: TextStyle(
@@ -266,7 +266,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
               color: Colors.green[800],
             ),
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Text(
             "Start tracking your pregnancy journey",
             style: TextStyle(
@@ -274,7 +274,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
               color: Colors.grey[600],
             ),
           ),
-          SizedBox(height: 30),
+          const SizedBox(height: 30),
           SizedBox(
             width: 220,
             height: 60,
@@ -282,8 +282,8 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
               onPressed: () {
                 controller.goToCreatePregnancyProfile();
               },
-              icon: Icon(Icons.add_circle_outline, size: 28),
-              label: Text(
+              icon: const Icon(Icons.add_circle_outline, size: 28),
+              label: const Text(
                 "Add Profile",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
@@ -304,7 +304,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
 
   Widget _buildProfileGrid() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: GridView.builder(
         padding: const EdgeInsets.all(8.0),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -342,7 +342,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
             color: Colors.black.withOpacity(0.08),
             spreadRadius: 1,
             blurRadius: 10,
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -398,10 +398,10 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                             color: Colors.black.withOpacity(0.1),
                             spreadRadius: 1,
                             blurRadius: 5,
-                            offset: Offset(0, 3),
+                            offset: const Offset(0, 3),
                           ),
                         ],
-                        image: DecorationImage(
+                        image: const DecorationImage(
                           image: AssetImage("assets/images/pregnancy.png"),
                           fit: BoxFit.cover,
                         ),
@@ -433,8 +433,8 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                           onPressed: () {
                             controller.goToUpdatePregnancyProfile(index);
                           },
-                          constraints:
-                              BoxConstraints.tightFor(width: 32, height: 32),
+                          constraints: const BoxConstraints.tightFor(
+                              width: 32, height: 32),
                           padding: EdgeInsets.zero,
                         ),
                       ),
@@ -445,7 +445,8 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                 // Profile Info
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -460,7 +461,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                        SizedBox(height: 6),
+                        const SizedBox(height: 6),
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -471,7 +472,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                                   ? Colors.orange[700]
                                   : Colors.green[700],
                             ),
-                            SizedBox(width: 4),
+                            const SizedBox(width: 4),
                             Flexible(
                               child: Text(
                                 "Week ${profile.pregnancyWeek}",
@@ -486,7 +487,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -499,7 +500,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                                   ? Colors.orange[700]
                                   : Colors.green[700],
                             ),
-                            SizedBox(width: 4),
+                            const SizedBox(width: 4),
                             Flexible(
                               child: Text(
                                 profile.dueDate != null
@@ -525,10 +526,10 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
 
                 // Status Indicator
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 6),
+                  padding: const EdgeInsets.symmetric(vertical: 6),
                   decoration: BoxDecoration(
                     color: isPastDue ? Colors.orange[50] : Colors.green[50],
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(16),
                       bottomRight: Radius.circular(16),
                     ),
@@ -542,7 +543,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                         color:
                             isPastDue ? Colors.orange[700] : Colors.green[700],
                       ),
-                      SizedBox(width: 4),
+                      const SizedBox(width: 4),
                       Text(
                         isPastDue ? "Completed" : "Active",
                         style: TextStyle(

@@ -10,10 +10,10 @@ class SubscriptionPlanDetailGuestScreen extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
-                    Color.fromARGB(255, 164, 219, 186),
+                    const Color.fromARGB(255, 164, 219, 186),
                     Color.fromARGB(255, 156, 227, 184),
                     Color.fromARGB(255, 137, 214, 169),
                     Color.fromARGB(255, 119, 209, 154),
@@ -23,8 +23,8 @@ class SubscriptionPlanDetailGuestScreen extends StatelessWidget {
                   end: Alignment.bottomRight,
                 ),
               ),
-              padding: EdgeInsets.all(16.0),
-              child: Column(
+              padding: const EdgeInsets.all(16.0),
+              child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -81,28 +81,28 @@ class SubscriptionPlanDetailGuestScreen extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Container(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Thanh toán bằng',
                     style: TextStyle(fontSize: 24),
                   ),
-                  TextField(
+                  const TextField(
                     decoration: InputDecoration(
                       hintText: 'Email',
                       border: OutlineInputBorder(),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Expanded(
                         child: RadioListTile(
-                          title: Text('Thẻ'),
+                          title: const Text('Thẻ'),
                           value: 'card',
                           groupValue: 'paymentMethod',
                           onChanged: (value) {},
@@ -110,7 +110,7 @@ class SubscriptionPlanDetailGuestScreen extends StatelessWidget {
                       ),
                       Expanded(
                         child: RadioListTile(
-                          title: Text('Cash App Pay'),
+                          title: const Text('Cash App Pay'),
                           value: 'cashApp',
                           groupValue: 'paymentMethod',
                           onChanged: (value) {},
@@ -118,15 +118,15 @@ class SubscriptionPlanDetailGuestScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   ElevatedButton(
                     onPressed: () {
                       // Logic để đăng ký
                     },
-                    child: Text('Đăng ký'),
+                    child: const Text('Đăng ký'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
-                      padding: EdgeInsets.symmetric(vertical: 16.0),
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
                     ),
                   ),
                 ],

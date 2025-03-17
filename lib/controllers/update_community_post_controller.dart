@@ -276,7 +276,7 @@ class UpdateCommunityPostController extends GetxController {
         elevation: 0,
         backgroundColor: Colors.transparent,
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.rectangle,
@@ -285,7 +285,7 @@ class UpdateCommunityPostController extends GetxController {
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
                 blurRadius: 10,
-                offset: Offset(0, 5),
+                offset: const Offset(0, 5),
               ),
             ],
           ),
@@ -293,27 +293,27 @@ class UpdateCommunityPostController extends GetxController {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Color(0xFFAD6E8C).withOpacity(0.2),
+                  color: const Color(0xFFAD6E8C).withOpacity(0.2),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.check_circle_outline,
                   color: Color(0xFFAD6E8C),
                   size: 60,
                 ),
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Success!',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF8E6C88),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 'Your post has been updated successfully.',
                 textAlign: TextAlign.center,
@@ -322,7 +322,7 @@ class UpdateCommunityPostController extends GetxController {
                   color: Colors.grey[700],
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               TextButton(
                 onPressed: () {
                   Get.back(); // Đóng dialog
@@ -330,14 +330,15 @@ class UpdateCommunityPostController extends GetxController {
                       result: true); // Quay lại màn hình trước với kết quả true
                 },
                 style: TextButton.styleFrom(
-                  backgroundColor: Color(0xFFAD6E8C),
+                  backgroundColor: const Color(0xFFAD6E8C),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
                 ),
-                child: Text(
+                child: const Text(
                   'OK',
                   style: TextStyle(
                     fontSize: 16,
@@ -363,7 +364,7 @@ class UpdateCommunityPostController extends GetxController {
         elevation: 0,
         backgroundColor: Colors.transparent,
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.rectangle,
@@ -372,7 +373,7 @@ class UpdateCommunityPostController extends GetxController {
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
                 blurRadius: 10,
-                offset: Offset(0, 5),
+                offset: const Offset(0, 5),
               ),
             ],
           ),
@@ -380,7 +381,7 @@ class UpdateCommunityPostController extends GetxController {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Colors.red[100],
                   shape: BoxShape.circle,
@@ -391,7 +392,7 @@ class UpdateCommunityPostController extends GetxController {
                   size: 60,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 'Error',
                 style: TextStyle(
@@ -400,7 +401,7 @@ class UpdateCommunityPostController extends GetxController {
                   color: Colors.red[400],
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 errorMessage,
                 textAlign: TextAlign.center,
@@ -409,7 +410,7 @@ class UpdateCommunityPostController extends GetxController {
                   color: Colors.grey[700],
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               TextButton(
                 onPressed: () {
                   Get.back(); // Đóng dialog
@@ -420,9 +421,10 @@ class UpdateCommunityPostController extends GetxController {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
                 ),
-                child: Text(
+                child: const Text(
                   'OK',
                   style: TextStyle(
                     fontSize: 16,

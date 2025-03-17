@@ -11,12 +11,12 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFFF8EEF6), // Hồng pastel nhạt
+              const Color(0xFFF8EEF6), // Hồng pastel nhạt
               Colors.white,
             ],
           ),
@@ -41,21 +41,21 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
                         _buildSectionHeading('Attachment', Icons.image),
                         _buildAttachmentSection(),
 
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         // Title & Description
                         _buildSectionHeading('Title', Icons.title),
                         _buildTitleField(),
 
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         // Content Section
                         _buildSectionHeading('Content', Icons.description),
                         _buildContentField(),
 
-                        SizedBox(height: 40),
+                        const SizedBox(height: 40),
 
                         // Submit Button
                         _buildSubmitButton(),
-                        SizedBox(height: 30),
+                        const SizedBox(height: 30),
                       ],
                     ),
                   ),
@@ -73,7 +73,7 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
     return Container(
       padding: const EdgeInsets.fromLTRB(40, 30, 40, 20),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
@@ -81,7 +81,7 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
             Color(0xFFE5D1E8), // Soft lavender
           ],
         ),
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           bottomLeft: Radius.circular(20),
           bottomRight: Radius.circular(20),
         ),
@@ -89,7 +89,7 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
-            offset: Offset(0, 5),
+            offset: const Offset(0, 5),
           ),
         ],
       ),
@@ -99,20 +99,20 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
           Row(
             children: [
               IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_back_ios,
                   color: Color(0xFFAD6E8C),
                 ),
                 onPressed: () => Get.back(),
               ),
-              SizedBox(width: 10),
-              Icon(
+              const SizedBox(width: 10),
+              const Icon(
                 Icons.edit_note,
                 size: 32,
                 color: Color(0xFFAD6E8C),
               ),
-              SizedBox(width: 15),
-              Text(
+              const SizedBox(width: 15),
+              const Text(
                 'Update Community Post',
                 style: TextStyle(
                   fontSize: 32,
@@ -123,14 +123,14 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
               ),
             ],
           ),
-          SizedBox(height: 15),
+          const SizedBox(height: 15),
           Padding(
             padding: const EdgeInsets.only(left: 50),
             child: Text(
               'Edit your post to update information or improve content',
               style: TextStyle(
                 fontSize: 16,
-                color: Color(0xFF8E6C88).withOpacity(0.8),
+                color: const Color(0xFF8E6C88).withOpacity(0.8),
               ),
             ),
           ),
@@ -147,13 +147,13 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
         children: [
           Icon(
             icon,
-            color: Color(0xFFAD6E8C),
+            color: const Color(0xFFAD6E8C),
             size: 24,
           ),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Color(0xFF8E6C88),
@@ -174,7 +174,7 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
           BoxShadow(
             color: Colors.black.withOpacity(0.03),
             blurRadius: 6,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -188,8 +188,9 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide.none,
           ),
-          contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          suffixIcon: Icon(
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          suffixIcon: const Icon(
             Icons.edit_note,
             color: Color(0xFF8E6C88),
           ),
@@ -212,7 +213,7 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
           BoxShadow(
             color: Colors.black.withOpacity(0.03),
             blurRadius: 6,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -227,7 +228,7 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide.none,
           ),
-          contentPadding: EdgeInsets.all(16),
+          contentPadding: const EdgeInsets.all(16),
         ),
         style: TextStyle(
           fontSize: 16,
@@ -246,18 +247,18 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
         // Image selection button
         ElevatedButton.icon(
           onPressed: controller.pickImageFromGallery,
-          icon: Icon(Icons.add_photo_alternate),
-          label: Text('Select Image'),
+          icon: const Icon(Icons.add_photo_alternate),
+          label: const Text('Select Image'),
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xFF8E6C88),
+            backgroundColor: const Color(0xFF8E6C88),
             foregroundColor: Colors.white,
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
           ),
         ),
-        SizedBox(height: 15),
+        const SizedBox(height: 15),
 
         // Image preview
         Obx(
@@ -266,7 +267,7 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
                   children: [
                     Container(
                       width: double.infinity,
-                      padding: EdgeInsets.all(5),
+                      padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         color: Colors.grey[100],
                         borderRadius: BorderRadius.circular(10),
@@ -283,7 +284,7 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
                             color: Colors.white.withOpacity(0.8),
                             shape: BoxShape.circle,
                           ),
-                          padding: EdgeInsets.all(6),
+                          padding: const EdgeInsets.all(6),
                           child: Icon(
                             Icons.close,
                             color: Colors.red[400],
@@ -311,7 +312,7 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
                           size: 50,
                           color: Colors.grey[400],
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         Text(
                           'No image selected',
                           style: TextStyle(
@@ -319,7 +320,7 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
                             fontSize: 16,
                           ),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Text(
                           'Click the button above to select an image',
                           style: TextStyle(
@@ -338,7 +339,7 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
 
   // Hàm hiển thị ảnh đã chọn với hỗ trợ Web
   Widget _buildImagePreview() {
-    if (!controller.isImageSelected.value) return SizedBox();
+    if (!controller.isImageSelected.value) return const SizedBox();
 
     // Hiển thị ảnh từ URL có sẵn nếu chưa chọn ảnh mới
     if (controller.selectedImage.value == null &&
@@ -353,7 +354,7 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
             height: 350,
             width: double.infinity,
             color: Colors.grey[200],
-            child: Center(child: Text('Cannot load image')),
+            child: const Center(child: Text('Cannot load image')),
           );
         },
       );
@@ -374,7 +375,7 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
                   height: 350,
                   width: double.infinity,
                   color: Colors.grey[200],
-                  child: Center(child: Text('Loading image...')),
+                  child: const Center(child: Text('Loading image...')),
                 ))
           // Hiển thị ảnh trên mobile
           : Image.file(
@@ -397,17 +398,19 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
                   ? null
                   : () => controller.updateCommunityPost(),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFAD6E8C),
+                backgroundColor: const Color(0xFFAD6E8C),
                 foregroundColor: Colors.white,
-                disabledBackgroundColor: Color(0xFFAD6E8C).withOpacity(0.6),
+                disabledBackgroundColor:
+                    const Color(0xFFAD6E8C).withOpacity(0.6),
                 elevation: 3,
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),
                 ),
               ),
               child: controller.isLoading.value
-                  ? Row(
+                  ? const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
@@ -428,7 +431,7 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
                         ),
                       ],
                     )
-                  : Row(
+                  : const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.save),

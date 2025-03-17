@@ -62,41 +62,42 @@ class ThemeHelper {
 /// Class containing the supported text theme styles.
 class TextThemes {
   static TextTheme textTheme(ColorScheme colorScheme) => TextTheme(
-        displayLarge: TextStyle(color: Color(0xff31493b), fontSize: 30.fSize),
+        displayLarge:
+            TextStyle(color: const Color(0xff31493b), fontSize: 30.fSize),
         headlineMedium: TextStyle(
-            color: Color(0xff31493b),
+            color: const Color(0xff31493b),
             fontWeight: FontWeight.bold,
             fontSize: 24.fSize),
         headlineSmall: TextStyle(
-            color: Color(0xff31493b),
+            color: const Color(0xff31493b),
             fontWeight: FontWeight.bold,
             fontSize: 20.fSize),
         headlineLarge: TextStyle(
-            color: Color(0xff31493b),
+            color: const Color(0xff31493b),
             fontWeight: FontWeight.bold,
             fontSize: 26.fSize),
         titleLarge: TextStyle(
-          color: Color(0xff000000),
+          color: const Color(0xff000000),
           fontWeight: FontWeight.bold,
           fontSize: 20.fSize,
         ),
         titleMedium: TextStyle(
-          color: Color(0xff000000),
+          color: const Color(0xff000000),
           // fontWeight: FontWeight.bold,
           fontSize: 12.fSize,
         ),
         titleSmall: TextStyle(
-          color: Color(0xff000000),
+          color: const Color(0xff000000),
           fontWeight: FontWeight.bold,
           fontSize: 16.fSize,
         ),
         bodyLarge: TextStyle(
-          color: Color(0xff000000),
+          color: const Color(0xff000000),
           fontWeight: FontWeight.w400,
           fontSize: 16.fSize,
         ),
         bodyMedium: TextStyle(
-          color: Color(0xff000000),
+          color: const Color(0xff000000),
           fontWeight: FontWeight.w400,
           fontSize: 14.fSize,
         ),

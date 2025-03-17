@@ -24,6 +24,7 @@ import '../account_profile/update_account_profile_screen.dart';
 import '../admin/create_subscription_plan_screen.dart';
 import '../admin/manage_subscription_plan_screen.dart';
 import '../admin/manage_user_screen.dart';
+import '../admin/manage_user_subscription_screen.dart';
 import '../bindings/account_profile_binding.dart';
 import '../bindings/community_post_binding.dart';
 import '../bindings/community_post_details_binding.dart';
@@ -39,6 +40,7 @@ import '../bindings/home_screen_binding.dart';
 import '../bindings/login_binding.dart';
 import '../bindings/manage_subscription_plan_binding.dart';
 import '../bindings/manage_user_binding.dart';
+import '../bindings/manage_user_subscription_binding.dart';
 import '../bindings/payment_success_binding.dart';
 import '../bindings/pregnancy_profile_details_binding.dart';
 import '../bindings/register_binding.dart';
@@ -117,98 +119,106 @@ class AppRoutes {
   static const String manageSubscriptionPlan = '/manage-subscription-plan';
   static const String createSubscriptionPlan = '/create-subscription-plan';
   static const String updatepregnancyprofile = '/update-pregnancy-profile';
+  static const String manageUserSubscription = '/manage-user-subscription';
 
   // static const String pregnancyprofileedit = '/pregnancy-profile-edit';
   // static const String signup = '/signup';
 
   static List<GetPage> pages = [
     GetPage(
+        name: manageUserSubscription,
+        page: () => const ManageUserSubscriptionScreen(),
+        binding: ManageUserSubscriptionBinding()),
+    GetPage(
         name: updatepregnancyprofile,
-        page: () => UpdatePregnancyProfileScreen(),
+        page: () => const UpdatePregnancyProfileScreen(),
         binding: UpdatePregnancyProfileBinding()),
     GetPage(
         name: manageSubscriptionPlan,
-        page: () => ManageSubscriptionPlanScreen(),
+        page: () => const ManageSubscriptionPlanScreen(),
         binding: ManageSubscriptionPlanBinding()),
     GetPage(
         name: createSubscriptionPlan,
-        page: () => CreateSubscriptionPlanScreen(),
+        page: () => const CreateSubscriptionPlanScreen(),
         binding: CreateSubscriptionPlanBinding()),
     GetPage(
         name: manageuser,
-        page: () => ManageUserScreen(),
+        page: () => const ManageUserScreen(),
         binding: ManageUserBinding()),
     GetPage(
         name: sidebarnaradmin,
-        page: () => SideBarNavAdmin(),
+        page: () => const SideBarNavAdmin(),
         binding: SideBarNavAdminBinding()),
     GetPage(
         name: communitypostguest,
-        page: () => CommunityPostGuestScreen(),
+        page: () => const CommunityPostGuestScreen(),
         binding: CommunityPostGuestBinding()),
     GetPage(
         name: communitypostguestdetails,
-        page: () => CommunityPostGuestDetailsScreen(),
+        page: () => const CommunityPostGuestDetailsScreen(),
         binding: CommunityPostGuestDetailsBinding()),
     GetPage(
         name: updatecommunitypost,
-        page: () => UpdateCommunityPostScreen(),
+        page: () => const UpdateCommunityPostScreen(),
         binding: UpdateCommunityPostBinding()),
     GetPage(
         name: communitypost,
-        page: () => CommunityPostScreen(),
+        page: () => const CommunityPostScreen(),
         binding: CommunityPostBinding()),
     GetPage(
         name: createcommunitypost,
-        page: () => CreateCommunityPostScreen(),
+        page: () => const CreateCommunityPostScreen(),
         binding: CreateCommunityPostBinding()),
     GetPage(
         name: communitypostdetails,
-        page: () => CommunityPostDetailsScreen(),
+        page: () => const CommunityPostDetailsScreen(),
         binding: CommunityPostDetailsBinding()),
     GetPage(
         name: updateAccountProfile,
-        page: () => UpdateAccountProfileScreen(),
+        page: () => const UpdateAccountProfileScreen(),
         binding: UpdateAccountProfileBinding()),
-    GetPage(name: home, page: () => HomeScreen(), binding: HomeScreenBinding()),
+    GetPage(
+        name: home,
+        page: () => const HomeScreen(),
+        binding: HomeScreenBinding()),
     GetPage(
         name: updateSchedule,
-        page: () => UpdateScheduleScreen(),
+        page: () => const UpdateScheduleScreen(),
         binding: UpdateScheduleBinding()),
     GetPage(
         name: createSchedule,
-        page: () => CreateScheduleScreen(),
+        page: () => const CreateScheduleScreen(),
         binding: CreateScheduleBinding()),
     GetPage(
         name: schedule,
-        page: () => ScheduleScreen(),
+        page: () => const ScheduleScreen(),
         binding: ScheduleBinding()),
     GetPage(
         name: updatefetalgrowthmeasurement,
-        page: () => UpdateFetalGrowthMeasurementScreen(),
+        page: () => const UpdateFetalGrowthMeasurementScreen(),
         binding: UpdateFetalGrowthMeasurementBinding()),
     GetPage(
         name: createfetalgrowthmeasurement,
-        page: () => CreateFetalGrowthMeasurementScreen(),
+        page: () => const CreateFetalGrowthMeasurementScreen(),
         binding: CreateFetalGrowthMeasurementBinding()),
     GetPage(
         name: usersubscription,
-        page: () => UserSubscriptionScreen(),
+        page: () => const UserSubscriptionScreen(),
         binding: UserSubscriptionBinding()),
     GetPage(
         name: createpregnancyprofile,
-        page: () => CreatePregnancyProfileScreen(),
+        page: () => const CreatePregnancyProfileScreen(),
         binding: CreatePregnancyProfileBinding()),
-    GetPage(name: pregnancyprofile, page: () => PregnancyProfileScreen()),
+    GetPage(name: pregnancyprofile, page: () => const PregnancyProfileScreen()),
     GetPage(
         name: sidebarnarguest,
-        page: () => SideBarNavGuestScreen(),
+        page: () => const SideBarNavGuestScreen(),
         binding: SideBarNavGuestBinding()),
-    GetPage(name: homeguest, page: () => HomeScreenGuest()),
+    GetPage(name: homeguest, page: () => const HomeScreenGuest()),
     // GetPage(name: blogpostguest, page: () => BlogPostGuest()),
     GetPage(
         name: subscriptionplanguest,
-        page: () => SubscriptionPlanGuestScreen(),
+        page: () => const SubscriptionPlanGuestScreen(),
         binding: SubscriptionPlanGuestBinding()),
     GetPage(
         name: subscriptionplandetailguest,
@@ -217,22 +227,23 @@ class AppRoutes {
     // GetPage(name: initialRoute, page: () => const InitialRoute()),
     GetPage(
         name: sidebarnar,
-        page: () => SideBarNavScreen(),
+        page: () => const SideBarNavScreen(),
         binding: SideBarNavBinding()),
     GetPage(
         name: pregnancyprofiledetails,
-        page: () => PregnancyProfileDetailsScreen(),
+        page: () => const PregnancyProfileDetailsScreen(),
         binding: PregnancyProfileDetailsBinding(),
         transition: Transition.noTransition),
     // GetPage(name: pregnancyprofileedit, page: () => PregnancyProfileEditScreen()),
-    GetPage(name: login, page: () => LoginScreen(), binding: LoginBinding()),
+    GetPage(
+        name: login, page: () => const LoginScreen(), binding: LoginBinding()),
     GetPage(
         name: register,
-        page: () => RegisterScreen(),
+        page: () => const RegisterScreen(),
         binding: RegisterBinding()),
     GetPage(
         name: accountprofile,
-        page: () => AccountProfileScreen(),
+        page: () => const AccountProfileScreen(),
         binding: AccountProfileBinding()),
     GetPage(
         name: fetalgrowthmeasurement,
@@ -240,7 +251,7 @@ class AppRoutes {
         binding: FetalGrowthMeasurementBinding()),
     GetPage(
         name: subscriptionplan,
-        page: () => SubscriptionPlan(),
+        page: () => const SubscriptionPlan(),
         binding: SubscriptionPlanBinding()),
     GetPage(
         name: subscriptionplandetail,
@@ -253,7 +264,7 @@ class AppRoutes {
         binding: PaymentSuccessBinding()),
     GetPage(
       name: paymentFailed,
-      page: () => PaymentFailedScreen(),
+      page: () => const PaymentFailedScreen(),
       // binding: PaymentFailedBinding()),
     ),
   ];

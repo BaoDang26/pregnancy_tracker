@@ -19,7 +19,7 @@ class RegisterScreen extends GetView<RegisterController> {
             flex: 2,
             child: Container(
               padding: const EdgeInsets.all(32.0),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
                     Color(0xFFF8EEF6), // Hồng pastel nhạt
@@ -38,7 +38,7 @@ class RegisterScreen extends GetView<RegisterController> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
+                    const Row(
                       children: [
                         Icon(
                           Icons.family_restroom,
@@ -59,8 +59,8 @@ class RegisterScreen extends GetView<RegisterController> {
                     ),
                     const SizedBox(height: 24),
                     Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 20),
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(0.7),
                         borderRadius: BorderRadius.circular(15),
@@ -68,23 +68,23 @@ class RegisterScreen extends GetView<RegisterController> {
                           BoxShadow(
                             color: Colors.black.withOpacity(0.05),
                             blurRadius: 10,
-                            offset: Offset(0, 4),
+                            offset: const Offset(0, 4),
                           ),
                         ],
                       ),
                       child: Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.pregnant_woman_rounded,
                             color: Color(0xFFE57373), // Hồng nhạt
                             size: 28,
                           ),
-                          SizedBox(width: 12),
+                          const SizedBox(width: 12),
                           Text(
                             'Please enter your details',
                             style: TextStyle(
                               fontSize: 16,
-                              color: Color(0xFF8E6C88).withOpacity(0.8),
+                              color: const Color(0xFF8E6C88).withOpacity(0.8),
                             ),
                           ),
                         ],
@@ -102,10 +102,10 @@ class RegisterScreen extends GetView<RegisterController> {
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide:
-                                BorderSide(color: Color(0xFFAD6E8C), width: 2),
+                            borderSide: const BorderSide(
+                                color: Color(0xFFAD6E8C), width: 2),
                           ),
-                          contentPadding: EdgeInsets.symmetric(
+                          contentPadding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 16),
                         ),
                       ),
@@ -120,7 +120,7 @@ class RegisterScreen extends GetView<RegisterController> {
                               return controller.validateEmail(value!);
                             },
                             hintTxt: 'Enter your email',
-                            suffixIcon: Icon(
+                            suffixIcon: const Icon(
                               Icons.alternate_email,
                               color: Color(0xFF8E6C88),
                             ),
@@ -135,7 +135,7 @@ class RegisterScreen extends GetView<RegisterController> {
                               return controller.validateFullName(value!);
                             },
                             hintTxt: 'Enter your full name',
-                            suffixIcon: Icon(
+                            suffixIcon: const Icon(
                               Icons.person_outline,
                               color: Color(0xFF8E6C88),
                             ),
@@ -155,9 +155,9 @@ class RegisterScreen extends GetView<RegisterController> {
                               isObscure: controller.passwordVisible.value,
                               suffixIcon: IconButton(
                                 icon: controller.passwordVisible.value
-                                    ? Icon(Icons.visibility,
+                                    ? const Icon(Icons.visibility,
                                         color: Color(0xFF8E6C88))
-                                    : Icon(Icons.visibility_off,
+                                    : const Icon(Icons.visibility_off,
                                         color: Color(0xFF8E6C88)),
                                 onPressed: () {
                                   controller.passwordVisible.value =
@@ -182,9 +182,9 @@ class RegisterScreen extends GetView<RegisterController> {
                                   controller.confirmPasswordVisible.value,
                               suffixIcon: IconButton(
                                 icon: controller.confirmPasswordVisible.value
-                                    ? Icon(Icons.visibility,
+                                    ? const Icon(Icons.visibility,
                                         color: Color(0xFF8E6C88))
-                                    : Icon(Icons.visibility_off,
+                                    : const Icon(Icons.visibility_off,
                                         color: Color(0xFF8E6C88)),
                                 onPressed: () {
                                   controller.confirmPasswordVisible.value =
@@ -203,7 +203,7 @@ class RegisterScreen extends GetView<RegisterController> {
                               return controller.validateAddress(value!);
                             },
                             hintTxt: 'Enter your address',
-                            suffixIcon: Icon(
+                            suffixIcon: const Icon(
                               Icons.location_on_outlined,
                               color: Color(0xFF8E6C88),
                             ),
@@ -215,7 +215,7 @@ class RegisterScreen extends GetView<RegisterController> {
                                   text: controller.dateOfBirth.value),
                               decoration: InputDecoration(
                                 labelText: 'Date of Birth',
-                                labelStyle: TextStyle(
+                                labelStyle: const TextStyle(
                                   color: Color(0xFF8E6C88),
                                 ),
                                 border: OutlineInputBorder(
@@ -224,13 +224,13 @@ class RegisterScreen extends GetView<RegisterController> {
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12.0),
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                       color: Color(0xFFAD6E8C), width: 2),
                                 ),
                                 filled: true,
                                 fillColor: Colors.white,
                                 suffixIcon: IconButton(
-                                  icon: Icon(
+                                  icon: const Icon(
                                     Icons.calendar_today_rounded,
                                     color: Color(0xFF8E6C88),
                                   ),
@@ -243,7 +243,8 @@ class RegisterScreen extends GetView<RegisterController> {
                                       builder: (context, child) {
                                         return Theme(
                                           data: Theme.of(context).copyWith(
-                                            colorScheme: ColorScheme.light(
+                                            colorScheme:
+                                                const ColorScheme.light(
                                               primary: Color(
                                                   0xFFAD6E8C), // Mauve/hồng đậm
                                               onPrimary: Colors.white,
@@ -277,17 +278,19 @@ class RegisterScreen extends GetView<RegisterController> {
                                 width: 220,
                                 height: 50,
                                 decoration: BoxDecoration(
-                                  color: Color(0xFFAD6E8C), // Mauve/hồng đậm
+                                  color:
+                                      const Color(0xFFAD6E8C), // Mauve/hồng đậm
                                   borderRadius: BorderRadius.circular(25),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Color(0xFFAD6E8C).withOpacity(0.3),
+                                      color: const Color(0xFFAD6E8C)
+                                          .withOpacity(0.3),
                                       blurRadius: 8,
-                                      offset: Offset(0, 3),
+                                      offset: const Offset(0, 3),
                                     ),
                                   ],
                                 ),
-                                child: Center(
+                                child: const Center(
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -328,17 +331,17 @@ class RegisterScreen extends GetView<RegisterController> {
                                     }
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor:
-                                        Color(0xFFAD6E8C), // Mauve/hồng đậm
+                                    backgroundColor: const Color(
+                                        0xFFAD6E8C), // Mauve/hồng đậm
                                     foregroundColor: Colors.white,
                                     elevation: 4,
-                                    shadowColor:
-                                        Color(0xFFAD6E8C).withOpacity(0.4),
+                                    shadowColor: const Color(0xFFAD6E8C)
+                                        .withOpacity(0.4),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(25),
                                     ),
                                   ),
-                                  child: Row(
+                                  child: const Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
                                       Icon(Icons.app_registration),
@@ -362,12 +365,12 @@ class RegisterScreen extends GetView<RegisterController> {
                         onPressed: () {
                           Get.back();
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.arrow_back,
                           color: Color(0xFF8E6C88),
                           size: 18,
                         ),
-                        label: Text(
+                        label: const Text(
                           'Back to Login',
                           style: TextStyle(
                             fontSize: 14,
@@ -385,7 +388,7 @@ class RegisterScreen extends GetView<RegisterController> {
           Expanded(
             flex: 3,
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(
                       'assets/images/logo.png'), // Replace with your image path

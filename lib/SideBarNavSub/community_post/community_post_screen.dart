@@ -16,7 +16,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
     final accountController = Get.find<AccountProfileController>();
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -33,7 +33,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
             Container(
               padding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
               decoration: BoxDecoration(
-                gradient: LinearGradient(
+                gradient: const LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
@@ -41,7 +41,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                     Color(0xFFE5D1E8), // Soft lavender
                   ],
                 ),
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(20),
                   bottomRight: Radius.circular(20),
                 ),
@@ -49,7 +49,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                   BoxShadow(
                     color: Colors.black.withOpacity(0.05),
                     blurRadius: 10,
-                    offset: Offset(0, 5),
+                    offset: const Offset(0, 5),
                   ),
                 ],
               ),
@@ -58,14 +58,14 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                 children: [
                   Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.forum_rounded,
                         size: 36,
                         color:
                             Color(0xFFAD6E8C), // Mauve/pink for pregnancy theme
                       ),
-                      SizedBox(width: 15),
-                      Text(
+                      const SizedBox(width: 15),
+                      const Text(
                         'COMMUNITY POSTS',
                         style: TextStyle(
                           fontSize: 36,
@@ -74,7 +74,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                           letterSpacing: 1,
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       // Get the account controller
 
                       // Only show Create Post button if user is not a regular user
@@ -82,25 +82,25 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                         _buildActionButton(
                           icon: Icons.add_circle_outline,
                           label: 'Create Post',
-                          color: Color(0xFF8E6C88),
+                          color: const Color(0xFF8E6C88),
                           onTap: () => controller.goToCreateCommunityPost(),
                         ),
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       // Refresh button
                       _buildActionButton(
                         icon: Icons.refresh,
                         label: 'Refresh',
-                        color: Color(0xFF6F9EAF), // Soft blue/teal
+                        color: const Color(0xFF6F9EAF), // Soft blue/teal
                         onTap: () => controller.getCommunityPostList(),
                       ),
                     ],
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   Text(
                     'The community post is a place to share your journey, connect with other expecting parents, and find support.',
                     style: TextStyle(
                       fontSize: 16,
-                      color: Color(0xFF8E6C88).withOpacity(0.8),
+                      color: const Color(0xFF8E6C88).withOpacity(0.8),
                     ),
                   ),
                 ],
@@ -115,7 +115,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                   Expanded(
                     child: Container(
                       height: 45,
-                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
@@ -123,17 +123,17 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                           BoxShadow(
                             color: Colors.black.withOpacity(0.05),
                             blurRadius: 5,
-                            offset: Offset(0, 2),
+                            offset: const Offset(0, 2),
                           ),
                         ],
                       ),
                       child: Row(
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.search,
                             color: Color(0xFF8E6C88),
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           Expanded(
                             child: TextField(
                               decoration: InputDecoration(
@@ -147,10 +147,10 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 15),
+                  const SizedBox(width: 15),
                   Container(
                     height: 45,
-                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
@@ -158,14 +158,15 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                         BoxShadow(
                           color: Colors.black.withOpacity(0.05),
                           blurRadius: 5,
-                          offset: Offset(0, 2),
+                          offset: const Offset(0, 2),
                         ),
                       ],
                     ),
                     child: DropdownButtonHideUnderline(
                       child: DropdownButton<String>(
                         value: 'Recent',
-                        icon: Icon(Icons.filter_list, color: Color(0xFF8E6C88)),
+                        icon: const Icon(Icons.filter_list,
+                            color: Color(0xFF8E6C88)),
                         items: ['Recent', 'Most Comments', 'Oldest']
                             .map((String value) {
                           return DropdownMenuItem<String>(
@@ -185,7 +186,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
             Expanded(
               child: Obx(() {
                 if (controller.isLoading.value) {
-                  return Center(
+                  return const Center(
                     child: CircularProgressIndicator(
                       valueColor:
                           AlwaysStoppedAnimation<Color>(Color(0xFFAD6E8C)),
@@ -242,7 +243,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
       onTap: onTap,
       borderRadius: BorderRadius.circular(8),
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
@@ -250,14 +251,14 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
             BoxShadow(
               color: color.withOpacity(0.2),
               blurRadius: 4,
-              offset: Offset(0, 2),
+              offset: const Offset(0, 2),
             ),
           ],
         ),
         child: Row(
           children: [
             Icon(icon, color: color, size: 20),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
             Text(
               label,
               style: TextStyle(
@@ -282,7 +283,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
             size: 80,
             color: Colors.grey[300],
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text(
             'No community posts yet',
             style: TextStyle(
@@ -291,7 +292,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
               color: Colors.grey[700],
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             'Be the first to share your journey',
             style: TextStyle(
@@ -299,15 +300,15 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
               color: Colors.grey[500],
             ),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           ElevatedButton.icon(
             onPressed: () => controller.goToCreateCommunityPost(),
-            icon: Icon(Icons.add),
-            label: Text('Create Post'),
+            icon: const Icon(Icons.add),
+            label: const Text('Create Post'),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF8E6C88),
+              backgroundColor: const Color(0xFF8E6C88),
               foregroundColor: Colors.white,
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -329,7 +330,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -340,7 +341,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
           GestureDetector(
             onTap: () => controller.goToCommunityPostDetail(index),
             child: ClipRRect(
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(15),
                 topRight: Radius.circular(15),
               ),
@@ -387,7 +388,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: 6),
+                  const SizedBox(height: 6),
                   // Post info row
                   Row(
                     children: [
@@ -396,7 +397,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                         size: 14,
                         color: Colors.grey[500],
                       ),
-                      SizedBox(width: 4),
+                      const SizedBox(width: 4),
                       Text(
                         post.createdDate != null
                             ? DateFormat('MMM d, yyyy')
@@ -407,13 +408,13 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                           color: Colors.grey[500],
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Icon(
                         Icons.comment,
                         size: 14,
                         color: Colors.grey[500],
                       ),
-                      SizedBox(width: 4),
+                      const SizedBox(width: 4),
                       Text(
                         '${post.commentCount ?? 0}',
                         style: TextStyle(

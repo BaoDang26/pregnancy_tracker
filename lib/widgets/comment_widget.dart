@@ -17,10 +17,10 @@ class Comment extends StatelessWidget {
         border: Border.all(color: Colors.grey.shade300), // Viền màu xám nhạt
         borderRadius: BorderRadius.circular(8.0), // Bo góc
         boxShadow: [
-          BoxShadow(
+          const BoxShadow(
             color: Colors.black26, // Màu bóng
             blurRadius: 4.0, // Độ mờ của bóng
-            offset: Offset(2, 2), // Vị trí bóng
+            offset: const Offset(2, 2), // Vị trí bóng
           ),
         ],
       ),
@@ -32,14 +32,14 @@ class Comment extends StatelessWidget {
         children: [
           Text(
             userName,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           ),
-          SizedBox(height: 4.0),
+          const SizedBox(height: 4.0),
           Text(
             content,
-            style: TextStyle(color: Colors.black87, fontSize: 16),
+            style: const TextStyle(color: Colors.black87, fontSize: 16),
           ),
-          Divider(), // Thêm đường kẻ phân cách giữa các bình luận
+          const Divider(), // Thêm đường kẻ phân cách giữa các bình luận
         ],
       ),
     );

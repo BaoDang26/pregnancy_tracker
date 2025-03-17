@@ -14,7 +14,7 @@ class LoginScreen extends GetView<LoginController> {
   Widget build(BuildContext context) {
     return Obx(() {
       if (controller.isLoading.value) {
-        return Scaffold(
+        return const Scaffold(
           backgroundColor: Colors.white,
           body: Center(
             child: CircularProgressIndicator.adaptive(
@@ -34,7 +34,7 @@ class LoginScreen extends GetView<LoginController> {
                 flex: 2,
                 child: Container(
                   padding: const EdgeInsets.all(32.0),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
                         Color(0xFFF8EEF6), // Hồng pastel nhạt
@@ -52,7 +52,7 @@ class LoginScreen extends GetView<LoginController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // App logo and title
-                      Row(
+                      const Row(
                         children: [
                           Icon(
                             Icons.child_friendly_outlined,
@@ -65,7 +65,7 @@ class LoginScreen extends GetView<LoginController> {
                             style: TextStyle(
                               fontSize: 42,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFFAD6E8C), // Mauve/hồng đậm
+                              color: const Color(0xFFAD6E8C), // Mauve/hồng đậm
                               letterSpacing: 0.5,
                             ),
                           ),
@@ -76,8 +76,8 @@ class LoginScreen extends GetView<LoginController> {
 
                       // Welcome text with custom icon
                       Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 20),
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.7),
                           borderRadius: BorderRadius.circular(15),
@@ -85,22 +85,22 @@ class LoginScreen extends GetView<LoginController> {
                             BoxShadow(
                               color: Colors.black.withOpacity(0.05),
                               blurRadius: 10,
-                              offset: Offset(0, 4),
+                              offset: const Offset(0, 4),
                             ),
                           ],
                         ),
                         child: Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.favorite,
                               color: Color(0xFFE57373), // Hồng nhạt
                               size: 28,
                             ),
-                            SizedBox(width: 12),
+                            const SizedBox(width: 12),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+                                const Text(
                                   'Welcome Back',
                                   style: TextStyle(
                                     fontSize: 24,
@@ -108,12 +108,12 @@ class LoginScreen extends GetView<LoginController> {
                                     color: Color(0xFF8E6C88), // Tím nhạt
                                   ),
                                 ),
-                                SizedBox(height: 4),
+                                const SizedBox(height: 4),
                                 Text(
                                   'Please enter your details',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: Color(0xFF8E6C88)
+                                    color: const Color(0xFF8E6C88)
                                         .withOpacity(0.8), // Tím nhạt
                                   ),
                                 ),
@@ -137,10 +137,10 @@ class LoginScreen extends GetView<LoginController> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   color: Color(0xFFAD6E8C), width: 2),
                             ),
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 16, vertical: 16),
                           ),
                         ),
@@ -153,7 +153,7 @@ class LoginScreen extends GetView<LoginController> {
                             return controller.validateEmail(value!);
                           },
                           hintTxt: 'Enter your email',
-                          suffixIcon: Icon(
+                          suffixIcon: const Icon(
                             Icons.alternate_email,
                             color: Color(0xFF8E6C88),
                           ),
@@ -174,10 +174,10 @@ class LoginScreen extends GetView<LoginController> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   color: Color(0xFFAD6E8C), width: 2),
                             ),
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 horizontal: 16, vertical: 16),
                           ),
                         ),
@@ -195,9 +195,9 @@ class LoginScreen extends GetView<LoginController> {
                             isObscure: controller.passwordVisible.value,
                             suffixIcon: IconButton(
                               icon: controller.passwordVisible.value
-                                  ? Icon(Icons.visibility,
+                                  ? const Icon(Icons.visibility,
                                       color: Color(0xFF8E6C88))
-                                  : Icon(Icons.visibility_off,
+                                  : const Icon(Icons.visibility_off,
                                       color: Color(0xFF8E6C88)),
                               onPressed: () {
                                 controller.passwordVisible.value =
@@ -225,15 +225,16 @@ class LoginScreen extends GetView<LoginController> {
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor:
-                                  Color(0xFFAD6E8C), // Mauve/hồng đậm
+                                  const Color(0xFFAD6E8C), // Mauve/hồng đậm
                               foregroundColor: Colors.white,
                               elevation: 4,
-                              shadowColor: Color(0xFFAD6E8C).withOpacity(0.4),
+                              shadowColor:
+                                  const Color(0xFFAD6E8C).withOpacity(0.4),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25),
                               ),
                             ),
-                            child: Row(
+                            child: const Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Icon(Icons.login_rounded),
@@ -270,7 +271,7 @@ class LoginScreen extends GetView<LoginController> {
                       const SizedBox(height: 20),
 
                       // Sign up section with decorative divider
-                      Center(
+                      const Center(
                         child: Row(
                           children: [
                             Expanded(
@@ -280,8 +281,7 @@ class LoginScreen extends GetView<LoginController> {
                               ),
                             ),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
+                              padding: EdgeInsets.symmetric(horizontal: 16),
                               child: Text(
                                 "Don't have an account?",
                                 style: TextStyle(
@@ -312,14 +312,15 @@ class LoginScreen extends GetView<LoginController> {
                               Get.toNamed(AppRoutes.register);
                             },
                             style: OutlinedButton.styleFrom(
-                              foregroundColor: Color(0xFF8E6C88), // Tím nhạt
-                              side: BorderSide(
+                              foregroundColor:
+                                  const Color(0xFF8E6C88), // Tím nhạt
+                              side: const BorderSide(
                                   color: Color(0xFF8E6C88), width: 2),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25),
                               ),
                             ),
-                            child: Row(
+                            child: const Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Icon(Icons.person_add_alt_1),
@@ -343,7 +344,7 @@ class LoginScreen extends GetView<LoginController> {
               Expanded(
                 flex: 3,
                 child: Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(
                           'assets/images/logo.png'), // Replace with your image path

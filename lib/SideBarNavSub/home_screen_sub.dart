@@ -30,14 +30,14 @@ class HomeScreen extends StatelessWidget {
             //   ),
             // ),
             Container(
-              color: Color.fromARGB(255, 117, 196, 149),
+              color: const Color.fromARGB(255, 117, 196, 149),
               width: double.infinity,
-              padding: EdgeInsets.all(16.0),
-              child: Column(
+              padding: const EdgeInsets.all(16.0),
+              child: const Column(
                 children: [
                   Text(
                     'Welcome to Your Pregnancy Journey',
-                    style: TextStyle(color: Colors.white, fontSize: 40),
+                    style: const TextStyle(color: Colors.white, fontSize: 40),
                     textAlign: TextAlign.center,
                   ),
                   Text(
@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Stack(
               children: [
                 CarouselSlider(
@@ -56,8 +56,9 @@ class HomeScreen extends StatelessWidget {
                   options: CarouselOptions(
                     height: 500.0,
                     autoPlay: true,
-                    autoPlayInterval: Duration(seconds: 3),
-                    autoPlayAnimationDuration: Duration(milliseconds: 800),
+                    autoPlayInterval: const Duration(seconds: 3),
+                    autoPlayAnimationDuration:
+                        const Duration(milliseconds: 800),
                     autoPlayCurve: Curves.fastOutSlowIn,
                     enlargeCenterPage: true,
                   ),
@@ -71,7 +72,7 @@ class HomeScreen extends StatelessWidget {
                       builder: (BuildContext context) {
                         return Container(
                           width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.symmetric(horizontal: 5.0),
+                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8.0),
                             image: DecorationImage(
@@ -89,7 +90,7 @@ class HomeScreen extends StatelessWidget {
                   top: 0,
                   bottom: 0,
                   child: IconButton(
-                    icon: Icon(Icons.arrow_back_ios, color: Colors.black),
+                    icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
                     onPressed: () {
                       // Implement previous slide
                       _carouselController.previousPage();
@@ -101,7 +102,8 @@ class HomeScreen extends StatelessWidget {
                   top: 0,
                   bottom: 0,
                   child: IconButton(
-                    icon: Icon(Icons.arrow_forward_ios, color: Colors.black),
+                    icon: const Icon(Icons.arrow_forward_ios,
+                        color: Colors.black),
                     onPressed: () {
                       // Implement next slide
                       _carouselController.nextPage();
@@ -110,8 +112,8 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'Latest Blog Posts',
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
             ),
@@ -186,7 +188,7 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
-            Text(
+            const Text(
               'Membership Packages',
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
             ),
@@ -260,12 +262,12 @@ class HomeScreen extends StatelessWidget {
             ),
             // Add your membership packages here
             // ...
-            Text(
+            const Text(
               'Frequently Asked Questions',
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
               textAlign: TextAlign.left,
             ),
-            Column(
+            const Column(
               children: [
                 ExpansionTile(
                   title: Text(
@@ -274,7 +276,7 @@ class HomeScreen extends StatelessWidget {
                       'What is the best time to start tracking my pregnancy?'),
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -293,7 +295,7 @@ class HomeScreen extends StatelessWidget {
                       'How often should I visit my doctor during pregnancy?'),
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(

@@ -11,8 +11,8 @@ class CreateSubscriptionPlanScreen
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Subscription Plan'),
-        backgroundColor: Color(0xFFE5D1E8),
+        title: const Text('Create Subscription Plan'),
+        backgroundColor: const Color(0xFFE5D1E8),
         elevation: 0,
         actions: [
           TextButton.icon(
@@ -23,11 +23,11 @@ class CreateSubscriptionPlanScreen
               style: TextStyle(color: Colors.red[700]),
             ),
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -39,7 +39,7 @@ class CreateSubscriptionPlanScreen
         ),
         child: Center(
           child: SingleChildScrollView(
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: Container(
               width: 800, // Fixed width for desktop view
               decoration: BoxDecoration(
@@ -49,7 +49,7 @@ class CreateSubscriptionPlanScreen
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),
                     blurRadius: 10,
-                    offset: Offset(0, 4),
+                    offset: const Offset(0, 4),
                   ),
                 ],
               ),
@@ -69,8 +69,8 @@ class CreateSubscriptionPlanScreen
 
   Widget _buildHeader() {
     return Container(
-      padding: EdgeInsets.all(24),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(24),
+      decoration: const BoxDecoration(
         color: Color(0xFFEBD7E6),
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(16),
@@ -79,16 +79,16 @@ class CreateSubscriptionPlanScreen
       ),
       child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.add_circle_outline,
             size: 32,
             color: Color(0xFF614051),
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'New Subscription Plan',
                 style: TextStyle(
                   fontSize: 24,
@@ -96,7 +96,7 @@ class CreateSubscriptionPlanScreen
                   color: Color(0xFF614051),
                 ),
               ),
-              SizedBox(height: 4),
+              const SizedBox(height: 4),
               Text(
                 'Create a new subscription plan for users',
                 style: TextStyle(
@@ -113,7 +113,7 @@ class CreateSubscriptionPlanScreen
 
   Widget _buildForm() {
     return Padding(
-      padding: EdgeInsets.all(24),
+      padding: const EdgeInsets.all(24),
       child: Form(
         key: controller.subscriptionPlanFormKey,
         child: Column(
@@ -121,7 +121,7 @@ class CreateSubscriptionPlanScreen
           children: [
             // Plan Information Section
             _buildSectionHeader('Plan Information', Icons.info_outline),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Name Field
             _buildInputField(
@@ -133,11 +133,11 @@ class CreateSubscriptionPlanScreen
               icon: Icons.card_membership,
               maxLength: 100,
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
 
             // Pricing & Duration Section
             _buildSectionHeader('Pricing & Duration', Icons.payments_outlined),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Two columns for price and duration
             Row(
@@ -156,7 +156,7 @@ class CreateSubscriptionPlanScreen
                     maxLength: 15,
                   ),
                 ),
-                SizedBox(width: 24),
+                const SizedBox(width: 24),
                 // Duration Field
                 Expanded(
                   child: _buildInputField(
@@ -172,11 +172,11 @@ class CreateSubscriptionPlanScreen
                 ),
               ],
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
 
             // Description Section
             _buildSectionHeader('Description', Icons.description_outlined),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
 
             // Description Field
             _buildInputField(
@@ -189,13 +189,13 @@ class CreateSubscriptionPlanScreen
               isMultiline: true,
               maxLength: 500,
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
 
             // Submit Button
             Center(
               child: Obx(
                 () => controller.isLoading.value
-                    ? CircularProgressIndicator(
+                    ? const CircularProgressIndicator(
                         valueColor:
                             AlwaysStoppedAnimation<Color>(Color(0xFF8E6C88)),
                       )
@@ -204,8 +204,8 @@ class CreateSubscriptionPlanScreen
                         height: 50,
                         child: ElevatedButton.icon(
                           onPressed: _submitForm,
-                          icon: Icon(Icons.check_circle_outline),
-                          label: Text(
+                          icon: const Icon(Icons.check_circle_outline),
+                          label: const Text(
                             'Create Subscription Plan',
                             style: TextStyle(
                               fontSize: 16,
@@ -213,7 +213,7 @@ class CreateSubscriptionPlanScreen
                             ),
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xFF8E6C88),
+                            backgroundColor: const Color(0xFF8E6C88),
                             foregroundColor: Colors.white,
                             elevation: 2,
                             shape: RoundedRectangleBorder(
@@ -224,7 +224,7 @@ class CreateSubscriptionPlanScreen
                       ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
           ],
         ),
       ),
@@ -236,13 +236,13 @@ class CreateSubscriptionPlanScreen
       children: [
         Icon(
           icon,
-          color: Color(0xFF8E6C88),
+          color: const Color(0xFF8E6C88),
           size: 20,
         ),
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
         Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Color(0xFF614051),
@@ -268,18 +268,18 @@ class CreateSubscriptionPlanScreen
       children: [
         Text(
           label,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.bold,
             color: Color(0xFF614051),
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         TextFormField(
           controller: controller,
           decoration: InputDecoration(
             hintText: hint,
-            prefixIcon: Icon(icon, color: Color(0xFF8E6C88)),
+            prefixIcon: Icon(icon, color: const Color(0xFF8E6C88)),
             filled: true,
             fillColor: Colors.grey[50],
             border: OutlineInputBorder(
@@ -296,14 +296,14 @@ class CreateSubscriptionPlanScreen
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: Color(0xFF8E6C88),
                 width: 2,
               ),
             ),
             errorBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 color: Colors.red,
                 width: 1,
               ),
@@ -353,18 +353,18 @@ class CreateSubscriptionPlanScreen
               borderRadius: BorderRadius.circular(16),
             ),
             child: Container(
-              padding: EdgeInsets.all(24),
+              padding: const EdgeInsets.all(24),
               width: 400,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.check_circle,
                     color: Colors.green,
                     size: 64,
                   ),
-                  SizedBox(height: 24),
-                  Text(
+                  const SizedBox(height: 24),
+                  const Text(
                     'Subscription Plan Created',
                     style: TextStyle(
                       fontSize: 20,
@@ -372,7 +372,7 @@ class CreateSubscriptionPlanScreen
                       color: Color(0xFF614051),
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Text(
                     'The subscription plan has been successfully created.',
                     textAlign: TextAlign.center,
@@ -381,7 +381,7 @@ class CreateSubscriptionPlanScreen
                       color: Colors.grey[700],
                     ),
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -391,29 +391,29 @@ class CreateSubscriptionPlanScreen
                           Get.back(); // Go back to subscription plan list
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFF8E6C88),
+                          backgroundColor: const Color(0xFF8E6C88),
                           foregroundColor: Colors.white,
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 24, vertical: 12),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        child: Text('Return to List'),
+                        child: const Text('Return to List'),
                       ),
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       OutlinedButton(
                         onPressed: () => Get.back(), // Close dialog only
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: Color(0xFF8E6C88),
-                          side: BorderSide(color: Color(0xFF8E6C88)),
-                          padding: EdgeInsets.symmetric(
+                          foregroundColor: const Color(0xFF8E6C88),
+                          side: const BorderSide(color: Color(0xFF8E6C88)),
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 24, vertical: 12),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        child: Text('Create Another'),
+                        child: const Text('Create Another'),
                       ),
                     ],
                   ),

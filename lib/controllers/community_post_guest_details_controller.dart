@@ -26,7 +26,7 @@ class CommunityPostGuestDetailsController extends GetxController {
       if (Get.arguments is CommunityPostModel) {
         // Gán trực tiếp model từ argument
         communityPost.value = Get.arguments as CommunityPostModel;
-        postId = communityPost.value!.id!;
+        postId = communityPost.value.id!;
 
         // Luôn fetch lại comments từ API để đảm bảo dữ liệu mới nhất
         fetchPostDetails();
@@ -156,17 +156,17 @@ class CommunityPostGuestDetailsController extends GetxController {
       Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         child: Container(
-          padding: EdgeInsets.all(24),
+          padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
+              const Icon(
                 Icons.forum_outlined,
                 size: 60,
                 color: Color(0xFFAD6E8C),
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Join Our Community',
                 style: TextStyle(
                   fontSize: 20,
@@ -174,7 +174,7 @@ class CommunityPostGuestDetailsController extends GetxController {
                   color: Color(0xFF614051),
                 ),
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               Text(
                 'Sign in or create an account to comment on posts and connect with other parents!',
                 textAlign: TextAlign.center,
@@ -184,7 +184,7 @@ class CommunityPostGuestDetailsController extends GetxController {
                   height: 1.4,
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -195,16 +195,16 @@ class CommunityPostGuestDetailsController extends GetxController {
                         navigateToLogin();
                       },
                       style: OutlinedButton.styleFrom(
-                        foregroundColor: Color(0xFF8E6C88),
-                        padding: EdgeInsets.symmetric(vertical: 12),
+                        foregroundColor: const Color(0xFF8E6C88),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      child: Text('Sign In'),
+                      child: const Text('Sign In'),
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
@@ -212,14 +212,14 @@ class CommunityPostGuestDetailsController extends GetxController {
                         navigateToSignUp();
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFAD6E8C),
+                        backgroundColor: const Color(0xFFAD6E8C),
                         foregroundColor: Colors.white,
-                        padding: EdgeInsets.symmetric(vertical: 12),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
                         ),
                       ),
-                      child: Text('Sign Up'),
+                      child: const Text('Sign Up'),
                     ),
                   ),
                 ],

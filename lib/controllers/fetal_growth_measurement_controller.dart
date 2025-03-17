@@ -220,7 +220,7 @@ class FetalGrowthMeasurementController extends GetxController {
               color: Colors.blue[800],
             ),
           ),
-          content: Column(
+          content: const Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
@@ -229,7 +229,7 @@ class FetalGrowthMeasurementController extends GetxController {
                 color: Colors.amber,
               ),
               SizedBox(height: 16),
-              Text(
+              const Text(
                 'This feature is only available for premium members.',
                 style: TextStyle(fontSize: 16),
                 textAlign: TextAlign.center,
@@ -239,7 +239,7 @@ class FetalGrowthMeasurementController extends GetxController {
           actions: [
             TextButton(
               onPressed: () => Get.back(),
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -248,9 +248,10 @@ class FetalGrowthMeasurementController extends GetxController {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green[600],
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
-              child: Text(
+              child: const Text(
                 'Back to Home',
                 style: TextStyle(color: Colors.white),
               ),

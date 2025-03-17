@@ -174,7 +174,7 @@ class CreateFetalGrowthMeasurementController extends GetxController {
               color: Colors.blue[800],
             ),
           ),
-          content: Column(
+          content: const Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
@@ -183,7 +183,7 @@ class CreateFetalGrowthMeasurementController extends GetxController {
                 color: Colors.amber,
               ),
               SizedBox(height: 16),
-              Text(
+              const Text(
                 'This feature is only available for premium members.',
                 style: TextStyle(fontSize: 16),
                 textAlign: TextAlign.center,
@@ -193,7 +193,7 @@ class CreateFetalGrowthMeasurementController extends GetxController {
           actions: [
             TextButton(
               onPressed: () => Get.back(),
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -202,9 +202,10 @@ class CreateFetalGrowthMeasurementController extends GetxController {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green[600],
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
-              child: Text(
+              child: const Text(
                 'Back to Home',
                 style: TextStyle(color: Colors.white),
               ),
@@ -372,25 +373,25 @@ class CreateFetalGrowthMeasurementController extends GetxController {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
+                    const Text(
                       'Success',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Text('Fetal growth measurement added successfully!'),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 10),
+                    const Text('Fetal growth measurement added successfully!'),
+                    const SizedBox(height: 20),
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text('OK'),
+                      child: const Text('OK'),
                     ),
                   ],
                 ),

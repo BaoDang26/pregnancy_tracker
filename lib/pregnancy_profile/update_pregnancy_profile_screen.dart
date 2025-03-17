@@ -10,16 +10,16 @@ class UpdatePregnancyProfileScreen
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Update Pregnancy Profile',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: Color(0xFFF5E1EB), // Soft pink
+        backgroundColor: const Color(0xFFF5E1EB), // Soft pink
         elevation: 0,
-        iconTheme: IconThemeData(color: Color(0xFF614051)),
+        iconTheme: const IconThemeData(color: const Color(0xFF614051)),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -32,7 +32,7 @@ class UpdatePregnancyProfileScreen
         child: Obx(() {
           if (controller.isLoading.value &&
               controller.pregnancyProfileModel.value.id == null) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF8E6C88)),
               ),
@@ -42,13 +42,13 @@ class UpdatePregnancyProfileScreen
           return SingleChildScrollView(
             child: Center(
               child: Container(
-                constraints: BoxConstraints(maxWidth: 800),
-                padding: EdgeInsets.all(24),
+                constraints: const BoxConstraints(maxWidth: 800),
+                padding: const EdgeInsets.all(24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     _buildHeader(),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     _buildUpdateForm(),
                   ],
                 ),
@@ -64,26 +64,26 @@ class UpdatePregnancyProfileScreen
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: Color(0xFFAD6E8C).withOpacity(0.3),
+                color: const Color(0xFFAD6E8C).withOpacity(0.3),
                 blurRadius: 20,
-                offset: Offset(0, 5),
+                offset: const Offset(0, 5),
               ),
             ],
           ),
-          child: Icon(
+          child: const Icon(
             Icons.pregnant_woman_rounded,
             size: 80,
             color: Color(0xFFAD6E8C),
           ),
         ),
-        SizedBox(height: 24),
-        Text(
+        const SizedBox(height: 24),
+        const Text(
           "Update Your Pregnancy Profile",
           style: TextStyle(
             fontSize: 28,
@@ -91,7 +91,7 @@ class UpdatePregnancyProfileScreen
             color: Color(0xFF614051),
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Text(
           "Customize details about your pregnancy journey",
           style: TextStyle(
@@ -106,7 +106,7 @@ class UpdatePregnancyProfileScreen
 
   Widget _buildUpdateForm() {
     return Container(
-      padding: EdgeInsets.all(30),
+      padding: const EdgeInsets.all(30),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
@@ -115,7 +115,7 @@ class UpdatePregnancyProfileScreen
             color: Colors.grey.withOpacity(0.1),
             spreadRadius: 5,
             blurRadius: 15,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -126,21 +126,22 @@ class UpdatePregnancyProfileScreen
           children: [
             // Pregnancy Information Section
             _buildSectionHeader("Pregnancy Nickname", Icons.favorite_border),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               controller: controller.nickNameController,
               decoration: InputDecoration(
                 labelText: 'Nickname for this pregnancy',
                 hintText: 'e.g., "Little Bean", "Baby Joy"',
                 prefixIcon:
-                    Icon(Icons.emoji_emotions, color: Color(0xFFAD6E8C)),
+                    const Icon(Icons.emoji_emotions, color: Color(0xFFAD6E8C)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(color: Color(0xFFAD6E8C)),
+                  borderSide: const BorderSide(color: Color(0xFFAD6E8C)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(color: Color(0xFFAD6E8C), width: 2),
+                  borderSide:
+                      const BorderSide(color: Color(0xFFAD6E8C), width: 2),
                 ),
                 filled: true,
                 fillColor: Colors.grey[50],
@@ -149,9 +150,9 @@ class UpdatePregnancyProfileScreen
               onSaved: (value) => controller.nickName = value!,
             ),
 
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             _buildSectionHeader("Additional Notes", Icons.notes),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextFormField(
               controller: controller.notesController,
               maxLines: 5,
@@ -160,17 +161,18 @@ class UpdatePregnancyProfileScreen
                 hintText:
                     'Add any important details or reminders about your pregnancy',
                 alignLabelWithHint: true,
-                prefixIcon: Padding(
+                prefixIcon: const Padding(
                   padding: EdgeInsets.only(bottom: 80),
                   child: Icon(Icons.edit_note, color: Color(0xFFAD6E8C)),
                 ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(color: Color(0xFFAD6E8C)),
+                  borderSide: const BorderSide(color: Color(0xFFAD6E8C)),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(color: Color(0xFFAD6E8C), width: 2),
+                  borderSide:
+                      const BorderSide(color: Color(0xFFAD6E8C), width: 2),
                 ),
                 filled: true,
                 fillColor: Colors.grey[50],
@@ -178,7 +180,7 @@ class UpdatePregnancyProfileScreen
               onSaved: (value) => controller.notes = value!,
             ),
 
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             Center(
               child: Container(
                 width: double.infinity,
@@ -188,16 +190,16 @@ class UpdatePregnancyProfileScreen
                           ? null
                           : () => controller.updatePregnancyProfile(),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFAD6E8C),
+                        backgroundColor: const Color(0xFFAD6E8C),
                         foregroundColor: Colors.white,
                         elevation: 5,
-                        shadowColor: Color(0xFFAD6E8C).withOpacity(0.5),
+                        shadowColor: const Color(0xFFAD6E8C).withOpacity(0.5),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
                       ),
                       child: controller.isLoading.value
-                          ? Row(
+                          ? const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 SizedBox(
@@ -218,7 +220,7 @@ class UpdatePregnancyProfileScreen
                                 ),
                               ],
                             )
-                          : Row(
+                          : const Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Icon(Icons.check_circle_outline, size: 20),
@@ -235,10 +237,10 @@ class UpdatePregnancyProfileScreen
               ),
             ),
 
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             if (controller.errorString.isNotEmpty)
               Container(
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 decoration: BoxDecoration(
                   color: Colors.red[50],
                   borderRadius: BorderRadius.circular(10),
@@ -246,8 +248,8 @@ class UpdatePregnancyProfileScreen
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.error_outline, color: Colors.red),
-                    SizedBox(width: 10),
+                    const Icon(Icons.error_outline, color: Colors.red),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: Text(
                         controller.errorString.value,
@@ -268,13 +270,13 @@ class UpdatePregnancyProfileScreen
       children: [
         Icon(
           icon,
-          color: Color(0xFF8E6C88),
+          color: const Color(0xFF8E6C88),
           size: 24,
         ),
-        SizedBox(width: 10),
+        const SizedBox(width: 10),
         Text(
           title,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
             color: Color(0xFF614051),

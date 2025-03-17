@@ -66,12 +66,12 @@ class CommunityPostController extends GetxController {
     if (userId == null) {
       Get.dialog(
         AlertDialog(
-          title: Text("Warning"),
-          content: Text("Please login to create a post"),
+          title: const Text("Warning"),
+          content: const Text("Please login to create a post"),
           actions: [
             TextButton(
               onPressed: () => Get.back(),
-              child: Text("OK"),
+              child: const Text("OK"),
             ),
           ],
         ),
@@ -83,13 +83,13 @@ class CommunityPostController extends GetxController {
     if (accountProfileController.isRegularUser()) {
       Get.dialog(
         AlertDialog(
-          title: Text("Permission Denied"),
-          content: Text(
+          title: const Text("Permission Denied"),
+          content: const Text(
               "Regular users cannot create posts. Please subscribe to Premium to create posts."),
           actions: [
             TextButton(
               onPressed: () => Get.back(),
-              child: Text("OK"),
+              child: const Text("OK"),
             ),
           ],
         ),

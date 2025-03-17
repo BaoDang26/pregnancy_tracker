@@ -29,11 +29,11 @@ class CreatePregnancyProfileScreen
               flex: 2,
               child: Container(
                 padding: const EdgeInsets.all(32.0),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
                       Color.fromARGB(255, 164, 219, 186),
-                      Color.fromARGB(255, 156, 227, 184),
+                      const Color.fromARGB(255, 156, 227, 184),
                       Color.fromARGB(255, 137, 214, 169),
                       Color.fromARGB(255, 119, 209, 154),
                       Color.fromARGB(255, 102, 204, 140),
@@ -69,7 +69,7 @@ class CreatePregnancyProfileScreen
                         validator: (value) {
                           return controller.validateNickName(value!);
                         },
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Baby\'s nickname',
                           border: OutlineInputBorder(),
                           filled: true,
@@ -78,7 +78,7 @@ class CreatePregnancyProfileScreen
                       ),
                       const SizedBox(height: 16),
                       Container(
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(8),
@@ -87,7 +87,7 @@ class CreatePregnancyProfileScreen
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Choose one option:',
                               style: TextStyle(
                                 fontSize: 16,
@@ -96,19 +96,20 @@ class CreatePregnancyProfileScreen
                             ),
                             const SizedBox(height: 16),
                             ListTile(
-                              title: Text('Enter Last Period Date'),
-                              subtitle: Text('We will calculate your due date'),
+                              title: const Text('Enter Last Period Date'),
+                              subtitle:
+                                  const Text('We will calculate your due date'),
                               onTap: () async {
                                 DateTime? pickedDate = await showDatePicker(
                                   context: context,
                                   initialDate: DateTime.now(),
                                   firstDate: DateTime.now()
-                                      .subtract(Duration(days: 280)),
+                                      .subtract(const Duration(days: 280)),
                                   lastDate: DateTime.now(),
                                   builder: (context, child) {
                                     return Theme(
                                       data: Theme.of(context).copyWith(
-                                        colorScheme: ColorScheme.light(
+                                        colorScheme: const ColorScheme.light(
                                           primary: Colors.green,
                                           onPrimary: Colors.white,
                                           onSurface: Colors.black,
@@ -142,7 +143,7 @@ class CreatePregnancyProfileScreen
                                       DateFormat('yyyy-MM-dd').format(dueDate);
                                 }
                               },
-                              leading: Icon(Icons.calendar_today,
+                              leading: const Icon(Icons.calendar_today,
                                   color: Colors.green),
                               tileColor: controller
                                       .lastPeriodDateController.text.isNotEmpty
@@ -151,13 +152,15 @@ class CreatePregnancyProfileScreen
                             ),
                             const SizedBox(height: 8),
                             ListTile(
-                              title: Text('Enter Due Date'),
-                              subtitle: Text(
+                              title: const Text('Enter Due Date'),
+                              subtitle: const Text(
                                   'If you already know your due date from doctor'),
                               onTap: () async {
                                 DateTime now = DateTime.now();
-                                DateTime minDate = now.add(Duration(days: 1));
-                                DateTime maxDate = now.add(Duration(days: 280));
+                                DateTime minDate =
+                                    now.add(const Duration(days: 1));
+                                DateTime maxDate =
+                                    now.add(const Duration(days: 280));
 
                                 DateTime? pickedDate = await showDatePicker(
                                   context: context,
@@ -167,7 +170,7 @@ class CreatePregnancyProfileScreen
                                   builder: (context, child) {
                                     return Theme(
                                       data: Theme.of(context).copyWith(
-                                        colorScheme: ColorScheme.light(
+                                        colorScheme: const ColorScheme.light(
                                           primary: Colors.green,
                                           onPrimary: Colors.white,
                                           onSurface: Colors.black,
@@ -203,7 +206,8 @@ class CreatePregnancyProfileScreen
                                           .format(lastPeriodDate);
                                 }
                               },
-                              leading: Icon(Icons.event, color: Colors.green),
+                              leading:
+                                  const Icon(Icons.event, color: Colors.green),
                               tileColor: controller
                                           .dueDateController.text.isNotEmpty &&
                                       controller
@@ -221,7 +225,7 @@ class CreatePregnancyProfileScreen
                           controller.lastPeriodDate = value!;
                         },
                         readOnly: true,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Last Period Date',
                           border: OutlineInputBorder(),
                           filled: true,
@@ -236,7 +240,7 @@ class CreatePregnancyProfileScreen
                           controller.dueDate = value!;
                         },
                         readOnly: true,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Due Date',
                           border: OutlineInputBorder(),
                           filled: true,
@@ -248,7 +252,7 @@ class CreatePregnancyProfileScreen
                       TextFormField(
                         controller: controller.notesController,
                         maxLines: 3,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Notes',
                           border: OutlineInputBorder(),
                           filled: true,
@@ -260,7 +264,7 @@ class CreatePregnancyProfileScreen
                       if (controller.lastPeriodDateController.text.isNotEmpty ||
                           controller.dueDateController.text.isNotEmpty)
                         Container(
-                          padding: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(8),
@@ -269,7 +273,7 @@ class CreatePregnancyProfileScreen
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Your Pregnancy Dates',
                                 style: TextStyle(
                                   fontSize: 16,
@@ -312,7 +316,7 @@ class CreatePregnancyProfileScreen
                                         const SizedBox(height: 4),
                                         Text(
                                           controller.dueDateController.text,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.green,
@@ -382,7 +386,7 @@ class CreatePregnancyProfileScreen
             Expanded(
               flex: 3,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/images/logo.png'),
                     fit: BoxFit.cover,

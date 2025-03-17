@@ -15,7 +15,7 @@ class SubscriptionPlanGuestScreen
       body: Obx(() {
         if (controller.isLoading.value) {
           return Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -34,7 +34,7 @@ class SubscriptionPlanGuestScreen
         }
 
         return Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
@@ -77,9 +77,9 @@ class SubscriptionPlanGuestScreen
 
   Widget _buildHeaderSection(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(20, 20, 20, 15),
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 15),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
@@ -91,7 +91,7 @@ class SubscriptionPlanGuestScreen
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
             blurRadius: 8,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -104,19 +104,19 @@ class SubscriptionPlanGuestScreen
               Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.2),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.card_membership,
                       color: Colors.white,
                       size: 26,
                     ),
                   ),
-                  SizedBox(width: 12),
-                  Text(
+                  const SizedBox(width: 12),
+                  const Text(
                     'Subscription Plans',
                     style: TextStyle(
                       fontSize: 28,
@@ -135,7 +135,7 @@ class SubscriptionPlanGuestScreen
                     BoxShadow(
                       color: Colors.black.withOpacity(0.1),
                       blurRadius: 4,
-                      offset: Offset(0, 2),
+                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),
@@ -173,7 +173,7 @@ class SubscriptionPlanGuestScreen
               ),
             ],
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             'Enhance your pregnancy journey with premium features',
             style: TextStyle(
@@ -189,8 +189,8 @@ class SubscriptionPlanGuestScreen
 
   Widget _buildInfoBanner() {
     return Container(
-      margin: EdgeInsets.fromLTRB(16, 16, 16, 8),
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      margin: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
@@ -205,7 +205,7 @@ class SubscriptionPlanGuestScreen
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
             blurRadius: 4,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
         border: Border.all(
@@ -220,7 +220,7 @@ class SubscriptionPlanGuestScreen
             color: Colors.blue[700],
             size: 22,
           ),
-          SizedBox(width: 12),
+          const SizedBox(width: 12),
           Expanded(
             child: Text(
               'Choose a subscription plan to access all premium features and content',
@@ -245,7 +245,7 @@ class SubscriptionPlanGuestScreen
             size: 80,
             color: Colors.grey[400],
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text(
             'No subscription plans available',
             style: TextStyle(
@@ -254,7 +254,7 @@ class SubscriptionPlanGuestScreen
               color: Colors.grey[600],
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             'Please check back later',
             style: TextStyle(
@@ -269,7 +269,7 @@ class SubscriptionPlanGuestScreen
 
   Widget _buildPlansList() {
     return ListView.builder(
-      padding: EdgeInsets.only(top: 8, bottom: 20),
+      padding: const EdgeInsets.only(top: 8, bottom: 20),
       itemCount: controller.subscriptionPlanList.length,
       itemBuilder: (context, index) {
         final plan = controller.subscriptionPlanList[index];
@@ -299,7 +299,7 @@ class SubscriptionPlanGuestScreen
         index == 1; // Mark the second plan as popular for example
 
     return Container(
-      margin: EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
@@ -307,7 +307,7 @@ class SubscriptionPlanGuestScreen
           BoxShadow(
             color: Colors.black.withOpacity(0.06),
             blurRadius: 10,
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -319,9 +319,9 @@ class SubscriptionPlanGuestScreen
             if (isPopular)
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 6),
+                padding: const EdgeInsets.symmetric(vertical: 6),
                 color: Colors.orange[400],
-                child: Center(
+                child: const Center(
                   child: Text(
                     'MOST POPULAR',
                     style: TextStyle(
@@ -364,7 +364,7 @@ class SubscriptionPlanGuestScreen
 
                   // Main content
                   Padding(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -372,7 +372,7 @@ class SubscriptionPlanGuestScreen
                         Row(
                           children: [
                             Container(
-                              padding: EdgeInsets.all(8),
+                              padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 color: accentColor.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(10),
@@ -383,7 +383,7 @@ class SubscriptionPlanGuestScreen
                                 size: 24,
                               ),
                             ),
-                            SizedBox(width: 12),
+                            const SizedBox(width: 12),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -409,7 +409,7 @@ class SubscriptionPlanGuestScreen
                           ],
                         ),
 
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
 
                         // Price
                         Row(
@@ -423,7 +423,7 @@ class SubscriptionPlanGuestScreen
                                 color: accentColor,
                               ),
                             ),
-                            SizedBox(width: 4),
+                            const SizedBox(width: 4),
                             Text(
                               'VND',
                               style: TextStyle(
@@ -435,7 +435,7 @@ class SubscriptionPlanGuestScreen
                           ],
                         ),
 
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
 
                         // Description
                         Text(
@@ -449,7 +449,7 @@ class SubscriptionPlanGuestScreen
                           overflow: TextOverflow.ellipsis,
                         ),
 
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
 
                         // Subscribe button
                         SizedBox(
@@ -460,12 +460,13 @@ class SubscriptionPlanGuestScreen
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) => AlertDialog(
-                                  title: Text('Login Required'),
-                                  content: Text('You must login to subscribe.'),
+                                  title: const Text('Login Required'),
+                                  content: const Text(
+                                      'You must login to subscribe.'),
                                   actions: [
                                     TextButton(
                                       onPressed: () => Navigator.pop(context),
-                                      child: Text('Cancel'),
+                                      child: const Text('Cancel'),
                                     ),
                                     TextButton(
                                       onPressed: () {
@@ -488,7 +489,7 @@ class SubscriptionPlanGuestScreen
                                 borderRadius: BorderRadius.circular(8),
                               ),
                             ),
-                            child: Text(
+                            child: const Text(
                               'Subscribe Now',
                               style: TextStyle(
                                 fontSize: 16,
@@ -571,7 +572,7 @@ class SubscriptionPlanGuestScreen
     ];
 
     return Container(
-      margin: EdgeInsets.fromLTRB(16, 8, 16, 16),
+      margin: const EdgeInsets.fromLTRB(16, 8, 16, 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
@@ -579,7 +580,7 @@ class SubscriptionPlanGuestScreen
           BoxShadow(
             color: Colors.black.withOpacity(0.06),
             blurRadius: 10,
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -589,8 +590,8 @@ class SubscriptionPlanGuestScreen
           // Header
           Container(
             width: double.infinity,
-            padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            decoration: BoxDecoration(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -604,7 +605,7 @@ class SubscriptionPlanGuestScreen
                 topRight: Radius.circular(16),
               ),
             ),
-            child: Row(
+            child: const Row(
               children: [
                 Icon(
                   Icons.stars,
@@ -636,7 +637,7 @@ class SubscriptionPlanGuestScreen
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           color: feature['color'].withOpacity(0.1),
                           borderRadius: BorderRadius.circular(10),
@@ -647,7 +648,7 @@ class SubscriptionPlanGuestScreen
                           size: 22,
                         ),
                       ),
-                      SizedBox(width: 12),
+                      const SizedBox(width: 12),
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -660,7 +661,7 @@ class SubscriptionPlanGuestScreen
                                 color: Colors.grey[800],
                               ),
                             ),
-                            SizedBox(height: 2),
+                            const SizedBox(height: 2),
                             Text(
                               feature['description'],
                               style: TextStyle(

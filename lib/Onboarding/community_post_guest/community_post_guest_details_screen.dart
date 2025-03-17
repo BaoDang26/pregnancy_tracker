@@ -13,20 +13,20 @@ class CommunityPostGuestDetailsScreen
     return Scaffold(
       body: SafeArea(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
                 Color(0xFFFDF4F9),
                 Color(0xFFF8F4FF),
-                Color(0xFFF0F8FF),
+                const Color(0xFFF0F8FF),
               ],
             ),
           ),
           child: Obx(() {
             if (controller.isLoading.value) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFAD6E8C)),
                 ),
@@ -43,14 +43,14 @@ class CommunityPostGuestDetailsScreen
                     Icon(
                       Icons.error_outline,
                       size: 80,
-                      color: Color(0xFFAD6E8C).withOpacity(0.6),
+                      color: const Color(0xFFAD6E8C).withOpacity(0.6),
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     Text(
                       controller.communityPost.value == null
                           ? 'Post not found'
                           : 'This post is no longer available',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF8E6C88),
@@ -67,16 +67,16 @@ class CommunityPostGuestDetailsScreen
                           ),
                         ),
                       ),
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
                     ElevatedButton.icon(
                       onPressed: () => Get.back(),
-                      icon: Icon(Icons.arrow_back),
-                      label: Text('Go Back'),
+                      icon: const Icon(Icons.arrow_back),
+                      label: const Text('Go Back'),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFFAD6E8C),
+                        backgroundColor: const Color(0xFFAD6E8C),
                         foregroundColor: Colors.white,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24, vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25),
                         ),
@@ -94,9 +94,9 @@ class CommunityPostGuestDetailsScreen
                   expandedHeight: 120.0,
                   floating: false,
                   pinned: true,
-                  backgroundColor: Color(0xFFAD6E8C),
+                  backgroundColor: const Color(0xFFAD6E8C),
                   flexibleSpace: FlexibleSpaceBar(
-                    title: Text(
+                    title: const Text(
                       'Community Post',
                       style: TextStyle(
                         color: Colors.white,
@@ -104,7 +104,7 @@ class CommunityPostGuestDetailsScreen
                       ),
                     ),
                     background: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -126,7 +126,7 @@ class CommunityPostGuestDetailsScreen
                                 color: Colors.white.withOpacity(0.9),
                                 size: 24,
                               ),
-                              SizedBox(width: 8),
+                              const SizedBox(width: 8),
                               Text(
                                 'Pregnancy Community',
                                 style: TextStyle(
@@ -142,12 +142,14 @@ class CommunityPostGuestDetailsScreen
                     ),
                   ),
                   leading: IconButton(
-                    icon: Icon(Icons.arrow_back_ios_new, color: Colors.white),
+                    icon: const Icon(Icons.arrow_back_ios_new,
+                        color: Colors.white),
                     onPressed: () => Get.back(),
                   ),
                   actions: [
                     IconButton(
-                      icon: Icon(Icons.login_rounded, color: Colors.white),
+                      icon:
+                          const Icon(Icons.login_rounded, color: Colors.white),
                       onPressed: () => controller.navigateToLogin(),
                       tooltip: 'Sign In',
                     ),
@@ -157,7 +159,7 @@ class CommunityPostGuestDetailsScreen
                 // Post Content
                 SliverToBoxAdapter(
                   child: Container(
-                    margin: EdgeInsets.all(16),
+                    margin: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
@@ -165,7 +167,7 @@ class CommunityPostGuestDetailsScreen
                         BoxShadow(
                           color: Colors.black.withOpacity(0.05),
                           blurRadius: 10,
-                          offset: Offset(0, 4),
+                          offset: const Offset(0, 4),
                         ),
                       ],
                     ),
@@ -182,18 +184,18 @@ class CommunityPostGuestDetailsScreen
                               Text(
                                 controller.communityPost.value?.title ??
                                     'Untitled Post',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
                                   color: Color(0xFF614051),
                                 ),
                               ),
-                              SizedBox(height: 12),
+                              const SizedBox(height: 12),
 
                               // Post Meta Info
                               Row(
                                 children: [
-                                  CircleAvatar(
+                                  const CircleAvatar(
                                     backgroundColor: Color(0xFFE1BEE7),
                                     radius: 20,
                                     child: Icon(
@@ -202,14 +204,14 @@ class CommunityPostGuestDetailsScreen
                                       size: 22,
                                     ),
                                   ),
-                                  SizedBox(width: 12),
+                                  const SizedBox(width: 12),
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "User #${controller.communityPost.value?.userId ?? 'Unknown'}",
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16,
                                           color: Color(0xFF614051),
@@ -225,25 +227,26 @@ class CommunityPostGuestDetailsScreen
                                       ),
                                     ],
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   Container(
-                                    padding: EdgeInsets.symmetric(
+                                    padding: const EdgeInsets.symmetric(
                                         horizontal: 12, vertical: 6),
                                     decoration: BoxDecoration(
-                                      color: Color(0xFFE1BEE7).withOpacity(0.3),
+                                      color: const Color(0xFFE1BEE7)
+                                          .withOpacity(0.3),
                                       borderRadius: BorderRadius.circular(20),
                                     ),
                                     child: Row(
                                       children: [
-                                        Icon(
+                                        const Icon(
                                           Icons.comment_outlined,
                                           size: 16,
                                           color: Color(0xFF8E6C88),
                                         ),
-                                        SizedBox(width: 4),
+                                        const SizedBox(width: 4),
                                         Text(
                                           '${controller.communityPost.value?.commentCount ?? 0}',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Color(0xFF8E6C88),
                                           ),
@@ -292,7 +295,7 @@ class CommunityPostGuestDetailsScreen
                                             top: 40,
                                             right: 20,
                                             child: IconButton(
-                                              icon: Icon(Icons.close,
+                                              icon: const Icon(Icons.close,
                                                   color: Colors.white,
                                                   size: 30),
                                               onPressed: () => Get.back(),
@@ -304,7 +307,7 @@ class CommunityPostGuestDetailsScreen
                                   );
                                 },
                                 child: Container(
-                                  constraints: BoxConstraints(
+                                  constraints: const BoxConstraints(
                                     minHeight: 100,
                                     maxHeight: 400,
                                   ),
@@ -347,7 +350,7 @@ class CommunityPostGuestDetailsScreen
                           ),
                         ),
 
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),
@@ -356,15 +359,15 @@ class CommunityPostGuestDetailsScreen
                 // Join Community Banner
                 SliverToBoxAdapter(
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(16, 0, 16, 16),
-                    padding: EdgeInsets.all(20),
+                    margin: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                    padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
-                          Color(0xFFAD6E8C).withOpacity(0.9),
-                          Color(0xFF8E6C88).withOpacity(0.9),
+                          const Color(0xFFAD6E8C).withOpacity(0.9),
+                          const Color(0xFF8E6C88).withOpacity(0.9),
                         ],
                       ),
                       borderRadius: BorderRadius.circular(20),
@@ -372,23 +375,23 @@ class CommunityPostGuestDetailsScreen
                         BoxShadow(
                           color: Colors.black.withOpacity(0.1),
                           blurRadius: 10,
-                          offset: Offset(0, 4),
+                          offset: const Offset(0, 4),
                         ),
                       ],
                     ),
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.forum_outlined,
                           size: 40,
                           color: Colors.white,
                         ),
-                        SizedBox(width: 16),
+                        const SizedBox(width: 16),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Join the conversation!',
                                 style: TextStyle(
                                   fontSize: 18,
@@ -396,7 +399,7 @@ class CommunityPostGuestDetailsScreen
                                   color: Colors.white,
                                 ),
                               ),
-                              SizedBox(height: 4),
+                              const SizedBox(height: 4),
                               Text(
                                 'Sign in or create an account to add comments and connect with other parents',
                                 style: TextStyle(
@@ -407,31 +410,31 @@ class CommunityPostGuestDetailsScreen
                             ],
                           ),
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Column(
                           children: [
                             ElevatedButton(
                               onPressed: () => controller.navigateToLogin(),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.white,
-                                foregroundColor: Color(0xFFAD6E8C),
-                                padding: EdgeInsets.symmetric(
+                                foregroundColor: const Color(0xFFAD6E8C),
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 10),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                               ),
-                              child: Text('Sign In'),
+                              child: const Text('Sign In'),
                             ),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             TextButton(
                               onPressed: () => controller.navigateToSignUp(),
                               style: TextButton.styleFrom(
                                 foregroundColor: Colors.white,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 16, vertical: 0),
                               ),
-                              child: Text(
+                              child: const Text(
                                 'Register',
                                 style: TextStyle(
                                   decoration: TextDecoration.underline,
@@ -451,28 +454,28 @@ class CommunityPostGuestDetailsScreen
                     padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.chat_bubble_outline,
                           color: Color(0xFF8E6C88),
                         ),
-                        SizedBox(width: 8),
+                        const SizedBox(width: 8),
                         Text(
                           'Comments (${controller.comments.length})',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             color: Color(0xFF614051),
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         // Nút đăng nhập với icon comment
                         GestureDetector(
                           onTap: () => controller.navigateToLogin(),
                           child: Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 12, vertical: 6),
                             decoration: BoxDecoration(
-                              color: Color(0xFFE1BEE7).withOpacity(0.3),
+                              color: const Color(0xFFE1BEE7).withOpacity(0.3),
                               borderRadius: BorderRadius.circular(20),
                             ),
                             // child: Row(
@@ -506,7 +509,7 @@ class CommunityPostGuestDetailsScreen
                     (context, index) {
                       final comment = controller.comments[index];
                       return Container(
-                        margin: EdgeInsets.fromLTRB(16, 0, 16, 12),
+                        margin: const EdgeInsets.fromLTRB(16, 0, 16, 12),
                         decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
@@ -514,7 +517,7 @@ class CommunityPostGuestDetailsScreen
                             BoxShadow(
                               color: Colors.black.withOpacity(0.05),
                               blurRadius: 5,
-                              offset: Offset(0, 2),
+                              offset: const Offset(0, 2),
                             ),
                           ],
                         ),
@@ -526,7 +529,7 @@ class CommunityPostGuestDetailsScreen
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  CircleAvatar(
+                                  const CircleAvatar(
                                     backgroundColor: Color(0xFFE1BEE7),
                                     radius: 18,
                                     child: Icon(
@@ -535,7 +538,7 @@ class CommunityPostGuestDetailsScreen
                                       size: 20,
                                     ),
                                   ),
-                                  SizedBox(width: 12),
+                                  const SizedBox(width: 12),
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment:
@@ -543,13 +546,13 @@ class CommunityPostGuestDetailsScreen
                                       children: [
                                         Text(
                                           "User #${comment.userId ?? 'Unknown'}",
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,
                                             color: Color(0xFF614051),
                                           ),
                                         ),
-                                        SizedBox(height: 2),
+                                        const SizedBox(height: 2),
                                         Text(
                                           controller
                                               .formatDate(comment.createdDate),
@@ -592,8 +595,8 @@ class CommunityPostGuestDetailsScreen
                 if (controller.comments.isEmpty)
                   SliverToBoxAdapter(
                     child: Container(
-                      margin: EdgeInsets.all(16),
-                      padding: EdgeInsets.all(24),
+                      margin: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(24),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
@@ -601,7 +604,7 @@ class CommunityPostGuestDetailsScreen
                           BoxShadow(
                             color: Colors.black.withOpacity(0.05),
                             blurRadius: 10,
-                            offset: Offset(0, 4),
+                            offset: const Offset(0, 4),
                           ),
                         ],
                       ),
@@ -610,10 +613,10 @@ class CommunityPostGuestDetailsScreen
                           Icon(
                             Icons.chat_bubble_outline,
                             size: 60,
-                            color: Color(0xFFAD6E8C).withOpacity(0.3),
+                            color: const Color(0xFFAD6E8C).withOpacity(0.3),
                           ),
-                          SizedBox(height: 16),
-                          Text(
+                          const SizedBox(height: 16),
+                          const Text(
                             'No comments yet',
                             style: TextStyle(
                               fontSize: 18,
@@ -621,7 +624,7 @@ class CommunityPostGuestDetailsScreen
                               color: Color(0xFF614051),
                             ),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
                             'Be the first to share your thoughts on this post',
                             textAlign: TextAlign.center,
@@ -652,8 +655,8 @@ class CommunityPostGuestDetailsScreen
                 // Bottom Padding with Sign Up CTA
                 SliverToBoxAdapter(
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(16, 0, 16, 100),
-                    padding: EdgeInsets.all(16),
+                    margin: const EdgeInsets.fromLTRB(16, 0, 16, 100),
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20),
@@ -661,7 +664,7 @@ class CommunityPostGuestDetailsScreen
                         BoxShadow(
                           color: Colors.black.withOpacity(0.05),
                           blurRadius: 10,
-                          offset: Offset(0, 4),
+                          offset: const Offset(0, 4),
                         ),
                       ],
                     ),

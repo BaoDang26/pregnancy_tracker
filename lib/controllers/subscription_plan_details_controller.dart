@@ -65,12 +65,12 @@ class SubscriptionPlanDetailsController extends GetxController {
         elevation: 0,
         child: Center(
           child: Container(
-            padding: EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
               boxShadow: [
-                BoxShadow(
+                const BoxShadow(
                   color: Colors.black26,
                   blurRadius: 10,
                   offset: Offset(0, 2),
@@ -83,15 +83,15 @@ class SubscriptionPlanDetailsController extends GetxController {
                 CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(Colors.green[700]!),
                 ),
-                SizedBox(height: 20),
-                Text(
+                const SizedBox(height: 20),
+                const Text(
                   'Processing payment...',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(
                   'Please wait while we prepare your payment',
                   textAlign: TextAlign.center,
@@ -153,7 +153,7 @@ class SubscriptionPlanDetailsController extends GetxController {
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Container(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   width: 320,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -163,7 +163,7 @@ class SubscriptionPlanDetailsController extends GetxController {
                         size: 50,
                         color: Colors.blue[700],
                       ),
-                      SizedBox(height: 16),
+                      const SizedBox(height: 16),
                       Text(
                         'Payment Processing',
                         style: TextStyle(
@@ -172,7 +172,7 @@ class SubscriptionPlanDetailsController extends GetxController {
                           color: Colors.blue[800],
                         ),
                       ),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       Text(
                         'Please complete your payment in the opened window. Checking payment status in 10 seconds...',
                         textAlign: TextAlign.center,
@@ -181,7 +181,7 @@ class SubscriptionPlanDetailsController extends GetxController {
                           color: Colors.grey[700],
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
                           Get.back(); // Đóng dialog
@@ -192,10 +192,10 @@ class SubscriptionPlanDetailsController extends GetxController {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 24, vertical: 12),
                         ),
-                        child: Text('OK, I understand'),
+                        child: const Text('OK, I understand'),
                       ),
                     ],
                   ),
@@ -228,8 +228,8 @@ class SubscriptionPlanDetailsController extends GetxController {
         if (message.contains("User already has an active subscription.")) {
           Get.dialog(
             AlertDialog(
-              title: Text("Notification"),
-              content: Text("You already have an active subscription."),
+              title: const Text("Notification"),
+              content: const Text("You already have an active subscription."),
               actions: [
                 TextButton(
                   onPressed: () => Get.back(),
@@ -295,7 +295,7 @@ class SubscriptionPlanDetailsController extends GetxController {
     isCheckingPayment.value = true;
 
     // Tạo timer mới kiểm tra mỗi 3 giây
-    _paymentCheckTimer = Timer.periodic(Duration(seconds: 3), (timer) {
+    _paymentCheckTimer = Timer.periodic(const Duration(seconds: 3), (timer) {
       _checkPaymentStatus(txnRef);
       print("Starting payment status check now 3 seconds");
     });

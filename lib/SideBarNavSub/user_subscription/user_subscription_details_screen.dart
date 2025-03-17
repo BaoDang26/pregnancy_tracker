@@ -11,11 +11,11 @@ class SubscriptionPlanDetailScreen extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
                     Color.fromARGB(255, 164, 219, 186),
-                    Color.fromARGB(255, 156, 227, 184),
+                    const Color.fromARGB(255, 156, 227, 184),
                     Color.fromARGB(255, 137, 214, 169),
                     Color.fromARGB(255, 119, 209, 154),
                     Color.fromARGB(255, 102, 204, 140),
@@ -24,8 +24,8 @@ class SubscriptionPlanDetailScreen extends StatelessWidget {
                   end: Alignment.bottomRight,
                 ),
               ),
-              padding: EdgeInsets.all(16.0),
-              child: Column(
+              padding: const EdgeInsets.all(16.0),
+              child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -84,16 +84,16 @@ class SubscriptionPlanDetailScreen extends StatelessWidget {
           Expanded(
             flex: 3,
             child: Container(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Payment method',
                     style: TextStyle(fontSize: 24),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.blueAccent, width: 2),
@@ -102,7 +102,7 @@ class SubscriptionPlanDetailScreen extends StatelessWidget {
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.5),
                           blurRadius: 5,
-                          offset: Offset(0, 2),
+                          offset: const Offset(0, 2),
                         ),
                       ],
                     ),
@@ -113,7 +113,7 @@ class SubscriptionPlanDetailScreen extends StatelessWidget {
                           height: 50,
                           width: 50,
                           decoration: BoxDecoration(
-                            image: DecorationImage(
+                            image: const DecorationImage(
                               image: NetworkImage(
                                   'https://res.cloudinary.com/dlipvbdwi/image/upload/v1740010783/VNPay.png'),
                               fit: BoxFit.cover,
@@ -121,15 +121,15 @@ class SubscriptionPlanDetailScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        SizedBox(width: 10),
-                        Text(
+                        const SizedBox(width: 10),
+                        const Text(
                           'VNPay',
                           style: TextStyle(fontSize: 16),
                         ),
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   CustomElevatedButton(
                     onPressed: () {
                       // Logic để đăng ký

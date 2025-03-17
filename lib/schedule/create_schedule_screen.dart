@@ -11,7 +11,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color(0xFFFCE4EC), // Hồng nhạt
@@ -30,10 +30,10 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                 // Header Section
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.symmetric(vertical: 30),
+                  padding: const EdgeInsets.symmetric(vertical: 30),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.8),
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(50),
                       bottomRight: Radius.circular(50),
                     ),
@@ -42,7 +42,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                         color: Colors.purple.withOpacity(0.2),
                         spreadRadius: 2,
                         blurRadius: 10,
-                        offset: Offset(0, 3),
+                        offset: const Offset(0, 3),
                       ),
                     ],
                   ),
@@ -57,7 +57,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                           letterSpacing: 1.2,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text(
                         "Plan your next visit with your doctor",
                         style: TextStyle(
@@ -70,11 +70,11 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                   ),
                 ),
 
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
 
                 // Main Content - Form and Info
                 ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 1200),
+                  constraints: const BoxConstraints(maxWidth: 1200),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -82,8 +82,8 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                       Expanded(
                         flex: 3,
                         child: Container(
-                          margin: EdgeInsets.all(16),
-                          padding: EdgeInsets.all(24),
+                          margin: const EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(24),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20),
@@ -92,7 +92,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                 color: Colors.black.withOpacity(0.1),
                                 spreadRadius: 2,
                                 blurRadius: 10,
-                                offset: Offset(0, 2),
+                                offset: const Offset(0, 2),
                               ),
                             ],
                           ),
@@ -106,7 +106,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                   children: [
                                     Icon(Icons.event_note,
                                         color: Colors.purple[600], size: 28),
-                                    SizedBox(width: 10),
+                                    const SizedBox(width: 10),
                                     Text(
                                       "Appointment Details",
                                       style: TextStyle(
@@ -120,7 +120,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                 Divider(
                                     thickness: 1,
                                     color: Colors.purple.withOpacity(0.2)),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
 
                                 // Title Field
                                 Text(
@@ -131,7 +131,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                     color: Colors.grey[800],
                                   ),
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 TextFormField(
                                   controller: controller.titleController,
                                   validator: (value) =>
@@ -155,7 +155,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                     filled: true,
                                   ),
                                 ),
-                                SizedBox(height: 24),
+                                const SizedBox(height: 24),
 
                                 // Date Field
                                 Text(
@@ -166,7 +166,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                     color: Colors.grey[800],
                                   ),
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 TextFormField(
                                   controller: controller.eventDateController,
                                   validator: (value) =>
@@ -197,7 +197,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                   ),
                                   onTap: () => controller.showDatePicker(),
                                 ),
-                                SizedBox(height: 24),
+                                const SizedBox(height: 24),
 
                                 // Description Field
                                 Text(
@@ -208,7 +208,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                     color: Colors.grey[800],
                                   ),
                                 ),
-                                SizedBox(height: 8),
+                                const SizedBox(height: 8),
                                 TextFormField(
                                   controller: controller.descriptionController,
                                   maxLines: 5,
@@ -235,13 +235,13 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                     filled: true,
                                   ),
                                 ),
-                                SizedBox(height: 30),
+                                const SizedBox(height: 30),
 
                                 // Error message display
                                 Obx(() => controller
                                         .errorMessage.value.isNotEmpty
                                     ? Container(
-                                        padding: EdgeInsets.all(10),
+                                        padding: const EdgeInsets.all(10),
                                         decoration: BoxDecoration(
                                           color: Colors.red[50],
                                           borderRadius:
@@ -251,9 +251,9 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                         ),
                                         child: Row(
                                           children: [
-                                            Icon(Icons.error_outline,
+                                            const Icon(Icons.error_outline,
                                                 color: Colors.red),
-                                            SizedBox(width: 8),
+                                            const SizedBox(width: 8),
                                             Expanded(
                                               child: Text(
                                                 controller.errorMessage.value,
@@ -264,8 +264,8 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                           ],
                                         ),
                                       )
-                                    : SizedBox.shrink()),
-                                SizedBox(height: 10),
+                                    : const SizedBox.shrink()),
+                                const SizedBox(height: 10),
 
                                 // Buttons
                                 Row(
@@ -275,7 +275,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                       child: OutlinedButton(
                                         onPressed: () => Get.back(),
                                         style: OutlinedButton.styleFrom(
-                                          padding: EdgeInsets.symmetric(
+                                          padding: const EdgeInsets.symmetric(
                                               vertical: 16),
                                           side: BorderSide(
                                               color: Colors.purple[300]!),
@@ -293,7 +293,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(width: 16),
+                                    const SizedBox(width: 16),
                                     Expanded(
                                       flex: 2,
                                       child: Obx(() => ElevatedButton(
@@ -303,8 +303,9 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                                 : () =>
                                                     controller.addSchedule(),
                                             style: ElevatedButton.styleFrom(
-                                              padding: EdgeInsets.symmetric(
-                                                  vertical: 16),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 16),
                                               backgroundColor:
                                                   Colors.purple[600],
                                               shape: RoundedRectangleBorder(
@@ -314,9 +315,9 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                               elevation: 2,
                                             ),
                                             child: controller.isLoading.value
-                                                ? CircularProgressIndicator(
+                                                ? const CircularProgressIndicator(
                                                     color: Colors.white)
-                                                : Row(
+                                                : const Row(
                                                     mainAxisAlignment:
                                                         MainAxisAlignment
                                                             .center,
@@ -349,12 +350,12 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                       Expanded(
                         flex: 2,
                         child: Container(
-                          margin: EdgeInsets.all(16),
+                          margin: const EdgeInsets.all(16),
                           child: Column(
                             children: [
                               // Image Container
                               Container(
-                                padding: EdgeInsets.all(16),
+                                padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(20),
@@ -363,7 +364,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                       color: Colors.black.withOpacity(0.1),
                                       spreadRadius: 2,
                                       blurRadius: 10,
-                                      offset: Offset(0, 2),
+                                      offset: const Offset(0, 2),
                                     ),
                                   ],
                                 ),
@@ -374,7 +375,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                       height: 240,
                                       fit: BoxFit.contain,
                                     ),
-                                    SizedBox(height: 16),
+                                    const SizedBox(height: 16),
                                     Text(
                                       "Regular check-ups are essential for a healthy pregnancy",
                                       textAlign: TextAlign.center,
@@ -387,11 +388,11 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                 ),
                               ),
 
-                              SizedBox(height: 24),
+                              const SizedBox(height: 24),
 
                               // Info Container
                               Container(
-                                padding: EdgeInsets.all(16),
+                                padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
                                   color: Colors.purple[50],
                                   borderRadius: BorderRadius.circular(20),
@@ -400,7 +401,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                       color: Colors.black.withOpacity(0.1),
                                       spreadRadius: 2,
                                       blurRadius: 10,
-                                      offset: Offset(0, 2),
+                                      offset: const Offset(0, 2),
                                     ),
                                   ],
                                 ),
@@ -415,7 +416,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                         color: Colors.purple[800],
                                       ),
                                     ),
-                                    SizedBox(height: 16),
+                                    const SizedBox(height: 16),
                                     _buildCheckupItem(
                                       "Weeks 4-28",
                                       "One prenatal visit a month",
@@ -440,11 +441,11 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                 ),
                               ),
 
-                              SizedBox(height: 24),
+                              const SizedBox(height: 24),
 
                               // Tips Container
                               Container(
-                                padding: EdgeInsets.all(16),
+                                padding: const EdgeInsets.all(16),
                                 decoration: BoxDecoration(
                                   color: Colors.blue[50],
                                   borderRadius: BorderRadius.circular(20),
@@ -453,7 +454,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                       color: Colors.black.withOpacity(0.1),
                                       spreadRadius: 2,
                                       blurRadius: 10,
-                                      offset: Offset(0, 2),
+                                      offset: const Offset(0, 2),
                                     ),
                                   ],
                                 ),
@@ -468,7 +469,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                         color: Colors.blue[800],
                                       ),
                                     ),
-                                    SizedBox(height: 16),
+                                    const SizedBox(height: 16),
                                     _buildTipItem(
                                       "Prepare questions for your doctor",
                                       Icons.help_outline,
@@ -496,17 +497,18 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                   ),
                 ),
 
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
 
                 // Footer
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                   color: Colors.purple[800]!.withOpacity(0.8),
                   child: Center(
                     child: ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 1200),
-                      child: Text(
+                      constraints: const BoxConstraints(maxWidth: 1200),
+                      child: const Text(
                         "Track your pregnancy journey with our app - Regular check-ups ensure a healthy pregnancy",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -532,7 +534,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, color: Colors.purple[600], size: 20),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -544,7 +546,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                     color: Colors.purple[800],
                   ),
                 ),
-                SizedBox(height: 2),
+                const SizedBox(height: 2),
                 Text(
                   description,
                   style: TextStyle(
@@ -565,7 +567,7 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
       child: Row(
         children: [
           Icon(icon, color: Colors.blue[600], size: 20),
-          SizedBox(width: 10),
+          const SizedBox(width: 10),
           Expanded(
             child: Text(
               tip,

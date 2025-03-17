@@ -25,7 +25,7 @@ class PregnancyProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Color.fromARGB(255, 48, 168, 78),
+      color: const Color.fromARGB(255, 48, 168, 78),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
@@ -53,7 +53,7 @@ class PregnancyProfileCard extends StatelessWidget {
                     onTap: onTitleTap,
                     child: Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
@@ -74,7 +74,7 @@ class PregnancyProfileCard extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 5.v),
                 child: Text(
                   content1!,
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  style: const TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
               // SizedBox(height: 5),
@@ -84,7 +84,7 @@ class PregnancyProfileCard extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 5.v),
                 child: Text(
                   content2!,
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  style: const TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
             ],
@@ -93,7 +93,7 @@ class PregnancyProfileCard extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 5.v),
                 child: Text(
                   content3!,
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  style: const TextStyle(fontSize: 18, color: Colors.white),
                 ),
               ),
             ],

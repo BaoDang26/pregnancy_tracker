@@ -50,7 +50,7 @@ class _CustomBlogCardState extends State<CustomBlogCard> {
       child: Padding(
         padding:
             // EdgeInsets.only(bottom: 5.v, top: 10.v, left: 10.v, right: 10.v),
-            EdgeInsets.all(10.0),
+            const EdgeInsets.all(10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -102,7 +102,7 @@ class _CustomBlogCardState extends State<CustomBlogCard> {
             ),
             Text(
               '${widget.commentCount} comments',
-              style: TextStyle(fontSize: 16, color: Colors.grey),
+              style: const TextStyle(fontSize: 16, color: Colors.grey),
             ),
             // if (content1 != null) ...[
             // Padding(

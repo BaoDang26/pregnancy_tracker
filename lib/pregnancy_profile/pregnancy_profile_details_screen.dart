@@ -21,7 +21,7 @@ class PregnancyProfileDetailsScreen
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -44,9 +44,9 @@ class PregnancyProfileDetailsScreen
                   child: Column(
                     children: [
                       _buildProfileDetailsSection(),
-                      SizedBox(height: 24),
+                      const SizedBox(height: 24),
                       _buildActionButtons(),
-                      SizedBox(height: 24),
+                      const SizedBox(height: 24),
                       _buildResourcesSection(),
                     ],
                   ),
@@ -61,9 +61,9 @@ class PregnancyProfileDetailsScreen
 
   Widget _buildHeader() {
     return Container(
-      padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
@@ -75,21 +75,21 @@ class PregnancyProfileDetailsScreen
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
             blurRadius: 8,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
       child: Row(
         children: [
           IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white, size: 28),
+            icon: const Icon(Icons.arrow_back, color: Colors.white, size: 28),
             onPressed: () => Get.back(),
           ),
-          SizedBox(width: 12),
+          const SizedBox(width: 12),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
+              const Row(
                 children: [
                   Icon(
                     Icons.favorite,
@@ -174,12 +174,12 @@ class PregnancyProfileDetailsScreen
                     Shadow(
                       blurRadius: 10.0,
                       color: Colors.black.withOpacity(0.5),
-                      offset: Offset(0, 2),
+                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 'Welcome to pregnancy! This is the start of an incredible journey with information, tracking tools, and support every step of the way.',
                 style: TextStyle(
@@ -190,7 +190,7 @@ class PregnancyProfileDetailsScreen
                     Shadow(
                       blurRadius: 8.0,
                       color: Colors.black.withOpacity(0.5),
-                      offset: Offset(0, 2),
+                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),
@@ -215,7 +215,7 @@ class PregnancyProfileDetailsScreen
               color: Colors.black.withOpacity(0.05),
               blurRadius: 10,
               spreadRadius: 1,
-              offset: Offset(0, 4),
+              offset: const Offset(0, 4),
             ),
           ],
         ),
@@ -224,10 +224,10 @@ class PregnancyProfileDetailsScreen
           children: [
             // Section header
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               decoration: BoxDecoration(
                 color: Colors.green[50],
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(16),
                   topRight: Radius.circular(16),
                 ),
@@ -239,7 +239,7 @@ class PregnancyProfileDetailsScreen
                     color: Colors.green[700],
                     size: 24,
                   ),
-                  SizedBox(width: 12),
+                  const SizedBox(width: 12),
                   Text(
                     'Profile Details',
                     style: TextStyle(
@@ -304,7 +304,7 @@ class PregnancyProfileDetailsScreen
               isLongText: true,
             ),
 
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
           ],
         ),
       );
@@ -322,14 +322,14 @@ class PregnancyProfileDetailsScreen
     double progressValue = 0.0,
   }) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Container(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: iconBgColor,
                   borderRadius: BorderRadius.circular(10),
@@ -340,7 +340,7 @@ class PregnancyProfileDetailsScreen
                   size: 20,
                 ),
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Text(
                 title,
                 style: TextStyle(
@@ -351,7 +351,7 @@ class PregnancyProfileDetailsScreen
               ),
             ],
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           isLongText
               ? Text(
                   value,
@@ -363,7 +363,7 @@ class PregnancyProfileDetailsScreen
                 )
               : Row(
                   children: [
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Text(
                       value,
                       style: TextStyle(
@@ -400,7 +400,7 @@ class PregnancyProfileDetailsScreen
                       ),
                     ],
                   ),
-                  SizedBox(height: 6),
+                  const SizedBox(height: 6),
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: LinearProgressIndicator(
@@ -414,7 +414,7 @@ class PregnancyProfileDetailsScreen
                 ],
               ),
             ),
-          if (!isLongText && !showProgress) SizedBox(height: 6),
+          if (!isLongText && !showProgress) const SizedBox(height: 6),
         ],
       ),
     );
@@ -434,7 +434,7 @@ class PregnancyProfileDetailsScreen
                 controller.goToFetalGrowthMeasurement();
               },
             ),
-            SizedBox(width: 20),
+            const SizedBox(width: 20),
             _buildActionButton(
               icon: Icons.event_note,
               text: 'Schedule',
@@ -499,10 +499,10 @@ class PregnancyProfileDetailsScreen
               icon,
               size: 32,
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               text,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
@@ -523,7 +523,7 @@ class PregnancyProfileDetailsScreen
             color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
             spreadRadius: 1,
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -531,10 +531,10 @@ class PregnancyProfileDetailsScreen
         children: [
           // Section header
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
             decoration: BoxDecoration(
               color: Colors.blue[50],
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(16),
                 topRight: Radius.circular(16),
               ),
@@ -546,7 +546,7 @@ class PregnancyProfileDetailsScreen
                   color: Colors.blue[700],
                   size: 24,
                 ),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 Text(
                   'Pregnancy Resources',
                   style: TextStyle(
@@ -582,7 +582,7 @@ class PregnancyProfileDetailsScreen
 
           // More resources button
           Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: OutlinedButton(
               onPressed: () {
                 _launchURL('https://www.babycenter.com/pregnancy');
@@ -593,9 +593,9 @@ class PregnancyProfileDetailsScreen
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
-                padding: EdgeInsets.symmetric(vertical: 12),
+                padding: const EdgeInsets.symmetric(vertical: 12),
               ),
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
@@ -627,11 +627,11 @@ class PregnancyProfileDetailsScreen
             'https://www.vinmec.com/vie/bai-viet/bang-can-nang-va-chieu-dai-thai-nhi-theo-tieu-chuan-cua-who-vi');
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         child: Row(
           children: [
             Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: Colors.blue[50],
                 borderRadius: BorderRadius.circular(12),
@@ -642,7 +642,7 @@ class PregnancyProfileDetailsScreen
                 size: 24,
               ),
             ),
-            SizedBox(width: 16),
+            const SizedBox(width: 16),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -655,7 +655,7 @@ class PregnancyProfileDetailsScreen
                       color: Colors.grey[800],
                     ),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     description,
                     style: TextStyle(

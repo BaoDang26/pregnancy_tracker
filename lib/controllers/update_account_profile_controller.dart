@@ -119,7 +119,8 @@ class UpdateAccountProfileController extends GetxController {
 
   void showDatePicker() {
     // Thiết lập ngày mặc định là 20 năm trước (thay vì ngày hiện tại)
-    DateTime defaultDate = DateTime.now().subtract(Duration(days: 365 * 20));
+    DateTime defaultDate =
+        DateTime.now().subtract(const Duration(days: 365 * 20));
     DateTime initialDate;
 
     // Nếu đã có ngày sinh được lưu, sử dụng ngày đó
@@ -138,10 +139,10 @@ class UpdateAccountProfileController extends GetxController {
 
     Get.dialog(
       Dialog(
-        insetPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+        insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
         child: Container(
           width: 300,
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -153,7 +154,7 @@ class UpdateAccountProfileController extends GetxController {
                   color: Colors.purple[700],
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Container(
                 height: 300,
                 child: Theme(
@@ -161,7 +162,7 @@ class UpdateAccountProfileController extends GetxController {
                     colorScheme: ColorScheme.light(
                       primary: Colors.purple[600]!,
                     ),
-                    textTheme: TextTheme(
+                    textTheme: const TextTheme(
                       bodyMedium: TextStyle(fontSize: 12),
                       bodySmall: TextStyle(fontSize: 12),
                       titleSmall: TextStyle(fontSize: 12),
@@ -187,9 +188,10 @@ class UpdateAccountProfileController extends GetxController {
                   TextButton(
                     onPressed: () => Get.back(),
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      minimumSize: Size(60, 25),
+                      minimumSize: const Size(60, 25),
                     ),
                     child: Text(
                       'Cancel',
@@ -245,7 +247,7 @@ class UpdateAccountProfileController extends GetxController {
           elevation: 0,
           child: Center(
             child: Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
@@ -257,7 +259,7 @@ class UpdateAccountProfileController extends GetxController {
                     valueColor:
                         AlwaysStoppedAnimation<Color>(Colors.purple[700]!),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Text(
                     'Uploading image...',
                     style: TextStyle(
@@ -302,7 +304,7 @@ class UpdateAccountProfileController extends GetxController {
           backgroundColor: Colors.green[100],
           colorText: Colors.green[800],
           snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.all(16),
+          margin: const EdgeInsets.all(16),
         );
 
         // Cập nhật AccountProfileController
@@ -315,7 +317,7 @@ class UpdateAccountProfileController extends GetxController {
           backgroundColor: Colors.red[100],
           colorText: Colors.red[800],
           snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.all(16),
+          margin: const EdgeInsets.all(16),
         );
       } else {
         // Xử lý các lỗi khác
@@ -326,7 +328,7 @@ class UpdateAccountProfileController extends GetxController {
           backgroundColor: Colors.red[100],
           colorText: Colors.red[800],
           snackPosition: SnackPosition.BOTTOM,
-          margin: EdgeInsets.all(16),
+          margin: const EdgeInsets.all(16),
         );
       }
     } catch (e) {
@@ -343,7 +345,7 @@ class UpdateAccountProfileController extends GetxController {
         backgroundColor: Colors.red[100],
         colorText: Colors.red[800],
         snackPosition: SnackPosition.BOTTOM,
-        margin: EdgeInsets.all(16),
+        margin: const EdgeInsets.all(16),
       );
     } finally {
       isLoading.value = false;
@@ -508,25 +510,25 @@ class UpdateAccountProfileController extends GetxController {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
+                    const Text(
                       'Success',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Text('Account profile updated successfully!'),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 10),
+                    const Text('Account profile updated successfully!'),
+                    const SizedBox(height: 20),
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text('OK'),
+                      child: const Text('OK'),
                     ),
                   ],
                 ),

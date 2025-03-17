@@ -60,7 +60,7 @@ class CreateScheduleController extends GetxController {
     try {
       final date = DateFormat('yyyy-MM-dd').parse(value);
       final now = DateTime.now();
-      if (date.isBefore(now.subtract(Duration(days: 1)))) {
+      if (date.isBefore(now.subtract(const Duration(days: 1)))) {
         return "Appointment date cannot be in the past";
       }
     } catch (e) {
@@ -125,25 +125,25 @@ class CreateScheduleController extends GetxController {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
+                    const Text(
                       'Success',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Text('Appointment scheduled successfully!'),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 10),
+                    const Text('Appointment scheduled successfully!'),
+                    const SizedBox(height: 20),
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text('OK'),
+                      child: const Text('OK'),
                     ),
                   ],
                 ),
@@ -217,10 +217,10 @@ class CreateScheduleController extends GetxController {
 
     Get.dialog(
       Dialog(
-        insetPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+        insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
         child: Container(
           width: 300,
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -232,7 +232,7 @@ class CreateScheduleController extends GetxController {
                   color: Colors.purple[700],
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Container(
                 height: 300,
                 child: Theme(
@@ -240,7 +240,7 @@ class CreateScheduleController extends GetxController {
                     colorScheme: ColorScheme.light(
                       primary: Colors.purple[600]!,
                     ),
-                    textTheme: TextTheme(
+                    textTheme: const TextTheme(
                       bodyMedium: TextStyle(fontSize: 12),
                       bodySmall: TextStyle(fontSize: 12),
                       titleSmall: TextStyle(fontSize: 12),
@@ -248,8 +248,8 @@ class CreateScheduleController extends GetxController {
                   ),
                   child: CalendarDatePicker(
                     initialDate: initialDate,
-                    firstDate: DateTime.now().subtract(Duration(days: 1)),
-                    lastDate: DateTime.now().add(Duration(days: 365 * 2)),
+                    firstDate: DateTime.now().subtract(const Duration(days: 1)),
+                    lastDate: DateTime.now().add(const Duration(days: 365 * 2)),
                     onDateChanged: (date) {
                       eventDateController.text =
                           DateFormat('yyyy-MM-dd').format(date);
@@ -264,9 +264,10 @@ class CreateScheduleController extends GetxController {
                   TextButton(
                     onPressed: () => Get.back(),
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      minimumSize: Size(60, 25),
+                      minimumSize: const Size(60, 25),
                     ),
                     child: Text(
                       'Cancel',

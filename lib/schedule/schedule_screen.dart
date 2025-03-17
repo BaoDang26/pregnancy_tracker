@@ -11,13 +11,13 @@ class ScheduleScreen extends GetView<ScheduleController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color.fromARGB(255, 200, 240, 250),
               Color.fromARGB(255, 190, 250, 240),
               Color.fromARGB(255, 180, 230, 230),
-              Color.fromARGB(255, 170, 240, 210),
+              const Color.fromARGB(255, 170, 240, 210),
               Color.fromARGB(255, 160, 220, 200),
             ],
             begin: Alignment.topLeft,
@@ -52,19 +52,19 @@ class ScheduleScreen extends GetView<ScheduleController> {
                   ),
                 ],
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // Subheader with info
               Container(
-                padding: EdgeInsets.all(12),
+                padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.7),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.info_outline, color: Colors.blue),
-                    SizedBox(width: 8),
+                    const Icon(Icons.info_outline, color: Colors.blue),
+                    const SizedBox(width: 8),
                     Expanded(
                       child: Text(
                         'Keep track of your appointments with doctors and check-ups during your pregnancy.',
@@ -77,13 +77,13 @@ class ScheduleScreen extends GetView<ScheduleController> {
                   ],
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
 
               // Main content - Schedule list
               Expanded(
                 child: Obx(() {
                   if (controller.isLoading.value) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
@@ -93,12 +93,12 @@ class ScheduleScreen extends GetView<ScheduleController> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.event_busy,
                             size: 64,
                             color: Colors.grey,
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           Text(
                             'No appointments yet',
                             style: TextStyle(
@@ -107,7 +107,7 @@ class ScheduleScreen extends GetView<ScheduleController> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(height: 8),
+                          const SizedBox(height: 8),
                           Text(
                             'Tap "Add New Appointment" to create your first appointment',
                             textAlign: TextAlign.center,
@@ -136,12 +136,12 @@ class ScheduleScreen extends GetView<ScheduleController> {
                       // Kiểm tra ngày đã qua hay chưa để thay đổi màu sắc
                       final isPastDate = schedule.eventDate != null &&
                           schedule.eventDate!.isBefore(
-                              DateTime.now().subtract(Duration(days: 1)));
+                              DateTime.now().subtract(const Duration(days: 1)));
                       final cardColor = isPastDate ? Colors.grey : Colors.blue;
 
                       return Card(
                         elevation: 3,
-                        margin: EdgeInsets.only(bottom: 16),
+                        margin: const EdgeInsets.only(bottom: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -162,11 +162,11 @@ class ScheduleScreen extends GetView<ScheduleController> {
                               children: [
                                 // Card header with status & actions
                                 Container(
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 16, vertical: 8),
                                   decoration: BoxDecoration(
                                     color: cardColor.withOpacity(0.1),
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(12),
                                       topRight: Radius.circular(12),
                                     ),
@@ -183,7 +183,7 @@ class ScheduleScreen extends GetView<ScheduleController> {
                                                 : Icons.event_available,
                                             color: cardColor,
                                           ),
-                                          SizedBox(width: 8),
+                                          const SizedBox(width: 8),
                                           Text(
                                             isPastDate ? 'PAST' : 'UPCOMING',
                                             style: TextStyle(
@@ -197,7 +197,7 @@ class ScheduleScreen extends GetView<ScheduleController> {
                                         children: [
                                           // Edit button
                                           IconButton(
-                                            icon: Icon(Icons.edit,
+                                            icon: const Icon(Icons.edit,
                                                 color: Colors.blue),
                                             onPressed: () {
                                               controller
@@ -205,25 +205,26 @@ class ScheduleScreen extends GetView<ScheduleController> {
                                             },
                                             iconSize: 20,
                                             padding: EdgeInsets.zero,
-                                            constraints: BoxConstraints(),
+                                            constraints: const BoxConstraints(),
                                           ),
-                                          SizedBox(width: 16),
+                                          const SizedBox(width: 16),
                                           // Delete button
                                           IconButton(
-                                            icon: Icon(Icons.delete,
+                                            icon: const Icon(Icons.delete,
                                                 color: Colors.red),
                                             onPressed: () {
                                               Get.dialog(
                                                 AlertDialog(
-                                                  title: Text(
+                                                  title: const Text(
                                                       'Delete Appointment'),
-                                                  content: Text(
+                                                  content: const Text(
                                                       'Are you sure you want to delete this appointment?'),
                                                   actions: [
                                                     TextButton(
                                                       onPressed: () =>
                                                           Get.back(),
-                                                      child: Text('Cancel'),
+                                                      child:
+                                                          const Text('Cancel'),
                                                     ),
                                                     TextButton(
                                                       onPressed: () {
@@ -232,7 +233,8 @@ class ScheduleScreen extends GetView<ScheduleController> {
                                                         //     .deleteSchedule(
                                                         //         schedule.id!);
                                                       },
-                                                      child: Text('Delete',
+                                                      child: const Text(
+                                                          'Delete',
                                                           style: TextStyle(
                                                               color:
                                                                   Colors.red)),
@@ -243,7 +245,7 @@ class ScheduleScreen extends GetView<ScheduleController> {
                                             },
                                             iconSize: 20,
                                             padding: EdgeInsets.zero,
-                                            constraints: BoxConstraints(),
+                                            constraints: const BoxConstraints(),
                                           ),
                                         ],
                                       ),
@@ -261,18 +263,18 @@ class ScheduleScreen extends GetView<ScheduleController> {
                                       Text(
                                         schedule.title ??
                                             'Untitled Appointment',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      SizedBox(height: 12),
+                                      const SizedBox(height: 12),
                                       Row(
                                         children: [
                                           Icon(Icons.calendar_today,
                                               size: 18,
                                               color: Colors.grey[600]),
-                                          SizedBox(width: 8),
+                                          const SizedBox(width: 8),
                                           Text(
                                             formattedDate,
                                             style: TextStyle(
@@ -282,10 +284,10 @@ class ScheduleScreen extends GetView<ScheduleController> {
                                           // Hiển thị ngày còn lại nếu là ngày trong tương lai
                                           if (!isPastDate &&
                                               schedule.eventDate != null) ...[
-                                            SizedBox(width: 8),
+                                            const SizedBox(width: 8),
                                             Text(
                                               '(${_getDaysRemaining(schedule.eventDate!)})',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: Colors.green,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -295,7 +297,7 @@ class ScheduleScreen extends GetView<ScheduleController> {
                                       ),
                                       if (schedule.description != null &&
                                           schedule.description!.isNotEmpty) ...[
-                                        SizedBox(height: 12),
+                                        const SizedBox(height: 12),
                                         Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -303,7 +305,7 @@ class ScheduleScreen extends GetView<ScheduleController> {
                                             Icon(Icons.description,
                                                 size: 18,
                                                 color: Colors.grey[600]),
-                                            SizedBox(width: 8),
+                                            const SizedBox(width: 8),
                                             Expanded(
                                               child: Text(
                                                 schedule.description!,

@@ -100,7 +100,7 @@ class ManageUserController extends GetxController {
 
       // Status filter
       bool matchesStatus = selectedStatus.value == 'All Statuses' ||
-          user.status?.toUpperCase() == selectedStatus.value;
+          user.status == selectedStatus.value;
 
       // User must match all active filters
       return matchesSearch && matchesRole && matchesStatus;

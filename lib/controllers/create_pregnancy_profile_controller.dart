@@ -134,25 +134,25 @@ class CreatePregnancyProfileController extends GetxController {
               borderRadius: BorderRadius.circular(12),
             ),
             child: Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
+                  const Text(
                     'Success',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 10),
-                  Text('Pregnancy profile created successfully!'),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 10),
+                  const Text('Pregnancy profile created successfully!'),
+                  const SizedBox(height: 20),
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text('OK'),
+                    child: const Text('OK'),
                   ),
                 ],
               ),

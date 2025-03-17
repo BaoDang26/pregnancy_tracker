@@ -64,8 +64,8 @@ class CreateFetalGrowthMeasurementScreen
                         Obx(() {
                           if (controller.errorMessage.isNotEmpty) {
                             return Container(
-                              margin: EdgeInsets.only(bottom: 20),
-                              padding: EdgeInsets.all(12),
+                              margin: const EdgeInsets.only(bottom: 20),
+                              padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                 color: Colors.red[50],
                                 border: Border.all(color: Colors.red[300]!),
@@ -73,8 +73,9 @@ class CreateFetalGrowthMeasurementScreen
                               ),
                               child: Row(
                                 children: [
-                                  Icon(Icons.error_outline, color: Colors.red),
-                                  SizedBox(width: 12),
+                                  const Icon(Icons.error_outline,
+                                      color: Colors.red),
+                                  const SizedBox(width: 12),
                                   Expanded(
                                     child: Text(
                                       controller.errorMessage.value,
@@ -94,7 +95,7 @@ class CreateFetalGrowthMeasurementScreen
                               ),
                             );
                           }
-                          return SizedBox.shrink();
+                          return const SizedBox.shrink();
                         }),
                         _buildInputField(
                           controller: controller.measurementDateController,
@@ -102,47 +103,47 @@ class CreateFetalGrowthMeasurementScreen
                           isDatePicker: true,
                           context: context,
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         _buildInputField(
                           controller: controller.weightController,
                           label: 'Weight (g)',
                           validator: (value) =>
                               controller.validateWeight(value!),
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         _buildInputField(
                           controller: controller.heightController,
                           label: 'Height (cm)',
                           validator: (value) =>
                               controller.validateHeight(value!),
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         _buildInputField(
                           controller: controller.headCircumferenceController,
                           label: 'Head Circumference (cm)',
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         _buildInputField(
                           controller: controller.bellyCircumferenceController,
                           label: 'Belly Circumference (cm)',
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         _buildInputField(
                           controller: controller.heartRateController,
                           label: 'Heart Rate (bpm)',
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         _buildInputField(
                           controller: controller.movementCountController,
                           label: 'Movement Count',
                         ),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         _buildInputField(
                           controller: controller.notesController,
                           label: 'Notes',
                           maxLines: 5,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -154,7 +155,7 @@ class CreateFetalGrowthMeasurementScreen
                                 text: 'Cancel',
                               ),
                             ),
-                            SizedBox(width: 20),
+                            const SizedBox(width: 20),
                             Expanded(
                               child: CustomElevatedButton(
                                 onPressed: () {
@@ -174,7 +175,7 @@ class CreateFetalGrowthMeasurementScreen
             Expanded(
               flex: 3,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/images/logo.png'),
                     fit: BoxFit.cover,
@@ -226,7 +227,7 @@ class CreateFetalGrowthMeasurementScreen
                   builder: (context, child) {
                     return Theme(
                       data: Theme.of(context).copyWith(
-                        colorScheme: ColorScheme.light(
+                        colorScheme: const ColorScheme.light(
                           primary: Colors.green,
                           onPrimary: Colors.white,
                           onSurface: Colors.black,
@@ -257,9 +258,10 @@ class CreateFetalGrowthMeasurementScreen
           ),
           filled: true,
           fillColor: Colors.transparent,
-          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           suffixIcon: isDatePicker
-              ? Icon(Icons.calendar_today, color: Colors.green)
+              ? const Icon(Icons.calendar_today, color: Colors.green)
               : null,
         ),
       ),

@@ -118,7 +118,7 @@ class UpdateAccountProfileScreen
                               child: CircleAvatar(
                                 radius: 22,
                                 backgroundColor: Colors.purple[600],
-                                child: Icon(
+                                child: const Icon(
                                   Icons.camera_alt,
                                   color: Colors.white,
                                   size: 22,
@@ -131,7 +131,7 @@ class UpdateAccountProfileScreen
                     ),
                   ),
 
-                  SizedBox(height: 32),
+                  const SizedBox(height: 32),
 
                   // Profile Form
                   Card(
@@ -145,11 +145,11 @@ class UpdateAccountProfileScreen
                       children: [
                         // Card Header
                         Container(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 24, vertical: 16),
                           decoration: BoxDecoration(
                             color: Colors.purple[700]!.withOpacity(0.1),
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                               topLeft: Radius.circular(16),
                               topRight: Radius.circular(16),
                             ),
@@ -160,7 +160,7 @@ class UpdateAccountProfileScreen
                                 Icons.person,
                                 color: Colors.purple[700],
                               ),
-                              SizedBox(width: 10),
+                              const SizedBox(width: 10),
                               Text(
                                 'Personal Information',
                                 style: TextStyle(
@@ -175,7 +175,7 @@ class UpdateAccountProfileScreen
 
                         // Form Content
                         Padding(
-                          padding: EdgeInsets.all(24),
+                          padding: const EdgeInsets.all(24),
                           child: Form(
                             key: controller.accountProfileFormKey,
                             child: Column(
@@ -191,7 +191,7 @@ class UpdateAccountProfileScreen
                                       controller.validateFullName(value ?? ''),
                                 ),
 
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
 
                                 // Address Field
                                 _buildFormField(
@@ -203,7 +203,7 @@ class UpdateAccountProfileScreen
                                       controller.validateAddress(value ?? ''),
                                 ),
 
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
 
                                 // Date of Birth Field
                                 TextFormField(
@@ -240,9 +240,9 @@ class UpdateAccountProfileScreen
                                 // Error message
                                 if (controller.errorMessage.value.isNotEmpty)
                                   Padding(
-                                    padding: EdgeInsets.only(top: 16),
+                                    padding: const EdgeInsets.only(top: 16),
                                     child: Container(
-                                      padding: EdgeInsets.all(12),
+                                      padding: const EdgeInsets.all(12),
                                       decoration: BoxDecoration(
                                         color: Colors.red[50],
                                         borderRadius: BorderRadius.circular(8),
@@ -253,7 +253,7 @@ class UpdateAccountProfileScreen
                                         children: [
                                           Icon(Icons.error_outline,
                                               color: Colors.red[700], size: 20),
-                                          SizedBox(width: 8),
+                                          const SizedBox(width: 8),
                                           Expanded(
                                             child: Text(
                                               controller.errorMessage.value,
@@ -273,7 +273,7 @@ class UpdateAccountProfileScreen
                     ),
                   ),
 
-                  SizedBox(height: 32),
+                  const SizedBox(height: 32),
 
                   // Action Buttons
                   Row(
@@ -292,7 +292,7 @@ class UpdateAccountProfileScreen
                           textColor: Colors.grey[800]!,
                         ),
                       ),
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       Expanded(
                         child: _buildActionButton(
                           onPressed: controller.isLoading.value
@@ -339,14 +339,14 @@ class UpdateAccountProfileScreen
             color: Colors.grey[700],
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
                 color: Colors.purple.withOpacity(0.05),
                 blurRadius: 4,
-                offset: Offset(0, 2),
+                offset: const Offset(0, 2),
               ),
             ],
           ),
@@ -390,7 +390,7 @@ class UpdateAccountProfileScreen
                   width: 1,
                 ),
               ),
-              contentPadding: EdgeInsets.symmetric(
+              contentPadding: const EdgeInsets.symmetric(
                 vertical: 16,
                 horizontal: 16,
               ),
@@ -420,14 +420,14 @@ class UpdateAccountProfileScreen
             color: Colors.grey[700],
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
                 color: Colors.purple.withOpacity(0.05),
                 blurRadius: 4,
-                offset: Offset(0, 2),
+                offset: const Offset(0, 2),
               ),
             ],
           ),
@@ -470,7 +470,7 @@ class UpdateAccountProfileScreen
                   width: 2,
                 ),
               ),
-              contentPadding: EdgeInsets.symmetric(
+              contentPadding: const EdgeInsets.symmetric(
                 vertical: 16,
                 horizontal: 16,
               ),
@@ -498,7 +498,7 @@ class UpdateAccountProfileScreen
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
             blurRadius: 8,
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
           ),
         ],
         gradient: onPressed == null
@@ -514,7 +514,7 @@ class UpdateAccountProfileScreen
           borderRadius: BorderRadius.circular(12),
           child: Center(
             child: isLoading
-                ? SizedBox(
+                ? const SizedBox(
                     width: 24,
                     height: 24,
                     child: CircularProgressIndicator(
@@ -530,7 +530,7 @@ class UpdateAccountProfileScreen
                         color: textColor,
                         size: 20,
                       ),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       Text(
                         label,
                         style: TextStyle(
@@ -554,8 +554,8 @@ class UpdateAccountProfileScreen
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
         return Container(
-          padding: EdgeInsets.all(24),
-          decoration: BoxDecoration(
+          padding: const EdgeInsets.all(24),
+          decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(24),
@@ -568,7 +568,7 @@ class UpdateAccountProfileScreen
               Container(
                 width: 40,
                 height: 4,
-                margin: EdgeInsets.only(bottom: 24),
+                margin: const EdgeInsets.only(bottom: 24),
                 decoration: BoxDecoration(
                   color: Colors.grey[300],
                   borderRadius: BorderRadius.circular(4),
@@ -582,7 +582,7 @@ class UpdateAccountProfileScreen
                   color: Colors.purple[800],
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -621,7 +621,7 @@ class UpdateAccountProfileScreen
                   // ),
                 ],
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Container(
                 width: double.infinity,
                 height: 56,
@@ -673,7 +673,7 @@ class UpdateAccountProfileScreen
               size: 28,
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             label,
             style: TextStyle(

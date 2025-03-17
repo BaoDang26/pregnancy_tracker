@@ -22,7 +22,7 @@ class FetalGrowthMeasurementScreen
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
                 Color.fromARGB(255, 200, 240, 250),
@@ -42,7 +42,7 @@ class FetalGrowthMeasurementScreen
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                    const Text(
                       'Fetal Growth Measurement',
                       style: TextStyle(
                         fontSize: 48,
@@ -79,7 +79,7 @@ class FetalGrowthMeasurementScreen
                     ),
                   ],
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Row(
                   children: [
                     Expanded(
@@ -93,27 +93,27 @@ class FetalGrowthMeasurementScreen
                               color: Colors.black.withOpacity(0.2),
                               spreadRadius: 2,
                               blurRadius: 5,
-                              offset: Offset(0, 3),
+                              offset: const Offset(0, 3),
                             ),
                           ],
                         ),
                         child: Obx(() {
                           if (controller.weightData.isEmpty) {
-                            return Center(
+                            return const Center(
                                 child: Text('No weight data available.'));
                           }
                           return SfCartesianChart(
-                            title: ChartTitle(
+                            title: const ChartTitle(
                                 text: 'Weight Over Gestational Weeks'),
-                            legend: Legend(isVisible: true),
+                            legend: const Legend(isVisible: true),
                             tooltipBehavior: TooltipBehavior(enable: true),
-                            primaryXAxis: NumericAxis(
+                            primaryXAxis: const NumericAxis(
                               title: AxisTitle(text: 'Gestational Weeks'),
                               minimum: 0,
                               maximum: 45,
                               interval: 5,
                             ),
-                            primaryYAxis: NumericAxis(
+                            primaryYAxis: const NumericAxis(
                               title: AxisTitle(text: 'Weight (g)'),
                             ),
                             series: <CartesianSeries>[
@@ -134,13 +134,13 @@ class FetalGrowthMeasurementScreen
                                 name: 'Your Baby\'s Weight',
                                 color: Colors.green,
                                 width: 3,
-                                markerSettings: MarkerSettings(
+                                markerSettings: const MarkerSettings(
                                   isVisible: true,
                                   shape: DataMarkerType.circle,
                                   height: 8,
                                   width: 8,
                                 ),
-                                dataLabelSettings: DataLabelSettings(
+                                dataLabelSettings: const DataLabelSettings(
                                   isVisible: true,
                                   labelAlignment: ChartDataLabelAlignment.top,
                                 ),
@@ -150,7 +150,7 @@ class FetalGrowthMeasurementScreen
                         }),
                       ),
                     ),
-                    SizedBox(width: 16),
+                    const SizedBox(width: 16),
                     Expanded(
                       child: Container(
                         height: 700,
@@ -162,27 +162,27 @@ class FetalGrowthMeasurementScreen
                               color: Colors.black.withOpacity(0.2),
                               spreadRadius: 2,
                               blurRadius: 5,
-                              offset: Offset(0, 3),
+                              offset: const Offset(0, 3),
                             ),
                           ],
                         ),
                         child: Obx(() {
                           if (controller.heightData.isEmpty) {
-                            return Center(
+                            return const Center(
                                 child: Text('No height data available.'));
                           }
                           return SfCartesianChart(
-                            title: ChartTitle(
+                            title: const ChartTitle(
                                 text: 'Height Over Gestational Weeks'),
-                            legend: Legend(isVisible: true),
+                            legend: const Legend(isVisible: true),
                             tooltipBehavior: TooltipBehavior(enable: true),
-                            primaryXAxis: NumericAxis(
+                            primaryXAxis: const NumericAxis(
                               title: AxisTitle(text: 'Gestational Weeks'),
                               minimum: 0,
                               maximum: 45,
                               interval: 5,
                             ),
-                            primaryYAxis: NumericAxis(
+                            primaryYAxis: const NumericAxis(
                               title: AxisTitle(text: 'Height (cm)'),
                             ),
                             series: <CartesianSeries>[
@@ -205,7 +205,7 @@ class FetalGrowthMeasurementScreen
                                 name: 'Your Baby\'s Height',
                                 color: Colors.purple,
                                 width: 3,
-                                markerSettings: MarkerSettings(
+                                markerSettings: const MarkerSettings(
                                   isVisible: true,
                                   shape: DataMarkerType.circle,
                                   height: 8,
@@ -235,7 +235,7 @@ class FetalGrowthMeasurementScreen
                                         (data.height - referenceHeight).abs();
                                     if (deviation > 3) {
                                       return Container(
-                                        padding: EdgeInsets.all(4),
+                                        padding: const EdgeInsets.all(4),
                                         decoration: BoxDecoration(
                                           color: Colors.red.withOpacity(0.8),
                                           borderRadius:
@@ -246,7 +246,7 @@ class FetalGrowthMeasurementScreen
                                           children: [
                                             Text(
                                               'Week: ${data.week}',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 10,
                                               ),
@@ -258,7 +258,7 @@ class FetalGrowthMeasurementScreen
                                             // ),
                                             Text(
                                               '⚠️ ${deviation.toStringAsFixed(1)}cm',
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 10,
                                               ),
@@ -272,7 +272,7 @@ class FetalGrowthMeasurementScreen
                                       children: [
                                         Text(
                                           'Week: ${data.week}',
-                                          style: TextStyle(fontSize: 10),
+                                          style: const TextStyle(fontSize: 10),
                                         ),
                                         Text(data.height.toStringAsFixed(1)),
                                       ],
@@ -287,7 +287,7 @@ class FetalGrowthMeasurementScreen
                     ),
                   ],
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -299,8 +299,8 @@ class FetalGrowthMeasurementScreen
                         color: Colors.red[700],
                       ),
                     ),
-                    SizedBox(height: 8),
-                    SelectableText(
+                    const SizedBox(height: 8),
+                    const SelectableText(
                       'Note: Dotted line represents standard growth curve',
                       style: TextStyle(
                         fontSize: 18,
@@ -308,11 +308,11 @@ class FetalGrowthMeasurementScreen
                         color: Colors.purple,
                       ),
                     ),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     InkWell(
                       onTap: () => launchUrl(Uri.parse(
                           'https://www.vinmec.com/vie/bai-viet/bang-can-nang-va-chieu-dai-thai-nhi-theo-tieu-chuan-cua-who-vi')),
-                      child: SelectableText(
+                      child: const SelectableText(
                         'Reference: WHO Fetal Growth Standards (Vinmec)',
                         style: TextStyle(
                           fontSize: 16,
@@ -350,7 +350,7 @@ class FetalGrowthMeasurementScreen
                               child: ListView.separated(
                                 shrinkWrap: true, // Thêm thuộc tính này
                                 physics:
-                                    AlwaysScrollableScrollPhysics(), // Thêm physics để có thể scroll
+                                    const AlwaysScrollableScrollPhysics(), // Thêm physics để có thể scroll
                                 itemCount: controller
                                     .fetalGrowthMeasurementModel.length,
                                 separatorBuilder: (context, index) =>

@@ -11,12 +11,12 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFFE8F5E9),
+              const Color(0xFFE8F5E9),
               Color(0xFFC8E6C9),
               Colors.white,
             ],
@@ -49,9 +49,9 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
 
   Widget _buildHeader() {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
@@ -63,7 +63,7 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
             blurRadius: 8,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -76,19 +76,19 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
               Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: Colors.white.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.history_edu,
                       color: Colors.white,
                       size: 28,
                     ),
                   ),
-                  SizedBox(width: 12),
-                  Text(
+                  const SizedBox(width: 12),
+                  const Text(
                     'Subscription History',
                     style: TextStyle(
                       fontSize: 28,
@@ -107,7 +107,7 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
                     BoxShadow(
                       color: Colors.black.withOpacity(0.1),
                       blurRadius: 4,
-                      offset: Offset(0, 2),
+                      offset: const Offset(0, 2),
                     ),
                   ],
                 ),
@@ -124,7 +124,7 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
               ),
             ],
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             'View and manage your subscription packages',
             style: TextStyle(
@@ -144,7 +144,7 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.8),
               borderRadius: BorderRadius.circular(16),
@@ -156,12 +156,12 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
                 ),
               ],
             ),
-            child: CircularProgressIndicator(
+            child: const CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
               strokeWidth: 3,
             ),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           Text(
             'Loading your subscriptions...',
             style: TextStyle(
@@ -178,7 +178,7 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
   Widget _buildEmptyState() {
     return Center(
       child: Container(
-        padding: EdgeInsets.all(30),
+        padding: const EdgeInsets.all(30),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
@@ -195,7 +195,7 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               decoration: BoxDecoration(
                 color: Colors.green[50],
                 shape: BoxShape.circle,
@@ -206,7 +206,7 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
                 color: Colors.green[400],
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Text(
               'No Subscriptions Yet',
               style: TextStyle(
@@ -215,7 +215,7 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
                 color: Colors.green[800],
               ),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             Text(
               'Subscribe to unlock premium features and enhance your pregnancy journey',
               textAlign: TextAlign.center,
@@ -225,7 +225,7 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
                 height: 1.4,
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             ElevatedButton.icon(
               onPressed: () {
                 Get.back();
@@ -233,13 +233,14 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green[600],
                 foregroundColor: Colors.white,
-                padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              icon: Icon(Icons.add_circle_outline),
-              label: Text(
+              icon: const Icon(Icons.add_circle_outline),
+              label: const Text(
                 'Browse Plans',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
@@ -252,13 +253,13 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
 
   Widget _buildSubscriptionGrid() {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.only(bottom: 16),
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            margin: const EdgeInsets.only(bottom: 16),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -270,7 +271,7 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
                 BoxShadow(
                   color: Colors.black.withOpacity(0.05),
                   blurRadius: 4,
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                 ),
               ],
               border: Border.all(
@@ -281,7 +282,7 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
             child: Row(
               children: [
                 Icon(Icons.info_outline, color: Colors.blue[700], size: 22),
-                SizedBox(width: 12),
+                const SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     'Your active and past subscription packages are shown below',
@@ -322,7 +323,7 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
                       BoxShadow(
                         color: Colors.black.withOpacity(0.06),
                         blurRadius: 10,
-                        offset: Offset(0, 4),
+                        offset: const Offset(0, 4),
                       ),
                     ],
                     border: Border.all(
@@ -337,16 +338,16 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
                           top: 0,
                           right: 0,
                           child: Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 12, vertical: 6),
                             decoration: BoxDecoration(
                               color: Colors.green[600],
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(16),
                                 bottomLeft: Radius.circular(16),
                               ),
                             ),
-                            child: Text(
+                            child: const Text(
                               'ACTIVE',
                               style: TextStyle(
                                 color: Colors.white,
@@ -357,12 +358,12 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
                           ),
                         ),
                       Padding(
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              padding: EdgeInsets.all(12),
+                              padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                 color: isActive
                                     ? Colors.green[100]
@@ -378,7 +379,7 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
                                 size: 32,
                               ),
                             ),
-                            SizedBox(height: 16),
+                            const SizedBox(height: 16),
                             Text(
                               subscription.subscriptionPlanName ??
                                   'Unknown Plan',
@@ -392,24 +393,24 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            SizedBox(height: 8),
-                            Divider(),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
+                            const Divider(),
+                            const SizedBox(height: 8),
                             _buildInfoRow(Icons.calendar_today,
                                 'Start: ${_formatDate(subscription.startDate)}'),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             _buildInfoRow(Icons.event,
                                 'End: ${_formatDate(subscription.endDate)}'),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             _buildInfoRow(Icons.payments,
                                 '${_formatAmount(subscription.amount?.toDouble() ?? 0.0)} VND'),
-                            SizedBox(height: 8),
+                            const SizedBox(height: 8),
                             _buildInfoRow(Icons.confirmation_number,
                                 '#${subscription.subscriptionCode ?? ''}'),
-                            Spacer(),
+                            const Spacer(),
                             Container(
                               width: double.infinity,
-                              padding: EdgeInsets.symmetric(vertical: 10),
+                              padding: const EdgeInsets.symmetric(vertical: 10),
                               decoration: BoxDecoration(
                                 color: isActive
                                     ? Colors.green[100]
@@ -446,7 +447,7 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
     return Row(
       children: [
         Icon(icon, size: 16, color: Colors.grey[600]),
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
         Expanded(
           child: Text(
             text,

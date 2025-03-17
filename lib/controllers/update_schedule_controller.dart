@@ -144,10 +144,10 @@ class UpdateScheduleController extends GetxController {
 
     Get.dialog(
       Dialog(
-        insetPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+        insetPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
         child: Container(
           width: 300,
-          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -159,7 +159,7 @@ class UpdateScheduleController extends GetxController {
                   color: Colors.purple[700],
                 ),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Container(
                 height: 300,
                 child: Theme(
@@ -167,7 +167,7 @@ class UpdateScheduleController extends GetxController {
                     colorScheme: ColorScheme.light(
                       primary: Colors.purple[600]!,
                     ),
-                    textTheme: TextTheme(
+                    textTheme: const TextTheme(
                       bodyMedium: TextStyle(fontSize: 12),
                       bodySmall: TextStyle(fontSize: 12),
                       titleSmall: TextStyle(fontSize: 12),
@@ -175,8 +175,8 @@ class UpdateScheduleController extends GetxController {
                   ),
                   child: CalendarDatePicker(
                     initialDate: initialDate,
-                    firstDate: DateTime.now().subtract(Duration(days: 1)),
-                    lastDate: DateTime.now().add(Duration(days: 365 * 2)),
+                    firstDate: DateTime.now().subtract(const Duration(days: 1)),
+                    lastDate: DateTime.now().add(const Duration(days: 365 * 2)),
                     onDateChanged: (date) {
                       eventDateController.text =
                           DateFormat('yyyy-MM-dd').format(date);
@@ -191,9 +191,10 @@ class UpdateScheduleController extends GetxController {
                   TextButton(
                     onPressed: () => Get.back(),
                     style: TextButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      minimumSize: Size(60, 25),
+                      minimumSize: const Size(60, 25),
                     ),
                     child: Text(
                       'Cancel',
@@ -269,25 +270,25 @@ class UpdateScheduleController extends GetxController {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
+                    const Text(
                       'Success',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Text('Schedule updated successfully!'),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 10),
+                    const Text('Schedule updated successfully!'),
+                    const SizedBox(height: 20),
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text('OK'),
+                      child: const Text('OK'),
                     ),
                   ],
                 ),
@@ -321,11 +322,11 @@ class UpdateScheduleController extends GetxController {
   void showDeleteConfirmation() {
     Get.dialog(
       AlertDialog(
-        title: Text(
+        title: const Text(
           'Delete Schedule?',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
-        content: Text(
+        content: const Text(
           'Are you sure you want to delete this schedule?',
           style: TextStyle(fontSize: 14),
         ),
@@ -339,7 +340,7 @@ class UpdateScheduleController extends GetxController {
               Get.back();
               // deleteSchedule();
             },
-            child: Text(
+            child: const Text(
               'Delete',
               style: TextStyle(color: Colors.red),
             ),

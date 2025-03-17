@@ -57,12 +57,12 @@ class _SideBarNavScreenState extends State<SideBarNavScreen> {
       body: Row(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Color(0xFFF8EEF6), // Hồng pastel nhạt
+                  const Color(0xFFF8EEF6), // Hồng pastel nhạt
                   Color(0xFFF5E1EB), // Hồng pastel
                   Color(0xFFEBD7E6), // Hồng nhạt pha tím
                   Color(0xFFE5D1E8), // Tím lavender nhạt
@@ -88,7 +88,7 @@ class _SideBarNavScreenState extends State<SideBarNavScreen> {
                     height: 85,
                   ),
                   // SizedBox(width: 8),
-                  Text(
+                  const Text(
                     'Pregnancy Tracker',
                     style: TextStyle(
                       fontSize: 19,

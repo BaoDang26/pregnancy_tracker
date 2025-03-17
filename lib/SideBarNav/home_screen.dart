@@ -14,7 +14,7 @@ class HomeScreen extends GetView<HomeScreenController> {
     return Obx(() {
       if (controller.isLoading.value) {
         return Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -37,7 +37,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                     strokeWidth: 3,
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Text(
                   'Loading your journey...',
                   style: TextStyle(
@@ -55,7 +55,7 @@ class HomeScreen extends GetView<HomeScreenController> {
         body: Stack(
           children: [
             Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -74,7 +74,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                       width: double.infinity,
                       height: 280,
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
+                        gradient: const LinearGradient(
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                           colors: [
@@ -87,10 +87,10 @@ class HomeScreen extends GetView<HomeScreenController> {
                             color: Colors.black.withOpacity(0.1),
                             spreadRadius: 0,
                             blurRadius: 10,
-                            offset: Offset(0, 3),
+                            offset: const Offset(0, 3),
                           ),
                         ],
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(30),
                           bottomRight: Radius.circular(30),
                         ),
@@ -110,7 +110,7 @@ class HomeScreen extends GetView<HomeScreenController> {
 
                           // Header Content
                           Padding(
-                            padding: EdgeInsets.all(24.0),
+                            padding: const EdgeInsets.all(24.0),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -118,19 +118,19 @@ class HomeScreen extends GetView<HomeScreenController> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.all(12),
+                                      padding: const EdgeInsets.all(12),
                                       decoration: BoxDecoration(
                                         color: Colors.white.withOpacity(0.3),
                                         shape: BoxShape.circle,
                                       ),
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.child_friendly_outlined,
                                         color: Colors.white,
                                         size: 40,
                                       ),
                                     ),
-                                    SizedBox(width: 16),
-                                    Text(
+                                    const SizedBox(width: 16),
+                                    const Text(
                                       'Mommy\'s Journey',
                                       style: TextStyle(
                                         color: Colors.white,
@@ -141,15 +141,15 @@ class HomeScreen extends GetView<HomeScreenController> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                                 Container(
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 24, vertical: 10),
                                   decoration: BoxDecoration(
                                     color: Colors.white.withOpacity(0.3),
                                     borderRadius: BorderRadius.circular(20),
                                   ),
-                                  child: Text(
+                                  child: const Text(
                                     'Every step of your beautiful journey matters',
                                     style: TextStyle(
                                       color: Colors.white,
@@ -159,8 +159,8 @@ class HomeScreen extends GetView<HomeScreenController> {
                                     textAlign: TextAlign.center,
                                   ),
                                 ),
-                                SizedBox(height: 20),
-                                Row(
+                                const SizedBox(height: 20),
+                                const Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     // ElevatedButton.icon(
@@ -218,12 +218,12 @@ class HomeScreen extends GetView<HomeScreenController> {
                       ),
                     ),
 
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
 
                     // About This App Section
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20),
-                      padding: EdgeInsets.all(24),
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.all(24),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
@@ -232,7 +232,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                             color: Colors.black.withOpacity(0.05),
                             spreadRadius: 0,
                             blurRadius: 10,
-                            offset: Offset(0, 3),
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
@@ -241,7 +241,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                           Row(
                             children: [
                               Container(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   color: Colors.purple[50],
                                   shape: BoxShape.circle,
@@ -252,7 +252,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                                   size: 28,
                                 ),
                               ),
-                              SizedBox(width: 14),
+                              const SizedBox(width: 14),
                               Text(
                                 'About Our App',
                                 style: TextStyle(
@@ -263,7 +263,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Text(
                             'Pregnancy Tracker is your personal companion throughout your pregnancy journey. We provide comprehensive tools to monitor your baby\'s growth, track your health, and prepare for the big day.',
                             style: TextStyle(
@@ -272,7 +272,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                               height: 1.5,
                             ),
                           ),
-                          SizedBox(height: 24),
+                          const SizedBox(height: 24),
                           Row(
                             children: [
                               Expanded(
@@ -284,7 +284,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                                   color: Colors.blue[400]!,
                                 ),
                               ),
-                              SizedBox(width: 16),
+                              const SizedBox(width: 16),
                               Expanded(
                                 child: _buildFeatureItem(
                                   icon: Icons.monitor_heart_outlined,
@@ -296,7 +296,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           // Row(
                           //   children: [
                           //     Expanded(
@@ -324,20 +324,20 @@ class HomeScreen extends GetView<HomeScreenController> {
                       ),
                     ),
 
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
 
                     // Image Carousel Section with Rounded Corners
                     Container(
-                      padding: EdgeInsets.symmetric(vertical: 16),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
                       child: Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 8),
                             child: Row(
                               children: [
                                 Container(
-                                  padding: EdgeInsets.all(8),
+                                  padding: const EdgeInsets.all(8),
                                   decoration: BoxDecoration(
                                     color: Colors.pink[50],
                                     shape: BoxShape.circle,
@@ -348,7 +348,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                                     size: 24,
                                   ),
                                 ),
-                                SizedBox(width: 12),
+                                const SizedBox(width: 12),
                                 Text(
                                   'Beautiful Moments',
                                   style: TextStyle(
@@ -360,11 +360,12 @@ class HomeScreen extends GetView<HomeScreenController> {
                               ],
                             ),
                           ),
-                          SizedBox(height: 12),
+                          const SizedBox(height: 12),
                           Stack(
                             children: [
                               Container(
-                                margin: EdgeInsets.symmetric(horizontal: 20),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 20),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
                                   boxShadow: [
@@ -372,7 +373,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                                       color: Colors.black.withOpacity(0.1),
                                       spreadRadius: 0,
                                       blurRadius: 10,
-                                      offset: Offset(0, 3),
+                                      offset: const Offset(0, 3),
                                     ),
                                   ],
                                 ),
@@ -383,9 +384,10 @@ class HomeScreen extends GetView<HomeScreenController> {
                                     options: CarouselOptions(
                                       height: 600.0,
                                       autoPlay: true,
-                                      autoPlayInterval: Duration(seconds: 5),
+                                      autoPlayInterval:
+                                          const Duration(seconds: 5),
                                       autoPlayAnimationDuration:
-                                          Duration(milliseconds: 800),
+                                          const Duration(milliseconds: 800),
                                       autoPlayCurve: Curves.easeInOut,
                                       enlargeCenterPage: true,
                                       viewportFraction: 1.0,
@@ -417,9 +419,10 @@ class HomeScreen extends GetView<HomeScreenController> {
                                             ),
                                           ),
                                           alignment: Alignment.bottomCenter,
-                                          padding: EdgeInsets.only(bottom: 20),
+                                          padding:
+                                              const EdgeInsets.only(bottom: 20),
                                           child: Container(
-                                            padding: EdgeInsets.symmetric(
+                                            padding: const EdgeInsets.symmetric(
                                                 horizontal: 16, vertical: 8),
                                             decoration: BoxDecoration(
                                               color:
@@ -491,12 +494,12 @@ class HomeScreen extends GetView<HomeScreenController> {
                       ),
                     ),
 
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
 
                     // How It Works Section
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 20),
-                      padding: EdgeInsets.all(24),
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.all(24),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
@@ -505,7 +508,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                             color: Colors.black.withOpacity(0.05),
                             spreadRadius: 0,
                             blurRadius: 10,
-                            offset: Offset(0, 3),
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
@@ -514,7 +517,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                           Row(
                             children: [
                               Container(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   color: Colors.teal[50],
                                   shape: BoxShape.circle,
@@ -525,7 +528,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                                   size: 28,
                                 ),
                               ),
-                              SizedBox(width: 14),
+                              const SizedBox(width: 14),
                               Text(
                                 'How It Works',
                                 style: TextStyle(
@@ -536,7 +539,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 24),
+                          const SizedBox(height: 24),
                           _buildHowItWorksStep(
                             number: '1',
                             title: 'Sign Up',
@@ -584,12 +587,12 @@ class HomeScreen extends GetView<HomeScreenController> {
                       ),
                     ),
 
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
 
                     // FAQ Section
                     Container(
-                      padding: EdgeInsets.all(24),
-                      margin: EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.all(24),
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(20),
@@ -598,7 +601,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                             color: Colors.black.withOpacity(0.05),
                             spreadRadius: 0,
                             blurRadius: 10,
-                            offset: Offset(0, 3),
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
@@ -608,7 +611,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                           Row(
                             children: [
                               Container(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
                                   color: Colors.amber[50],
                                   shape: BoxShape.circle,
@@ -619,7 +622,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                                   size: 28,
                                 ),
                               ),
-                              SizedBox(width: 14),
+                              const SizedBox(width: 14),
                               Text(
                                 'Frequently Asked Questions',
                                 style: TextStyle(
@@ -630,7 +633,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           _buildFaqItem(
                             question:
                                 'How can this app help me during pregnancy?',
@@ -664,9 +667,9 @@ class HomeScreen extends GetView<HomeScreenController> {
 
                     // Testimonials Section
                     Container(
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-                      padding: EdgeInsets.all(24),
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 24),
+                      padding: const EdgeInsets.all(24),
                       decoration: BoxDecoration(
                         color: Colors.purple[50],
                         borderRadius: BorderRadius.circular(20),
@@ -675,7 +678,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                             color: Colors.black.withOpacity(0.05),
                             spreadRadius: 0,
                             blurRadius: 10,
-                            offset: Offset(0, 3),
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
@@ -685,8 +688,8 @@ class HomeScreen extends GetView<HomeScreenController> {
                           Row(
                             children: [
                               Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
+                                padding: const EdgeInsets.all(10),
+                                decoration: const BoxDecoration(
                                   color: Colors.white,
                                   shape: BoxShape.circle,
                                 ),
@@ -696,7 +699,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                                   size: 28,
                                 ),
                               ),
-                              SizedBox(width: 14),
+                              const SizedBox(width: 14),
                               Text(
                                 'What Mothers Say',
                                 style: TextStyle(
@@ -707,7 +710,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                               ),
                             ],
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           _buildTestimonial(
                             quote:
                                 "This app has been my constant companion during pregnancy. The weekly updates are so informative, and I love tracking my baby's growth!",
@@ -715,7 +718,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                             imagUrl:
                                 "https://res.cloudinary.com/dlipvbdwi/image/upload/v1739408433/zwibz1obvawg6u8b7ck0.jpg",
                           ),
-                          SizedBox(height: 16),
+                          const SizedBox(height: 16),
                           _buildTestimonial(
                             quote:
                                 "As a first-time mom, I had so many questions. The expert advice section answered almost everything I needed to know. Highly recommend!",
@@ -729,11 +732,11 @@ class HomeScreen extends GetView<HomeScreenController> {
 
                     // Footer
                     Container(
-                      margin: EdgeInsets.only(top: 10),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 30, horizontal: 20),
+                      margin: const EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 30, horizontal: 20),
                       width: double.infinity,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         gradient: LinearGradient(
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
@@ -753,7 +756,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.favorite, color: Colors.red[300]),
-                              SizedBox(width: 8),
+                              const SizedBox(width: 8),
                               Text(
                                 'Your Pregnancy Companion',
                                 style: TextStyle(
@@ -795,19 +798,19 @@ class HomeScreen extends GetView<HomeScreenController> {
                           //     ),
                           //   ),
                           // ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               _buildFooterIcon(Icons.security, "Privacy"),
-                              SizedBox(width: 20),
+                              const SizedBox(width: 20),
                               _buildFooterIcon(Icons.help_outline, "Help"),
-                              SizedBox(width: 20),
+                              const SizedBox(width: 20),
                               _buildFooterIcon(
                                   Icons.contact_support, "Contact"),
                             ],
                           ),
-                          SizedBox(height: 20),
+                          const SizedBox(height: 20),
                           Text(
                             '© 2024 Pregnancy Tracker App. All rights reserved.',
                             style: TextStyle(
@@ -836,7 +839,7 @@ class HomeScreen extends GetView<HomeScreenController> {
     required Color color,
   }) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: color.withOpacity(0.1),
         borderRadius: BorderRadius.circular(16),
@@ -846,7 +849,7 @@ class HomeScreen extends GetView<HomeScreenController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, color: color, size: 32),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Text(
             title,
             style: TextStyle(
@@ -855,7 +858,7 @@ class HomeScreen extends GetView<HomeScreenController> {
               color: color.withOpacity(0.8),
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             description,
             style: TextStyle(
@@ -900,7 +903,7 @@ class HomeScreen extends GetView<HomeScreenController> {
             ),
           ),
         ),
-        SizedBox(width: 16),
+        const SizedBox(width: 16),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -913,7 +916,7 @@ class HomeScreen extends GetView<HomeScreenController> {
                   color: Colors.teal[800],
                 ),
               ),
-              SizedBox(height: 6),
+              const SizedBox(height: 6),
               Text(
                 description,
                 style: TextStyle(
@@ -936,14 +939,14 @@ class HomeScreen extends GetView<HomeScreenController> {
     required Color color,
   }) {
     return Container(
-      margin: EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
         color: color.withOpacity(0.05),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(color: color.withOpacity(0.2)),
       ),
       child: ExpansionTile(
-        tilePadding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         title: Text(
           question,
           style: TextStyle(
@@ -953,7 +956,7 @@ class HomeScreen extends GetView<HomeScreenController> {
           ),
         ),
         expandedAlignment: Alignment.topLeft,
-        childrenPadding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
+        childrenPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
         children: <Widget>[
           Text(
             answer,
@@ -975,7 +978,7 @@ class HomeScreen extends GetView<HomeScreenController> {
     required String imagUrl,
   }) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
@@ -984,7 +987,7 @@ class HomeScreen extends GetView<HomeScreenController> {
             color: Colors.black.withOpacity(0.05),
             spreadRadius: 0,
             blurRadius: 5,
-            offset: Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -995,7 +998,7 @@ class HomeScreen extends GetView<HomeScreenController> {
             color: Colors.purple[300],
             size: 32,
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             quote,
             style: TextStyle(
@@ -1006,12 +1009,12 @@ class HomeScreen extends GetView<HomeScreenController> {
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           CircleAvatar(
             radius: 30,
             backgroundImage: NetworkImage(imagUrl),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             name,
             style: TextStyle(
@@ -1030,7 +1033,7 @@ class HomeScreen extends GetView<HomeScreenController> {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.3),
             shape: BoxShape.circle,
@@ -1041,7 +1044,7 @@ class HomeScreen extends GetView<HomeScreenController> {
             size: 24,
           ),
         ),
-        SizedBox(height: 6),
+        const SizedBox(height: 6),
         Text(
           label,
           style: TextStyle(

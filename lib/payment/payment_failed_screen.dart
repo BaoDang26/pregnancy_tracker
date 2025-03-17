@@ -9,11 +9,11 @@ class PaymentFailedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:
-          Color.fromARGB(255, 255, 235, 235), // Background màu đỏ nhạt
+          const Color.fromARGB(255, 255, 235, 235), // Background màu đỏ nhạt
       body: Center(
         child: Container(
-          padding: EdgeInsets.all(32),
-          margin: EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.all(32),
+          margin: const EdgeInsets.symmetric(horizontal: 24),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
@@ -22,7 +22,7 @@ class PaymentFailedScreen extends StatelessWidget {
                 color: Colors.black.withOpacity(0.1),
                 spreadRadius: 5,
                 blurRadius: 10,
-                offset: Offset(0, 3),
+                offset: const Offset(0, 3),
               ),
             ],
           ),
@@ -31,25 +31,25 @@ class PaymentFailedScreen extends StatelessWidget {
             children: [
               // Icon thất bại
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: Colors.red.withOpacity(0.1),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.error_outline,
                   size: 80,
                   color: Colors.red,
                 ),
               ),
               AnimatedContainer(
-                duration: Duration(milliseconds: 500),
+                duration: const Duration(milliseconds: 500),
                 curve: Curves.easeInOut,
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
 
               // Text thất bại
-              Text(
+              const Text(
                 'Payment Failed!',
                 style: TextStyle(
                   fontSize: 24,
@@ -57,7 +57,7 @@ class PaymentFailedScreen extends StatelessWidget {
                   color: Colors.red,
                 ),
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
 
               // Text mô tả
               Text(
@@ -68,7 +68,7 @@ class PaymentFailedScreen extends StatelessWidget {
                   color: Colors.grey[600],
                 ),
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
 
               // Hai nút: Try Again và Back to Home
               Row(
@@ -96,7 +96,7 @@ class PaymentFailedScreen extends StatelessWidget {
                   //     ),
                   //   ),
                   // ),
-                  SizedBox(width: 16), // Khoảng cách giữa 2 nút
+                  const SizedBox(width: 16), // Khoảng cách giữa 2 nút
 
                   // Nút Back to Home
                   CustomElevatedButton(

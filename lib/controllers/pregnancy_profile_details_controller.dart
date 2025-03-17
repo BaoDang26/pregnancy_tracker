@@ -44,7 +44,7 @@ class PregnancyProfileDetailsController extends GetxController {
               color: Colors.blue[800],
             ),
           ),
-          content: Column(
+          content: const Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
@@ -55,7 +55,7 @@ class PregnancyProfileDetailsController extends GetxController {
               SizedBox(height: 16),
               Text(
                 'This feature is only available for premium members.',
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -63,7 +63,7 @@ class PregnancyProfileDetailsController extends GetxController {
           actions: [
             TextButton(
               onPressed: () => Get.back(),
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -73,9 +73,10 @@ class PregnancyProfileDetailsController extends GetxController {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green[600],
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
-              child: Text(
+              child: const Text(
                 'Go to Subscription Plans',
                 style: TextStyle(color: Colors.white),
               ),
@@ -99,7 +100,7 @@ class PregnancyProfileDetailsController extends GetxController {
               color: Colors.blue[800],
             ),
           ),
-          content: Column(
+          content: const Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
@@ -120,7 +121,7 @@ class PregnancyProfileDetailsController extends GetxController {
               onPressed: () {
                 Navigator.of(Get.context!).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -131,9 +132,10 @@ class PregnancyProfileDetailsController extends GetxController {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green[600],
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
-              child: Text(
+              child: const Text(
                 'Add measurement',
                 style: TextStyle(color: Colors.white),
               ),
@@ -178,7 +180,7 @@ class PregnancyProfileDetailsController extends GetxController {
               color: Colors.blue[800],
             ),
           ),
-          content: Column(
+          content: const Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
@@ -197,7 +199,7 @@ class PregnancyProfileDetailsController extends GetxController {
           actions: [
             TextButton(
               onPressed: () => Get.back(),
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -207,9 +209,10 @@ class PregnancyProfileDetailsController extends GetxController {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green[600],
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
-              child: Text(
+              child: const Text(
                 'Go to Subscription Plans',
                 style: TextStyle(color: Colors.white),
               ),
@@ -233,7 +236,7 @@ class PregnancyProfileDetailsController extends GetxController {
               color: Colors.blue[800],
             ),
           ),
-          content: Column(
+          content: const Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
@@ -254,7 +257,7 @@ class PregnancyProfileDetailsController extends GetxController {
               onPressed: () {
                 Navigator.of(Get.context!).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             ElevatedButton(
               onPressed: () {
@@ -265,9 +268,10 @@ class PregnancyProfileDetailsController extends GetxController {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green[600],
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
-              child: Text(
+              child: const Text(
                 'Add measurement',
                 style: TextStyle(color: Colors.white),
               ),

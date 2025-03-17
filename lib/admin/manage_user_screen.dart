@@ -11,17 +11,17 @@ class ManageUserScreen extends GetView<ManageUserController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Management'),
-        backgroundColor: Color(0xFF8E6C88),
+        title: const Text('User Management'),
+        backgroundColor: const Color(0xFF8E6C88),
         elevation: 0,
         actions: [
           IconButton(
-            icon: Icon(Icons.refresh),
+            icon: const Icon(Icons.refresh),
             onPressed: () => controller.getListUser(),
             tooltip: 'Refresh',
           ),
           IconButton(
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
             onPressed: () => controller.logOut(),
             tooltip: 'Logout',
           ),
@@ -33,7 +33,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color(0xFFF5E1EB).withOpacity(0.5),
+              const Color(0xFFF5E1EB).withOpacity(0.5),
               Colors.white,
             ],
           ),
@@ -50,14 +50,14 @@ class ManageUserScreen extends GetView<ManageUserController> {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Row(
                   children: [
-                    Chip(
+                    const Chip(
                       label: Text('Filters applied'),
                       backgroundColor: Color(0xFFEBD7E6),
                     ),
-                    SizedBox(width: 8),
+                    const SizedBox(width: 8),
                     TextButton.icon(
-                      icon: Icon(Icons.clear_all),
-                      label: Text('Clear all filters'),
+                      icon: const Icon(Icons.clear_all),
+                      label: const Text('Clear all filters'),
                       onPressed: () => controller.clearFilters(),
                     ),
                   ],
@@ -72,7 +72,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
 
   Widget _buildHeader() {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -80,14 +80,14 @@ class ManageUserScreen extends GetView<ManageUserController> {
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'User Management Dashboard',
             style: TextStyle(
               fontSize: 24,
@@ -95,7 +95,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
               color: Color(0xFF614051),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
             'Manage all users, update statuses, and monitor account activities',
             style: TextStyle(
@@ -110,7 +110,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
 
   Widget _buildSearchFilter() {
     return Padding(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Row(
         children: [
           Expanded(
@@ -124,7 +124,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
                   BoxShadow(
                     color: Colors.black.withOpacity(0.05),
                     blurRadius: 5,
-                    offset: Offset(0, 2),
+                    offset: const Offset(0, 2),
                   ),
                 ],
               ),
@@ -132,24 +132,25 @@ class ManageUserScreen extends GetView<ManageUserController> {
                 controller: controller.searchController,
                 decoration: InputDecoration(
                   hintText: 'Search users by name or email...',
-                  prefixIcon: Icon(Icons.search, color: Color(0xFF8E6C88)),
+                  prefixIcon:
+                      const Icon(Icons.search, color: Color(0xFF8E6C88)),
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 15),
                   suffixIcon: Obx(
                     () => controller.searchQuery.value.isNotEmpty
                         ? IconButton(
-                            icon: Icon(Icons.clear),
+                            icon: const Icon(Icons.clear),
                             onPressed: () {
                               controller.searchController.clear();
                             },
                           )
-                        : SizedBox.shrink(),
+                        : const SizedBox.shrink(),
                   ),
                 ),
               ),
             ),
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           Expanded(
             flex: 1,
             child: Container(
@@ -161,7 +162,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
                   BoxShadow(
                     color: Colors.black.withOpacity(0.05),
                     blurRadius: 5,
-                    offset: Offset(0, 2),
+                    offset: const Offset(0, 2),
                   ),
                 ],
               ),
@@ -169,11 +170,12 @@ class ManageUserScreen extends GetView<ManageUserController> {
                     child: DropdownButton<String>(
                       isExpanded: true,
                       value: controller.selectedRole.value,
-                      hint: Padding(
+                      hint: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         child: Text('Filter by Role'),
                       ),
-                      icon: Icon(Icons.filter_list, color: Color(0xFF8E6C88)),
+                      icon: const Icon(Icons.filter_list,
+                          color: Color(0xFF8E6C88)),
                       items: [
                         'All Roles',
                         'ROLE_ADMIN',
@@ -183,7 +185,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: Text(value),
                           ),
                         );
@@ -197,7 +199,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
                   )),
             ),
           ),
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           Expanded(
             flex: 1,
             child: Container(
@@ -209,7 +211,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
                   BoxShadow(
                     color: Colors.black.withOpacity(0.05),
                     blurRadius: 5,
-                    offset: Offset(0, 2),
+                    offset: const Offset(0, 2),
                   ),
                 ],
               ),
@@ -217,17 +219,18 @@ class ManageUserScreen extends GetView<ManageUserController> {
                     child: DropdownButton<String>(
                       isExpanded: true,
                       value: controller.selectedStatus.value,
-                      hint: Padding(
+                      hint: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         child: Text('Filter by Status'),
                       ),
-                      icon: Icon(Icons.filter_list, color: Color(0xFF8E6C88)),
-                      items: ['All Statuses', 'ACTIVE', 'INACTIVE', 'PENDING']
+                      icon: const Icon(Icons.filter_list,
+                          color: Color(0xFF8E6C88)),
+                      items: ['All Statuses', 'Active', 'Deactive']
                           .map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: Text(value),
                           ),
                         );
@@ -250,7 +253,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
     return Expanded(
       child: Obx(() {
         if (controller.isLoading.value) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFAD6E8C)),
             ),
@@ -267,7 +270,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
                   size: 72,
                   color: Colors.grey[400],
                 ),
-                SizedBox(height: 16),
+                const SizedBox(height: 16),
                 Text(
                   'No users found',
                   style: TextStyle(
@@ -281,7 +284,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
         }
 
         return Container(
-          margin: EdgeInsets.all(16),
+          margin: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
@@ -289,7 +292,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
               BoxShadow(
                 color: Colors.black.withOpacity(0.05),
                 blurRadius: 10,
-                offset: Offset(0, 5),
+                offset: const Offset(0, 5),
               ),
             ],
           ),
@@ -300,11 +303,11 @@ class ManageUserScreen extends GetView<ManageUserController> {
               child: SingleChildScrollView(
                 child: DataTable(
                   headingRowColor: MaterialStateProperty.all(
-                    Color(0xFFF5E1EB),
+                    const Color(0xFFF5E1EB),
                   ),
                   columnSpacing: 20,
                   columns: [
-                    DataColumn(
+                    const DataColumn(
                       label: Text(
                         'ID',
                         style: TextStyle(
@@ -313,7 +316,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
                         ),
                       ),
                     ),
-                    DataColumn(
+                    const DataColumn(
                       label: Text(
                         'User',
                         style: TextStyle(
@@ -322,7 +325,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
                         ),
                       ),
                     ),
-                    DataColumn(
+                    const DataColumn(
                       label: Text(
                         'Email',
                         style: TextStyle(
@@ -331,7 +334,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
                         ),
                       ),
                     ),
-                    DataColumn(
+                    const DataColumn(
                       label: Text(
                         'Address',
                         style: TextStyle(
@@ -340,7 +343,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
                         ),
                       ),
                     ),
-                    DataColumn(
+                    const DataColumn(
                       label: Text(
                         'Date of Birth',
                         style: TextStyle(
@@ -349,7 +352,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
                         ),
                       ),
                     ),
-                    DataColumn(
+                    const DataColumn(
                       label: Text(
                         'Role',
                         style: TextStyle(
@@ -358,7 +361,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
                         ),
                       ),
                     ),
-                    DataColumn(
+                    const DataColumn(
                       label: Text(
                         'Status',
                         style: TextStyle(
@@ -367,7 +370,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
                         ),
                       ),
                     ),
-                    DataColumn(
+                    const DataColumn(
                       label: Text(
                         'Actions',
                         style: TextStyle(
@@ -397,12 +400,13 @@ class ManageUserScreen extends GetView<ManageUserController> {
                                                 user.fullName!.isNotEmpty
                                             ? user.fullName![0].toUpperCase()
                                             : '?',
-                                        style: TextStyle(color: Colors.white),
+                                        style: const TextStyle(
+                                            color: Colors.white),
                                       )
                                     : null,
                                 backgroundColor: Colors.purple[200],
                               ),
-                              SizedBox(width: 10),
+                              const SizedBox(width: 10),
                               Text(user.fullName ?? 'N/A'),
                             ],
                           ),
@@ -417,7 +421,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
                         )),
                         DataCell(
                           Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 3),
                             decoration: BoxDecoration(
                               color: _getRoleColor(user.roleName),
@@ -425,7 +429,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
                             ),
                             child: Text(
                               user.roleName ?? 'Unknown',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 12,
                               ),
@@ -434,7 +438,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
                         ),
                         DataCell(
                           Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 3),
                             decoration: BoxDecoration(
                               color: _getStatusColor(user.status),
@@ -442,7 +446,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
                             ),
                             child: Text(
                               user.status ?? 'Unknown',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 12,
                               ),
@@ -472,8 +476,8 @@ class ManageUserScreen extends GetView<ManageUserController> {
                               //   tooltip: 'Edit User',
                               // ),
                               IconButton(
-                                icon:
-                                    Icon(Icons.info, color: Color(0xFF8E6C88)),
+                                icon: const Icon(Icons.info,
+                                    color: Color(0xFF8E6C88)),
                                 onPressed: () => _showUserDetailsDialog(user),
                                 tooltip: 'View Details',
                               ),
@@ -531,7 +535,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Container(
           width: 400,
-          padding: EdgeInsets.all(24),
+          padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -540,23 +544,23 @@ class ManageUserScreen extends GetView<ManageUserController> {
                 size: 48,
                 color: isCurrentlyActive ? Colors.red : Colors.green,
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Text(
                 isCurrentlyActive ? 'Deactivate User?' : 'Activate User?',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Text(
                 isCurrentlyActive
                     ? 'Are you sure you want to deactivate this user? They will no longer be able to access the system.'
                     : 'Are you sure you want to activate this user? This will restore their access to the system.',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -565,12 +569,12 @@ class ManageUserScreen extends GetView<ManageUserController> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey[300],
                       foregroundColor: Colors.black,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12),
                     ),
-                    child: Text('Cancel'),
+                    child: const Text('Cancel'),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   ElevatedButton(
                     onPressed: () {
                       Get.back();
@@ -580,8 +584,8 @@ class ManageUserScreen extends GetView<ManageUserController> {
                       backgroundColor:
                           isCurrentlyActive ? Colors.red : Colors.green,
                       foregroundColor: Colors.white,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12),
                     ),
                     child: Text(
                       isCurrentlyActive ? 'Deactivate' : 'Activate',
@@ -602,7 +606,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Container(
           width: 500,
-          padding: EdgeInsets.all(24),
+          padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -620,24 +624,25 @@ class ManageUserScreen extends GetView<ManageUserController> {
                             user.fullName != null && user.fullName!.isNotEmpty
                                 ? user.fullName![0].toUpperCase()
                                 : '?',
-                            style: TextStyle(color: Colors.white, fontSize: 20),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 20),
                           )
                         : null,
-                    backgroundColor: Color(0xFFAD6E8C),
+                    backgroundColor: const Color(0xFFAD6E8C),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         user.fullName ?? 'N/A',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF614051),
                         ),
                       ),
-                      SizedBox(height: 4),
+                      const SizedBox(height: 4),
                       Text(
                         user.email ?? 'N/A',
                         style: TextStyle(
@@ -649,7 +654,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
                   ),
                 ],
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               _buildDetailItem('User ID', '${user.id}'),
               _buildDetailItem('Role', user.roleName ?? 'N/A'),
               _buildDetailItem('Status', user.status ?? 'N/A'),
@@ -660,17 +665,18 @@ class ManageUserScreen extends GetView<ManageUserController> {
                     ? DateFormat('dd/MM/yyyy').format(user.dateOfBirth!)
                     : 'N/A',
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Align(
                 alignment: Alignment.center,
                 child: ElevatedButton(
                   onPressed: () => Get.back(),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF8E6C88),
+                    backgroundColor: const Color(0xFF8E6C88),
                     foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
                   ),
-                  child: Text('Close'),
+                  child: const Text('Close'),
                 ),
               ),
             ],
@@ -690,7 +696,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
             width: 120,
             child: Text(
               label + ':',
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF614051),
               ),

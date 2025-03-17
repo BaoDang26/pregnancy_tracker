@@ -17,7 +17,7 @@ class _SideBarNavGuestScreenState extends State<SideBarNavGuestScreen> {
     const HomeScreenGuest(),
     // const BlogPostGuest(),
     const CommunityPostGuestScreen(),
-    SubscriptionPlanGuestScreen(),
+    const SubscriptionPlanGuestScreen(),
     // AccountProfileScreen(),
     // const HomeScreen(),
     // WeeklyMenuScreen(),
@@ -32,7 +32,7 @@ class _SideBarNavGuestScreenState extends State<SideBarNavGuestScreen> {
       body: Row(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -63,7 +63,7 @@ class _SideBarNavGuestScreenState extends State<SideBarNavGuestScreen> {
                     height: 85,
                   ),
                   // SizedBox(width: 8),
-                  Text(
+                  const Text(
                     'Pregnancy Tracker',
                     style: TextStyle(
                       fontSize: 19,

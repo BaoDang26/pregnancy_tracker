@@ -47,15 +47,16 @@ class ManageSubscriptionPlanScreen
 
   Widget _buildHeader() {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Color(0xFFEBD7E6), // Light pastel pink with a hint of purple
+        color:
+            const Color(0xFFEBD7E6), // Light pastel pink with a hint of purple
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
@@ -65,7 +66,7 @@ class ManageSubscriptionPlanScreen
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Subscription Plans Dashboard',
                   style: TextStyle(
                     fontSize: 24,
@@ -73,7 +74,7 @@ class ManageSubscriptionPlanScreen
                     color: Color(0xFF614051),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
                   'Manage all subscription plans, update pricing, and modify available features',
                   style: TextStyle(
@@ -84,15 +85,15 @@ class ManageSubscriptionPlanScreen
               ],
             ),
           ),
-          SizedBox(width: 20),
+          const SizedBox(width: 20),
           ElevatedButton.icon(
             onPressed: () => controller.goToCreateSubscriptionPlan(),
-            icon: Icon(Icons.add_circle_outline),
-            label: Text('Create New Plan'),
+            icon: const Icon(Icons.add_circle_outline),
+            label: const Text('Create New Plan'),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF8E6C88),
+              backgroundColor: const Color(0xFF8E6C88),
               foregroundColor: Colors.white,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -106,7 +107,7 @@ class ManageSubscriptionPlanScreen
 
   Widget _buildSearchFilter() {
     return Padding(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Row(
         children: [
           // Search text field
@@ -121,7 +122,7 @@ class ManageSubscriptionPlanScreen
                   BoxShadow(
                     color: Colors.black.withOpacity(0.05),
                     blurRadius: 5,
-                    offset: Offset(0, 2),
+                    offset: const Offset(0, 2),
                   ),
                 ],
               ),
@@ -129,22 +130,23 @@ class ManageSubscriptionPlanScreen
                 controller: controller.searchController,
                 decoration: InputDecoration(
                   hintText: 'Search subscription plans...',
-                  prefixIcon: Icon(Icons.search, color: Color(0xFF8E6C88)),
+                  prefixIcon:
+                      const Icon(Icons.search, color: Color(0xFF8E6C88)),
                   suffixIcon: Obx(() => controller.searchQuery.value.isNotEmpty
                       ? IconButton(
-                          icon: Icon(Icons.clear, color: Colors.grey),
+                          icon: const Icon(Icons.clear, color: Colors.grey),
                           onPressed: controller.clearFilters,
                         )
-                      : SizedBox.shrink()),
+                      : const SizedBox.shrink()),
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 15),
                 ),
               ),
             ),
           ),
 
           // Status filter dropdown
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           Expanded(
             flex: 1,
             child: Container(
@@ -156,7 +158,7 @@ class ManageSubscriptionPlanScreen
                   BoxShadow(
                     color: Colors.black.withOpacity(0.05),
                     blurRadius: 5,
-                    offset: Offset(0, 2),
+                    offset: const Offset(0, 2),
                   ),
                 ],
               ),
@@ -164,8 +166,9 @@ class ManageSubscriptionPlanScreen
                     child: DropdownButton<String>(
                       isExpanded: true,
                       value: controller.selectedStatus.value,
-                      icon: Icon(Icons.filter_list, color: Color(0xFF8E6C88)),
-                      hint: Padding(
+                      icon: const Icon(Icons.filter_list,
+                          color: Color(0xFF8E6C88)),
+                      hint: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         child: Text('Status'),
                       ),
@@ -173,7 +176,7 @@ class ManageSubscriptionPlanScreen
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15),
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: Text(value),
                           ),
                         );
@@ -189,7 +192,7 @@ class ManageSubscriptionPlanScreen
           ),
 
           // Clear filters button (only shown when filters are applied)
-          SizedBox(width: 16),
+          const SizedBox(width: 16),
           Obx(() {
             if (controller.searchQuery.value.isNotEmpty ||
                 controller.selectedStatus.value != 'All') {
@@ -197,16 +200,16 @@ class ManageSubscriptionPlanScreen
                 height: 50,
                 child: ElevatedButton.icon(
                   onPressed: controller.clearFilters,
-                  icon: Icon(Icons.clear_all),
-                  label: Text('Clear Filters'),
+                  icon: const Icon(Icons.clear_all),
+                  label: const Text('Clear Filters'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF8E6C88),
+                    backgroundColor: const Color(0xFF8E6C88),
                     foregroundColor: Colors.white,
                   ),
                 ),
               );
             }
-            return SizedBox.shrink();
+            return const SizedBox.shrink();
           }),
         ],
       ),
@@ -217,7 +220,7 @@ class ManageSubscriptionPlanScreen
     return Expanded(
       child: Obx(() {
         if (controller.isLoading.value) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFAD6E8C)),
             ),
@@ -236,7 +239,7 @@ class ManageSubscriptionPlanScreen
                     size: 64,
                     color: Colors.grey[400],
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Text(
                     'No plans match your filters',
                     style: TextStyle(
@@ -245,7 +248,7 @@ class ManageSubscriptionPlanScreen
                       color: Colors.grey[700],
                     ),
                   ),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Text(
                     'Try changing your search terms or filter settings',
                     style: TextStyle(
@@ -253,16 +256,16 @@ class ManageSubscriptionPlanScreen
                       color: Colors.grey[500],
                     ),
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   ElevatedButton.icon(
                     onPressed: controller.clearFilters,
-                    icon: Icon(Icons.clear_all),
-                    label: Text('Clear Filters'),
+                    icon: const Icon(Icons.clear_all),
+                    label: const Text('Clear Filters'),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF8E6C88),
+                      backgroundColor: const Color(0xFF8E6C88),
                       foregroundColor: Colors.white,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -278,7 +281,7 @@ class ManageSubscriptionPlanScreen
         }
 
         return Container(
-          margin: EdgeInsets.all(16),
+          margin: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
@@ -286,7 +289,7 @@ class ManageSubscriptionPlanScreen
               BoxShadow(
                 color: Colors.black.withOpacity(0.05),
                 blurRadius: 10,
-                offset: Offset(0, 5),
+                offset: const Offset(0, 5),
               ),
             ],
           ),
@@ -297,11 +300,11 @@ class ManageSubscriptionPlanScreen
               child: SingleChildScrollView(
                 child: DataTable(
                   headingRowColor: MaterialStateProperty.all(
-                    Color(0xFFF5E1EB),
+                    const Color(0xFFF5E1EB),
                   ),
                   columnSpacing: 20,
                   columns: [
-                    DataColumn(
+                    const DataColumn(
                       label: Text(
                         'ID',
                         style: TextStyle(
@@ -310,7 +313,7 @@ class ManageSubscriptionPlanScreen
                         ),
                       ),
                     ),
-                    DataColumn(
+                    const DataColumn(
                       label: Text(
                         'Name',
                         style: TextStyle(
@@ -319,7 +322,7 @@ class ManageSubscriptionPlanScreen
                         ),
                       ),
                     ),
-                    DataColumn(
+                    const DataColumn(
                       label: Text(
                         'Price (VND)',
                         style: TextStyle(
@@ -328,7 +331,7 @@ class ManageSubscriptionPlanScreen
                         ),
                       ),
                     ),
-                    DataColumn(
+                    const DataColumn(
                       label: Text(
                         'Duration (Days)',
                         style: TextStyle(
@@ -337,7 +340,7 @@ class ManageSubscriptionPlanScreen
                         ),
                       ),
                     ),
-                    DataColumn(
+                    const DataColumn(
                       label: Text(
                         'Description',
                         style: TextStyle(
@@ -346,7 +349,7 @@ class ManageSubscriptionPlanScreen
                         ),
                       ),
                     ),
-                    DataColumn(
+                    const DataColumn(
                       label: Text(
                         'Status',
                         style: TextStyle(
@@ -355,7 +358,7 @@ class ManageSubscriptionPlanScreen
                         ),
                       ),
                     ),
-                    DataColumn(
+                    const DataColumn(
                       label: Text(
                         'Created Date',
                         style: TextStyle(
@@ -364,7 +367,7 @@ class ManageSubscriptionPlanScreen
                         ),
                       ),
                     ),
-                    DataColumn(
+                    const DataColumn(
                       label: Text(
                         'Actions',
                         style: TextStyle(
@@ -394,7 +397,7 @@ class ManageSubscriptionPlanScreen
                         ),
                         DataCell(
                           Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 3),
                             decoration: BoxDecoration(
                               color: plan.status == 'Active'
@@ -404,7 +407,7 @@ class ManageSubscriptionPlanScreen
                             ),
                             child: Text(
                               plan.status == 'Active' ? 'Active' : 'Inactive',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 12,
                               ),
@@ -438,13 +441,14 @@ class ManageSubscriptionPlanScreen
                                     : 'Activate Plan',
                               ),
                               IconButton(
-                                icon: Icon(Icons.edit, color: Colors.blue),
+                                icon:
+                                    const Icon(Icons.edit, color: Colors.blue),
                                 onPressed: () => _showEditPlanDialog(plan),
                                 tooltip: 'Edit Plan',
                               ),
                               IconButton(
-                                icon:
-                                    Icon(Icons.info, color: Color(0xFF8E6C88)),
+                                icon: const Icon(Icons.info,
+                                    color: Color(0xFF8E6C88)),
                                 onPressed: () => _showPlanDetailsDialog(plan),
                                 tooltip: 'View Details',
                               ),
@@ -473,7 +477,7 @@ class ManageSubscriptionPlanScreen
             size: 80,
             color: Colors.grey[400],
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           Text(
             'No subscription plans found',
             style: TextStyle(
@@ -482,7 +486,7 @@ class ManageSubscriptionPlanScreen
               color: Colors.grey[700],
             ),
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Text(
             'Create your first subscription plan',
             style: TextStyle(
@@ -490,15 +494,15 @@ class ManageSubscriptionPlanScreen
               color: Colors.grey[500],
             ),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           ElevatedButton.icon(
             onPressed: () => controller.goToCreateSubscriptionPlan(),
-            icon: Icon(Icons.add),
-            label: Text('Create Plan'),
+            icon: const Icon(Icons.add),
+            label: const Text('Create Plan'),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF8E6C88),
+              backgroundColor: const Color(0xFF8E6C88),
               foregroundColor: Colors.white,
-              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
               ),
@@ -517,7 +521,7 @@ class ManageSubscriptionPlanScreen
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Container(
           width: 400,
-          padding: EdgeInsets.all(24),
+          padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -526,23 +530,23 @@ class ManageSubscriptionPlanScreen
                 size: 48,
                 color: isCurrentlyActive ? Colors.red : Colors.green,
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Text(
                 isCurrentlyActive ? 'Deactivate Plan?' : 'Activate Plan?',
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Text(
                 isCurrentlyActive
                     ? 'Are you sure you want to deactivate this plan? Users will no longer be able to purchase it.'
                     : 'Are you sure you want to activate this plan? This will make it available for purchase.',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16),
+                style: const TextStyle(fontSize: 16),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -551,12 +555,12 @@ class ManageSubscriptionPlanScreen
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.grey[300],
                       foregroundColor: Colors.black,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12),
                     ),
-                    child: Text('Cancel'),
+                    child: const Text('Cancel'),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   ElevatedButton(
                     onPressed: () {
                       Get.back();
@@ -567,8 +571,8 @@ class ManageSubscriptionPlanScreen
                       backgroundColor:
                           isCurrentlyActive ? Colors.red : Colors.green,
                       foregroundColor: Colors.white,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12),
                     ),
                     child: Text(
                       isCurrentlyActive ? 'Deactivate' : 'Activate',
@@ -590,11 +594,11 @@ class ManageSubscriptionPlanScreen
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Container(
           width: 500,
-          padding: EdgeInsets.all(24),
+          padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
+              const Text(
                 'Edit Subscription Plan',
                 style: TextStyle(
                   fontSize: 20,
@@ -602,20 +606,21 @@ class ManageSubscriptionPlanScreen
                   color: Color(0xFF614051),
                 ),
               ),
-              SizedBox(height: 24),
-              Text(
+              const SizedBox(height: 24),
+              const Text(
                 'Edit functionality would be implemented here',
                 style: TextStyle(fontSize: 16),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               ElevatedButton(
                 onPressed: () => Get.back(),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF8E6C88),
+                  backgroundColor: const Color(0xFF8E6C88),
                   foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 ),
-                child: Text('Close'),
+                child: const Text('Close'),
               ),
             ],
           ),
@@ -630,7 +635,7 @@ class ManageSubscriptionPlanScreen
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Container(
           width: 500,
-          padding: EdgeInsets.all(24),
+          padding: const EdgeInsets.all(24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -638,31 +643,31 @@ class ManageSubscriptionPlanScreen
               Row(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: Color(0xFFE5D1E8).withOpacity(0.5),
+                      color: const Color(0xFFE5D1E8).withOpacity(0.5),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.card_membership,
                       color: Color(0xFF8E6C88),
                       size: 32,
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           plan.name ?? 'N/A',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                             color: Color(0xFF614051),
                           ),
                         ),
-                        SizedBox(height: 4),
+                        const SizedBox(height: 4),
                         Text(
                           '${plan.duration} days subscription',
                           style: TextStyle(
@@ -675,7 +680,7 @@ class ManageSubscriptionPlanScreen
                   ),
                 ],
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               _buildDetailItem('Plan ID', '${plan.id}'),
               _buildDetailItem(
                   'Price', '${NumberFormat('#,###').format(plan.price)} VND'),
@@ -690,17 +695,18 @@ class ManageSubscriptionPlanScreen
               ),
               _buildDetailItem('Description',
                   plan.description ?? 'No description available'),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Align(
                 alignment: Alignment.center,
                 child: ElevatedButton(
                   onPressed: () => Get.back(),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF8E6C88),
+                    backgroundColor: const Color(0xFF8E6C88),
                     foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
                   ),
-                  child: Text('Close'),
+                  child: const Text('Close'),
                 ),
               ),
             ],
@@ -720,7 +726,7 @@ class ManageSubscriptionPlanScreen
             width: 120,
             child: Text(
               label + ':',
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF614051),
               ),
@@ -744,7 +750,7 @@ class ManageSubscriptionPlanScreen
       flex: flex,
       child: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.bold,
           color: Color(0xFF614051),
         ),

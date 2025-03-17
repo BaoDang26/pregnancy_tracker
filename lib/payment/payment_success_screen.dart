@@ -17,14 +17,14 @@ class PaymentSuccessScreen extends GetView<PaymentSuccessController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          Color.fromARGB(255, 230, 255, 230), // Background màu xanh lá nhạt
+      backgroundColor: const Color.fromARGB(
+          255, 230, 255, 230), // Background màu xanh lá nhạt
       body: Stack(
         children: [
           Center(
             child: Container(
-              padding: EdgeInsets.all(32),
-              margin: EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.all(32),
+              margin: const EdgeInsets.symmetric(horizontal: 24),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -33,7 +33,7 @@ class PaymentSuccessScreen extends GetView<PaymentSuccessController> {
                     color: Colors.black.withOpacity(0.1),
                     spreadRadius: 5,
                     blurRadius: 10,
-                    offset: Offset(0, 3),
+                    offset: const Offset(0, 3),
                   ),
                 ],
               ),
@@ -42,25 +42,25 @@ class PaymentSuccessScreen extends GetView<PaymentSuccessController> {
                 children: [
                   // Icon thành công
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: Colors.green.withOpacity(0.1),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.check_circle,
                       size: 80,
                       color: Colors.green,
                     ),
                   ),
                   AnimatedContainer(
-                    duration: Duration(milliseconds: 500),
+                    duration: const Duration(milliseconds: 500),
                     curve: Curves.easeInOut,
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
 
                   // Text thành công
-                  Text(
+                  const Text(
                     'Payment Successful!',
                     style: TextStyle(
                       fontSize: 24,
@@ -68,7 +68,7 @@ class PaymentSuccessScreen extends GetView<PaymentSuccessController> {
                       color: Colors.green,
                     ),
                   ),
-                  SizedBox(height: 12),
+                  const SizedBox(height: 12),
 
                   // Text mô tả
                   Text(
@@ -79,7 +79,7 @@ class PaymentSuccessScreen extends GetView<PaymentSuccessController> {
                       color: Colors.grey[600],
                     ),
                   ),
-                  SizedBox(height: 32),
+                  const SizedBox(height: 32),
                   //Text thông báo trở về tab trước
                   Text(
                     'Back to previous tab to enable the features',

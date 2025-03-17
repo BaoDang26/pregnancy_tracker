@@ -15,7 +15,7 @@ class SubscriptionPlanDetailScreen
       if (controller.isLoading.value) {
         return Scaffold(
           body: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -34,11 +34,11 @@ class SubscriptionPlanDetailScreen
                     width: 120,
                     height: 120,
                   ),
-                  SizedBox(height: 20),
-                  CircularProgressIndicator(
+                  const SizedBox(height: 20),
+                  const CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(
                     "Loading subscription details...",
                     style: TextStyle(
@@ -61,7 +61,7 @@ class SubscriptionPlanDetailScreen
           elevation: 0,
           leading: IconButton(
             icon: Container(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.9),
                 shape: BoxShape.circle,
@@ -79,7 +79,7 @@ class SubscriptionPlanDetailScreen
                 Shadow(
                   blurRadius: 10.0,
                   color: Colors.black.withOpacity(0.3),
-                  offset: Offset(0, 2),
+                  offset: const Offset(0, 2),
                 ),
               ],
             ),
@@ -88,20 +88,20 @@ class SubscriptionPlanDetailScreen
         ),
         body: Container(
           height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
                 Color(0xFFE8F5E9),
-                Color(0xFFC8E6C9),
+                const Color(0xFFC8E6C9),
                 Color(0xFFB2DFDB),
               ],
             ),
           ),
           child: SafeArea(
             child: SingleChildScrollView(
-              physics: AlwaysScrollableScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               child: Column(
                 children: [
                   // Hero Banner Section (Reduced height)
@@ -109,7 +109,7 @@ class SubscriptionPlanDetailScreen
                     height: 180, // Reduced from 220
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
+                      gradient: const LinearGradient(
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                         colors: [
@@ -122,7 +122,7 @@ class SubscriptionPlanDetailScreen
                         BoxShadow(
                           color: Colors.black.withOpacity(0.2),
                           blurRadius: 10,
-                          offset: Offset(0, 5),
+                          offset: const Offset(0, 5),
                         ),
                       ],
                     ),
@@ -137,7 +137,7 @@ class SubscriptionPlanDetailScreen
                             child: Container(
                               width: 120, // Reduced from 150
                               height: 120, // Reduced from 150
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Colors.white,
                                 shape: BoxShape.circle,
                               ),
@@ -152,7 +152,7 @@ class SubscriptionPlanDetailScreen
                             child: Container(
                               width: 100, // Reduced from 120
                               height: 100, // Reduced from 120
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Colors.white,
                                 shape: BoxShape.circle,
                               ),
@@ -162,7 +162,7 @@ class SubscriptionPlanDetailScreen
 
                         // Plan details
                         Padding(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 15), // Reduced padding
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -172,19 +172,19 @@ class SubscriptionPlanDetailScreen
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Container(
-                                    padding:
-                                        EdgeInsets.all(8), // Reduced from 10
-                                    decoration: BoxDecoration(
+                                    padding: const EdgeInsets.all(
+                                        8), // Reduced from 10
+                                    decoration: const BoxDecoration(
                                       color: Colors.white,
                                       shape: BoxShape.circle,
                                     ),
-                                    child: Icon(
+                                    child: const Icon(
                                       Icons.star,
                                       size: 24, // Reduced from 30
                                       color: Colors.amber,
                                     ),
                                   ),
-                                  SizedBox(width: 10), // Reduced from 15
+                                  const SizedBox(width: 10), // Reduced from 15
                                   Expanded(
                                     child: Text(
                                       '${controller.subscriptionPlan.value.name}',
@@ -198,7 +198,7 @@ class SubscriptionPlanDetailScreen
                                             blurRadius: 5.0,
                                             color:
                                                 Colors.black.withOpacity(0.3),
-                                            offset: Offset(0, 2),
+                                            offset: const Offset(0, 2),
                                           ),
                                         ],
                                       ),
@@ -208,9 +208,9 @@ class SubscriptionPlanDetailScreen
                                   ),
                                 ],
                               ),
-                              SizedBox(height: 15), // Reduced from 20
+                              const SizedBox(height: 15), // Reduced from 20
                               Container(
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 15,
                                     vertical: 10), // Reduced padding
                                 decoration: BoxDecoration(
@@ -232,27 +232,27 @@ class SubscriptionPlanDetailScreen
                                   children: [
                                     Text(
                                       '${controller.subscriptionPlan.value.price?.round().formatWithThousandSeparator()} VND',
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 26, // Reduced from 30
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    SizedBox(height: 5),
+                                    const SizedBox(height: 5),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Icon(
+                                        const Icon(
                                           Icons.calendar_today,
                                           color: Colors.white,
                                           size: 16,
                                         ),
-                                        SizedBox(width: 5),
+                                        const SizedBox(width: 5),
                                         Text(
                                           "${controller.subscriptionPlan.value.duration} days",
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 16,
                                           ),
@@ -271,7 +271,7 @@ class SubscriptionPlanDetailScreen
 
                   // Description Card - Minimal padding, more compact layout
                   Padding(
-                    padding: EdgeInsets.all(15), // Reduced from 20
+                    padding: const EdgeInsets.all(15), // Reduced from 20
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
@@ -282,7 +282,7 @@ class SubscriptionPlanDetailScreen
                             color: Colors.black.withOpacity(0.1),
                             blurRadius: 10,
                             spreadRadius: 0,
-                            offset: Offset(0, 2),
+                            offset: const Offset(0, 2),
                           ),
                         ],
                       ),
@@ -290,7 +290,8 @@ class SubscriptionPlanDetailScreen
                         children: [
                           // Plan Description
                           Container(
-                            padding: EdgeInsets.all(20), // Reduced from 25
+                            padding:
+                                const EdgeInsets.all(20), // Reduced from 25
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -301,7 +302,7 @@ class SubscriptionPlanDetailScreen
                                       color: Colors.green[700],
                                       size: 22, // Reduced from 24
                                     ),
-                                    SizedBox(width: 8), // Reduced from 10
+                                    const SizedBox(width: 8), // Reduced from 10
                                     Text(
                                       "Plan Description",
                                       style: TextStyle(
@@ -312,10 +313,10 @@ class SubscriptionPlanDetailScreen
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 12), // Reduced from 15
+                                const SizedBox(height: 12), // Reduced from 15
                                 Container(
-                                  padding:
-                                      EdgeInsets.all(12), // Reduced from 15
+                                  padding: const EdgeInsets.all(
+                                      12), // Reduced from 15
                                   decoration: BoxDecoration(
                                     color: Colors.green[50],
                                     borderRadius: BorderRadius.circular(10),
@@ -334,7 +335,7 @@ class SubscriptionPlanDetailScreen
                                   ),
                                 ),
 
-                                SizedBox(height: 20), // Reduced from 30
+                                const SizedBox(height: 20), // Reduced from 30
 
                                 // Plan Benefits
                                 Row(
@@ -344,7 +345,7 @@ class SubscriptionPlanDetailScreen
                                       color: Colors.green[700],
                                       size: 22, // Reduced from 24
                                     ),
-                                    SizedBox(width: 8), // Reduced from 10
+                                    const SizedBox(width: 8), // Reduced from 10
                                     Text(
                                       "Plan Benefits",
                                       style: TextStyle(
@@ -355,7 +356,7 @@ class SubscriptionPlanDetailScreen
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 12), // Reduced from 15
+                                const SizedBox(height: 12), // Reduced from 15
 
                                 // Feature list - more compact
                                 _buildFeatureItem(
@@ -371,7 +372,7 @@ class SubscriptionPlanDetailScreen
                                     icon: Icons.check_circle,
                                     text: "Offline access to saved content"),
 
-                                SizedBox(height: 20), // Reduced from 30
+                                const SizedBox(height: 20), // Reduced from 30
 
                                 // Payment Method
                                 Row(
@@ -381,7 +382,7 @@ class SubscriptionPlanDetailScreen
                                       color: Colors.green[700],
                                       size: 22, // Reduced from 24
                                     ),
-                                    SizedBox(width: 8), // Reduced from 10
+                                    const SizedBox(width: 8), // Reduced from 10
                                     Text(
                                       "Payment Method",
                                       style: TextStyle(
@@ -392,9 +393,9 @@ class SubscriptionPlanDetailScreen
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 12), // Reduced from 15
+                                const SizedBox(height: 12), // Reduced from 15
                                 Container(
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       vertical: 10,
                                       horizontal: 12), // Reduced padding
                                   decoration: BoxDecoration(
@@ -412,7 +413,7 @@ class SubscriptionPlanDetailScreen
                                       BoxShadow(
                                         color: Colors.blue.withOpacity(0.1),
                                         blurRadius: 8,
-                                        offset: Offset(0, 2),
+                                        offset: const Offset(0, 2),
                                       ),
                                     ],
                                   ),
@@ -420,7 +421,7 @@ class SubscriptionPlanDetailScreen
                                     children: [
                                       // Logo container
                                       Container(
-                                        padding: EdgeInsets.all(
+                                        padding: const EdgeInsets.all(
                                             8), // Reduced from 10
                                         decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -438,7 +439,7 @@ class SubscriptionPlanDetailScreen
                                               color:
                                                   Colors.grey.withOpacity(0.2),
                                               blurRadius: 4,
-                                              offset: Offset(0, 2),
+                                              offset: const Offset(0, 2),
                                             ),
                                           ],
                                         ),
@@ -449,7 +450,8 @@ class SubscriptionPlanDetailScreen
                                           fit: BoxFit.contain,
                                         ),
                                       ),
-                                      SizedBox(width: 12), // Reduced from 15
+                                      const SizedBox(
+                                          width: 12), // Reduced from 15
                                       Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -471,7 +473,7 @@ class SubscriptionPlanDetailScreen
                                           ),
                                         ],
                                       ),
-                                      Spacer(),
+                                      const Spacer(),
                                       Icon(
                                         Icons.check_circle,
                                         color: Colors.green[600],
@@ -486,12 +488,12 @@ class SubscriptionPlanDetailScreen
 
                           // Subscribe Button
                           Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 horizontal: 20,
                                 vertical: 15), // Reduced padding
                             decoration: BoxDecoration(
                               color: Colors.grey[50],
-                              borderRadius: BorderRadius.vertical(
+                              borderRadius: const BorderRadius.vertical(
                                 bottom: Radius.circular(20),
                               ),
                             ),
@@ -519,7 +521,7 @@ class SubscriptionPlanDetailScreen
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 15), // Reduced from 20
+                                const SizedBox(height: 15), // Reduced from 20
                                 SizedBox(
                                   width: double.infinity,
                                   height: 50, // Reduced from 55
@@ -534,7 +536,7 @@ class SubscriptionPlanDetailScreen
                                       ),
                                       elevation: 2,
                                     ),
-                                    child: Row(
+                                    child: const Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
@@ -556,7 +558,7 @@ class SubscriptionPlanDetailScreen
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 12), // Reduced from 15
+                                const SizedBox(height: 12), // Reduced from 15
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -565,7 +567,7 @@ class SubscriptionPlanDetailScreen
                                       size: 12, // Reduced from 14
                                       color: Colors.grey[600],
                                     ),
-                                    SizedBox(width: 5),
+                                    const SizedBox(width: 5),
                                     Text(
                                       "Secure Transaction",
                                       style: TextStyle(
@@ -583,7 +585,7 @@ class SubscriptionPlanDetailScreen
                     ),
                   ),
                   // Add padding at the bottom to ensure everything is visible
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),
@@ -603,7 +605,7 @@ class SubscriptionPlanDetailScreen
             color: Colors.green[600],
             size: 18, // Reduced from 20
           ),
-          SizedBox(width: 8), // Reduced from 10
+          const SizedBox(width: 8), // Reduced from 10
           Expanded(
             child: Text(
               text,

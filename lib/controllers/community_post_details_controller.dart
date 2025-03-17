@@ -459,7 +459,7 @@ class CommunityPostDetailsController extends GetxController {
         elevation: 0,
         backgroundColor: Colors.transparent,
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.rectangle,
@@ -468,7 +468,7 @@ class CommunityPostDetailsController extends GetxController {
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
                 blurRadius: 10,
-                offset: Offset(0, 5),
+                offset: const Offset(0, 5),
               ),
             ],
           ),
@@ -476,27 +476,27 @@ class CommunityPostDetailsController extends GetxController {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Color(0xFFFF9800).withOpacity(0.2),
+                  color: const Color(0xFFFF9800).withOpacity(0.2),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.warning_amber_rounded,
                   color: Color(0xFFFF9800),
                   size: 60,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF8E6C88),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 message,
                 textAlign: TextAlign.center,
@@ -505,7 +505,7 @@ class CommunityPostDetailsController extends GetxController {
                   color: Colors.grey[700],
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -520,10 +520,10 @@ class CommunityPostDetailsController extends GetxController {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 12),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Cancel',
                       style: TextStyle(
                         fontSize: 16,
@@ -542,10 +542,10 @@ class CommunityPostDetailsController extends GetxController {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 12),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Delete',
                       style: TextStyle(
                         fontSize: 16,
@@ -574,7 +574,7 @@ class CommunityPostDetailsController extends GetxController {
         elevation: 0,
         backgroundColor: Colors.transparent,
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.rectangle,
@@ -583,7 +583,7 @@ class CommunityPostDetailsController extends GetxController {
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
                 blurRadius: 10,
-                offset: Offset(0, 5),
+                offset: const Offset(0, 5),
               ),
             ],
           ),
@@ -591,7 +591,7 @@ class CommunityPostDetailsController extends GetxController {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Colors.red[100],
                   shape: BoxShape.circle,
@@ -602,7 +602,7 @@ class CommunityPostDetailsController extends GetxController {
                   size: 60,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 'Error',
                 style: TextStyle(
@@ -611,7 +611,7 @@ class CommunityPostDetailsController extends GetxController {
                   color: Colors.red[400],
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 errorMessage,
                 textAlign: TextAlign.center,
@@ -620,7 +620,7 @@ class CommunityPostDetailsController extends GetxController {
                   color: Colors.grey[700],
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               TextButton(
                 onPressed: () {
                   Get.back(); // Đóng dialog
@@ -631,9 +631,10 @@ class CommunityPostDetailsController extends GetxController {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
                 ),
-                child: Text(
+                child: const Text(
                   'OK',
                   style: TextStyle(
                     fontSize: 16,
@@ -658,7 +659,7 @@ class CommunityPostDetailsController extends GetxController {
         elevation: 0,
         backgroundColor: Colors.transparent,
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Colors.white,
             shape: BoxShape.rectangle,
@@ -667,20 +668,20 @@ class CommunityPostDetailsController extends GetxController {
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
                 blurRadius: 10,
-                offset: Offset(0, 5),
+                offset: const Offset(0, 5),
               ),
             ],
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
+              const Icon(
                 Icons.check_circle,
                 color: Colors.green,
                 size: 60,
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'Success',
                 style: TextStyle(
                   fontSize: 22,
@@ -688,7 +689,7 @@ class CommunityPostDetailsController extends GetxController {
                   color: Colors.green,
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 message,
                 textAlign: TextAlign.center,
@@ -697,7 +698,7 @@ class CommunityPostDetailsController extends GetxController {
                   color: Colors.grey[700],
                 ),
               ),
-              SizedBox(height: 24),
+              const SizedBox(height: 24),
               TextButton(
                 onPressed: () {
                   Get.back(); // Đóng dialog
@@ -708,9 +709,10 @@ class CommunityPostDetailsController extends GetxController {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
                 ),
-                child: Text(
+                child: const Text(
                   'OK',
                   style: TextStyle(
                     fontSize: 16,
@@ -812,7 +814,7 @@ class CommunityPostDetailsController extends GetxController {
         _showSuccessDialog('Post deleted successfully');
 
         // Chờ 1 giây rồi quay về trang danh sách
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
         Get.back(result: true); // true để báo hiệu cần refresh danh sách
       } else {
         // Xử lý lỗi
