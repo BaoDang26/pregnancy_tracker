@@ -172,7 +172,7 @@ class ManageSubscriptionPlanScreen
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         child: Text('Status'),
                       ),
-                      items: ['All', 'Active', 'Inactive'].map((String value) {
+                      items: ['All', 'Active', 'Deactive'].map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Padding(
@@ -406,7 +406,7 @@ class ManageSubscriptionPlanScreen
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
-                              plan.status == 'Active' ? 'Active' : 'Inactive',
+                              plan.status == 'Active' ? 'Active' : 'Deactive',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 12,
@@ -565,7 +565,7 @@ class ManageSubscriptionPlanScreen
                     onPressed: () {
                       Get.back();
                       // Call method to toggle plan status
-                      // controller.togglePlanStatus(plan.id!);
+                      controller.deactivateSubscriptionPlan(plan.id!);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor:
@@ -588,44 +588,183 @@ class ManageSubscriptionPlanScreen
   }
 
   void _showEditPlanDialog(SubscriptionPlanModel plan) {
-    // This would be expanded with form fields for editing the plan
+    // Điền dữ liệu vào form
+    controller.prepareUpdateForm(plan);
+
     Get.dialog(
       Dialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Container(
           width: 500,
           padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                'Edit Subscription Plan',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF614051),
+          child: Obx(() => Form(
+                key: controller.updateSubscriptionPlanFormKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Header
+                      const Row(
+                        children: [
+                          Icon(Icons.edit,
+                              color: const Color(0xFF8E6C88), size: 24),
+                          SizedBox(width: 12),
+                          Text(
+                            'Edit Subscription Plan',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF614051),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+
+                      // Plan Name
+                      const Text(
+                        'Plan Name',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF614051),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        controller: controller.updateNameController,
+                        validator: (value) => controller.validateName(value!),
+                        decoration: const InputDecoration(
+                          hintText: 'Enter plan name',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+
+                      // Price
+                      const Text(
+                        'Price (VND)',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF614051),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        controller: controller.updatePriceController,
+                        validator: (value) => controller.validatePrice(value!),
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter price',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+
+                      // Duration
+                      const Text(
+                        'Duration (Days)',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF614051),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        controller: controller.updateDurationController,
+                        validator: (value) =>
+                            controller.validateDuration(value!),
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter duration in days',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+
+                      // Description
+                      const Text(
+                        'Description',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF614051),
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        controller: controller.updateDescriptionController,
+                        validator: (value) =>
+                            controller.validateDescription(value!),
+                        maxLines: 8,
+                        decoration: const InputDecoration(
+                          hintText: 'Enter plan description',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+
+                      // Error message
+                      if (controller.updateErrorString.value.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            color: Colors.red[50],
+                            child: Row(
+                              children: [
+                                const Icon(Icons.error_outline,
+                                    color: Colors.red),
+                                const SizedBox(width: 8),
+                                Expanded(
+                                  child: Text(
+                                    controller.updateErrorString.value,
+                                    style: const TextStyle(color: Colors.red),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
+                      const SizedBox(height: 24),
+
+                      // Action buttons
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: () => Get.back(),
+                            child: const Text('Cancel'),
+                          ),
+                          const SizedBox(width: 16),
+                          ElevatedButton(
+                            onPressed: controller.isUpdating.value
+                                ? null
+                                : () =>
+                                    controller.updateSubscriptionPlan(plan.id!),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF8E6C88),
+                              foregroundColor: Colors.white,
+                            ),
+                            child: controller.isUpdating.value
+                                ? const SizedBox(
+                                    width: 20,
+                                    height: 20,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                : const Text('Update Plan'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 24),
-              const Text(
-                'Edit functionality would be implemented here',
-                style: TextStyle(fontSize: 16),
-              ),
-              const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: () => Get.back(),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF8E6C88),
-                  foregroundColor: Colors.white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                ),
-                child: const Text('Close'),
-              ),
-            ],
-          ),
+              )),
         ),
       ),
+      barrierDismissible: false,
     );
   }
 
@@ -686,7 +825,7 @@ class ManageSubscriptionPlanScreen
                   'Price', '${NumberFormat('#,###').format(plan.price)} VND'),
               _buildDetailItem('Duration', '${plan.duration} days'),
               _buildDetailItem(
-                  'Status', plan.status == 'Active' ? 'Active' : 'Inactive'),
+                  'Status', plan.status == 'Active' ? 'Active' : 'Deactive'),
               _buildDetailItem(
                 'Created Date',
                 plan.createdDate != null

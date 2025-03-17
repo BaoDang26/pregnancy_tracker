@@ -26,11 +26,12 @@ class SubscriptionPlanGuestController extends GetxController {
 
     if (response.statusCode == 200) {
       String jsonResult = utf8.decode(response.bodyBytes);
-      // Log the JSON result
-      print("JSON Result: $jsonResult");
+      List<SubscriptionPlanModel> allPlans =
+          subscriptionPlanModelFromJson(jsonResult);
 
-      // Convert JSON to model
-      subscriptionPlanList.value = subscriptionPlanModelFromJson(jsonResult);
+      // Lọc chỉ lấy các plan có status = "Active"
+      subscriptionPlanList.value =
+          allPlans.where((plan) => plan.status == 'Active').toList();
     } else {
       Get.snackbar("Error server ${response.statusCode}",
           jsonDecode(response.body)['message']);

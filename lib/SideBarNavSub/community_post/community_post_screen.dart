@@ -136,6 +136,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                           const SizedBox(width: 10),
                           Expanded(
                             child: TextField(
+                              controller: controller.searchController,
                               decoration: InputDecoration(
                                 hintText: 'Search community posts...',
                                 border: InputBorder.none,
@@ -163,24 +164,57 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                       ],
                     ),
                     child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: 'Recent',
-                        icon: const Icon(Icons.filter_list,
-                            color: Color(0xFF8E6C88)),
-                        items: ['Recent', 'Most Comments', 'Oldest']
-                            .map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {},
-                      ),
+                      child: Obx(() => DropdownButton<String>(
+                            value: controller.selectedFilter.value,
+                            icon: const Icon(Icons.filter_list,
+                                color: Color(0xFF8E6C88)),
+                            items: ['Recent', 'Most Comments', 'Oldest']
+                                .map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (String? newValue) {
+                              if (newValue != null) {
+                                controller.setFilter(newValue);
+                              }
+                            },
+                          )),
                     ),
                   ),
                 ],
               ),
             ),
+
+            // Thêm sau phần search bar
+            Obx(() {
+              if (controller.searchQuery.value.isNotEmpty) {
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Row(
+                    children: [
+                      Text('Search results for: ',
+                          style: TextStyle(color: Colors.grey[700])),
+                      Text('"${controller.searchQuery.value}"',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFFAD6E8C))),
+                      const Spacer(),
+                      TextButton.icon(
+                        icon: const Icon(Icons.clear, size: 16),
+                        label: const Text('Clear'),
+                        onPressed: () => controller.searchController.clear(),
+                        style: TextButton.styleFrom(
+                            foregroundColor: Colors.grey[600]),
+                      ),
+                    ],
+                  ),
+                );
+              }
+              return const SizedBox.shrink();
+            }),
 
             // Grid of community posts
             Expanded(
@@ -194,7 +228,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                   );
                 }
 
-                if (controller.activePostList.isEmpty) {
+                if (controller.filteredPostList.isEmpty) {
                   return _buildEmptyState();
                 }
 
@@ -211,9 +245,9 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                       mainAxisSpacing: 20.0,
                       childAspectRatio: 0.85,
                     ),
-                    itemCount: controller.activePostList.length,
+                    itemCount: controller.filteredPostList.length,
                     itemBuilder: (context, index) {
-                      final post = controller.activePostList[index];
+                      final post = controller.filteredPostList[index];
                       return _buildPostCard(context, post, index);
                     },
                   ),
@@ -424,27 +458,6 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                       ),
                     ],
                   ),
-
-                  // Thêm nút Xem chi tiết
-                  // Spacer(),
-                  // SizedBox(
-                  //   width: double.infinity,
-                  //   child: ElevatedButton.icon(
-                  //     onPressed: () =>
-                  //         controller.goToCommunityPostDetail(index),
-                  //     icon: Icon(Icons.visibility, size: 16),
-                  //     label: Text('Details', style: TextStyle(fontSize: 12)),
-                  //     style: ElevatedButton.styleFrom(
-                  //       backgroundColor: Color(0xFFAD6E8C),
-                  //       foregroundColor: Colors.white,
-                  //       padding: EdgeInsets.symmetric(vertical: 6),
-                  //       minimumSize: Size(0, 30),
-                  //       shape: RoundedRectangleBorder(
-                  //         borderRadius: BorderRadius.circular(8),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
             ),

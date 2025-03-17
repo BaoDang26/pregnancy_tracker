@@ -208,6 +208,23 @@ class LoginScreen extends GetView<LoginController> {
                         ),
                       ),
 
+                      // Add Forgot Password link
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () =>
+                              controller.showForgotPasswordDialog(context),
+                          child: Text(
+                            'Forgot Password?',
+                            style: TextStyle(
+                              color: const Color(0xFF8E6C88),
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ),
+
                       const SizedBox(height: 24),
 
                       // Login button with new styling

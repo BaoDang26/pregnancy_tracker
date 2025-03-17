@@ -36,6 +36,34 @@ class AuthenticationRepository {
     return response;
   }
 
+  static Future<http.Response> changePassword(var body) async {
+    http.Response response;
+
+    Map<String, String> header = {
+      "Content-type": "application/json",
+    };
+    response = await interceptedClient.put(
+      BuildServer.buildUrl("auth/change-password"),
+      body: body,
+      headers: header,
+    );
+    return response;
+  }
+
+  static Future<http.Response> forgotPassword(String email) async {
+    http.Response response;
+
+    Map<String, String> header = {
+      "Content-type": "application/json",
+    };
+    response = await interceptedClient.post(
+      BuildServer.buildUrl("auth/forgot-password"),
+      body: {"email": email},
+      headers: header,
+    );
+    return response;
+  }
+
   static Future<String> logout() async {
     try {
       Map<String, String> header = {

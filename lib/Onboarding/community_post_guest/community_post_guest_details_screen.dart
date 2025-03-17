@@ -146,14 +146,6 @@ class CommunityPostGuestDetailsScreen
                         color: Colors.white),
                     onPressed: () => Get.back(),
                   ),
-                  actions: [
-                    IconButton(
-                      icon:
-                          const Icon(Icons.login_rounded, color: Colors.white),
-                      onPressed: () => controller.navigateToLogin(),
-                      tooltip: 'Sign In',
-                    ),
-                  ],
                 ),
 
                 // Post Content
@@ -401,7 +393,7 @@ class CommunityPostGuestDetailsScreen
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                'Sign in or create an account to add comments and connect with other parents',
+                                'Login or create an account to add comments and connect with other parents',
                                 style: TextStyle(
                                   color: Colors.white.withOpacity(0.9),
                                   fontSize: 14,
@@ -424,7 +416,7 @@ class CommunityPostGuestDetailsScreen
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                               ),
-                              child: const Text('Sign In'),
+                              child: const Text('Login'),
                             ),
                             const SizedBox(height: 8),
                             TextButton(

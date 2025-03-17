@@ -343,7 +343,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                                   obscureText: true,
                                   trailing: TextButton(
                                     onPressed: () {
-                                      // Change password logic
+                                      controller.showChangePasswordDialog();
                                     },
                                     child: Text(
                                       'Change',

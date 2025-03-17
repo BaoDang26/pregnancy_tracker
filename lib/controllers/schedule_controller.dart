@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:pregnancy_tracker/repositories/schedule_repository.dart';
+import 'package:flutter/material.dart';
 
 import '../models/schedule_model.dart';
 import '../routes/app_routes.dart';
@@ -12,10 +13,41 @@ class ScheduleController extends GetxController {
   var scheduleModel = ScheduleModel().obs;
   late int pregnancyId;
 
+  final searchController = TextEditingController();
+  var searchQuery = ''.obs;
+  var allSchedules = <ScheduleModel>[].obs;
+
   @override
-  Future<void> onInit() async {
+  void onInit() async {
     await getScheduleList();
+    searchController.addListener(_onSearchChanged);
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    searchController.removeListener(_onSearchChanged);
+    searchController.dispose();
+    super.onClose();
+  }
+
+  void _onSearchChanged() {
+    searchQuery.value = searchController.text;
+    _filterSchedules();
+  }
+
+  void _filterSchedules() {
+    if (searchQuery.value.isEmpty) {
+      scheduleList.value = allSchedules;
+    } else {
+      scheduleList.value = allSchedules
+          .where((schedule) =>
+              schedule.title != null &&
+              schedule.title!
+                  .toLowerCase()
+                  .contains(searchQuery.value.toLowerCase()))
+          .toList();
+    }
   }
 
   Future<void> getScheduleList() async {
@@ -32,7 +64,20 @@ class ScheduleController extends GetxController {
       print("JSON Result: $jsonResult");
 
       // Chuyển đổi từ JSON sang model
-      scheduleList.value = scheduleModelFromJson(jsonResult);
+      List<ScheduleModel> allSchedulesFromApi =
+          scheduleModelFromJson(jsonResult);
+
+      // Lọc ra chỉ những schedule có status là ACTIVE
+      allSchedules.value = allSchedulesFromApi
+          .where((schedule) => schedule.status?.toUpperCase() == 'ACTIVE')
+          .toList();
+
+      // Khởi tạo danh sách hiển thị
+      scheduleList.value = allSchedules;
+
+      // Log số lượng schedule đã lọc
+      print("Total schedules: ${allSchedulesFromApi.length}");
+      print("Active schedules: ${allSchedules.length}");
     } else {
       Get.snackbar("Error server ${response.statusCode}",
           jsonDecode(response.body)['message']);

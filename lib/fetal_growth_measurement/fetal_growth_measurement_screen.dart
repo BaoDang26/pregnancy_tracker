@@ -382,14 +382,58 @@ class FetalGrowthMeasurementScreen
                                                 color: Colors.green,
                                               ),
                                             ),
-                                            IconButton(
-                                              icon: const Icon(Icons.update,
-                                                  color: Colors.red),
-                                              onPressed: () {
-                                                controller
-                                                    .navigateToUpdateMeasurement(
-                                                        index);
-                                              },
+                                            Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                IconButton(
+                                                  icon: const Icon(Icons.update,
+                                                      color: Colors.grey),
+                                                  onPressed: () {
+                                                    controller
+                                                        .navigateToUpdateMeasurement(
+                                                            index);
+                                                  },
+                                                  tooltip: 'Update',
+                                                ),
+                                                IconButton(
+                                                  icon: const Icon(Icons.delete,
+                                                      color: Colors.red),
+                                                  onPressed: () {
+                                                    // Hiển thị dialog xác nhận
+                                                    Get.dialog(
+                                                      AlertDialog(
+                                                        title: Text('Confirm'),
+                                                        content: Text(
+                                                            'Are you sure you want to delete this measurement?'),
+                                                        actions: [
+                                                          TextButton(
+                                                            onPressed: () =>
+                                                                Get.back(),
+                                                            child:
+                                                                Text('Cancel'),
+                                                          ),
+                                                          TextButton(
+                                                            onPressed: () {
+                                                              Get.back();
+                                                              controller
+                                                                  .deleteMeasurement(
+                                                                      measurement
+                                                                          .id!);
+                                                            },
+                                                            child: Text(
+                                                              'Delete',
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .red),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                                  },
+                                                  tooltip: 'Delete',
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),

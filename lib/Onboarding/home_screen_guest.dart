@@ -160,57 +160,6 @@ class HomeScreenGuest extends GetView<HomeScreenGuestController> {
                                   ),
                                 ),
                                 const SizedBox(height: 20),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ElevatedButton.icon(
-                                      onPressed: () =>
-                                          Get.toNamed(AppRoutes.login),
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.white,
-                                        foregroundColor: Colors.pink[400],
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 12),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                        ),
-                                      ),
-                                      icon: const Icon(Icons.login),
-                                      label: const Text(
-                                        'Sign In',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    const SizedBox(width: 12),
-                                    OutlinedButton.icon(
-                                      onPressed: () =>
-                                          Get.toNamed(AppRoutes.register),
-                                      style: OutlinedButton.styleFrom(
-                                        foregroundColor: Colors.white,
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 20, vertical: 12),
-                                        side: const BorderSide(
-                                            color: Colors.white, width: 2),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                        ),
-                                      ),
-                                      icon: const Icon(Icons.person_add),
-                                      label: const Text(
-                                        'Register',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
                               ],
                             ),
                           ),
@@ -542,7 +491,7 @@ class HomeScreenGuest extends GetView<HomeScreenGuestController> {
                           const SizedBox(height: 24),
                           _buildHowItWorksStep(
                             number: '1',
-                            title: 'Sign Up',
+                            title: 'Register',
                             description:
                                 'Create your account to begin tracking your pregnancy journey',
                             color: Colors.teal[400]!,

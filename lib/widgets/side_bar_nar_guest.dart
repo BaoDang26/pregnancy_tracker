@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../Onboarding/community_post_guest/community_post_guest_screen.dart';
 import '../Onboarding/home_screen_guest.dart';
 import '../Onboarding/subscription_plan/subscription_plan_guest.dart';
+import '../routes/app_routes.dart';
+import '../util/app_export.dart';
 
 class SideBarNavGuestScreen extends StatefulWidget {
   const SideBarNavGuestScreen({super.key});
@@ -93,7 +95,7 @@ class _SideBarNavGuestScreenState extends State<SideBarNavGuestScreen> {
                     width: 24,
                     child: Icon(Icons.local_fire_department),
                   ),
-                  label: Text('Blog Post', style: TextStyle(fontSize: 15)),
+                  label: Text('Community Post', style: TextStyle(fontSize: 15)),
                 ),
                 // NavigationRailDestination(
                 //   icon: SizedBox(
@@ -132,6 +134,46 @@ class _SideBarNavGuestScreenState extends State<SideBarNavGuestScreen> {
                 //       Text('Account Profile', style: TextStyle(fontSize: 15)),
                 // ),
               ],
+              trailing: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child:
+                    // CustomElevatedButton(
+                    //   onPressed: () {
+                    //     // Gọi phương thức logout từ ManageUserController
+                    //     Get.find<ManageUserController>().logOut();
+                    //   },
+                    //   text: 'Log out',
+                    // ),
+                    ElevatedButton(
+                  onPressed: () async {
+                    // Gọi phương thức logout từ ManageUserController
+                    Get.toNamed(AppRoutes.login);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFAD6E8C), // Mauve/hồng đậm
+                    foregroundColor: Colors.white,
+                    elevation: 4,
+                    shadowColor: const Color(0xFFAD6E8C).withOpacity(0.4),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.login_rounded),
+                      SizedBox(width: 8),
+                      Text(
+                        'Login',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
           const VerticalDivider(thickness: 1, width: 1),

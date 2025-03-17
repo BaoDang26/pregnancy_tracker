@@ -98,7 +98,7 @@ class LoginController extends GetxController {
         // Navigate to admin sidebar
         Get.offAllNamed(AppRoutes.sidebarnaradmin);
       } else if (userRole.toUpperCase() == "ROLE_USER" ||
-          userRole.toUpperCase() == "ROLE_PREMIUM") {
+          userRole.toUpperCase() == "ROLE_USER_PREMIUM") {
         // Navigate to user sidebar
         Get.offAllNamed(AppRoutes.sidebarnar);
       } else {
@@ -121,5 +121,114 @@ class LoginController extends GetxController {
 
   void goToRegisterScreen() {
     Get.toNamed(AppRoutes.register);
+  }
+
+  void showForgotPasswordDialog(BuildContext context) {
+    final emailController = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+
+    Get.dialog(
+      AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Row(
+          children: [
+            Icon(Icons.password_rounded, color: const Color(0xFFAD6E8C)),
+            SizedBox(width: 10),
+            Text('Forgot Password'),
+          ],
+        ),
+        content: Form(
+          key: formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Enter your email address and we\'ll send you a link to reset your password.',
+                style: TextStyle(color: Colors.grey[700], fontSize: 14),
+              ),
+              SizedBox(height: 20),
+              TextFormField(
+                controller: emailController,
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  prefixIcon: Icon(Icons.email, color: const Color(0xFF8E6C88)),
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty || !value.contains('@')) {
+                    return 'Please enter a valid email';
+                  }
+                  return null;
+                },
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: Text(
+              'Cancel',
+              style: TextStyle(color: Colors.grey[700]),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              if (formKey.currentState!.validate()) {
+                Get.back();
+                forgotPassword(emailController.text);
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFFAD6E8C),
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            child: Text('Send Reset Link'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> forgotPassword(String email) async {
+    isLoading.value = true;
+
+    try {
+      var response = await AuthenticationRepository.forgotPassword(email);
+
+      if (response.statusCode == 200) {
+        Get.snackbar(
+          'Success',
+          'Password reset link has been sent to your email',
+          backgroundColor: Colors.green[100],
+          colorText: Colors.green[800],
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      } else {
+        var errorData = json.decode(response.body);
+        Get.snackbar(
+          'Error',
+          errorData['message'] ?? 'Failed to send reset link',
+          backgroundColor: Colors.red[100],
+          colorText: Colors.red[800],
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'An error occurred: $e',
+        backgroundColor: Colors.red[100],
+        colorText: Colors.red[800],
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } finally {
+      isLoading.value = false;
+    }
   }
 }

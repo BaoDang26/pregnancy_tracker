@@ -321,39 +321,39 @@ class UpdateScheduleScreen extends GetView<UpdateScheduleController> {
                                           const SizedBox(width: 16),
 
                                           // Delete Button
-                                          Expanded(
-                                            child: OutlinedButton(
-                                              onPressed: () => controller
-                                                  .showDeleteConfirmation(),
-                                              style: OutlinedButton.styleFrom(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 16),
-                                                side: BorderSide(
-                                                    color: Colors.red[300]!),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Icon(Icons.delete_outline,
-                                                      color: Colors.red[700]),
-                                                  const SizedBox(width: 8),
-                                                  Text(
-                                                    "Delete",
-                                                    style: TextStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.red[700],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
+                                          // Expanded(
+                                          //   child: OutlinedButton(
+                                          //     onPressed: () => controller
+                                          //         .showDeleteConfirmation(),
+                                          //     style: OutlinedButton.styleFrom(
+                                          //       padding:
+                                          //           const EdgeInsets.symmetric(
+                                          //               vertical: 16),
+                                          //       side: BorderSide(
+                                          //           color: Colors.red[300]!),
+                                          //       shape: RoundedRectangleBorder(
+                                          //         borderRadius:
+                                          //             BorderRadius.circular(10),
+                                          //       ),
+                                          //     ),
+                                          //     child: Row(
+                                          //       mainAxisAlignment:
+                                          //           MainAxisAlignment.center,
+                                          //       children: [
+                                          //         Icon(Icons.delete_outline,
+                                          //             color: Colors.red[700]),
+                                          //         const SizedBox(width: 8),
+                                          //         Text(
+                                          //           "Delete",
+                                          //           style: TextStyle(
+                                          //             fontSize: 16,
+                                          //             color: Colors.red[700],
+                                          //           ),
+                                          //         ),
+                                          //       ],
+                                          //     ),
+                                          //   ),
+                                          // ),
                                           const SizedBox(width: 16),
 
                                           // Update Button

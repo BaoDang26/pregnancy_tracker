@@ -22,6 +22,7 @@ import '../SideBarNavSub/user_subscription/user_subscription_screen.dart';
 import '../account_profile/account_profile_screen.dart';
 import '../account_profile/update_account_profile_screen.dart';
 import '../admin/create_subscription_plan_screen.dart';
+import '../admin/dashboard_screen.dart';
 import '../admin/manage_subscription_plan_screen.dart';
 import '../admin/manage_user_screen.dart';
 import '../admin/manage_user_subscription_screen.dart';
@@ -35,6 +36,7 @@ import '../bindings/create_fetal_growth_measurement_binding.dart';
 import '../bindings/create_pregnancy_profile_binding.dart';
 import '../bindings/create_schedule_binding.dart';
 import '../bindings/create_subscription_plan_binding.dart';
+import '../bindings/dashboard_binding.dart';
 import '../bindings/fetal_growth_measurement_binding.dart';
 import '../bindings/home_screen_binding.dart';
 import '../bindings/login_binding.dart';
@@ -120,11 +122,16 @@ class AppRoutes {
   static const String createSubscriptionPlan = '/create-subscription-plan';
   static const String updatepregnancyprofile = '/update-pregnancy-profile';
   static const String manageUserSubscription = '/manage-user-subscription';
+  static const String dashboard = '/dashboard';
 
   // static const String pregnancyprofileedit = '/pregnancy-profile-edit';
   // static const String signup = '/signup';
 
   static List<GetPage> pages = [
+    GetPage(
+        name: dashboard,
+        page: () => const DashboardScreen(),
+        binding: DashboardBinding()),
     GetPage(
         name: manageUserSubscription,
         page: () => const ManageUserSubscriptionScreen(),

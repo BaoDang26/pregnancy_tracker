@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:pregnancy_tracker/util/app_export.dart';
 
 import '../models/subscription_plan_model.dart';
@@ -12,33 +13,14 @@ class SubscriptionPlanController extends GetxController {
   var subscriptionPlanModel = SubscriptionPlanModel().obs;
   var userRole = ''.obs;
   var userId = 0.obs;
+  var activeSubscriptionPlanList = <SubscriptionPlanModel>[].obs;
 
   @override
   void onInit() {
     super.onInit();
-    getSubscriptionPlans();
+    // getSubscriptionPlans();
     getUserRole();
-  }
-
-  Future<void> getSubscriptionPlans() async {
-    isLoading.value = true;
-    var response = await SubscriptionPlanRepository.getSubscriptionPlanList();
-
-    // Log the response status and body
-
-    if (response.statusCode == 200) {
-      String jsonResult = utf8.decode(response.bodyBytes);
-      // Log the JSON result
-      print("JSON Result: $jsonResult");
-
-      // Convert JSON to model
-      subscriptionPlanList.value = subscriptionPlanModelFromJson(jsonResult);
-    } else {
-      Get.snackbar("Error server ${response.statusCode}",
-          jsonDecode(response.body)['message']);
-    }
-    isLoading.value = false;
-    update();
+    getActiveSubscriptionPlanList();
   }
 
   Future<void> getUserRole() async {
@@ -71,6 +53,34 @@ class SubscriptionPlanController extends GetxController {
     } catch (e) {
       print('Error getting user id: $e');
     }
+  }
+
+  Future<void> getActiveSubscriptionPlanList() async {
+    isLoading.value = true;
+    var response = await SubscriptionPlanRepository.getSubscriptionPlanList();
+
+    if (response.statusCode == 200) {
+      String jsonResult = utf8.decode(response.bodyBytes);
+      List<SubscriptionPlanModel> allPlans =
+          subscriptionPlanModelFromJson(jsonResult);
+
+      // Lọc chỉ lấy các plan có status = "Active"
+      activeSubscriptionPlanList.value =
+          allPlans.where((plan) => plan.status == 'Active').toList();
+
+      print("Total plans: ${allPlans.length}");
+      print("Active plans: ${activeSubscriptionPlanList.length}");
+    } else {
+      Get.snackbar(
+        "Error",
+        "Failed to load subscription plans",
+        backgroundColor: Colors.red[100],
+        colorText: Colors.red[800],
+      );
+    }
+
+    isLoading.value = false;
+    update();
   }
 
   void goToSubscriptionPlanDetail(int index) {

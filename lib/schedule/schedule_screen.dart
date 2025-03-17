@@ -79,6 +79,33 @@ class ScheduleScreen extends GetView<ScheduleController> {
               ),
               const SizedBox(height: 16),
 
+              // Thêm thanh tìm kiếm ở đây
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 5,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
+                ),
+                child: TextField(
+                  controller: controller.searchController,
+                  decoration: InputDecoration(
+                    hintText: 'Search appointments by title...',
+                    prefixIcon: const Icon(Icons.search, color: Colors.blue),
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 12),
+                  ),
+                  style: const TextStyle(fontSize: 15),
+                ),
+              ),
+              const SizedBox(height: 16),
+
               // Main content - Schedule list
               Expanded(
                 child: Obx(() {
@@ -229,9 +256,9 @@ class ScheduleScreen extends GetView<ScheduleController> {
                                                     TextButton(
                                                       onPressed: () {
                                                         Get.back();
-                                                        // controller
-                                                        //     .deleteSchedule(
-                                                        //         schedule.id!);
+                                                        controller
+                                                            .deleteSchedule(
+                                                                schedule.id!);
                                                       },
                                                       child: const Text(
                                                           'Delete',

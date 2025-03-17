@@ -57,4 +57,11 @@ class SubscriptionPlanModel {
         "duration": duration,
         "description": description,
       };
+
+  Map<String, dynamic> toUpdateJson() => {
+        "name": name,
+        "price": price,
+        "duration": duration,
+        "description": description,
+      };
 }

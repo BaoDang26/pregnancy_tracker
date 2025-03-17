@@ -176,12 +176,8 @@ class ManageUserScreen extends GetView<ManageUserController> {
                       ),
                       icon: const Icon(Icons.filter_list,
                           color: Color(0xFF8E6C88)),
-                      items: [
-                        'All Roles',
-                        'ROLE_ADMIN',
-                        'ROLE_USER',
-                        'ROLE_PREMIUM'
-                      ].map((String value) {
+                      items: ['All Roles', 'ROLE_USER', 'ROLE_PREMIUM']
+                          .map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Padding(

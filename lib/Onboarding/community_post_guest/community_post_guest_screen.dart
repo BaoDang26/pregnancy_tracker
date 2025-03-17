@@ -17,7 +17,7 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              const Color(0xFFF8F0F8), // Soft pink/lavender background
+              Color(0xFFF8F0F8), // Soft pink/lavender background
               Colors.white,
             ],
           ),
@@ -52,13 +52,12 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Row(
+                  Row(
                     children: [
                       Icon(
                         Icons.forum_rounded,
                         size: 36,
-                        color:
-                            Color(0xFFAD6E8C), // Mauve/pink for pregnancy theme
+                        color: Color(0xFFAD6E8C),
                       ),
                       SizedBox(width: 15),
                       Text(
@@ -66,18 +65,17 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                         style: TextStyle(
                           fontSize: 36,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFFAD6E8C), // Matching mauve color
+                          color: Color(0xFFAD6E8C),
                           letterSpacing: 1,
                         ),
                       ),
-                      // Spacer(),
-                      // // Join Community button for guests
-                      // _buildActionButton(
-                      //   icon: Icons.login_rounded,
-                      //   label: 'Join Community',
-                      //   color: Color(0xFF8E6C88), // Soft purple
-                      //   onTap: () => controller.navigateToLogin(),
-                      // ),
+                      Spacer(),
+                      //refresh button
+                      IconButton(
+                        onPressed: () => controller.getCommunityPostGuestList(),
+                        icon: Icon(Icons.refresh),
+                        tooltip: 'Refresh',
+                      ),
                     ],
                   ),
                   const SizedBox(height: 15),
@@ -121,6 +119,7 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                           const SizedBox(width: 10),
                           Expanded(
                             child: TextField(
+                              controller: controller.searchController,
                               decoration: InputDecoration(
                                 hintText: 'Search community posts...',
                                 border: InputBorder.none,
@@ -148,19 +147,23 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                       ],
                     ),
                     child: DropdownButtonHideUnderline(
-                      child: DropdownButton<String>(
-                        value: 'Recent',
-                        icon: const Icon(Icons.filter_list,
-                            color: Color(0xFF8E6C88)),
-                        items: ['Recent', 'Most Comments', 'Oldest']
-                            .map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
-                        onChanged: (String? newValue) {},
-                      ),
+                      child: Obx(() => DropdownButton<String>(
+                            value: controller.selectedFilter.value,
+                            icon: const Icon(Icons.filter_list,
+                                color: Color(0xFF8E6C88)),
+                            items: ['Recent', 'Most Comments', 'Oldest']
+                                .map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
+                            onChanged: (String? newValue) {
+                              if (newValue != null) {
+                                controller.setFilter(newValue);
+                              }
+                            },
+                          )),
                     ),
                   ),
                 ],
@@ -222,7 +225,7 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                       ),
                     ),
                     ElevatedButton(
-                      onPressed: () => controller.navigateToSignUp(),
+                      onPressed: () => controller.navigateToLogin(),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
                         foregroundColor: const Color(0xFFAD6E8C),
@@ -234,7 +237,7 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                         ),
                       ),
                       child: const Text(
-                        'Sign Up',
+                        'Login',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -287,13 +290,13 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
         ),
       ),
       // Floating action button for quick registration
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => controller.navigateToLogin(),
-        backgroundColor: const Color(0xFFAD6E8C),
-        icon: const Icon(Icons.person_add, color: Colors.white),
-        label: const Text('Join Now', style: TextStyle(color: Colors.white)),
-        tooltip: 'Sign up to join the community',
-      ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: () => controller.navigateToLogin(),
+      //   backgroundColor: const Color(0xFFAD6E8C),
+      //   icon: const Icon(Icons.person_add, color: Colors.white),
+      //   label: const Text('Join Now', style: TextStyle(color: Colors.white)),
+      //   tooltip: 'Sign up to join the community',
+      // ),
     );
   }
 

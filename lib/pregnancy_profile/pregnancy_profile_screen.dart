@@ -408,35 +408,67 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                       ),
                     ),
 
-                    // Edit Button
+                    // Buttons container for Edit and Delete
                     Positioned(
                       top: 4,
                       right: 4,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.08),
-                              spreadRadius: 1,
-                              blurRadius: 5,
+                      child: Row(
+                        children: [
+                          // Edit Button
+                          Container(
+                            margin: const EdgeInsets.only(right: 6),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.08),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                        child: IconButton(
-                          icon: Icon(Icons.edit,
-                              color: isPastDue
-                                  ? Colors.orange[700]
-                                  : Colors.green[700],
-                              size: 18),
-                          onPressed: () {
-                            controller.goToUpdatePregnancyProfile(index);
-                          },
-                          constraints: const BoxConstraints.tightFor(
-                              width: 32, height: 32),
-                          padding: EdgeInsets.zero,
-                        ),
+                            child: IconButton(
+                              icon: Icon(Icons.edit,
+                                  color: isPastDue
+                                      ? Colors.orange[700]
+                                      : Colors.green[700],
+                                  size: 18),
+                              onPressed: () {
+                                controller.goToUpdatePregnancyProfile(index);
+                              },
+                              constraints: const BoxConstraints.tightFor(
+                                  width: 32, height: 32),
+                              padding: EdgeInsets.zero,
+                            ),
+                          ),
+
+                          // Delete Button
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.08),
+                                  spreadRadius: 1,
+                                  blurRadius: 5,
+                                ),
+                              ],
+                            ),
+                            child: IconButton(
+                              icon: const Icon(Icons.delete,
+                                  color: Colors.red, size: 18),
+                              onPressed: () {
+                                // Show confirmation dialog
+                                _showDeleteConfirmationDialog(index);
+                              },
+                              constraints: const BoxConstraints.tightFor(
+                                  width: 32, height: 32),
+                              padding: EdgeInsets.zero,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -560,6 +592,40 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
               ],
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  // Add this method to show the delete confirmation dialog
+  void _showDeleteConfirmationDialog(int index) {
+    Get.dialog(
+      AlertDialog(
+        title: const Text('Confirm Delete'),
+        content: const Text(
+            'Are you sure you want to delete this pregnancy profile? This action cannot be undone.'),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: const Text('Cancel'),
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.grey[700],
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.back(); // Close dialog
+              controller.deletePregnancyProfile(index); // Call delete method
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
+            child: const Text('Delete'),
+          ),
+        ],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
         ),
       ),
     );

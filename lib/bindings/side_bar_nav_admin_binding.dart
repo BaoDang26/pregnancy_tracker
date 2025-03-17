@@ -1,3 +1,4 @@
+import '../controllers/dashboard_controller.dart';
 import '../controllers/manage_subscription_plan_controller.dart';
 import '../controllers/manage_user_controller.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,7 @@ class SideBarNavAdminBinding extends Bindings {
   @override
   Future<void> dependencies() async {
     // Khởi tạo các controller
+    Get.lazyPut(() => DashboardController());
     Get.lazyPut(() => ManageUserController());
     Get.lazyPut(() => ManageSubscriptionPlanController());
     Get.lazyPut(() => ManageUserSubscriptionController());

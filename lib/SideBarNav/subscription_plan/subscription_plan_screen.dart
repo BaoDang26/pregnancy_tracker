@@ -19,7 +19,8 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
             icon: const Icon(Icons.refresh),
             onPressed: () {
               // Call the method to refresh the subscription plans
-              controller.getSubscriptionPlans(); // Assuming this method exists
+              controller
+                  .getActiveSubscriptionPlanList(); // Assuming this method exists
             },
             tooltip: 'Refresh',
           ),
@@ -75,7 +76,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: controller.subscriptionPlanList.isEmpty
+                    child: controller.activeSubscriptionPlanList.isEmpty
                         ? _buildEmptyState()
                         : _buildPlansList(),
                   ),
@@ -262,9 +263,9 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
   Widget _buildPlansList() {
     return ListView.builder(
       padding: const EdgeInsets.only(top: 8, bottom: 20),
-      itemCount: controller.subscriptionPlanList.length,
+      itemCount: controller.activeSubscriptionPlanList.length,
       itemBuilder: (context, index) {
-        final plan = controller.subscriptionPlanList[index];
+        final plan = controller.activeSubscriptionPlanList[index];
         return _buildSubscriptionCard(plan, index, context);
       },
     );

@@ -71,4 +71,36 @@ class SubscriptionPlanRepository {
         .timeout(const Duration(seconds: 30));
     return response;
   }
+
+  static Future<http.Response> updateSubscriptionPlan(
+      int planId, SubscriptionPlanModel subscriptionPlanModel) async {
+    http.Response response;
+
+    Map<String, String> header = {
+      "Content-type": "application/json",
+    };
+    response = await interceptedClient
+        .put(
+          BuildServer.buildUrl("subscription-plans/$planId"),
+          body: json.encode(subscriptionPlanModel.toUpdateJson()),
+          headers: header,
+        )
+        .timeout(const Duration(seconds: 30));
+    return response;
+  }
+
+  static Future<http.Response> deactivateSubscriptionPlan(int planId) async {
+    http.Response response;
+
+    Map<String, String> header = {
+      "Content-type": "application/json",
+    };
+    response = await interceptedClient
+        .put(
+          BuildServer.buildUrl("subscription-plans/$planId/toggle-status"),
+          headers: header,
+        )
+        .timeout(const Duration(seconds: 30));
+    return response;
+  }
 }

@@ -277,8 +277,10 @@ class UpdateAccountProfileScreen
 
                   // Action Buttons
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Expanded(
+                      SizedBox(
+                        width: 300,
                         child: _buildActionButton(
                           onPressed: () => Get.back(),
                           label: 'Cancel',
@@ -293,7 +295,8 @@ class UpdateAccountProfileScreen
                         ),
                       ),
                       const SizedBox(width: 16),
-                      Expanded(
+                      SizedBox(
+                        width: 300,
                         child: _buildActionButton(
                           onPressed: controller.isLoading.value
                               ? null

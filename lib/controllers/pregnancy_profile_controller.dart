@@ -27,10 +27,13 @@ class PregnancyProfileController extends GetxController {
     if (response.statusCode == 200) {
       String jsonResult = utf8.decode(response.bodyBytes);
       // Log the JSON result
-      print("JSON Result: $jsonResult");
+      List<PregnancyProfileModel> allPregnancyProfile =
+          pregnancyProfileModelFromJson(jsonResult);
 
-      // Convert JSON to model
-      pregnancyProfileList.value = pregnancyProfileModelFromJson(jsonResult);
+      // Lọc chỉ lấy các profile có status = "ACTIVE" (không phân biệt chữ hoa/thường)
+      pregnancyProfileList.value = allPregnancyProfile
+          .where((plan) => plan.status?.toUpperCase() == 'ACTIVE')
+          .toList();
     } else {
       Get.snackbar("Error server ${response.statusCode}",
           jsonDecode(response.body)['message']);

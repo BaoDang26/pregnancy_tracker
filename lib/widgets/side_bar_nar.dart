@@ -118,7 +118,7 @@ class _SideBarNavScreenState extends State<SideBarNavScreen> {
                     width: 24,
                     child: Icon(Icons.local_fire_department),
                   ),
-                  label: Text('Blog Post', style: TextStyle(fontSize: 15)),
+                  label: Text('Community Post', style: TextStyle(fontSize: 15)),
                 ),
                 NavigationRailDestination(
                   icon: SizedBox(

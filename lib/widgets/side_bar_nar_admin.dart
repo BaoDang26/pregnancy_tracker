@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../admin/dashboard_screen.dart';
 import '../admin/manage_subscription_plan_screen.dart';
 import '../admin/manage_user_screen.dart';
 import '../admin/manage_user_subscription_screen.dart';
+import '../controllers/manage_user_controller.dart';
 import 'custom_elevated_button.dart';
 
 class SideBarNavAdmin extends StatefulWidget {
@@ -16,6 +18,7 @@ class SideBarNavAdmin extends StatefulWidget {
 class _SideBarNavAdminState extends State<SideBarNavAdmin> {
   int _selectedIndex = 0;
   static final List<Widget> _widgetOptions = [
+    const DashboardScreen(),
     const ManageUserScreen(),
     const ManageSubscriptionPlanScreen(),
     const ManageUserSubscriptionScreen(),
@@ -50,7 +53,7 @@ class _SideBarNavAdminState extends State<SideBarNavAdmin> {
       body: Row(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
@@ -58,7 +61,7 @@ class _SideBarNavAdminState extends State<SideBarNavAdmin> {
                   Color(0xFFF8EEF6), // Hồng pastel nhạt
                   Color(0xFFF5E1EB), // Hồng pastel
                   Color(0xFFEBD7E6), // Hồng nhạt pha tím
-                  Color(0xFFE5D1E8), // Tím lavender nhạt
+                  const Color(0xFFE5D1E8), // Tím lavender nhạt
                   Color(0xFFDBC5DE), // Tím lavender đậm hơn một chút
                 ],
               ),
@@ -81,7 +84,7 @@ class _SideBarNavAdminState extends State<SideBarNavAdmin> {
                     height: 85,
                   ),
                   // SizedBox(width: 8),
-                  Text(
+                  const Text(
                     'Pregnancy Tracker',
                     style: TextStyle(
                       fontSize: 19,
@@ -91,6 +94,17 @@ class _SideBarNavAdminState extends State<SideBarNavAdmin> {
                 ],
               ),
               destinations: const [
+                NavigationRailDestination(
+                  icon: SizedBox(
+                    width: 24,
+                    child: Icon(Icons.dashboard),
+                  ),
+                  selectedIcon: SizedBox(
+                    width: 24,
+                    child: Icon(Icons.dashboard),
+                  ),
+                  label: Text('Dashboard', style: TextStyle(fontSize: 15)),
+                ),
                 NavigationRailDestination(
                   icon: SizedBox(
                     width: 24,
@@ -127,15 +141,46 @@ class _SideBarNavAdminState extends State<SideBarNavAdmin> {
                       Text('User Subscription', style: TextStyle(fontSize: 15)),
                 ),
               ],
-              // trailing: Padding(
-              //   padding: const EdgeInsets.all(24.0),
-              //   child: CustomElevatedButton(
-              //     onPressed: () {
-              //       Navigator.pushNamed(context, AppRoutes.login);
-              //     },
-              //     text: 'Log out',
-              //   ),
-              // ),
+              trailing: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child:
+                    // CustomElevatedButton(
+                    //   onPressed: () {
+                    //     // Gọi phương thức logout từ ManageUserController
+                    //     Get.find<ManageUserController>().logOut();
+                    //   },
+                    //   text: 'Log out',
+                    // ),
+                    ElevatedButton(
+                  onPressed: () async {
+                    // Gọi phương thức logout từ ManageUserController
+                    Get.find<ManageUserController>().logOut();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFAD6E8C), // Mauve/hồng đậm
+                    foregroundColor: Colors.white,
+                    elevation: 4,
+                    shadowColor: const Color(0xFFAD6E8C).withOpacity(0.4),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                  ),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.login_rounded),
+                      SizedBox(width: 8),
+                      Text(
+                        'Log out',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
           const VerticalDivider(thickness: 1, width: 1),

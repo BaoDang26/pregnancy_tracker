@@ -25,6 +25,16 @@ class AccountProfileController extends GetxController {
   Rx<AccountProfileModel> accountProfileModel = AccountProfileModel().obs;
   RxList<dynamic> pregnancyProfiles = <dynamic>[].obs;
 
+  // Controllers cho các trường mật khẩu
+  TextEditingController currentPasswordController = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+
+  // Biến để kiểm soát hiển thị mật khẩu
+  RxBool hideCurrentPassword = true.obs;
+  RxBool hideNewPassword = true.obs;
+  RxBool hideConfirmPassword = true.obs;
+
   @override
   Future<void> onInit() async {
     await getAccountProfile();
@@ -383,5 +393,263 @@ class AccountProfileController extends GetxController {
   bool canModerateContent() {
     final role = accountProfileModel.value.roleName?.toUpperCase();
     return role == 'ROLE_ADMIN';
+  }
+
+  void showChangePasswordDialog() {
+    // Reset controllers và error message
+    currentPasswordController.clear();
+    newPasswordController.clear();
+    confirmPasswordController.clear();
+    errorMessage.value = '';
+
+    Get.dialog(
+      Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Obx(() => Container(
+              width: 400,
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Dialog header
+                  Row(
+                    children: [
+                      Icon(Icons.lock_reset, color: Colors.blue[700], size: 24),
+                      const SizedBox(width: 12),
+                      Text(
+                        'Change Password',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue[800],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Current Password field
+                  _buildPasswordField(
+                    controller: currentPasswordController,
+                    label: 'Current Password',
+                    hide: hideCurrentPassword,
+                    toggleVisibility: () =>
+                        hideCurrentPassword.value = !hideCurrentPassword.value,
+                  ),
+                  const SizedBox(height: 16),
+
+                  // New Password field
+                  _buildPasswordField(
+                    controller: newPasswordController,
+                    label: 'New Password',
+                    hide: hideNewPassword,
+                    toggleVisibility: () =>
+                        hideNewPassword.value = !hideNewPassword.value,
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Confirm Password field
+                  _buildPasswordField(
+                    controller: confirmPasswordController,
+                    label: 'Confirm New Password',
+                    hide: hideConfirmPassword,
+                    toggleVisibility: () =>
+                        hideConfirmPassword.value = !hideConfirmPassword.value,
+                  ),
+
+                  // Error message
+                  if (errorMessage.value.isNotEmpty) ...[
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Colors.red[50],
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.red[200]!),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(Icons.error_outline,
+                              color: Colors.red[700], size: 18),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              errorMessage.value,
+                              style: TextStyle(
+                                  color: Colors.red[700], fontSize: 13),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+
+                  const SizedBox(height: 24),
+
+                  // Action buttons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () => Get.back(),
+                        child: Text(
+                          'Cancel',
+                          style: TextStyle(color: Colors.grey[700]),
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      ElevatedButton(
+                        onPressed:
+                            isLoading.value ? null : () => changePassword(),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue[700],
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 10),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: isLoading.value
+                            ? const SizedBox(
+                                width: 20,
+                                height: 20,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ))
+                            : const Text('Change Password'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            )),
+      ),
+      barrierDismissible: false,
+    );
+  }
+
+  Widget _buildPasswordField({
+    required TextEditingController controller,
+    required String label,
+    required RxBool hide,
+    required Function toggleVisibility,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: Colors.grey[700],
+          ),
+        ),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: controller,
+          obscureText: hide.value,
+          decoration: InputDecoration(
+            hintText: '••••••••',
+            filled: true,
+            fillColor: Colors.white,
+            prefixIcon: const Icon(Icons.lock_outline, size: 18),
+            suffixIcon: IconButton(
+              icon: Icon(
+                hide.value ? Icons.visibility_off : Icons.visibility,
+                size: 18,
+              ),
+              onPressed: () => toggleVisibility(),
+            ),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(color: Colors.blue[200]!),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(color: Colors.blue[100]!),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: BorderSide(color: Colors.blue[400]!, width: 2),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Future<void> changePassword() async {
+    try {
+      // Validate inputs
+      if (currentPasswordController.text.isEmpty) {
+        errorMessage.value = 'Current password is required';
+        return;
+      }
+
+      if (newPasswordController.text.isEmpty) {
+        errorMessage.value = 'New password is required';
+        return;
+      }
+
+      if (newPasswordController.text.length < 6) {
+        errorMessage.value = 'New password must be at least 6 characters';
+        return;
+      }
+
+      if (confirmPasswordController.text != newPasswordController.text) {
+        errorMessage.value = 'Passwords do not match';
+        return;
+      }
+
+      isLoading.value = true;
+
+      // Prepare request body
+      Map<String, dynamic> requestBody = {
+        'currentPassword': currentPasswordController.text,
+        'newPassword': newPasswordController.text,
+        'confirmPassword': confirmPasswordController.text
+      };
+
+      String jsonBody = json.encode(requestBody);
+
+      // Call API
+      var response = await AuthenticationRepository.changePassword(jsonBody);
+
+      if (response.statusCode == 200) {
+        // Success - close dialog
+        Get.back();
+
+        // Show success message
+        Get.snackbar(
+          'Success',
+          'Password changed successfully',
+          backgroundColor: Colors.green[100],
+          colorText: Colors.green[800],
+          snackPosition: SnackPosition.BOTTOM,
+          margin: const EdgeInsets.all(16),
+        );
+      } else if (response.statusCode == 401) {
+        var errorData = jsonDecode(response.body);
+        errorMessage.value =
+            errorData['message'] ?? 'Current password is incorrect';
+      } else {
+        var errorData = jsonDecode(response.body);
+        errorMessage.value =
+            errorData['message'] ?? 'Failed to change password';
+      }
+    } catch (e) {
+      errorMessage.value = 'An error occurred. Please try again.';
+      print('Error changing password: $e');
+    } finally {
+      isLoading.value = false;
+    }
   }
 }

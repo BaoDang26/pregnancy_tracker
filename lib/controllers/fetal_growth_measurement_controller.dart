@@ -409,9 +409,13 @@ class FetalGrowthMeasurementController extends GetxController {
   Future<void> deleteMeasurement(int measurementId) async {
     try {
       isLoading.value = true;
+
       var response =
           await FetalGrowthMeasurementRepository.deleteFetalGrowthMeasurement(
               measurementId);
+
+      print('Delete measurement response: ${response.statusCode}');
+      print('Delete measurement response body: ${response.body}');
 
       if (response.statusCode == 200) {
         // Trigger refresh sau khi xóa
