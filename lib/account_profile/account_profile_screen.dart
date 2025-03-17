@@ -258,7 +258,7 @@ class AccountProfileScreen extends GetView<AccountProfileController> {
                                     : (controller.accountProfileModel.value
                                                 .roleName ==
                                             'ROLE_USER'
-                                        ? 'Deactive'
+                                        ? 'None'
                                         : 'Not set'),
                                 valueColor: controller.accountProfileModel.value
                                             .roleName ==

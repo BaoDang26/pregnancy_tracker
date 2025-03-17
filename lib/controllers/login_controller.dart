@@ -123,6 +123,9 @@ class LoginController extends GetxController {
         // Default to user sidebar
         Get.offAllNamed(AppRoutes.sidebarnar);
       }
+    } else if (response.statusCode == 403) {
+      errorString.value =
+          'Your account has been banned. Please contact administrator for more information.';
     } else {
       // Cập nhật errorString khi bắt được lỗi
       errorString.value = 'Your email or password is incorrect!!';
