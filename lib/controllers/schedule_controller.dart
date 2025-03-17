@@ -72,19 +72,22 @@ class ScheduleController extends GetxController {
   // }
 
   // Phương thức để xóa lịch trình
-  // Future<void> deleteSchedule(int scheduleId) async {
-  //   isLoading.value = true;
-  //   var response = await ScheduleRepository.deleteSchedule(scheduleId);
+  Future<void> deleteSchedule(int scheduleId) async {
+    isLoading.value = true;
+    var response = await ScheduleRepository.deleteSchedule(scheduleId);
 
-  //   if (response.statusCode == 200) {
-  //     Get.snackbar("Success", "Schedule deleted successfully");
-  //     await getScheduleList(); // Cập nhật lại danh sách
-  //   } else {
-  //     Get.snackbar(
-  //         "Error ${response.statusCode}", jsonDecode(response.body)['message']);
-  //   }
-  //   isLoading.value = false;
-  // }
+    if (response.statusCode == 200) {
+      Get.snackbar("Success", "Schedule deleted successfully");
+      await getScheduleList(); // Cập nhật lại danh sách
+    } else {
+      Get.snackbar(
+          "Error ${response.statusCode}", jsonDecode(response.body)['message']);
+      print("Error ${response.statusCode}");
+      print("Error body ${response.body}");
+    }
+    isLoading.value = false;
+    update();
+  }
 
   void getBack() {
     Get.back();

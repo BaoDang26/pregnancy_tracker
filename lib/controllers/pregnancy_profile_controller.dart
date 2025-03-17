@@ -53,4 +53,29 @@ class PregnancyProfileController extends GetxController {
   void getBack() {
     Get.back();
   }
+
+  void goToUpdatePregnancyProfile(int index) {
+    var profile = pregnancyProfileList[index];
+    Get.toNamed(AppRoutes.updatepregnancyprofile,
+        arguments: {'pregnancyId': profile.id});
+    print("goToUpdatePregnancyProfile: ${profile.id}");
+  }
+
+  Future<void> deletePregnancyProfile(int index) async {
+    isLoading.value = true;
+    var profile = pregnancyProfileList[index];
+    var response =
+        await PregnancyProfileRepository.deletePregnancyProfile(profile.id!);
+    if (response.statusCode == 200) {
+      Get.snackbar("Success", "Pregnancy profile deleted successfully");
+      await getPregnancyProfileList();
+    } else {
+      Get.snackbar("Error server ${response.statusCode}",
+          jsonDecode(response.body)['message']);
+      print("Error server ${response.statusCode}");
+      print("Error body ${response.body}");
+    }
+    isLoading.value = false;
+    update();
+  }
 }

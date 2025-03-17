@@ -55,4 +55,19 @@ class ScheduleRepository {
         .timeout(const Duration(seconds: 30));
     return response;
   }
+
+  static Future<http.Response> deleteSchedule(int scheduleId) async {
+    http.Response response;
+
+    Map<String, String> header = {
+      "Content-type": "application/json",
+    };
+    response = await interceptedClient
+        .put(
+          BuildServer.buildUrl("schedules/$scheduleId/toggle-status"),
+          headers: header,
+        )
+        .timeout(const Duration(seconds: 30));
+    return response;
+  }
 }

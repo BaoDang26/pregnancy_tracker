@@ -13,7 +13,7 @@ class UpdatePregnancyProfileController extends GetxController {
   late TextEditingController nickNameController;
   late TextEditingController notesController;
 
-  late int pregnancyProfileId;
+  late int pregnancyId;
 
   var nickName = '';
   var notes = '';
@@ -27,10 +27,18 @@ class UpdatePregnancyProfileController extends GetxController {
     nickNameController = TextEditingController();
     notesController = TextEditingController();
 
-    // Get the pregnancy profile ID from arguments
-    if (Get.arguments != null && Get.arguments['pregnancyId'] != null) {
-      pregnancyProfileId = Get.arguments['pregnancyId'];
-      getPregnancyProfile(pregnancyProfileId);
+    // More defensive argument handling
+    if (Get.arguments != null) {
+      // Check if arguments is a map with 'pregnancyId' key
+      if (Get.arguments is Map && Get.arguments.containsKey('pregnancyId')) {
+        pregnancyId = Get.arguments['pregnancyId'];
+        getPregnancyProfile(pregnancyId);
+      }
+      // Handle direct int argument as fallback
+      else if (Get.arguments is int) {
+        pregnancyId = Get.arguments;
+        getPregnancyProfile(pregnancyId);
+      }
     }
 
     super.onInit();
@@ -58,9 +66,6 @@ class UpdatePregnancyProfileController extends GetxController {
 
     if (response.statusCode == 200) {
       String jsonResult = utf8.decode(response.bodyBytes);
-      List<PregnancyProfileModel> pregnancyProfileModels =
-          pregnancyProfileModelFromJson(jsonResult);
-      pregnancyProfileModel.value = pregnancyProfileModels[0];
 
       // Initialize form fields with existing data
       nickNameController.text = pregnancyProfileModel.value.nickName ?? '';
@@ -90,7 +95,7 @@ class UpdatePregnancyProfileController extends GetxController {
 
     //create request
     var request = PregnancyProfileModel(
-      id: pregnancyProfileId,
+      id: pregnancyId,
       nickName: nickNameController.text,
       notes: notesController.text,
     );

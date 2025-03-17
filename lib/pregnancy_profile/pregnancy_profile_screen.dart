@@ -431,7 +431,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                                   : Colors.green[700],
                               size: 18),
                           onPressed: () {
-                            // controller.goToEditPregnancyProfile(index);
+                            controller.goToUpdatePregnancyProfile(index);
                           },
                           constraints:
                               BoxConstraints.tightFor(width: 32, height: 32),

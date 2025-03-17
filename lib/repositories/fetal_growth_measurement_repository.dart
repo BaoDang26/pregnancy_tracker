@@ -85,4 +85,20 @@ class FetalGrowthMeasurementRepository {
 
     return response;
   }
+
+  static Future<http.Response> deleteFetalGrowthMeasurement(
+      int fetalGrowthMeasurementId) async {
+    http.Response response;
+
+    Map<String, String> header = {
+      "Content-type": "application/json",
+    };
+    response = await interceptedClient
+        .delete(
+          BuildServer.buildUrl("fetal-growth/$fetalGrowthMeasurementId"),
+          headers: header,
+        )
+        .timeout(const Duration(seconds: 30));
+    return response;
+  }
 }

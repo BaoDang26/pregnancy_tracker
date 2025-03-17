@@ -405,29 +405,29 @@ class FetalGrowthMeasurementController extends GetxController {
   }
 
   // Thêm hàm để xóa measurement
-  // Future<void> deleteMeasurement(int measurementId) async {
-  //   try {
-  //     isLoading.value = true;
-  //     var response =
-  //         await FetalGrowthMeasurementRepository.deleteFetalGrowthMeasurement(
-  //             measurementId);
+  Future<void> deleteMeasurement(int measurementId) async {
+    try {
+      isLoading.value = true;
+      var response =
+          await FetalGrowthMeasurementRepository.deleteFetalGrowthMeasurement(
+              measurementId);
 
-  //     if (response.statusCode == 200) {
-  //       // Trigger refresh sau khi xóa
-  //       await fetchFetalGrowthMeasurementData();
-  //       Get.snackbar('Success', 'Measurement deleted successfully');
-  //     } else if (response.statusCode == 401) {
-  //       handleUnauthorized(response);
-  //     } else {
-  //       handleError(response);
-  //     }
-  //   } catch (e) {
-  //     print('Error deleting measurement: $e');
-  //     Get.snackbar('Error', 'Failed to delete measurement');
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
+      if (response.statusCode == 200) {
+        // Trigger refresh sau khi xóa
+        await fetchFetalGrowthMeasurementData();
+        Get.snackbar('Success', 'Measurement deleted successfully');
+      } else if (response.statusCode == 401) {
+        handleUnauthorized(response as Response<dynamic>);
+      } else {
+        handleError(response as Response<dynamic>);
+      }
+    } catch (e) {
+      print('Error deleting measurement: $e');
+      Get.snackbar('Error', 'Failed to delete measurement');
+    } finally {
+      isLoading.value = false;
+    }
+  }
 
   // Hàm để clear form fields
   void clearFormFields() {
