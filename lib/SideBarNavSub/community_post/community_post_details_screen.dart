@@ -145,7 +145,7 @@ class CommunityPostDetailsScreen
                     onPressed: () => Get.back(),
                   ),
                   actions: [
-                    // Chỉ hiển thị khi người dùng là chủ bài viết
+                    // Chỉ hiển thị nút sửa và xóa khi người dùng có quyền
                     if (controller.canEditPost())
                       IconButton(
                         icon: Icon(Icons.edit, color: Colors.white),
@@ -425,72 +425,108 @@ class CommunityPostDetailsScreen
                         ),
                       ],
                     ),
-                    child: Form(
-                      key: controller.commentFormKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Share your thoughts',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF614051),
-                            ),
-                          ),
-                          SizedBox(height: 12),
-                          TextFormField(
-                            controller: controller.commentController,
-                            validator: (value) =>
-                                controller.validateComment(value ?? ''),
-                            maxLines: 3,
-                            decoration: InputDecoration(
-                              hintText: 'Write a comment...',
-                              hintStyle: TextStyle(color: Colors.grey[400]),
-                              fillColor: Colors.grey[100],
-                              filled: true,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide: BorderSide.none,
-                              ),
-                              contentPadding: EdgeInsets.all(16),
-                            ),
-                          ),
-                          SizedBox(height: 16),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Obx(() => ElevatedButton.icon(
-                                  onPressed:
-                                      controller.isSubmittingComment.value
-                                          ? null
-                                          : () => controller.createComment(),
-                                  icon: controller.isSubmittingComment.value
-                                      ? SizedBox(
-                                          width: 16,
-                                          height: 16,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                            valueColor:
-                                                AlwaysStoppedAnimation<Color>(
-                                                    Colors.white),
+                    child: controller.canComment()
+                        ? Form(
+                            key: controller.commentFormKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Share your thoughts',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF614051),
+                                  ),
+                                ),
+                                SizedBox(height: 12),
+                                TextFormField(
+                                  controller: controller.commentController,
+                                  validator: (value) =>
+                                      controller.validateComment(value ?? ''),
+                                  maxLines: 3,
+                                  decoration: InputDecoration(
+                                    hintText: 'Write a comment...',
+                                    hintStyle:
+                                        TextStyle(color: Colors.grey[400]),
+                                    fillColor: Colors.grey[100],
+                                    filled: true,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    contentPadding: EdgeInsets.all(16),
+                                  ),
+                                ),
+                                SizedBox(height: 16),
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: Obx(() => ElevatedButton.icon(
+                                        onPressed: controller
+                                                .isSubmittingComment.value
+                                            ? null
+                                            : () => controller.createComment(),
+                                        icon: controller
+                                                .isSubmittingComment.value
+                                            ? SizedBox(
+                                                width: 16,
+                                                height: 16,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  strokeWidth: 2,
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(Colors.white),
+                                                ),
+                                              )
+                                            : Icon(Icons.send),
+                                        label: Text('Post Comment'),
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: Color(0xFFAD6E8C),
+                                          foregroundColor: Colors.white,
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 20, vertical: 12),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
                                           ),
-                                        )
-                                      : Icon(Icons.send),
-                                  label: Text('Post Comment'),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color(0xFFAD6E8C),
-                                    foregroundColor: Colors.white,
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20, vertical: 12),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(25),
+                                        ),
+                                      )),
+                                ),
+                              ],
+                            ),
+                          )
+                        : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.info_outline,
+                                    color: Color(0xFF8E6C88),
+                                    size: 22,
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    'Limited Access',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF614051),
                                     ),
                                   ),
-                                )),
+                                ],
+                              ),
+                              SizedBox(height: 12),
+                              Text(
+                                'Regular users cannot comment on posts. Please subscribe to Premium to comment on posts.',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.grey[600],
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    ),
                   ),
                 ),
 

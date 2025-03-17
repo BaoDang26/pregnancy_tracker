@@ -13,8 +13,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
 
   @override
   Widget build(BuildContext context) {
-    final accountProfileController = Get.find<AccountProfileController>();
-    final userId = accountProfileController.accountProfileModel.value.id;
+    final accountController = Get.find<AccountProfileController>();
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -76,13 +75,16 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                         ),
                       ),
                       Spacer(),
-                      // Create Post button
-                      // _buildActionButton(
-                      //   icon: Icons.add_circle_outline,
-                      //   label: 'Create Post',
-                      //   color: Color(0xFF8E6C88), // Soft purple
-                      //   onTap: () => controller.goToCreateCommunityPost(),
-                      // ),
+                      // Get the account controller
+
+                      // Only show Create Post button if user is not a regular user
+                      if (!accountController.isRegularUser())
+                        _buildActionButton(
+                          icon: Icons.add_circle_outline,
+                          label: 'Create Post',
+                          color: Color(0xFF8E6C88),
+                          onTap: () => controller.goToCreateCommunityPost(),
+                        ),
                       SizedBox(width: 16),
                       // My Posts button
                       // _buildActionButton(

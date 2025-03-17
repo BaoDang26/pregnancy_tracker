@@ -58,24 +58,50 @@ class CommunityPostController extends GetxController {
   }
 
   void goToCreateCommunityPost() {
-    // Lấy thông tin userId từ user info hiện tại
+    // Lấy thông tin từ user info hiện tại
     final accountProfileController = Get.find<AccountProfileController>();
     final userId = accountProfileController.accountProfileModel.value.id;
 
-    // Kiểm tra nếu đã có userId
-    if (userId != null) {
-      // Chuyển trang và truyền arguments
-      Get.toNamed(AppRoutes.createcommunitypost, arguments: {'userId': userId})
-          ?.then((value) => {
-                if (value != null && value) {getCommunityPostList()}
-              });
-    } else {
-      // Xử lý trường hợp chưa đăng nhập hoặc không có userId
-      Get.snackbar("Warning", "Please login to create a post",
-          snackPosition: SnackPosition.BOTTOM,
-          backgroundColor: Color(0xFFAD6E8C).withOpacity(0.8),
-          colorText: Colors.white);
+    // Kiểm tra nếu đã đăng nhập
+    if (userId == null) {
+      Get.dialog(
+        AlertDialog(
+          title: Text("Warning"),
+          content: Text("Please login to create a post"),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: Text("OK"),
+            ),
+          ],
+        ),
+      );
+      return;
     }
+
+    // Kiểm tra role - chặn ROLE_USER không cho tạo post
+    if (accountProfileController.isRegularUser()) {
+      Get.dialog(
+        AlertDialog(
+          title: Text("Permission Denied"),
+          content: Text(
+              "Regular users cannot create posts. Please subscribe to Premium to create posts."),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: Text("OK"),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    // Nếu không phải ROLE_USER, cho phép tạo post
+    Get.toNamed(AppRoutes.createcommunitypost, arguments: {'userId': userId})
+        ?.then((value) => {
+              if (value != null && value) {getCommunityPostList()}
+            });
   }
 
   void goToUpdateCommunityPost(int index) {

@@ -5,14 +5,12 @@ import 'package:pregnancy_tracker/pregnancy_profile/pregnancy_profile_screen.dar
 // import 'package:pregnancy_tracker/pregnancy_profile/pregnancy_profile_edit_screen.dart';
 import 'package:pregnancy_tracker/widgets/side_bar_nar.dart';
 
-import '../Onboarding/blog_post_guest/blog_post_detail_guest.dart';
-import '../Onboarding/blog_post_guest/blog_post_guest.dart';
 import '../Onboarding/community_post_guest/community_post_guest_details_screen.dart';
 import '../Onboarding/community_post_guest/community_post_guest_screen.dart';
 import '../Onboarding/home_screen_guest.dart';
 import '../Onboarding/subscription_plan/subscription_plan_detail_guest.dart';
 import '../Onboarding/subscription_plan/subscription_plan_guest.dart';
-import '../SideBarNav/blog_post/blog_post_detail.dart';
+
 import '../SideBarNav/home_screen.dart';
 import '../SideBarNav/subscription_plan/subscription_plan_screen.dart';
 import '../SideBarNav/subscription_plan/subscription_plan_details_screen.dart';
@@ -213,44 +211,7 @@ class AppRoutes {
         name: subscriptionplandetail,
         page: () => SubscriptionPlanDetailScreen(),
         binding: SubscriptionPlanDetailsBinding()),
-    GetPage(
-        name: blogpostdetail,
-        page: () => BlogPostDetail(
-              title: 'Blog Title',
-              content: 'This is a content',
-              imageUrl:
-                  'https://res.cloudinary.com/dlipvbdwi/image/upload/v1696896652/cld-sample-4.jpg',
-              commentCount: 3,
-              comments: [
-                {
-                  'userName': 'John Doe',
-                  'content': 'This is a comment',
-                },
-                {
-                  'userName': 'Jane Doe2',
-                  'content': 'This is a comment2',
-                },
-              ],
-            )),
-    GetPage(
-        name: blogpostdetailguest,
-        page: () => BlogPostDetailGuest(
-              title: 'Blog Title',
-              content: 'This is a content',
-              imageUrl:
-                  'https://res.cloudinary.com/dlipvbdwi/image/upload/v1696896652/cld-sample-4.jpg',
-              commentCount: 3,
-              comments: [
-                {
-                  'userName': 'John Doe',
-                  'content': 'This is a comment',
-                },
-                {
-                  'userName': 'Jane Doe2',
-                  'content': 'This is a comment2',
-                },
-              ],
-            )),
+
     GetPage(
         name: paymentSuccess,
         page: () => PaymentSuccessScreen(),

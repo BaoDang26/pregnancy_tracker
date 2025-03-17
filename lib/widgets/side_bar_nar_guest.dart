@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../Onboarding/blog_post_guest/blog_post_guest.dart';
 import '../Onboarding/community_post_guest/community_post_guest_screen.dart';
 import '../Onboarding/home_screen_guest.dart';
 import '../Onboarding/subscription_plan/subscription_plan_guest.dart';

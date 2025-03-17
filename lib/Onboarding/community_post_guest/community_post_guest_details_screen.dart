@@ -475,24 +475,24 @@ class CommunityPostGuestDetailsScreen
                               color: Color(0xFFE1BEE7).withOpacity(0.3),
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.add_comment_outlined,
-                                  size: 16,
-                                  color: Color(0xFF8E6C88),
-                                ),
-                                SizedBox(width: 6),
-                                Text(
-                                  'Login to comment',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color(0xFF8E6C88),
-                                  ),
-                                ),
-                              ],
-                            ),
+                            // child: Row(
+                            //   children: [
+                            //     Icon(
+                            //       Icons.add_comment_outlined,
+                            //       size: 16,
+                            //       color: Color(0xFF8E6C88),
+                            //     ),
+                            //     SizedBox(width: 6),
+                            //     Text(
+                            //       'Login to comment',
+                            //       style: TextStyle(
+                            //         fontSize: 12,
+                            //         fontWeight: FontWeight.bold,
+                            //         color: Color(0xFF8E6C88),
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
                           ),
                         ),
                       ],
@@ -629,21 +629,21 @@ class CommunityPostGuestDetailsScreen
                               color: Colors.grey[600],
                             ),
                           ),
-                          SizedBox(height: 20),
-                          ElevatedButton.icon(
-                            onPressed: () => controller.navigateToLogin(),
-                            icon: Icon(Icons.login_rounded),
-                            label: Text('Sign in to comment'),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xFFAD6E8C),
-                              foregroundColor: Colors.white,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 12),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                            ),
-                          ),
+                          // SizedBox(height: 20),
+                          // ElevatedButton.icon(
+                          //   onPressed: () => controller.navigateToLogin(),
+                          //   icon: Icon(Icons.login_rounded),
+                          //   label: Text('Sign in to comment'),
+                          //   style: ElevatedButton.styleFrom(
+                          //     backgroundColor: Color(0xFFAD6E8C),
+                          //     foregroundColor: Colors.white,
+                          //     padding: EdgeInsets.symmetric(
+                          //         horizontal: 20, vertical: 12),
+                          //     shape: RoundedRectangleBorder(
+                          //       borderRadius: BorderRadius.circular(25),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
@@ -665,50 +665,50 @@ class CommunityPostGuestDetailsScreen
                         ),
                       ],
                     ),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Want to interact with this community?',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF614051),
-                          ),
-                        ),
-                        SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Expanded(
-                              child: OutlinedButton.icon(
-                                onPressed: () => controller.navigateToLogin(),
-                                icon: Icon(Icons.login),
-                                label: Text('Sign In'),
-                                style: OutlinedButton.styleFrom(
-                                  foregroundColor: Color(0xFF8E6C88),
-                                  side: BorderSide(color: Color(0xFF8E6C88)),
-                                  padding: EdgeInsets.symmetric(vertical: 12),
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 16),
-                            Expanded(
-                              child: ElevatedButton.icon(
-                                onPressed: () => controller.navigateToSignUp(),
-                                icon: Icon(Icons.person_add),
-                                label: Text('Create Account'),
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Color(0xFFAD6E8C),
-                                  foregroundColor: Colors.white,
-                                  padding: EdgeInsets.symmetric(vertical: 12),
-                                  elevation: 0,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                    // child: Column(
+                    //   children: [
+                    //     Text(
+                    //       'Want to interact with this community?',
+                    //       style: TextStyle(
+                    //         fontSize: 16,
+                    //         fontWeight: FontWeight.bold,
+                    //         color: Color(0xFF614051),
+                    //       ),
+                    //     ),
+                    //     SizedBox(height: 16),
+                    //     Row(
+                    //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    //       children: [
+                    //         Expanded(
+                    //           child: OutlinedButton.icon(
+                    //             onPressed: () => controller.navigateToLogin(),
+                    //             icon: Icon(Icons.login),
+                    //             label: Text('Sign In'),
+                    //             style: OutlinedButton.styleFrom(
+                    //               foregroundColor: Color(0xFF8E6C88),
+                    //               side: BorderSide(color: Color(0xFF8E6C88)),
+                    //               padding: EdgeInsets.symmetric(vertical: 12),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //         SizedBox(width: 16),
+                    //         Expanded(
+                    //           child: ElevatedButton.icon(
+                    //             onPressed: () => controller.navigateToSignUp(),
+                    //             icon: Icon(Icons.person_add),
+                    //             label: Text('Create Account'),
+                    //             style: ElevatedButton.styleFrom(
+                    //               backgroundColor: Color(0xFFAD6E8C),
+                    //               foregroundColor: Colors.white,
+                    //               padding: EdgeInsets.symmetric(vertical: 12),
+                    //               elevation: 0,
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ],
+                    // ),
                   ),
                 ),
               ],
@@ -717,13 +717,13 @@ class CommunityPostGuestDetailsScreen
         ),
       ),
       // Floating action button for registration
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => controller.navigateToSignUp(),
-        backgroundColor: Color(0xFFAD6E8C),
-        icon: Icon(Icons.person_add_outlined, color: Colors.white),
-        label: Text('Join Community', style: TextStyle(color: Colors.white)),
-        elevation: 4,
-      ),
+      // floatingActionButton: FloatingActionButton.extended(
+      //   onPressed: () => controller.navigateToSignUp(),
+      //   backgroundColor: Color(0xFFAD6E8C),
+      //   icon: Icon(Icons.person_add_outlined, color: Colors.white),
+      //   label: Text('Join Community', style: TextStyle(color: Colors.white)),
+      //   elevation: 4,
+      // ),
     );
   }
 }

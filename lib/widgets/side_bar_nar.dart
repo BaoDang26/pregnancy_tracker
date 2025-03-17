@@ -9,7 +9,6 @@ import '../SideBarNavSub/community_post/community_post_screen.dart';
 import '../account_profile/account_profile_screen.dart';
 
 import 'custom_elevated_button.dart';
-import '../SideBarNav/blog_post/blog_post.dart';
 import '../SideBarNav/subscription_plan/subscription_plan_screen.dart';
 
 class SideBarNavScreen extends StatefulWidget {

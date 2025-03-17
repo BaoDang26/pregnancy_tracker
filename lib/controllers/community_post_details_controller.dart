@@ -130,8 +130,65 @@ class CommunityPostDetailsController extends GetxController {
     }
   }
 
+  // Kiểm tra xem user có quyền bình luận không
+  bool canComment() {
+    final accountController = Get.find<AccountProfileController>();
+
+    // Nếu là ROLE_USER, không cho phép bình luận
+    if (accountController.isRegularUser()) {
+      return false;
+    }
+
+    // Các role khác được phép bình luận
+    return true;
+  }
+
+  // Kiểm tra xem user có quyền chỉnh sửa comment không
+  @override
+  bool canEditComment(CommentModel comment) {
+    // Lấy ID người dùng từ session/preferences
+    final accountController = Get.find<AccountProfileController>();
+    final userId = accountController.accountProfileModel.value.id;
+
+    // Nếu là ROLE_USER, không được phép chỉnh sửa comment
+    if (accountController.isRegularUser()) {
+      return false;
+    }
+
+    // Các role khác được phép chỉnh sửa comment của mình
+    return userId != null && comment.userId == userId;
+  }
+
+  // Kiểm tra xem user có quyền chỉnh sửa bài viết không
+  @override
+  bool canEditPost() {
+    // Lấy ID người dùng từ session/preferences
+    final accountController = Get.find<AccountProfileController>();
+    final userId = accountController.accountProfileModel.value.id;
+
+    // Nếu là ROLE_USER, không được phép chỉnh sửa bài viết
+    if (accountController.isRegularUser()) {
+      return false;
+    }
+
+    // Admin và Moderator có thể chỉnh sửa mọi bài viết
+    if (accountController.canModerateContent()) {
+      return true;
+    }
+
+    // Các role khác chỉ được chỉnh sửa bài viết của mình
+    return userId != null && communityPost.value?.userId == userId;
+  }
+
   // Tạo comment mới
   Future<bool> createComment() async {
+    // Kiểm tra quyền trước khi thực hiện
+    if (!canComment()) {
+      _showErrorDialog(
+          'You do not have permission to add comments. Please contact administrator for more information.');
+      return false;
+    }
+
     // Kiểm tra form hợp lệ
     if (!commentFormKey.currentState!.validate()) {
       return false;
@@ -219,6 +276,20 @@ class CommunityPostDetailsController extends GetxController {
 
   // Cập nhật comment
   Future<bool> updateComment() async {
+    // Kiểm tra quyền trước khi thực hiện
+    CommentModel? currentComment;
+    for (var comment in comments) {
+      if (comment.id == editingCommentId.value) {
+        currentComment = comment;
+        break;
+      }
+    }
+
+    if (currentComment == null || !canEditComment(currentComment)) {
+      _showErrorDialog('You do not have permission to update this comment.');
+      return false;
+    }
+
     // Kiểm tra form hợp lệ
     if (!updateCommentFormKey.currentState!.validate() ||
         editingCommentId.value == -1) {
@@ -285,6 +356,21 @@ class CommunityPostDetailsController extends GetxController {
 
   // Xóa comment
   Future<bool> deleteComment(int commentId) async {
+    // Tìm comment cần xóa
+    CommentModel? commentToDelete;
+    for (var comment in comments) {
+      if (comment.id == commentId) {
+        commentToDelete = comment;
+        break;
+      }
+    }
+
+    // Kiểm tra quyền trước khi thực hiện
+    if (commentToDelete == null || !canEditComment(commentToDelete)) {
+      _showErrorDialog('You do not have permission to delete this comment.');
+      return false;
+    }
+
     // Hiện dialog xác nhận
     bool confirmDelete = await _showConfirmationDialog(
         'Delete Comment', 'Are you sure you want to delete this comment?');
@@ -333,16 +419,6 @@ class CommunityPostDetailsController extends GetxController {
     } finally {
       isLoading.value = false;
     }
-  }
-
-  // Kiểm tra quyền chỉnh sửa/xóa comment
-  bool canEditComment(CommentModel comment) {
-    // Lấy ID người dùng từ session/preferences
-    final accountController = Get.find<AccountProfileController>();
-    final userId = accountController.accountProfileModel.value.id;
-
-    // Trả về true nếu userId khớp với userId của comment
-    return userId != null && comment.userId == userId;
   }
 
   // Định dạng ngày tháng
@@ -683,16 +759,6 @@ class CommunityPostDetailsController extends GetxController {
     }
   }
 
-  // Kiểm tra quyền chỉnh sửa/xóa bài viết
-  bool canEditPost() {
-    // Lấy ID người dùng từ session/preferences
-    final accountController = Get.find<AccountProfileController>();
-    final userId = accountController.accountProfileModel.value.id;
-
-    // Trả về true nếu userId khớp với userId của bài viết
-    return userId != null && communityPost.value?.userId == userId;
-  }
-
   // Phương thức cập nhật bài viết
   void goToUpdateCommunityPost(int index) {
     // Lấy thông tin userId từ user info hiện tại
@@ -723,7 +789,10 @@ class CommunityPostDetailsController extends GetxController {
 
   // Phương thức xóa bài viết
   Future<void> deletePost() async {
-    if (!canEditPost()) return;
+    if (!canEditPost()) {
+      _showErrorDialog('You do not have permission to delete this post.');
+      return;
+    }
 
     // Hiện dialog xác nhận
     bool confirmDelete = await _showConfirmationDialog('Delete Post',

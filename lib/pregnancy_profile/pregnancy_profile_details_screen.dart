@@ -428,7 +428,7 @@ class PregnancyProfileDetailsScreen
           children: [
             _buildActionButton(
               icon: Icons.analytics,
-              text: 'Statistics',
+              text: 'Fetal Growth Measurement',
               color: Colors.indigo[600]!,
               onPressed: () {
                 controller.goToFetalGrowthMeasurement();
@@ -479,7 +479,7 @@ class PregnancyProfileDetailsScreen
     required VoidCallback onPressed,
   }) {
     return Container(
-      width: 150,
+      width: 220,
       height: 100,
       child: ElevatedButton(
         onPressed: onPressed,

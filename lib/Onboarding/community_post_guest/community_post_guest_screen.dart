@@ -70,14 +70,14 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                           letterSpacing: 1,
                         ),
                       ),
-                      Spacer(),
-                      // Join Community button for guests
-                      _buildActionButton(
-                        icon: Icons.login_rounded,
-                        label: 'Join Community',
-                        color: Color(0xFF8E6C88), // Soft purple
-                        onTap: () => controller.navigateToLogin(),
-                      ),
+                      // Spacer(),
+                      // // Join Community button for guests
+                      // _buildActionButton(
+                      //   icon: Icons.login_rounded,
+                      //   label: 'Join Community',
+                      //   color: Color(0xFF8E6C88), // Soft purple
+                      //   onTap: () => controller.navigateToLogin(),
+                      // ),
                     ],
                   ),
                   SizedBox(height: 15),
@@ -287,7 +287,7 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
       ),
       // Floating action button for quick registration
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => controller.navigateToSignUp(),
+        onPressed: () => controller.navigateToLogin(),
         backgroundColor: Color(0xFFAD6E8C),
         icon: Icon(Icons.person_add, color: Colors.white),
         label: Text('Join Now', style: TextStyle(color: Colors.white)),
@@ -413,13 +413,13 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                   post.attachmentUrl != null && post.attachmentUrl!.isNotEmpty
                       ? Image.network(
                           post.attachmentUrl!,
-                          height: 140,
+                          height: 300,
                           width: double.infinity,
                           fit: BoxFit.cover,
                           errorBuilder: (context, error, stackTrace) {
                             return Image.network(
                               'https://res.cloudinary.com/dlipvbdwi/image/upload/v1696896650/cld-sample.jpg',
-                              height: 140,
+                              height: 300,
                               width: double.infinity,
                               fit: BoxFit.cover,
                             );
@@ -427,7 +427,7 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                         )
                       : Image.network(
                           'https://res.cloudinary.com/dlipvbdwi/image/upload/v1696896650/cld-sample.jpg',
-                          height: 140,
+                          height: 300,
                           width: double.infinity,
                           fit: BoxFit.cover,
                         ),
@@ -490,26 +490,26 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                   ),
 
                   // View details button
-                  Spacer(),
-                  SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton.icon(
-                      onPressed: () =>
-                          controller.goToCommunityPostDetail(index),
-                      icon: Icon(Icons.visibility, size: 16),
-                      label:
-                          Text('View Details', style: TextStyle(fontSize: 12)),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: Color(0xFFAD6E8C),
-                        side: BorderSide(color: Color(0xFFAD6E8C)),
-                        padding: EdgeInsets.symmetric(vertical: 6),
-                        minimumSize: Size(0, 30),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Spacer(),
+                  // SizedBox(
+                  //   width: double.infinity,
+                  //   child: OutlinedButton.icon(
+                  //     onPressed: () =>
+                  //         controller.goToCommunityPostDetail(index),
+                  //     icon: Icon(Icons.visibility, size: 16),
+                  //     label:
+                  //         Text('View Details', style: TextStyle(fontSize: 12)),
+                  //     style: OutlinedButton.styleFrom(
+                  //       foregroundColor: Color(0xFFAD6E8C),
+                  //       side: BorderSide(color: Color(0xFFAD6E8C)),
+                  //       padding: EdgeInsets.symmetric(vertical: 6),
+                  //       minimumSize: Size(0, 30),
+                  //       shape: RoundedRectangleBorder(
+                  //         borderRadius: BorderRadius.circular(8),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import '../models/account_profile_model.dart';
 import '../repositories/account_profile_repository.dart';
 import '../repositories/authentication_repository.dart';
+import '../repositories/pregnancy_profile_repository.dart';
 import '../routes/app_routes.dart';
 import '../util/preUtils.dart';
 
@@ -22,10 +23,12 @@ class AccountProfileController extends GetxController {
   var isLoading = false.obs;
   RxString errorMessage = ''.obs;
   Rx<AccountProfileModel> accountProfileModel = AccountProfileModel().obs;
+  RxList<dynamic> pregnancyProfiles = <dynamic>[].obs;
 
   @override
   Future<void> onInit() async {
     await getAccountProfile();
+    getPregnancyProfiles();
     fullNameController = TextEditingController();
     addressController = TextEditingController();
     dateOfBirthController = TextEditingController();
@@ -333,5 +336,51 @@ class AccountProfileController extends GetxController {
     PrefUtils.clearPreferencesData();
 
     Get.offAllNamed(AppRoutes.sidebarnarguest);
+  }
+
+  Future<void> getPregnancyProfiles() async {
+    try {
+      isLoading.value = true;
+      // Gọi API lấy danh sách pregnancy profile
+      var response = await PregnancyProfileRepository.getPregnancyProfileList();
+
+      if (response.statusCode == 200) {
+        String jsonResult = utf8.decode(response.bodyBytes);
+        var data = json.decode(jsonResult);
+
+        // Giả sử API trả về danh sách profile trong data
+        if (data is List) {
+          pregnancyProfiles.value = data;
+        } else if (data['data'] != null && data['data'] is List) {
+          pregnancyProfiles.value = data['data'];
+        } else {
+          pregnancyProfiles.value = [];
+        }
+      } else {
+        pregnancyProfiles.value = [];
+      }
+    } catch (e) {
+      print('Error getting pregnancy profiles: $e');
+      pregnancyProfiles.value = [];
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  // Kiểm tra nếu user có role là ROLE_USER
+  bool isRegularUser() {
+    return accountProfileModel.value.roleName?.toUpperCase() == 'ROLE_USER';
+  }
+
+  //Kiểm tra nếu user có role là ROLE_USER_PREMIUM
+  bool isPremiumUser() {
+    return accountProfileModel.value.roleName?.toUpperCase() ==
+        'ROLE_USER_PREMIUM';
+  }
+
+  // Kiểm tra nếu user có thể quản lý nội dung (ROLE_ADMIN hoặc ROLE_MODERATOR)
+  bool canModerateContent() {
+    final role = accountProfileModel.value.roleName?.toUpperCase();
+    return role == 'ROLE_ADMIN';
   }
 }
