@@ -599,8 +599,37 @@ class AccountProfileController extends GetxController {
         return;
       }
 
-      if (newPasswordController.text.length < 6) {
-        errorMessage.value = 'New password must be at least 6 characters';
+      // Tăng cường validation cho mật khẩu
+      String password = newPasswordController.text;
+      if (password.length < 8) {
+        errorMessage.value = 'New password must be at least 8 characters';
+        return;
+      }
+
+      // Kiểm tra có ít nhất 1 chữ in hoa
+      if (!RegExp(r'[A-Z]').hasMatch(password)) {
+        errorMessage.value =
+            'New password must contain at least one uppercase letter';
+        return;
+      }
+
+      // Kiểm tra có ít nhất 1 chữ thường
+      if (!RegExp(r'[a-z]').hasMatch(password)) {
+        errorMessage.value =
+            'New password must contain at least one lowercase letter';
+        return;
+      }
+
+      // Kiểm tra có ít nhất 1 chữ số
+      if (!RegExp(r'[0-9]').hasMatch(password)) {
+        errorMessage.value = 'New password must contain at least one number';
+        return;
+      }
+
+      // Kiểm tra có ít nhất 1 ký tự đặc biệt
+      if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(password)) {
+        errorMessage.value =
+            'New password must contain at least one special character';
         return;
       }
 

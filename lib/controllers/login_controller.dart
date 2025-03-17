@@ -83,6 +83,18 @@ class LoginController extends GetxController {
       String jsonResult = utf8.decode(response.bodyBytes);
       var data = json.decode(jsonResult);
 
+      // Kiểm tra status của user
+      String userStatus =
+          data["status"] ?? "Active"; // Default to ACTIVE if not present
+
+      if (userStatus == "Deactive") {
+        // Hiển thị thông báo nếu tài khoản bị vô hiệu hóa
+        errorString.value =
+            'Your account has been banned. Please contact administrator for more information.';
+        isLoading.value = false;
+        return;
+      }
+
       // Save tokens to SharedPreferences
       PrefUtils.setAccessToken(data["accessToken"]);
       PrefUtils.setRefreshToken(data["refreshToken"]);
