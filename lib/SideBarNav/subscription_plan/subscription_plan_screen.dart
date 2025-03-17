@@ -12,6 +12,19 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Subscription Plans'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+              // Call the method to refresh the subscription plans
+              controller.getSubscriptionPlans(); // Assuming this method exists
+            },
+            tooltip: 'Refresh',
+          ),
+        ],
+      ),
       body: Obx(() {
         if (controller.isLoading.value) {
           return Container(

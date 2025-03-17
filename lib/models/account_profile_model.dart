@@ -19,6 +19,7 @@ class AccountProfileModel {
   String? avatarUrl;
   String? message;
   String? roleName;
+  String? status;
 
   AccountProfileModel({
     this.id,
@@ -29,6 +30,7 @@ class AccountProfileModel {
     this.avatarUrl,
     this.message,
     this.roleName,
+    this.status,
   });
 
   factory AccountProfileModel.fromJson(Map<String, dynamic> json) =>
@@ -41,6 +43,7 @@ class AccountProfileModel {
         avatarUrl: json["avatarUrl"],
         message: json["message"],
         roleName: json["roleName"],
+        status: json["status"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -53,6 +56,7 @@ class AccountProfileModel {
         "avatarUrl": avatarUrl,
         "message": message,
         "roleName": roleName,
+        "status": status,
       };
 
   Map<String, dynamic> toUpdateJson() => {

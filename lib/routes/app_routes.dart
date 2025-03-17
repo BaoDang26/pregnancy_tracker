@@ -21,6 +21,9 @@ import '../SideBarNavSub/community_post/update_community_post_screen.dart';
 import '../SideBarNavSub/user_subscription/user_subscription_screen.dart';
 import '../account_profile/account_profile_screen.dart';
 import '../account_profile/update_account_profile_screen.dart';
+import '../admin/create_subscription_plan_screen.dart';
+import '../admin/manage_subscription_plan_screen.dart';
+import '../admin/manage_user_screen.dart';
 import '../bindings/account_profile_binding.dart';
 import '../bindings/community_post_binding.dart';
 import '../bindings/community_post_details_binding.dart';
@@ -30,13 +33,17 @@ import '../bindings/create_community_post_binding.dart';
 import '../bindings/create_fetal_growth_measurement_binding.dart';
 import '../bindings/create_pregnancy_profile_binding.dart';
 import '../bindings/create_schedule_binding.dart';
+import '../bindings/create_subscription_plan_binding.dart';
 import '../bindings/fetal_growth_measurement_binding.dart';
 import '../bindings/home_screen_binding.dart';
 import '../bindings/login_binding.dart';
+import '../bindings/manage_subscription_plan_binding.dart';
+import '../bindings/manage_user_binding.dart';
 import '../bindings/payment_success_binding.dart';
 import '../bindings/pregnancy_profile_details_binding.dart';
 import '../bindings/register_binding.dart';
 import '../bindings/schedule_binding.dart';
+import '../bindings/side_bar_nav_admin_binding.dart';
 import '../bindings/side_bar_nav_guest_binding.dart';
 import '../bindings/subscription_plan_binding.dart';
 import '../bindings/subscription_plan_details_binding.dart';
@@ -61,6 +68,7 @@ import '../schedule/create_schedule_screen.dart';
 import '../schedule/schedule_screen.dart';
 import '../schedule/update_schedule_screen.dart';
 import '../update_fetal_growth_measurement/update_fetal_growth_measurement_screen.dart';
+import '../widgets/side_bar_nar_admin.dart';
 import '../widgets/side_bar_nar_guest.dart';
 
 class AppRoutes {
@@ -102,11 +110,31 @@ class AppRoutes {
   static const String communitypostguest = '/community-post-guest';
   static const String communitypostguestdetails =
       '/community-post-guest-details';
+  static const String manageuser = '/manage-user';
+  static const String sidebarnaradmin = '/sidebarnar-admin';
+  static const String manageSubscriptionPlan = '/manage-subscription-plan';
+  static const String createSubscriptionPlan = '/create-subscription-plan';
 
   // static const String pregnancyprofileedit = '/pregnancy-profile-edit';
   // static const String signup = '/signup';
 
   static List<GetPage> pages = [
+    GetPage(
+        name: manageSubscriptionPlan,
+        page: () => ManageSubscriptionPlanScreen(),
+        binding: ManageSubscriptionPlanBinding()),
+    GetPage(
+        name: createSubscriptionPlan,
+        page: () => CreateSubscriptionPlanScreen(),
+        binding: CreateSubscriptionPlanBinding()),
+    GetPage(
+        name: manageuser,
+        page: () => ManageUserScreen(),
+        binding: ManageUserBinding()),
+    GetPage(
+        name: sidebarnaradmin,
+        page: () => SideBarNavAdmin(),
+        binding: SideBarNavAdminBinding()),
     GetPage(
         name: communitypostguest,
         page: () => CommunityPostGuestScreen(),

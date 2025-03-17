@@ -25,8 +25,6 @@ class SubscriptionPlanController extends GetxController {
     var response = await SubscriptionPlanRepository.getSubscriptionPlanList();
 
     // Log the response status and body
-    print("Response Status: ${response.statusCode}");
-    print("Response Body: ${response.body}");
 
     if (response.statusCode == 200) {
       String jsonResult = utf8.decode(response.bodyBytes);

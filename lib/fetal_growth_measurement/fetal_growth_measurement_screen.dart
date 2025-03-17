@@ -43,21 +43,39 @@ class FetalGrowthMeasurementScreen
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Fetal Growth Statistics',
+                      'Fetal Growth Measurement',
                       style: TextStyle(
                         fontSize: 48,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(
-                      width: 300, // Giới hạn chiều rộng của nút
-                      child: CustomElevatedButton(
-                        onPressed: () {
-                          Get.toNamed(AppRoutes.createfetalgrowthmeasurement,
-                              arguments: controller.pregnancyId);
-                        },
-                        text: 'Add Measurement',
-                      ),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.refresh, color: Colors.green[700]),
+                          onPressed: () {
+                            // Call the method to refresh the fetal growth measurements
+                            controller.getFetalGrowthMeasurement(
+                                controller.pregnancyId);
+                            controller
+                                .getHeightMeasurements(controller.pregnancyId);
+                            controller
+                                .getWeightMeasurements(controller.pregnancyId);
+                          },
+                          tooltip: 'Refresh',
+                        ),
+                        SizedBox(
+                          width: 300, // Giới hạn chiều rộng của nút
+                          child: CustomElevatedButton(
+                            onPressed: () {
+                              Get.toNamed(
+                                  AppRoutes.createfetalgrowthmeasurement,
+                                  arguments: controller.pregnancyId);
+                            },
+                            text: 'Add Measurement',
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

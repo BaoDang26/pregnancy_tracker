@@ -79,29 +79,38 @@ class LoginController extends GetxController {
     // Kiểm tra status code trả về
     if (response.statusCode == 500) {
       errorString.value = 'Timeout error occurred!';
-      // có lỗi từ server
-      // Get.snackbar(
-      //   "Error Server ${response.statusCode}",
-      //   jsonDecode(response.body)["message"],
-      //   duration: 5.seconds,
-      //   snackPosition: SnackPosition.BOTTOM,
-      //   showProgressIndicator: true,
-      //   isDismissible: true,
-      // );
     } else if (response.statusCode == 200) {
       String jsonResult = utf8.decode(response.bodyBytes);
       var data = json.decode(jsonResult);
-      // lưu accessToken và refresh token vào SharedPreferences
 
+      // Save tokens to SharedPreferences
       PrefUtils.setAccessToken(data["accessToken"]);
-      // log('a:${data["accessToken"]}');
       PrefUtils.setRefreshToken(data["refreshToken"]);
 
-      // print('data:$data');
+      // Extract user role from the response
+      String userRole = data["roleName"] ?? "";
 
+      // Clear any error messages
       errorString.value = "";
 
-      Get.toNamed(AppRoutes.sidebarnar);
+      // Determine navigation based on user role
+      if (userRole.toUpperCase() == "ROLE_ADMIN") {
+        // Navigate to admin sidebar
+        Get.offAllNamed(AppRoutes.sidebarnaradmin);
+      } else if (userRole.toUpperCase() == "ROLE_USER" ||
+          userRole.toUpperCase() == "ROLE_PREMIUM") {
+        // Navigate to user sidebar
+        Get.offAllNamed(AppRoutes.sidebarnar);
+      } else {
+        // Handle unexpected role
+        Get.snackbar("Warning",
+            "User role not recognized. Please contact administrator.",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.orange,
+            colorText: Colors.white);
+        // Default to user sidebar
+        Get.offAllNamed(AppRoutes.sidebarnar);
+      }
     } else {
       // Cập nhật errorString khi bắt được lỗi
       errorString.value = 'Your email or password is incorrect!!';

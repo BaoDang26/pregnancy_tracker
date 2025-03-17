@@ -23,8 +23,6 @@ class PregnancyProfileController extends GetxController {
     var response = await PregnancyProfileRepository.getPregnancyProfileList();
 
     // Log the response status and body
-    print("Response Status: ${response.statusCode}");
-    print("Response Body: ${response.body}");
 
     if (response.statusCode == 200) {
       String jsonResult = utf8.decode(response.bodyBytes);

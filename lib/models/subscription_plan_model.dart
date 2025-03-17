@@ -14,10 +14,10 @@ String subscriptionPlanModelToJson(List<SubscriptionPlanModel> data) =>
 class SubscriptionPlanModel {
   int? id;
   String? name;
-  int? price;
+  double? price;
   int? duration;
   String? description;
-  bool? isActive;
+  String? status;
   DateTime? createdDate;
 
   SubscriptionPlanModel({
@@ -26,7 +26,7 @@ class SubscriptionPlanModel {
     this.price,
     this.duration,
     this.description,
-    this.isActive,
+    this.status,
     this.createdDate,
   });
 
@@ -37,7 +37,7 @@ class SubscriptionPlanModel {
         price: json["price"],
         duration: json["duration"],
         description: json["description"],
-        isActive: json["isActive"],
+        status: json["status"],
         createdDate: DateTime.parse(json["createdDate"]),
       );
 
@@ -47,7 +47,14 @@ class SubscriptionPlanModel {
         "price": price,
         "duration": duration,
         "description": description,
-        "isActive": isActive,
+        "status": status,
         "createdDate": createdDate?.toIso8601String(),
+      };
+
+  Map<String, dynamic> toCreateJson() => {
+        "name": name,
+        "price": price,
+        "duration": duration,
+        "description": description,
       };
 }

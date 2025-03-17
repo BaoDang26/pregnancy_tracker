@@ -24,6 +24,17 @@ class PregnancyProfileRepository {
     return response;
   }
 
+  static Future<http.Response> getPregnancyProfileById(
+      int pregnancyProfileId) async {
+    Map<String, String> header = {
+      "Content-type": "application/json",
+    };
+    var response = await interceptedClient.get(
+        BuildServer.buildUrl("pregnancy-profiles/$pregnancyProfileId"),
+        headers: header);
+    return response;
+  }
+
   static Future<http.Response> createPregnancyProfile(
       PregnancyProfileModel pregnancyProfileModel) async {
     Map<String, String> header = {
@@ -45,6 +56,17 @@ class PregnancyProfileRepository {
         BuildServer.buildUrl("pregnancy-profiles/update"),
         headers: header,
         body: json.encode(pregnancyProfileModel.toUpdateJson()));
+    return response;
+  }
+
+  static Future<http.Response> deletePregnancyProfile(
+      int pregnancyProfileId) async {
+    Map<String, String> header = {
+      "Content-type": "application/json",
+    };
+    var response = await interceptedClient.delete(
+        BuildServer.buildUrl("pregnancy-profiles/$pregnancyProfileId"),
+        headers: header);
     return response;
   }
 }

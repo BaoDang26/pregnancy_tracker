@@ -81,12 +81,6 @@ class PregnancyProfileModel {
   Map<String, dynamic> toUpdateJson() => {
         "id": id,
         "nickName": nickName,
-        "dueDate":
-            "${dueDate?.year.toString().padLeft(4, '0')}-${dueDate?.month.toString().padLeft(2, '0')}-${dueDate?.day.toString().padLeft(2, '0')}",
-        "lastPeriodDate":
-            "${lastPeriodDate?.year.toString().padLeft(4, '0')}-${lastPeriodDate?.month.toString().padLeft(2, '0')}-${lastPeriodDate?.day.toString().padLeft(2, '0')}",
-        "pregnancyWeek": pregnancyWeek,
         "notes": notes,
-        "createdDate": createdDate,
       };
 }

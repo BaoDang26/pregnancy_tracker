@@ -86,13 +86,13 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                           onTap: () => controller.goToCreateCommunityPost(),
                         ),
                       SizedBox(width: 16),
-                      // My Posts button
-                      // _buildActionButton(
-                      //   icon: Icons.person_outline,
-                      //   label: 'My Posts',
-                      //   color: Color(0xFF6F9EAF), // Soft blue/teal
-                      //   onTap: () => controller.goToCommunityPostOfUser(),
-                      // ),
+                      // Refresh button
+                      _buildActionButton(
+                        icon: Icons.refresh,
+                        label: 'Refresh',
+                        color: Color(0xFF6F9EAF), // Soft blue/teal
+                        onTap: () => controller.getCommunityPostList(),
+                      ),
                     ],
                   ),
                   SizedBox(height: 15),
