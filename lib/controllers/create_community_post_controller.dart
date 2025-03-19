@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:pregnancy_tracker/controllers/community_post_controller.dart';
 
 import '../models/community_post_model.dart';
 import '../util/app_export.dart';
@@ -203,7 +204,10 @@ class CreateCommunityPostController extends GetxController {
         clearFormFields(); // Xóa dữ liệu form
 
         // Hiển thị dialog thông báo thành công
-        _showSuccessDialog();
+        // _showSuccessDialog();
+        Get.back();
+
+        Get.find<CommunityPostController>().getCommunityPostList();
         return true;
       } else {
         // Xử lý lỗi

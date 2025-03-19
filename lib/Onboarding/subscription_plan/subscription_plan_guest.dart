@@ -139,7 +139,11 @@ class SubscriptionPlanGuestScreen
                     ),
                   ],
                 ),
-                child: IconButton(
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white.withOpacity(0.85),
+                    foregroundColor: Colors.green[700],
+                  ),
                   icon: Icon(
                     Icons.history,
                     color: Colors.green[700],
@@ -147,7 +151,7 @@ class SubscriptionPlanGuestScreen
                   onPressed: () {
                     controller.getSubscriptionPlanGuestList();
                   },
-                  tooltip: 'Refresh',
+                  label: const Text('Refresh'),
                 ),
               ),
             ],
@@ -537,7 +541,7 @@ class SubscriptionPlanGuestScreen
       {
         'icon': Icons.edit,
         'color': Colors.amber[700]!,
-        'title': 'Create Blog Posts',
+        'title': 'Create Community Posts',
         'description':
             'Share your pregnancy experiences and insights with others'
       },

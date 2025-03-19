@@ -39,7 +39,7 @@ class UpdateCommunityPostController extends GetxController {
   void onInit() {
     super.onInit();
     isLoading.value = true;
-
+    // postId.value = Get.arguments['id'];
     // Khởi tạo các controller
     titleController = TextEditingController();
     contentController = TextEditingController();
@@ -234,8 +234,8 @@ class UpdateCommunityPostController extends GetxController {
 
         Get.back();
 
-        Get.find<CommunityPostController>().getCommunityPostList();
-        _showSuccessDialog();
+        await Get.find<CommunityPostController>().getCommunityPostList();
+        // _showSuccessDialog();
         return true;
       } else {
         // Xử lý lỗi

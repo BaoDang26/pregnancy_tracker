@@ -145,49 +145,6 @@ class CommunityPostDetailsScreen
                         color: Colors.white),
                     onPressed: () => Get.back(),
                   ),
-                  actions: [
-                    // Chỉ hiển thị nút sửa và xóa khi người dùng có quyền
-                    if (controller.canEditPost())
-                      IconButton(
-                        icon: const Icon(Icons.edit, color: Colors.white),
-                        onPressed: () => controller.goToUpdateCommunityPost(
-                            controller.communityPost.value!.id!),
-                        tooltip: 'Edit Post',
-                      ),
-                    if (controller.canEditPost())
-                      IconButton(
-                        icon: const Icon(Icons.delete, color: Colors.white),
-                        onPressed: () => controller.deletePost(),
-                        tooltip: 'Delete Post',
-                      ),
-                    IconButton(
-                      icon: const Icon(Icons.bookmark_border,
-                          color: Colors.white),
-                      onPressed: () {
-                        // Bookmark functionality can be added here
-                        Get.snackbar(
-                          'Bookmark',
-                          'Post saved for later',
-                          colorText: Colors.white,
-                          backgroundColor:
-                              const Color(0xFFAD6E8C).withOpacity(0.8),
-                        );
-                      },
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.share, color: Colors.white),
-                      onPressed: () {
-                        // Share functionality can be added here
-                        Get.snackbar(
-                          'Share',
-                          'Sharing options',
-                          colorText: Colors.white,
-                          backgroundColor:
-                              const Color(0xFFAD6E8C).withOpacity(0.8),
-                        );
-                      },
-                    ),
-                  ],
                 ),
 
                 // Post Content
@@ -244,7 +201,7 @@ class CommunityPostDetailsScreen
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "User #${controller.communityPost.value?.userId ?? 'Unknown'}",
+                                        "${controller.communityPost.value?.fullName ?? 'Unknown'}",
                                         style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16,
@@ -588,7 +545,7 @@ class CommunityPostDetailsScreen
                                           Row(
                                             children: [
                                               Text(
-                                                "User #${comment.userId ?? 'Unknown'}",
+                                                "${comment.fullName ?? 'Unknown'}",
                                                 style: const TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   fontSize: 15,

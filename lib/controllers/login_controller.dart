@@ -42,7 +42,9 @@ class LoginController extends GetxController {
   // }
 
   String? validateEmail(String value) {
-    if (value.isEmpty || !value.contains('@gmail.com')) {
+    if (value.isEmpty) {
+      return "email is required";
+    } else if (!value.contains('@gmail.com')) {
       return "email is invalid";
     }
     return null;
@@ -50,7 +52,7 @@ class LoginController extends GetxController {
 
   String? validatePassword(String value) {
     if (value.isEmpty) {
-      return "password is invalid";
+      return "password is required";
     }
     return null;
   }

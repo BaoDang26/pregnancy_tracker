@@ -189,8 +189,8 @@ class ManageUserSubscriptionScreen
                 child: Text('Payment Failed'),
               ),
               const PopupMenuItem<String>(
-                value: 'payment_success',
-                child: Text('Payment Success'),
+                value: 'payment_expired',
+                child: Text('Payment Expired'),
               ),
               const PopupMenuItem<String>(
                 value: 'pending',
@@ -199,14 +199,6 @@ class ManageUserSubscriptionScreen
               const PopupMenuItem<String>(
                 value: 'finished',
                 child: Text('Finished'),
-              ),
-              const PopupMenuItem<String>(
-                value: 'active',
-                child: Text('Active'),
-              ),
-              const PopupMenuItem<String>(
-                value: 'expired',
-                child: Text('Expired'),
               ),
             ],
           ),
@@ -329,7 +321,9 @@ class ManageUserSubscriptionScreen
 
     if (status.toLowerCase() == 'active') {
       backgroundColor = Colors.green;
-    } else if (status.toLowerCase() == 'expired') {
+    } else if (status.toLowerCase() == 'payment_expired') {
+      backgroundColor = Colors.red;
+    } else if (status.toLowerCase() == 'payment_failed') {
       backgroundColor = Colors.red;
     } else if (status.toLowerCase() == 'pending') {
       backgroundColor = Colors.orange;
@@ -394,7 +388,6 @@ class ManageUserSubscriptionScreen
                 spacing: 24,
                 runSpacing: 16,
                 children: [
-                  _buildDetailItem('ID', '${subscription.id}', Icons.tag),
                   _buildDetailItem(
                       'Plan Name',
                       subscription.subscriptionPlanName ?? 'N/A',
@@ -434,6 +427,8 @@ class ManageUserSubscriptionScreen
                       Icons.account_balance),
                   _buildDetailItem('Transaction No',
                       subscription.transactionNo ?? 'N/A', Icons.receipt),
+                  _buildDetailItem('Full Name', subscription.fullName ?? 'N/A',
+                      Icons.person),
                   _buildDetailItem(
                       'Created Date',
                       subscription.createdDate != null

@@ -7,6 +7,7 @@ class PaymentFailedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("PaymentFailedScreen");
     return Scaffold(
       backgroundColor:
           const Color.fromARGB(255, 255, 235, 235), // Background màu đỏ nhạt
@@ -102,7 +103,7 @@ class PaymentFailedScreen extends StatelessWidget {
                   CustomElevatedButton(
                     text: 'Back to Home',
                     onPressed: () {
-                      Get.offAllNamed('/home');
+                      Get.offAllNamed(AppRoutes.sidebarnar);
                     },
                   ),
                 ],

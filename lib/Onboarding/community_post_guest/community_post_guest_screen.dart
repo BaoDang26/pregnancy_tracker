@@ -71,10 +71,14 @@ class CommunityPostGuestScreen extends GetView<CommunityPostGuestController> {
                       ),
                       Spacer(),
                       //refresh button
-                      IconButton(
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white.withOpacity(0.85),
+                          foregroundColor: Color(0xFFAD6E8C),
+                        ),
                         onPressed: () => controller.getCommunityPostGuestList(),
                         icon: Icon(Icons.refresh),
-                        tooltip: 'Refresh',
+                        label: const Text('Refresh'),
                       ),
                     ],
                   ),

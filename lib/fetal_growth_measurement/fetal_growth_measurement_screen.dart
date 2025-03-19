@@ -51,8 +51,13 @@ class FetalGrowthMeasurementScreen
                     ),
                     Row(
                       children: [
-                        IconButton(
+                        ElevatedButton.icon(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white.withOpacity(0.85),
+                            foregroundColor: Colors.green[700],
+                          ),
                           icon: Icon(Icons.refresh, color: Colors.green[700]),
+                          label: const Text('Refresh'),
                           onPressed: () {
                             // Call the method to refresh the fetal growth measurements
                             controller.getFetalGrowthMeasurement(
@@ -62,7 +67,6 @@ class FetalGrowthMeasurementScreen
                             controller
                                 .getWeightMeasurements(controller.pregnancyId);
                           },
-                          tooltip: 'Refresh',
                         ),
                         SizedBox(
                           width: 300, // Giới hạn chiều rộng của nút

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pregnancy_tracker/util/app_export.dart';
 import '../../controllers/user_subscription_controller.dart';
+import '../../models/user_subscription_model.dart';
 import '../../widgets/custom_card_user_subscription_widget.dart';
 
 class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
@@ -309,130 +310,136 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
                 final subscription = controller.userSubscriptionList[index];
                 final isActive = subscription.status == 'active';
 
-                return Container(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: isActive
-                          ? [Colors.green[50]!, Colors.green[100]!]
-                          : [Colors.grey[50]!, Colors.grey[100]!],
-                    ),
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.06),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
+                return InkWell(
+                  onTap: () => _showSubscriptionDetailsDialog(subscription),
+                  borderRadius: BorderRadius.circular(16),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: isActive
+                            ? [Colors.green[50]!, Colors.green[100]!]
+                            : [Colors.grey[50]!, Colors.grey[100]!],
                       ),
-                    ],
-                    border: Border.all(
-                      color: isActive ? Colors.green[300]! : Colors.grey[300]!,
-                      width: 1,
-                    ),
-                  ),
-                  child: Stack(
-                    children: [
-                      if (isActive)
-                        Positioned(
-                          top: 0,
-                          right: 0,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 6),
-                            decoration: BoxDecoration(
-                              color: Colors.green[600],
-                              borderRadius: const BorderRadius.only(
-                                topRight: Radius.circular(16),
-                                bottomLeft: Radius.circular(16),
-                              ),
-                            ),
-                            child: const Text(
-                              'ACTIVE',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
+                      borderRadius: BorderRadius.circular(16),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.06),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
                         ),
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(12),
+                      ],
+                      border: Border.all(
+                        color:
+                            isActive ? Colors.green[300]! : Colors.grey[300]!,
+                        width: 1,
+                      ),
+                    ),
+                    child: Stack(
+                      children: [
+                        if (isActive)
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 6),
                               decoration: BoxDecoration(
-                                color: isActive
-                                    ? Colors.green[100]
-                                    : Colors.grey[200],
-                                borderRadius: BorderRadius.circular(12),
+                                color: Colors.green[600],
+                                borderRadius: const BorderRadius.only(
+                                  topRight: Radius.circular(16),
+                                  bottomLeft: Radius.circular(16),
+                                ),
                               ),
-                              child: Icon(
-                                _getIconForPlanName(
-                                    subscription.subscriptionPlanName ?? ''),
-                                color: isActive
-                                    ? Colors.green[700]
-                                    : Colors.grey[700],
-                                size: 32,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            Text(
-                              subscription.subscriptionPlanName ??
-                                  'Unknown Plan',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: isActive
-                                    ? Colors.green[800]
-                                    : Colors.grey[800],
-                              ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            const SizedBox(height: 8),
-                            const Divider(),
-                            const SizedBox(height: 8),
-                            _buildInfoRow(Icons.calendar_today,
-                                'Start: ${_formatDate(subscription.startDate)}'),
-                            const SizedBox(height: 8),
-                            _buildInfoRow(Icons.event,
-                                'End: ${_formatDate(subscription.endDate)}'),
-                            const SizedBox(height: 8),
-                            _buildInfoRow(Icons.payments,
-                                '${_formatAmount(subscription.amount?.toDouble() ?? 0.0)} VND'),
-                            const SizedBox(height: 8),
-                            _buildInfoRow(Icons.confirmation_number,
-                                '#${subscription.subscriptionCode ?? ''}'),
-                            const Spacer(),
-                            Container(
-                              width: double.infinity,
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              decoration: BoxDecoration(
-                                color: isActive
-                                    ? Colors.green[100]
-                                    : Colors.grey[200],
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  isActive ? 'Currently Active' : 'Expired',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: isActive
-                                        ? Colors.green[700]
-                                        : Colors.grey[700],
-                                  ),
+                              child: const Text(
+                                'ACTIVE',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
-                          ],
+                          ),
+                        Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(12),
+                                decoration: BoxDecoration(
+                                  color: isActive
+                                      ? Colors.green[100]
+                                      : Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Icon(
+                                  _getIconForPlanName(
+                                      subscription.subscriptionPlanName ?? ''),
+                                  color: isActive
+                                      ? Colors.green[700]
+                                      : Colors.grey[700],
+                                  size: 32,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                subscription.subscriptionPlanName ??
+                                    'Unknown Plan',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: isActive
+                                      ? Colors.green[800]
+                                      : Colors.grey[800],
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(height: 8),
+                              const Divider(),
+                              const SizedBox(height: 8),
+                              _buildInfoRow(Icons.calendar_today,
+                                  'Start: ${_formatDate(subscription.startDate)}'),
+                              const SizedBox(height: 8),
+                              _buildInfoRow(Icons.event,
+                                  'End: ${_formatDate(subscription.endDate)}'),
+                              const SizedBox(height: 8),
+                              _buildInfoRow(Icons.payments,
+                                  '${_formatAmount(subscription.amount?.toDouble() ?? 0.0)} VND'),
+                              const SizedBox(height: 8),
+                              _buildInfoRow(Icons.confirmation_number,
+                                  '#${subscription.subscriptionCode ?? ''}'),
+                              const Spacer(),
+                              Container(
+                                width: double.infinity,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                decoration: BoxDecoration(
+                                  color: isActive
+                                      ? Colors.green[100]
+                                      : Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    subscription.status ?? 'No information',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: subscription.status == 'PENDING'
+                                          ? Colors.green[700]
+                                          : Colors.grey[700],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               },
@@ -484,5 +491,223 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
     if (name.contains('yearly')) return Icons.calendar_today;
 
     return Icons.card_membership;
+  }
+
+  void _showSubscriptionDetailsDialog(UserSubscriptionModel subscription) {
+    Get.dialog(
+      Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Container(
+          width: 600,
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Colors.white, Colors.green[50]!],
+            ),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header
+              Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.green[100],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(
+                      _getIconForPlanName(
+                          subscription.subscriptionPlanName ?? ''),
+                      color: Colors.green[700],
+                      size: 28,
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Text(
+                    'History Details',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green[800],
+                    ),
+                  ),
+                  const Spacer(),
+                  IconButton(
+                    icon: Icon(Icons.close, color: Colors.grey[600]),
+                    onPressed: () => Get.back(),
+                  ),
+                ],
+              ),
+              const Divider(height: 32),
+
+              // Content
+              Wrap(
+                spacing: 16,
+                runSpacing: 16,
+                children: [
+                  _buildDetailItem(
+                    'Plan Name',
+                    subscription.subscriptionPlanName ?? 'No information',
+                    Icons.card_membership,
+                  ),
+                  _buildDetailItem(
+                    'Status',
+                    subscription.status ?? 'No information',
+                    Icons.info_outline,
+                    isStatus: true,
+                    statusValue: subscription.status,
+                  ),
+                  _buildDetailItem(
+                    'Amount',
+                    '${_formatAmount(subscription.amount?.toDouble() ?? 0.0)} VND',
+                    Icons.payments,
+                  ),
+                  _buildDetailItem(
+                    'Start Date',
+                    _formatDateDetailed(subscription.startDate),
+                    Icons.calendar_today,
+                  ),
+                  _buildDetailItem(
+                    'End Date',
+                    _formatDateDetailed(subscription.endDate),
+                    Icons.event,
+                  ),
+                  _buildDetailItem(
+                    'Payment Date',
+                    _formatDateDetailed(subscription.paymentDate),
+                    Icons.date_range,
+                  ),
+                  _buildDetailItem(
+                    'Subscription Code',
+                    subscription.subscriptionCode ?? 'No information',
+                    Icons.confirmation_number,
+                  ),
+                  _buildDetailItem(
+                    'Bank Code',
+                    subscription.bankCode ?? 'No information',
+                    Icons.account_balance,
+                  ),
+                  _buildDetailItem(
+                    'Transaction Number',
+                    subscription.transactionNo ?? 'No information',
+                    Icons.receipt_long,
+                  ),
+                  // _buildDetailItem(
+                  //   'Created Date',
+                  //   _formatDateDetailed(subscription.createdDate),
+                  //   Icons.create,
+                  // ),
+                ],
+              ),
+
+              const SizedBox(height: 24),
+
+              // Footer
+              Center(
+                child: ElevatedButton.icon(
+                  onPressed: () => Get.back(),
+                  icon: const Icon(Icons.check_circle_outline),
+                  label: const Text('Close'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green[600],
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDetailItem(String label, String value, IconData icon,
+      {bool isStatus = false, String? statusValue}) {
+    Color bgColor = Colors.blue[50]!;
+    Color iconColor = Colors.blue[700]!;
+    Color textColor = Colors.blue[900]!;
+
+    if (isStatus && statusValue != null) {
+      if (statusValue.toLowerCase() == 'active') {
+        bgColor = Colors.green[50]!;
+        iconColor = Colors.green[700]!;
+        textColor = Colors.green[900]!;
+      } else if (statusValue.toLowerCase() == 'expired' ||
+          statusValue.toLowerCase() == 'canceled') {
+        bgColor = Colors.grey[200]!;
+        iconColor = Colors.grey[700]!;
+        textColor = Colors.grey[900]!;
+      } else if (statusValue.toLowerCase().contains('pending')) {
+        bgColor = Colors.orange[50]!;
+        iconColor = Colors.orange[700]!;
+        textColor = Colors.orange[900]!;
+      } else if (statusValue.toLowerCase().contains('fail')) {
+        bgColor = Colors.red[50]!;
+        iconColor = Colors.red[700]!;
+        textColor = Colors.red[900]!;
+      }
+    }
+
+    return Container(
+      width: 260,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: bgColor,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.03),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(icon, color: iconColor, size: 18),
+              const SizedBox(width: 8),
+              Text(
+                label,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: textColor.withOpacity(0.7),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: textColor,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _formatDateDetailed(DateTime? date) {
+    if (date == null) return 'No information';
+    return DateFormat('dd/MM/yyyy').format(date);
   }
 }

@@ -232,7 +232,7 @@ class CommunityPostDetailsController extends GetxController {
         }
 
         // Hiển thị thông báo thành công
-        _showSuccessDialog('Comment posted successfully');
+        // _showSuccessDialog('Comment posted successfully');
 
         return true;
       } else {
@@ -328,7 +328,7 @@ class CommunityPostDetailsController extends GetxController {
         await fetchComments();
 
         // Hiển thị thông báo thành công
-        _showSuccessDialog('Comment updated successfully');
+        // _showSuccessDialog('Comment updated successfully');
 
         return true;
       } else {
@@ -395,7 +395,7 @@ class CommunityPostDetailsController extends GetxController {
         }
 
         // Hiển thị thông báo thành công bằng dialog
-        _showSuccessDialog('Comment deleted successfully');
+        // _showSuccessDialog('Comment deleted successfully');
 
         return true;
       } else {
@@ -811,7 +811,7 @@ class CommunityPostDetailsController extends GetxController {
 
       if (response.statusCode == 200 || response.statusCode == 204) {
         // Hiển thị thông báo thành công
-        _showSuccessDialog('Post deleted successfully');
+        // _showSuccessDialog('Post deleted successfully');
 
         // Chờ 1 giây rồi quay về trang danh sách
         await Future.delayed(const Duration(seconds: 1));

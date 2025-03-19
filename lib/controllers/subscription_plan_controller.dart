@@ -9,7 +9,6 @@ import '../repositories/subscription_plan_repository.dart';
 
 class SubscriptionPlanController extends GetxController {
   var isLoading = true.obs;
-  var subscriptionPlanList = <SubscriptionPlanModel>[].obs;
   var subscriptionPlanModel = SubscriptionPlanModel().obs;
   var userRole = ''.obs;
   var userId = 0.obs;
@@ -85,7 +84,7 @@ class SubscriptionPlanController extends GetxController {
 
   void goToSubscriptionPlanDetail(int index) {
     Get.toNamed(AppRoutes.subscriptionplandetail,
-        arguments: subscriptionPlanList[index].id);
+        arguments: activeSubscriptionPlanList[index].id);
   }
 
   void getBack() {

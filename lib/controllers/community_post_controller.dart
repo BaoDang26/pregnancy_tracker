@@ -87,6 +87,7 @@ class CommunityPostController extends GetxController {
 
   Future<void> getCommunityPostList() async {
     isLoading.value = true;
+    communityPostList.clear();
     var response = await CommunityPostRepository.getCommunityPostList();
 
     if (response.statusCode == 200) {
@@ -176,9 +177,126 @@ class CommunityPostController extends GetxController {
             });
   }
 
-  void goToUpdateCommunityPost(int index) {
-    // Get.toNamed(AppRoutes.updatecommunitypost,
-    //     arguments: communityPostList[index]);
+  void goToUpdateCommunityPost(CommunityPostModel post) {
+    // Lấy thông tin từ user info hiện tại
+    final accountProfileController = Get.find<AccountProfileController>();
+    final currentUserId = accountProfileController.accountProfileModel.value.id;
+
+    // Kiểm tra nếu người dùng hiện tại là tác giả của bài viết
+    if (post.userId != currentUserId) {
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Permission Denied"),
+          content: const Text("You can only edit your own posts."),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    // Chuyển đến màn hình cập nhật bài viết
+    Get.toNamed(AppRoutes.updatecommunitypost, arguments: post)
+        ?.then((value) => {
+              if (value != null && value) {getCommunityPostList()}
+            });
+  }
+
+  void showDeleteConfirmation(int postId) {
+    // Lấy thông tin từ user info hiện tại
+    final accountProfileController = Get.find<AccountProfileController>();
+    final currentUserId = accountProfileController.accountProfileModel.value.id;
+
+    // Tìm bài viết với ID tương ứng
+    final post = filteredPostList.firstWhere((post) => post.id == postId);
+
+    // Kiểm tra nếu người dùng hiện tại là tác giả của bài viết
+    if (post.userId != currentUserId) {
+      Get.dialog(
+        AlertDialog(
+          title: const Text("Permission Denied"),
+          content: const Text("You can only delete your own posts."),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    // Hiển thị dialog xác nhận xóa
+    Get.dialog(
+      AlertDialog(
+        title: const Text("Confirm Delete"),
+        content: const Text(
+            "Are you sure you want to delete this post? This action cannot be undone."),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.grey[700],
+            ),
+            child: const Text("Cancel"),
+          ),
+          TextButton(
+            onPressed: () {
+              Get.back();
+              deleteCommunityPost(postId);
+            },
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.red,
+            ),
+            child: const Text("Delete"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> deleteCommunityPost(int postId) async {
+    isLoading.value = true;
+
+    try {
+      var response = await CommunityPostRepository.deleteCommunityPost(postId);
+
+      if (response.statusCode == 200) {
+        Get.snackbar(
+          "Success",
+          "Post has been deleted successfully",
+          backgroundColor: Colors.green[100],
+          colorText: Colors.green[800],
+          snackPosition: SnackPosition.BOTTOM,
+        );
+
+        // Refresh the list after deletion
+        await getCommunityPostList();
+      } else {
+        Get.snackbar(
+          "Error",
+          "Failed to delete post: ${jsonDecode(response.body)['message'] ?? 'Unknown error'}",
+          backgroundColor: Colors.red[100],
+          colorText: Colors.red[800],
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        "An error occurred: $e",
+        backgroundColor: Colors.red[100],
+        colorText: Colors.red[800],
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } finally {
+      isLoading.value = false;
+    }
   }
 
   void getBack() {

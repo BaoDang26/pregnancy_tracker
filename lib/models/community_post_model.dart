@@ -16,6 +16,7 @@ String communityPostModelToJson(List<CommunityPostModel> data) =>
 class CommunityPostModel {
   int? id;
   int? userId;
+  String? fullName;
   String? title;
   String? content;
   int? commentCount;
@@ -27,6 +28,7 @@ class CommunityPostModel {
   CommunityPostModel({
     this.id,
     this.userId,
+    this.fullName,
     this.title,
     this.content,
     this.commentCount,
@@ -40,6 +42,7 @@ class CommunityPostModel {
       CommunityPostModel(
         id: json["id"],
         userId: json["userId"],
+        fullName: json["fullName"],
         title: json["title"],
         content: json["content"],
         commentCount: json["commentCount"],
@@ -53,6 +56,7 @@ class CommunityPostModel {
   Map<String, dynamic> toJson() => {
         "id": id,
         "userId": userId,
+        "fullName": fullName,
         "title": title,
         "content": content,
         "commentCount": commentCount,

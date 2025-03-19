@@ -21,6 +21,7 @@ class UserSubscriptionModel {
   String? bankCode;
   String? transactionNo;
   DateTime? paymentDate;
+  String? fullName;
   String? status;
   DateTime? createdDate;
 
@@ -36,6 +37,7 @@ class UserSubscriptionModel {
     this.paymentDate,
     this.status,
     this.createdDate,
+    this.fullName,
   });
 
   factory UserSubscriptionModel.fromJson(Map<String, dynamic> json) =>
@@ -58,6 +60,7 @@ class UserSubscriptionModel {
         createdDate: json["createdDate"] != null
             ? DateTime.parse(json["createdDate"])
             : null,
+        fullName: json["fullName"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -72,5 +75,6 @@ class UserSubscriptionModel {
         "paymentDate": paymentDate?.toIso8601String() ?? "",
         "status": status ?? "",
         "createdDate": createdDate?.toIso8601String() ?? "",
+        "fullName": fullName ?? "",
       };
 }

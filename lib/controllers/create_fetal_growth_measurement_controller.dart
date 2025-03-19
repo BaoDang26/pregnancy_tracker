@@ -92,6 +92,7 @@ class CreateFetalGrowthMeasurementController extends GetxController {
 
   String? validateHeight(String value) {
     if (value.isEmpty) return "Height is required";
+
     if (!RegExp(r'^\d*\.?\d+$').hasMatch(value))
       return "Height must be a number";
     double? number = double.tryParse(value);
@@ -105,6 +106,34 @@ class CreateFetalGrowthMeasurementController extends GetxController {
       return "Weight must be a number";
     double? number = double.tryParse(value);
     if (number == null || number <= 0) return "Weight must be greater than 0";
+    return null;
+  }
+
+  String? validateHeartRate(String value) {
+    if (value.isEmpty) return null;
+    if (!RegExp(r'^\d*\.?\d+$').hasMatch(value))
+      return "Heart rate must be a number";
+    return null;
+  }
+
+  String? validateBellyCircumference(String value) {
+    if (value.isEmpty) return null;
+    if (!RegExp(r'^\d*\.?\d+$').hasMatch(value))
+      return "Belly circumference must be a number";
+    return null;
+  }
+
+  String? validateHeadCircumference(String value) {
+    if (value.isEmpty) return null;
+    if (!RegExp(r'^\d*\.?\d+$').hasMatch(value))
+      return "Head circumference must be a number";
+    return null;
+  }
+
+  String? validateMovementCount(String value) {
+    if (value.isEmpty) return null;
+    if (!RegExp(r'^\d*\.?\d+$').hasMatch(value))
+      return "Movement count must be a number";
     return null;
   }
 

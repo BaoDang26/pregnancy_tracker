@@ -356,6 +356,11 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
   // Helper method to build each post card
   Widget _buildPostCard(
       BuildContext context, CommunityPostModel post, int index) {
+    // Get the current user's ID to check if they are the author
+    final accountController = Get.find<AccountProfileController>();
+    final currentUserId = accountController.accountProfileModel.value.id;
+    final isAuthor = post.userId == currentUserId;
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -372,15 +377,17 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Post image (if available)
-          GestureDetector(
-            onTap: () => controller.goToCommunityPostDetail(index),
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(15),
-                topRight: Radius.circular(15),
-              ),
-              child:
-                  post.attachmentUrl != null && post.attachmentUrl!.isNotEmpty
+          Stack(
+            children: [
+              GestureDetector(
+                onTap: () => controller.goToCommunityPostDetail(index),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  ),
+                  child: post.attachmentUrl != null &&
+                          post.attachmentUrl!.isNotEmpty
                       ? Image.network(
                           post.attachmentUrl!,
                           height: 300,
@@ -401,7 +408,53 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                           width: double.infinity,
                           fit: BoxFit.cover,
                         ),
-            ),
+                ),
+              ),
+              // Add edit/delete buttons for the author
+              if (isAuthor)
+                Positioned(
+                  top: 8,
+                  right: 8,
+                  child: Row(
+                    children: [
+                      // Edit button
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: IconButton(
+                          icon:
+                              const Icon(Icons.edit, color: Color(0xFF8E6C88)),
+                          onPressed: () =>
+                              controller.goToUpdateCommunityPost(post),
+                          tooltip: 'Edit Post',
+                          iconSize: 20,
+                          padding: const EdgeInsets.all(6),
+                          constraints: const BoxConstraints(),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      // Delete button
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.8),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: IconButton(
+                          icon: const Icon(Icons.delete, color: Colors.red),
+                          onPressed: () =>
+                              controller.showDeleteConfirmation(post.id!),
+                          tooltip: 'Delete Post',
+                          iconSize: 20,
+                          padding: const EdgeInsets.all(6),
+                          constraints: const BoxConstraints(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
           ),
 
           // Post content

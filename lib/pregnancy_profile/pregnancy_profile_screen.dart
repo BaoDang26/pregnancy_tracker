@@ -77,13 +77,17 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
               ),
             ),
           ),
-          IconButton(
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white.withOpacity(0.85),
+              foregroundColor: Colors.green[700],
+            ),
             icon: Icon(Icons.refresh, color: Colors.green[700]),
+            label: const Text('Refresh'),
             onPressed: () {
               // Call the method to refresh the pregnancy profiles
               controller.getPregnancyProfileList();
             },
-            tooltip: 'Refresh',
           ),
         ],
       ),

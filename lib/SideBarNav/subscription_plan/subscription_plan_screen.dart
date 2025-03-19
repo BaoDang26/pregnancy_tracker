@@ -15,14 +15,18 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
       appBar: AppBar(
         title: const Text('Subscription Plans'),
         actions: [
-          IconButton(
+          ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white.withOpacity(0.85),
+              foregroundColor: Colors.green[700],
+            ),
             icon: const Icon(Icons.refresh),
+            label: const Text('Refresh'),
             onPressed: () {
               // Call the method to refresh the subscription plans
               controller
                   .getActiveSubscriptionPlanList(); // Assuming this method exists
             },
-            tooltip: 'Refresh',
           ),
         ],
       ),
@@ -153,15 +157,19 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
                     ),
                   ],
                 ),
-                child: IconButton(
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white.withOpacity(0.85),
+                    foregroundColor: Colors.green[700],
+                  ),
                   icon: Icon(
                     Icons.history,
                     color: Colors.green[700],
                   ),
+                  label: const Text('Subscription History'),
                   onPressed: () {
                     Get.toNamed(AppRoutes.usersubscription);
                   },
-                  tooltip: 'Subscription History',
                 ),
               ),
             ],
@@ -481,7 +489,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
                                 ),
                               ),
                               child: const Text(
-                                'Subscribe Now',
+                                'Choose Plan',
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
@@ -550,7 +558,7 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
       {
         'icon': Icons.edit,
         'color': Colors.amber[700]!,
-        'title': 'Create Blog Posts',
+        'title': 'Create Community Posts',
         'description':
             'Share your pregnancy experiences and insights with others'
       },

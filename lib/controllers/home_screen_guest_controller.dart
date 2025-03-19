@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../models/subscription_plan_model.dart';
 import '../repositories/subscription_plan_repository.dart';
 import '../routes/app_routes.dart';
+import '../util/preUtils.dart';
 
 class HomeScreenGuestController extends GetxController {
   var isLoading = false.obs;

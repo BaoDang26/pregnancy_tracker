@@ -76,6 +76,12 @@ class ManageUserSubscriptionController extends GetxController {
                   subscription.status?.toUpperCase() == 'PAYMENT_SUCCESS')
               .toList();
           break;
+        case 'payment_expired':
+          tempList = tempList
+              .where((subscription) =>
+                  subscription.status?.toUpperCase() == 'PAYMENT_EXPIRED')
+              .toList();
+          break;
         case 'pending':
           tempList = tempList
               .where((subscription) =>

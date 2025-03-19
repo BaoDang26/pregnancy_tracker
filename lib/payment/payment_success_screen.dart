@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:confetti/confetti.dart';
 import 'package:flutter/material.dart';
 import 'package:pregnancy_tracker/widgets/custom_elevated_button.dart';
+import 'package:get/get.dart';
 
 import '../controllers/payment_success_controller.dart';
 import '../util/app_export.dart';
@@ -80,20 +81,24 @@ class PaymentSuccessScreen extends GetView<PaymentSuccessController> {
                     ),
                   ),
                   const SizedBox(height: 32),
-                  //Text thông báo trở về tab trước
-                  Text(
-                    'Back to previous tab to enable the features',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey[600],
-                    ),
-                  ),
+
                   // Nút Back to Home
-                  CustomElevatedButton(
-                    text: 'Back to Home',
-                    onPressed: () {
-                      controller.goToHomeScreen();
-                    },
+                  Obx(
+                    () => controller.isPaymentSuccess.value
+                        ? CustomElevatedButton(
+                            text: 'Back to Home',
+                            onPressed: () {
+                              controller.goToHomeScreen();
+                            },
+                          )
+                        : //Text thông báo trở về tab trước
+                        Text(
+                            'Back to previous tab to enable the features',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey[600],
+                            ),
+                          ), // Không hiển thị gì nếu isPaymentSuccess là false
                   ),
                 ],
               ),

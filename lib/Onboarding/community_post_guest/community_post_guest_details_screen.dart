@@ -202,7 +202,7 @@ class CommunityPostGuestDetailsScreen
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "User #${controller.communityPost.value?.userId ?? 'Unknown'}",
+                                        "${controller.communityPost.value?.fullName ?? 'Unknown'}",
                                         style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16,
@@ -537,7 +537,7 @@ class CommunityPostGuestDetailsScreen
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          "User #${comment.userId ?? 'Unknown'}",
+                                          "${comment.fullName ?? 'Unknown'}",
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,

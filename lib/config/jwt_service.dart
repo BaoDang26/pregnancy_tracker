@@ -20,7 +20,8 @@ class JwtService {
     }
     var response = await client
         .post(
-          BuildServer.buildUrl("auth/refreshtoken"),
+          BuildServer.buildUrl(
+              "auth/refresh-token?refreshTokenRequest=$refreshToken"),
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode({'refreshToken': refreshToken}),
         )

@@ -15,7 +15,7 @@ class SubscriptionPlanDetailsController extends GetxController {
   var isLoading = false.obs;
   var subscriptionPlan = SubscriptionPlanModel().obs;
   Rx<UserSubscriptionModel> userSubscriptionModel = UserSubscriptionModel().obs;
-
+  bool isPaymentSuccess = false;
   Timer? _paymentCheckTimer;
   var paymentStatus = "".obs;
   var isCheckingPayment = false.obs;
@@ -23,9 +23,14 @@ class SubscriptionPlanDetailsController extends GetxController {
   @override
   void onInit() {
     // Nhận subscriptionPlanID từ Argument từ SubscriptionPlan screen
-    int subscriptionPlanID = Get.arguments;
-
-    getSubscriptionPlanByID(subscriptionPlanID);
+    // int subscriptionPlanID = Get.arguments;
+    if (Get.arguments == null) {
+      print("Get.arguments is Null");
+      Get.toNamed(AppRoutes.paymentFailed);
+    } else {
+      int subscriptionPlanID = Get.arguments;
+      getSubscriptionPlanByID(subscriptionPlanID);
+    }
     super.onInit();
   }
 
@@ -139,7 +144,8 @@ class SubscriptionPlanDetailsController extends GetxController {
 
         Uri url = Uri.parse(paymentUrl);
         if (await canLaunchUrl(url)) {
-          await launchUrl(url, webOnlyWindowName: '_self');
+          // await launchUrl(url, webOnlyWindowName: '_self');
+          await launchUrl(url, webOnlyWindowName: '_blank');
 
           // Lấy giá trị vnp_TxnRef từ URL
           String? vnpTxnRef = _extractVnpTxnRef(paymentUrl);
@@ -174,7 +180,7 @@ class SubscriptionPlanDetailsController extends GetxController {
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        'Please complete your payment in the opened window. Checking payment status in 10 seconds...',
+                        'Please complete your payment in the opened window. Checking payment status in 3 seconds...',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 14,
@@ -344,7 +350,7 @@ class SubscriptionPlanDetailsController extends GetxController {
     // Điều hướng dựa trên trạng thái thanh toán
     if (status == "PAYMENT_SUCCESS") {
       // Nếu thanh toán thành công, điều hướng đến trang thành công
-      Get.toNamed(AppRoutes.paymentSuccess);
+      Get.toNamed(AppRoutes.paymentSuccess, arguments: true);
     } else if (status == "PAYMENT_FAILED") {
       // Nếu thanh toán thất bại, điều hướng đến trang thất bại
       Get.toNamed(AppRoutes.paymentFailed);
