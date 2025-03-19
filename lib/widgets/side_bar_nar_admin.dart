@@ -87,7 +87,7 @@ class _SideBarNavAdminState extends State<SideBarNavAdmin> {
                   const Text(
                     'Pregnancy Tracker',
                     style: TextStyle(
-                      fontSize: 19,
+                      fontSize: 17,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

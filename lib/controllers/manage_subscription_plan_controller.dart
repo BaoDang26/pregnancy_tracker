@@ -138,7 +138,7 @@ class ManageSubscriptionPlanController extends GetxController {
     if (response.statusCode == 200) {
       Get.snackbar(
         'Success',
-        'Subscription plan Deactivated successfully',
+        'Update status subscription plan success',
         backgroundColor: Colors.green[100],
         colorText: Colors.green[800],
         snackPosition: SnackPosition.BOTTOM,
@@ -147,7 +147,7 @@ class ManageSubscriptionPlanController extends GetxController {
     } else {
       //Xử lý lỗi
       updateErrorString.value = jsonDecode(response.body)['message'] ??
-          "Error Deactivating subscription plan";
+          "Error updating status subscription plan";
     }
   }
 

@@ -68,7 +68,7 @@ class _SideBarNavGuestScreenState extends State<SideBarNavGuestScreen> {
                   const Text(
                     'Pregnancy Tracker',
                     style: TextStyle(
-                      fontSize: 19,
+                      fontSize: 17,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
