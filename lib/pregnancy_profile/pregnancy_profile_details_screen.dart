@@ -47,6 +47,14 @@ class PregnancyProfileDetailsScreen
                       const SizedBox(height: 24),
                       _buildActionButtons(),
                       const SizedBox(height: 24),
+                      Text(
+                        '🪖 Notice: The Fetal Growth Measurement is available starting from 8 weeks of pregnancy. Please consider carefuly if you want to subscribe to the service.',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red,
+                        ),
+                      ),
                       _buildResourcesSection(),
                     ],
                   ),

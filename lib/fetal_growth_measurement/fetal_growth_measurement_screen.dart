@@ -127,8 +127,14 @@ class FetalGrowthMeasurementScreen
                                 yValueMapper: (WeightData data, _) =>
                                     data.weight,
                                 name: 'Reference Weight',
-                                color: Colors.grey[300],
+                                color: Colors.blue,
                                 width: 2,
+                                markerSettings: const MarkerSettings(
+                                  isVisible: true,
+                                  shape: DataMarkerType.circle,
+                                  height: 6,
+                                  width: 6,
+                                ),
                               ),
                               LineSeries<WeightData, num>(
                                 dataSource: controller.weightData,
@@ -141,8 +147,8 @@ class FetalGrowthMeasurementScreen
                                 markerSettings: const MarkerSettings(
                                   isVisible: true,
                                   shape: DataMarkerType.circle,
-                                  height: 8,
-                                  width: 8,
+                                  height: 6,
+                                  width: 6,
                                 ),
                                 dataLabelSettings: const DataLabelSettings(
                                   isVisible: true,
@@ -196,8 +202,14 @@ class FetalGrowthMeasurementScreen
                                 yValueMapper: (HeightData data, _) =>
                                     data.height,
                                 name: 'Reference Height',
-                                color: Colors.grey[300],
+                                color: Colors.blue,
                                 width: 2,
+                                markerSettings: const MarkerSettings(
+                                  isVisible: true,
+                                  shape: DataMarkerType.circle,
+                                  height: 6,
+                                  width: 6,
+                                ),
                               ),
                               LineSeries<HeightData, num>(
                                 dataSource: controller.heightData,
@@ -212,8 +224,8 @@ class FetalGrowthMeasurementScreen
                                 markerSettings: const MarkerSettings(
                                   isVisible: true,
                                   shape: DataMarkerType.circle,
-                                  height: 8,
-                                  width: 8,
+                                  height: 6,
+                                  width: 6,
                                 ),
                                 dataLabelSettings: DataLabelSettings(
                                   isVisible: true,
@@ -296,7 +308,7 @@ class FetalGrowthMeasurementScreen
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SelectableText(
-                      'Height Alert: Values outside 3rd-97th percentile range require medical attention',
+                      'Height Alert: Values outside 3cm range require medical attention',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
@@ -305,7 +317,7 @@ class FetalGrowthMeasurementScreen
                     ),
                     const SizedBox(height: 8),
                     const SelectableText(
-                      'Note: Dotted line represents standard growth curve',
+                      'Note: Dotted blue line represents standard growth curve',
                       style: TextStyle(
                         fontSize: 18,
                         fontStyle: FontStyle.italic,
@@ -316,7 +328,7 @@ class FetalGrowthMeasurementScreen
                     InkWell(
                       onTap: () => launchUrl(Uri.parse(
                           'https://www.vinmec.com/vie/bai-viet/bang-can-nang-va-chieu-dai-thai-nhi-theo-tieu-chuan-cua-who-vi')),
-                      child: const SelectableText(
+                      child: const Text(
                         'Reference: WHO Fetal Growth Standards (Vinmec)',
                         style: TextStyle(
                           fontSize: 16,

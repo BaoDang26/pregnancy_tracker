@@ -15,6 +15,7 @@ class CommentModel {
   int? postId;
   int? userId;
   String? fullName;
+  String? avatarUrl;
   String? content;
   String? status;
   DateTime? createdDate;
@@ -24,6 +25,7 @@ class CommentModel {
     this.postId,
     this.userId,
     this.fullName,
+    this.avatarUrl,
     this.content,
     this.status,
     this.createdDate,
@@ -34,6 +36,7 @@ class CommentModel {
         postId: json["postId"],
         userId: json["userId"],
         fullName: json["fullName"],
+        avatarUrl: json["avatarUrl"],
         content: json["content"],
         status: json["status"],
         createdDate: DateTime.parse(json["createdDate"]),
@@ -44,6 +47,7 @@ class CommentModel {
         "postId": postId,
         "userId": userId,
         "fullName": fullName,
+        "avatarUrl": avatarUrl,
         "content": content,
         "status": status,
         "createdDate": createdDate?.toIso8601String(),

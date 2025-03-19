@@ -17,6 +17,7 @@ class CommunityPostModel {
   int? id;
   int? userId;
   String? fullName;
+  String? avatarUrl;
   String? title;
   String? content;
   int? commentCount;
@@ -29,6 +30,7 @@ class CommunityPostModel {
     this.id,
     this.userId,
     this.fullName,
+    this.avatarUrl,
     this.title,
     this.content,
     this.commentCount,
@@ -43,6 +45,7 @@ class CommunityPostModel {
         id: json["id"],
         userId: json["userId"],
         fullName: json["fullName"],
+        avatarUrl: json["avatarUrl"],
         title: json["title"],
         content: json["content"],
         commentCount: json["commentCount"],
@@ -57,6 +60,7 @@ class CommunityPostModel {
         "id": id,
         "userId": userId,
         "fullName": fullName,
+        "avatarUrl": avatarUrl,
         "title": title,
         "content": content,
         "commentCount": commentCount,

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pregnancy_tracker/controllers/account_profile_controller.dart';
+import 'package:pregnancy_tracker/controllers/community_post_controller.dart';
 import '../models/community_post_model.dart';
 import '../models/comment_model.dart';
 import '../repositories/comment_repository.dart';
@@ -231,6 +232,8 @@ class CommunityPostDetailsController extends GetxController {
               (communityPost.value!.commentCount ?? 0) + 1;
         }
 
+        Get.find<CommunityPostController>().getCommunityPostList();
+
         // Hiển thị thông báo thành công
         // _showSuccessDialog('Comment posted successfully');
 
@@ -393,6 +396,8 @@ class CommunityPostDetailsController extends GetxController {
           communityPost.value!.commentCount =
               (communityPost.value!.commentCount ?? 1) - 1;
         }
+
+        Get.find<CommunityPostController>().getCommunityPostList();
 
         // Hiển thị thông báo thành công bằng dialog
         // _showSuccessDialog('Comment deleted successfully');

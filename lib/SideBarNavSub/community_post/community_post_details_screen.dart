@@ -186,14 +186,24 @@ class CommunityPostDetailsScreen
                               // Post Meta Info
                               Row(
                                 children: [
-                                  const CircleAvatar(
+                                  CircleAvatar(
                                     backgroundColor: Color(0xFFE1BEE7),
                                     radius: 20,
-                                    child: Icon(
-                                      Icons.person,
-                                      color: Color(0xFF8E6C88),
-                                      size: 22,
-                                    ),
+                                    backgroundImage: controller.communityPost
+                                                .value?.avatarUrl !=
+                                            null
+                                        ? NetworkImage(controller
+                                            .communityPost.value!.avatarUrl!)
+                                        : null,
+                                    child: controller.communityPost.value
+                                                ?.avatarUrl ==
+                                            null
+                                        ? Icon(
+                                            Icons.person,
+                                            color: Color(0xFF8E6C88),
+                                            size: 22,
+                                          )
+                                        : null,
                                   ),
                                   const SizedBox(width: 12),
                                   Column(
@@ -527,14 +537,19 @@ class CommunityPostDetailsScreen
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const CircleAvatar(
+                                    CircleAvatar(
                                       backgroundColor: Color(0xFFE1BEE7),
                                       radius: 18,
-                                      child: Icon(
-                                        Icons.person,
-                                        color: Color(0xFF8E6C88),
-                                        size: 20,
-                                      ),
+                                      backgroundImage: comment.avatarUrl != null
+                                          ? NetworkImage(comment.avatarUrl!)
+                                          : null,
+                                      child: comment.avatarUrl == null
+                                          ? Icon(
+                                              Icons.person,
+                                              color: Color(0xFF8E6C88),
+                                              size: 20,
+                                            )
+                                          : null,
                                     ),
                                     const SizedBox(width: 12),
                                     Expanded(

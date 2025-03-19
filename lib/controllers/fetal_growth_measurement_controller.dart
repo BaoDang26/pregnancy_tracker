@@ -205,6 +205,9 @@ class FetalGrowthMeasurementController extends GetxController {
     if (response.statusCode == 200) {
       fetalGrowthMeasurementModel.value =
           fetalGrowthMeasurementModelFromJson(response.body);
+      fetalGrowthMeasurementModel.sort(
+        (a, b) => a.measurementDate!.compareTo(b.measurementDate!),
+      );
     } else if (response.statusCode == 401) {
       String message = jsonDecode(response.body)['message'];
       if (message.contains("JWT token is expired")) {
@@ -273,13 +276,12 @@ class FetalGrowthMeasurementController extends GetxController {
     var response = await FetalGrowthMeasurementRepository
         .getHeightFetalGrowthMeasurementList(pregnancyId);
 
-    print('Height measurements response: ${response.statusCode}');
-    print('Height response body: ${response.body}');
-
     if (response.statusCode == 200) {
       var heightDataList = heightSummaryModelFromJson(response.body);
       print('Height data list: $heightDataList');
-
+      heightDataList.sort(
+        (a, b) => a.weekNumber!.compareTo(b.weekNumber!),
+      );
       // Update existing measurements with height data
       for (var heightMeasurement in heightDataList) {
         heightData.add(HeightData(heightMeasurement.weekNumber!,
@@ -312,11 +314,11 @@ class FetalGrowthMeasurementController extends GetxController {
     var response = await FetalGrowthMeasurementRepository
         .getWeightFetalGrowthMeasurementList(pregnancyId);
 
-    print('Weight measurements response: ${response.statusCode}');
-    print('Weight response body: ${response.body}');
-
     if (response.statusCode == 200) {
       var weightDataList = weightSummaryModelFromJson(response.body);
+      weightDataList.sort(
+        (a, b) => a.weekNumber!.compareTo(b.weekNumber!),
+      );
       print('Weight data list: $weightDataList');
 
       // Update existing measurements with weight data
