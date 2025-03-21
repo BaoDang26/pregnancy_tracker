@@ -57,8 +57,7 @@ class AuthenticationRepository {
       "Content-type": "application/json",
     };
     response = await interceptedClient.post(
-      BuildServer.buildUrl("auth/forgot-password"),
-      body: {"email": email},
+      BuildServer.buildUrl("auth/forgot-password?email=$email"),
       headers: header,
     );
     return response;

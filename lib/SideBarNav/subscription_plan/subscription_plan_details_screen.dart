@@ -378,10 +378,10 @@ class SubscriptionPlanDetailScreen
                                     //     text: "No advertisements"),
                                     _buildFeatureItem(
                                         icon: Icons.check_circle,
-                                        text: "Priority support"),
-                                    // _buildFeatureItem(
-                                    //     icon: Icons.check_circle,
-                                    //     text: "Offline access to saved content"),
+                                        text: "Personalized pregnancy journey"),
+                                    _buildFeatureItem(
+                                        icon: Icons.check_circle,
+                                        text: "Detailed health analysis"),
 
                                     const SizedBox(
                                         height: 20), // Reduced from 30
