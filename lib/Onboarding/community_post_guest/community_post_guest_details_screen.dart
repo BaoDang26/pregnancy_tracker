@@ -825,68 +825,6 @@ class CommunityPostGuestDetailsScreen
 
         // Join Community Box (đặc thù cho guest)
         const SizedBox(height: 24),
-        Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: const Color(0xFFE1BEE7).withOpacity(0.2),
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: const Color(0xFFAD6E8C).withOpacity(0.3),
-              width: 1,
-            ),
-          ),
-          child: Column(
-            children: [
-              const Icon(
-                Icons.person_add_outlined,
-                color: Color(0xFFAD6E8C),
-                size: 40,
-              ),
-              const SizedBox(height: 12),
-              const Text(
-                'Create Your Account',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF614051),
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                'Join our supportive community of parents and parents-to-be',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[700],
-                  height: 1.4,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton.icon(
-                onPressed: () => controller.navigateToSignUp(),
-                icon: const Icon(Icons.person_add_outlined),
-                label: const Text('Register Now'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFAD6E8C),
-                  foregroundColor: Colors.white,
-                  minimumSize: const Size(double.infinity, 45),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 8),
-              TextButton(
-                onPressed: () => controller.navigateToLogin(),
-                child: const Text('Already have an account? Login'),
-                style: TextButton.styleFrom(
-                  foregroundColor: const Color(0xFF8E6C88),
-                ),
-              ),
-            ],
-          ),
-        ),
       ],
     );
   }

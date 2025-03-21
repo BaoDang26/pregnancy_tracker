@@ -164,7 +164,7 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
               ),
               const SizedBox(width: 8),
               ElevatedButton.icon(
-                icon: const Icon(Icons.add_circle_outline),
+                icon: const Icon(Icons.subdirectory_arrow_left),
                 label: const Text('Subscription Plans'),
                 onPressed: () => Get.back(), // Go back to subscription plans
                 style: ElevatedButton.styleFrom(
@@ -698,16 +698,6 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
             ],
           ),
         ),
-        if (showAddButton && onAddPressed != null)
-          ElevatedButton.icon(
-            onPressed: onAddPressed,
-            icon: const Icon(Icons.add),
-            label: const Text('Browse Plans'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green[700],
-              foregroundColor: Colors.white,
-            ),
-          ),
       ],
     );
   }

@@ -14,10 +14,11 @@ class CreatePregnancyProfileScreen
     return Obx(() {
       if (controller.isLoading.value) {
         return Scaffold(
-          backgroundColor: appTheme.white,
+          backgroundColor: Colors.white,
           body: Center(
             child: CircularProgressIndicator.adaptive(
-              valueColor: AlwaysStoppedAnimation(appTheme.green500),
+              valueColor: const AlwaysStoppedAnimation(
+                  Color(0xFFAD6E8C)), // Mauve/hồng đậm
             ),
           ),
         );
@@ -32,297 +33,86 @@ class CreatePregnancyProfileScreen
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Color.fromARGB(255, 164, 219, 186),
-                      const Color.fromARGB(255, 156, 227, 184),
-                      Color.fromARGB(255, 137, 214, 169),
-                      Color.fromARGB(255, 119, 209, 154),
-                      Color.fromARGB(255, 102, 204, 140),
+                      Color(0xFFF8EEF6), // Hồng pastel nhạt
+                      Color(0xFFF5E1EB), // Hồng pastel
+                      Color(0xFFEBD7E6), // Hồng nhạt pha tím
+                      Color(0xFFE5D1E8), // Tím lavender nhạt
+                      Color(0xFFDBC5DE), // Tím lavender đậm hơn
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                 ),
-                child: Form(
-                  key: controller.pregnancyProfileFormKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Create Pregnancy Profile',
-                        style: TextStyle(
-                          fontSize: 48,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      const Text(
-                        'Please enter your details',
-                        textAlign: TextAlign.left,
-                      ),
-                      const SizedBox(height: 20),
-                      TextFormField(
-                        controller: controller.nickNameController,
-                        onSaved: (value) {
-                          controller.nickName = value!;
-                        },
-                        validator: (value) {
-                          return controller.validateNickName(value!);
-                        },
-                        decoration: const InputDecoration(
-                          labelText: 'Baby\'s nickname',
-                          border: OutlineInputBorder(),
-                          filled: true,
-                          fillColor: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: Colors.grey.shade300),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                child: SingleChildScrollView(
+                  child: Form(
+                    key: controller.pregnancyProfileFormKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Tiêu đề với icon
+                        Row(
                           children: [
-                            const Text(
-                              'Choose one option:',
+                            const Icon(
+                              Icons.pregnant_woman,
+                              size: 48,
+                              color: Color(0xFFAD6E8C), // Mauve/hồng đậm
+                            ),
+                            const SizedBox(width: 16),
+                            Text(
+                              'Pregnancy Profile',
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 32,
                                 fontWeight: FontWeight.bold,
+                                color:
+                                    const Color(0xFFAD6E8C), // Mauve/hồng đậm
+                                letterSpacing: 0.5,
                               ),
-                            ),
-                            const SizedBox(height: 16),
-                            ListTile(
-                              title: const Text('Enter Last Period Date'),
-                              subtitle:
-                                  const Text('We will calculate your due date'),
-                              onTap: () async {
-                                DateTime? pickedDate = await showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime.now()
-                                      .subtract(const Duration(days: 280)),
-                                  lastDate: DateTime.now(),
-                                  builder: (context, child) {
-                                    return Theme(
-                                      data: Theme.of(context).copyWith(
-                                        colorScheme: const ColorScheme.light(
-                                          primary: Colors.green,
-                                          onPrimary: Colors.white,
-                                          onSurface: Colors.black,
-                                        ),
-                                      ),
-                                      child: child!,
-                                    );
-                                  },
-                                );
-                                if (pickedDate != null) {
-                                  String formattedLPD = DateFormat('yyyy-MM-dd')
-                                      .format(pickedDate);
-                                  controller.lastPeriodDateController.text =
-                                      formattedLPD;
-
-                                  DateTime dueDate = DateTime(
-                                    pickedDate.year,
-                                    pickedDate.month + 9,
-                                    pickedDate.day + 7,
-                                  );
-
-                                  if (pickedDate.month + 9 > 12) {
-                                    dueDate = DateTime(
-                                      pickedDate.year + 1,
-                                      (pickedDate.month + 9) - 12,
-                                      pickedDate.day + 7,
-                                    );
-                                  }
-
-                                  controller.dueDateController.text =
-                                      DateFormat('yyyy-MM-dd').format(dueDate);
-                                }
-                              },
-                              leading: const Icon(Icons.calendar_today,
-                                  color: Colors.green),
-                              tileColor: controller
-                                      .lastPeriodDateController.text.isNotEmpty
-                                  ? Colors.green.withOpacity(0.1)
-                                  : null,
-                            ),
-                            const SizedBox(height: 8),
-                            ListTile(
-                              title: const Text('Enter Due Date'),
-                              subtitle: const Text(
-                                  'If you already know your due date from doctor'),
-                              onTap: () async {
-                                DateTime now = DateTime.now();
-                                DateTime minDate =
-                                    now.add(const Duration(days: 1));
-                                DateTime maxDate =
-                                    now.add(const Duration(days: 280));
-
-                                DateTime? pickedDate = await showDatePicker(
-                                  context: context,
-                                  initialDate: minDate,
-                                  firstDate: minDate,
-                                  lastDate: maxDate,
-                                  builder: (context, child) {
-                                    return Theme(
-                                      data: Theme.of(context).copyWith(
-                                        colorScheme: const ColorScheme.light(
-                                          primary: Colors.green,
-                                          onPrimary: Colors.white,
-                                          onSurface: Colors.black,
-                                        ),
-                                      ),
-                                      child: child!,
-                                    );
-                                  },
-                                );
-                                if (pickedDate != null) {
-                                  String formattedDate =
-                                      DateFormat('yyyy-MM-dd')
-                                          .format(pickedDate);
-                                  controller.dueDateController.text =
-                                      formattedDate;
-
-                                  DateTime lastPeriodDate = DateTime(
-                                    pickedDate.year,
-                                    pickedDate.month - 9,
-                                    pickedDate.day - 7,
-                                  );
-
-                                  if (pickedDate.month - 9 < 1) {
-                                    lastPeriodDate = DateTime(
-                                      pickedDate.year - 1,
-                                      12 + (pickedDate.month - 9),
-                                      pickedDate.day - 7,
-                                    );
-                                  }
-
-                                  controller.lastPeriodDateController.text =
-                                      DateFormat('yyyy-MM-dd')
-                                          .format(lastPeriodDate);
-                                }
-                              },
-                              leading:
-                                  const Icon(Icons.event, color: Colors.green),
-                              tileColor: controller
-                                          .dueDateController.text.isNotEmpty &&
-                                      controller
-                                          .lastPeriodDateController.text.isEmpty
-                                  ? Colors.green.withOpacity(0.1)
-                                  : null,
                             ),
                           ],
                         ),
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        controller: controller.lastPeriodDateController,
-                        onSaved: (value) {
-                          controller.lastPeriodDate = value!;
-                        },
-                        readOnly: true,
-                        decoration: const InputDecoration(
-                          labelText: 'Last Period Date',
-                          border: OutlineInputBorder(),
-                          filled: true,
-                          fillColor: Colors.white,
-                          suffixIcon: Icon(Icons.calendar_today),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        controller: controller.dueDateController,
-                        onSaved: (value) {
-                          controller.dueDate = value!;
-                        },
-                        readOnly: true,
-                        decoration: const InputDecoration(
-                          labelText: 'Due Date',
-                          border: OutlineInputBorder(),
-                          filled: true,
-                          fillColor: Colors.white,
-                          suffixIcon: Icon(Icons.calendar_today),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        controller: controller.notesController,
-                        maxLines: 3,
-                        decoration: const InputDecoration(
-                          labelText: 'Notes',
-                          border: OutlineInputBorder(),
-                          filled: true,
-                          fillColor: Colors.white,
-                          hintText: 'Enter any additional notes here...',
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      if (controller.lastPeriodDateController.text.isNotEmpty ||
-                          controller.dueDateController.text.isNotEmpty)
+                        const SizedBox(height: 24),
+
+                        // Form intro
                         Container(
-                          padding: const EdgeInsets.all(16),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 16, horizontal: 20),
                           decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                            border: Border.all(color: Colors.grey.shade300),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Your Pregnancy Dates',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                            color: Colors.white.withOpacity(0.7),
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.05),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
                               ),
-                              const SizedBox(height: 16),
-                              Row(
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.child_friendly,
+                                color: Color(0xFFE57373), // Hồng nhạt
+                                size: 28,
+                              ),
+                              const SizedBox(width: 12),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Last Period Date:',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.grey[600],
-                                          ),
-                                        ),
-                                        const SizedBox(height: 4),
-                                        Text(controller
-                                            .lastPeriodDateController.text),
-                                      ],
+                                  const Text(
+                                    'Create Baby Profile',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF8E6C88), // Tím nhạt
                                     ),
                                   ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Due Date:',
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            color: Colors.grey[600],
-                                          ),
-                                        ),
-                                        const SizedBox(height: 4),
-                                        Text(
-                                          controller.dueDateController.text,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.green,
-                                          ),
-                                        ),
-                                      ],
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'Please enter your pregnancy details',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: const Color(0xFF8E6C88)
+                                          .withOpacity(0.8), // Tím nhạt
                                     ),
                                   ),
                                 ],
@@ -330,55 +120,394 @@ class CreatePregnancyProfileScreen
                             ],
                           ),
                         ),
-                      const SizedBox(height: 20),
-                      Center(
-                        child: CustomElevatedButton(
-                          onPressed: () async {
-                            if (controller.pregnancyProfileFormKey.currentState!
-                                .validate()) {
-                              controller.pregnancyProfileFormKey.currentState!
-                                  .save();
-                              await controller.createPregnancyProfile();
-                              // showDialog(
-                              //   context: context,
-                              //   builder: (BuildContext context) {
-                              //     return Dialog(
-                              //       shape: RoundedRectangleBorder(
-                              //         borderRadius: BorderRadius.circular(12),
-                              //       ),
-                              //       child: Container(
-                              //         padding: EdgeInsets.all(20),
-                              //         child: Column(
-                              //           mainAxisSize: MainAxisSize.min,
-                              //           children: [
-                              //             Text(
-                              //               'Success',
-                              //               style: TextStyle(
-                              //                 fontSize: 24,
-                              //                 fontWeight: FontWeight.bold,
-                              //               ),
-                              //             ),
-                              //             SizedBox(height: 10),
-                              //             Text('Profile created successfully!'),
-                              //             SizedBox(height: 20),
-                              //             TextButton(
-                              //               onPressed: () {
-                              //                 Navigator.of(context).pop();
-                              //               },
-                              //               child: Text('OK'),
-                              //             ),
-                              //           ],
-                              //         ),
-                              //       ),
-                              //     );
-                              //   },
-                              // );
-                            }
+
+                        const SizedBox(height: 28),
+
+                        // Trường nhập tên
+                        _buildInputField(
+                          controller: controller.nickNameController,
+                          label: 'Baby\'s nickname',
+                          icon: Icons.baby_changing_station,
+                          validator: (value) {
+                            return controller.validateNickName(value!);
                           },
-                          text: 'Create Profile',
                         ),
-                      ),
-                    ],
+
+                        const SizedBox(height: 20),
+
+                        // Container chọn option
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.05),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.calendar_month,
+                                    color: Color(0xFFAD6E8C),
+                                    size: 24,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Text(
+                                    'Choose one option:',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: const Color(0xFF8E6C88),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 16),
+                              _buildOptionTile(
+                                title: 'Enter Last Period Date',
+                                subtitle: 'We will calculate your due date',
+                                icon: Icons.calendar_today,
+                                isSelected: controller
+                                    .lastPeriodDateController.text.isNotEmpty,
+                                onTap: () async {
+                                  DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime.now()
+                                        .subtract(const Duration(days: 280)),
+                                    lastDate: DateTime.now(),
+                                    builder: (context, child) {
+                                      return Theme(
+                                        data: Theme.of(context).copyWith(
+                                          colorScheme: const ColorScheme.light(
+                                            primary: Color(0xFFAD6E8C),
+                                            onPrimary: Colors.white,
+                                            onSurface: Colors.black,
+                                          ),
+                                        ),
+                                        child: child!,
+                                      );
+                                    },
+                                  );
+                                  if (pickedDate != null) {
+                                    String formattedLPD =
+                                        DateFormat('yyyy-MM-dd')
+                                            .format(pickedDate);
+                                    controller.lastPeriodDateController.text =
+                                        formattedLPD;
+
+                                    DateTime dueDate = DateTime(
+                                      pickedDate.year,
+                                      pickedDate.month + 9,
+                                      pickedDate.day + 7,
+                                    );
+
+                                    if (pickedDate.month + 9 > 12) {
+                                      dueDate = DateTime(
+                                        pickedDate.year + 1,
+                                        (pickedDate.month + 9) - 12,
+                                        pickedDate.day + 7,
+                                      );
+                                    }
+
+                                    controller.dueDateController.text =
+                                        DateFormat('yyyy-MM-dd')
+                                            .format(dueDate);
+                                  }
+                                },
+                              ),
+                              const SizedBox(height: 12),
+                              _buildOptionTile(
+                                title: 'Enter Due Date',
+                                subtitle:
+                                    'If you already know your due date from doctor',
+                                icon: Icons.event,
+                                isSelected: controller
+                                        .dueDateController.text.isNotEmpty &&
+                                    controller
+                                        .lastPeriodDateController.text.isEmpty,
+                                onTap: () async {
+                                  DateTime now = DateTime.now();
+                                  DateTime minDate =
+                                      now.add(const Duration(days: 1));
+                                  DateTime maxDate =
+                                      now.add(const Duration(days: 280));
+
+                                  DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: minDate,
+                                    firstDate: minDate,
+                                    lastDate: maxDate,
+                                    builder: (context, child) {
+                                      return Theme(
+                                        data: Theme.of(context).copyWith(
+                                          colorScheme: const ColorScheme.light(
+                                            primary: Color(0xFFAD6E8C),
+                                            onPrimary: Colors.white,
+                                            onSurface: Colors.black,
+                                          ),
+                                        ),
+                                        child: child!,
+                                      );
+                                    },
+                                  );
+                                  if (pickedDate != null) {
+                                    String formattedDate =
+                                        DateFormat('yyyy-MM-dd')
+                                            .format(pickedDate);
+                                    controller.dueDateController.text =
+                                        formattedDate;
+
+                                    DateTime lastPeriodDate = DateTime(
+                                      pickedDate.year,
+                                      pickedDate.month - 9,
+                                      pickedDate.day - 7,
+                                    );
+
+                                    if (pickedDate.month - 9 < 1) {
+                                      lastPeriodDate = DateTime(
+                                        pickedDate.year - 1,
+                                        12 + (pickedDate.month - 9),
+                                        pickedDate.day - 7,
+                                      );
+                                    }
+
+                                    controller.lastPeriodDateController.text =
+                                        DateFormat('yyyy-MM-dd')
+                                            .format(lastPeriodDate);
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        // Trường last period date
+                        _buildInputField(
+                          controller: controller.lastPeriodDateController,
+                          label: 'Last Period Date',
+                          icon: Icons.calendar_today,
+                          readOnly: true,
+                        ),
+
+                        const SizedBox(height: 16),
+
+                        // Trường due date
+                        _buildInputField(
+                          controller: controller.dueDateController,
+                          label: 'Due Date',
+                          icon: Icons.event_available,
+                          readOnly: true,
+                        ),
+
+                        const SizedBox(height: 16),
+
+                        // Trường notes
+                        _buildInputField(
+                          controller: controller.notesController,
+                          label: 'Notes',
+                          icon: Icons.note_alt,
+                          maxLines: 3,
+                          hint: 'Enter any additional notes here...',
+                        ),
+
+                        const SizedBox(height: 20),
+
+                        // Pregnancy dates summary
+                        if (controller
+                                .lastPeriodDateController.text.isNotEmpty ||
+                            controller.dueDateController.text.isNotEmpty)
+                          Container(
+                            padding: const EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.05),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.date_range,
+                                      color: Color(0xFFAD6E8C),
+                                      size: 24,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Text(
+                                      'Your Pregnancy Dates',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: const Color(0xFF8E6C88),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 16),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        padding: const EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFFF8EEF6)
+                                              .withOpacity(0.7),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.calendar_today,
+                                                  size: 16,
+                                                  color: Color(0xFF8E6C88),
+                                                ),
+                                                const SizedBox(width: 6),
+                                                Text(
+                                                  'Last Period Date:',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    color:
+                                                        const Color(0xFF8E6C88),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 4),
+                                            Text(
+                                              controller
+                                                  .lastPeriodDateController
+                                                  .text,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: Container(
+                                        padding: const EdgeInsets.all(10),
+                                        decoration: BoxDecoration(
+                                          color: const Color(0xFFE5D1E8)
+                                              .withOpacity(0.7),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.event_available,
+                                                  size: 16,
+                                                  color: Color(0xFF8E6C88),
+                                                ),
+                                                const SizedBox(width: 6),
+                                                Text(
+                                                  'Due Date:',
+                                                  style: TextStyle(
+                                                    fontWeight: FontWeight.w500,
+                                                    color:
+                                                        const Color(0xFF8E6C88),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(height: 4),
+                                            Text(
+                                              controller.dueDateController.text,
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Color(0xFFAD6E8C),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+
+                        const SizedBox(height: 28),
+
+                        // Create profile button
+                        Center(
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 50,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                if (controller
+                                    .pregnancyProfileFormKey.currentState!
+                                    .validate()) {
+                                  controller
+                                      .pregnancyProfileFormKey.currentState!
+                                      .save();
+                                  await controller.createPregnancyProfile();
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor:
+                                    const Color(0xFFAD6E8C), // Mauve/hồng đậm
+                                foregroundColor: Colors.white,
+                                elevation: 4,
+                                shadowColor:
+                                    const Color(0xFFAD6E8C).withOpacity(0.4),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25),
+                                ),
+                              ),
+                              child: const Row(
+                                mainAxisSize: MainAxisSize.min,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.save),
+                                  SizedBox(width: 8),
+                                  Text(
+                                    'Create Profile',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -398,5 +527,104 @@ class CreatePregnancyProfileScreen
         ),
       );
     });
+  }
+
+  // Helper widget để tạo các trường nhập liệu
+  Widget _buildInputField({
+    required TextEditingController controller,
+    required String label,
+    IconData? icon,
+    bool readOnly = false,
+    int? maxLines,
+    String? hint,
+    String? Function(String?)? validator,
+  }) {
+    return Theme(
+      data: ThemeData().copyWith(
+        inputDecorationTheme: InputDecorationTheme(
+          filled: true,
+          fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Color(0xFFAD6E8C), width: 2),
+          ),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        ),
+      ),
+      child: TextFormField(
+        controller: controller,
+        readOnly: readOnly,
+        maxLines: maxLines ?? 1,
+        validator: validator,
+        decoration: InputDecoration(
+          labelText: label,
+          hintText: hint,
+          labelStyle: const TextStyle(color: Color(0xFF8E6C88)),
+          suffixIcon: Icon(
+            icon,
+            color: const Color(0xFF8E6C88),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Helper widget để tạo các tile lựa chọn
+  Widget _buildOptionTile({
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required VoidCallback onTap,
+    bool isSelected = false,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(
+        color: isSelected ? const Color(0xFFEBD7E6) : Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: isSelected ? const Color(0xFFAD6E8C) : Colors.grey.shade300,
+          width: isSelected ? 2 : 1,
+        ),
+      ),
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        title: Text(
+          title,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: isSelected ? const Color(0xFF8E6C88) : Colors.grey.shade800,
+          ),
+        ),
+        subtitle: Text(
+          subtitle,
+          style: TextStyle(
+            color: isSelected
+                ? const Color(0xFF8E6C88).withOpacity(0.8)
+                : Colors.grey.shade600,
+          ),
+        ),
+        leading: Icon(
+          icon,
+          color: isSelected
+              ? const Color(0xFFAD6E8C)
+              : const Color(0xFF8E6C88).withOpacity(0.6),
+          size: 28,
+        ),
+        onTap: onTap,
+      ),
+    );
   }
 }
