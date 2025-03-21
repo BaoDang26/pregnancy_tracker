@@ -8,7 +8,6 @@ import 'app.dart';
 
 Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
-
   runApp(const MyApp());
 }
 

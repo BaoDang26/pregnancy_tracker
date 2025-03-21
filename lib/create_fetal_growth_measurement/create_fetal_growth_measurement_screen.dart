@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pregnancy_tracker/util/app_export.dart';
-
 import '../controllers/create_fetal_growth_measurement_controller.dart';
 import '../widgets/custom_elevated_button.dart';
 
@@ -26,17 +25,17 @@ class CreateFetalGrowthMeasurementScreen
         body: Row(
           children: [
             Expanded(
-              flex: 2,
+              flex: 1,
               child: Container(
                 padding: const EdgeInsets.all(32.0),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Colors.green[50]!,
-                      Colors.green[100]!,
-                      Colors.green[200]!.withOpacity(0.5),
-                      Colors.green[300]!.withOpacity(0.3),
-                      Colors.green[400]!.withOpacity(0.2),
+                      Color(0xFFF8EEF6), // Light pastel pink
+                      Color(0xFFF5E1EB), // Pastel pink
+                      Color(0xFFEBD7E6), // Light pink with purple
+                      Color(0xFFE5D1E8), // Light lavender
+                      Color(0xFFDBC5DE), // Darker lavender
                     ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -48,115 +47,163 @@ class CreateFetalGrowthMeasurementScreen
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Create Fetal Growth Measurement',
-                          style: TextStyle(
-                            fontSize: 48,
-                            fontWeight: FontWeight.bold,
+                        const Row(
+                          children: [
+                            Icon(
+                              Icons.pregnant_woman_rounded,
+                              size: 48,
+                              color: Color(0xFFAD6E8C), // Mauve/dark pink
+                            ),
+                            SizedBox(width: 16),
+                            Text(
+                              'Create Fetal Growth Measurement',
+                              style: TextStyle(
+                                fontSize: 42,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFFAD6E8C), // Mauve/dark pink
+                                letterSpacing: 0.5,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 24),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 16, horizontal: 20),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.7),
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.05),
+                                blurRadius: 10,
+                                offset: const Offset(0, 4),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.assignment, // Changed to a document icon
+                                color: Color(0xFFE57373), // Light pink
+                                size: 28,
+                              ),
+                              const SizedBox(width: 12),
+                              Text(
+                                'Please enter your details',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color:
+                                      const Color(0xFF8E6C88).withOpacity(0.8),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        const SizedBox(height: 20),
-                        const Text(
-                          'Please enter your details',
-                          textAlign: TextAlign.left,
+                        const SizedBox(height: 24),
+                        Center(
+                          child: Container(
+                            width: 600,
+                            child: _buildInputField(
+                              controller: controller.measurementDateController,
+                              label: 'Measurement Date',
+                              isDatePicker: true,
+                              context: context,
+                            ),
+                          ),
                         ),
-                        const SizedBox(height: 20),
-                        Obx(() {
-                          if (controller.errorMessage.isNotEmpty) {
-                            return Container(
-                              margin: const EdgeInsets.only(bottom: 20),
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                color: Colors.red[50],
-                                border: Border.all(color: Colors.red[300]!),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Row(
-                                children: [
-                                  const Icon(Icons.error_outline,
-                                      color: Colors.red),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: Text(
-                                      controller.errorMessage.value,
-                                      style: TextStyle(
-                                        color: Colors.red[900],
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  ),
-                                  IconButton(
-                                    icon: Icon(Icons.close,
-                                        color: Colors.red[300]),
-                                    onPressed: () =>
-                                        controller.errorMessage.value = '',
-                                  ),
-                                ],
-                              ),
-                            );
-                          }
-                          return const SizedBox.shrink();
-                        }),
-                        _buildInputField(
-                          controller: controller.measurementDateController,
-                          label: 'Measurement Date',
-                          isDatePicker: true,
-                          context: context,
+                        const SizedBox(height: 16),
+                        Center(
+                          child: Container(
+                            width: 600,
+                            child: _buildInputField(
+                              controller: controller.weightController,
+                              label: 'Weight (g)',
+                              validator: (value) =>
+                                  controller.validateWeight(value!),
+                            ),
+                          ),
                         ),
-                        const SizedBox(height: 12),
-                        _buildInputField(
-                          controller: controller.weightController,
-                          label: 'Weight (g)',
-                          validator: (value) =>
-                              controller.validateWeight(value!),
+                        const SizedBox(height: 16),
+                        Center(
+                          child: Container(
+                            width: 600,
+                            child: _buildInputField(
+                              controller: controller.heightController,
+                              label: 'Height (cm)',
+                              validator: (value) =>
+                                  controller.validateHeight(value!),
+                            ),
+                          ),
                         ),
-                        const SizedBox(height: 12),
-                        _buildInputField(
-                          controller: controller.heightController,
-                          label: 'Height (cm)',
-                          validator: (value) =>
-                              controller.validateHeight(value!),
+                        const SizedBox(height: 16),
+                        Center(
+                          child: Container(
+                            width: 600,
+                            child: _buildInputField(
+                              controller:
+                                  controller.headCircumferenceController,
+                              label: 'Head Circumference (cm)',
+                            ),
+                          ),
                         ),
-                        const SizedBox(height: 12),
-                        _buildInputField(
-                          controller: controller.headCircumferenceController,
-                          label: 'Head Circumference (cm)',
+                        const SizedBox(height: 16),
+                        Center(
+                          child: Container(
+                            width: 600,
+                            child: _buildInputField(
+                              controller:
+                                  controller.bellyCircumferenceController,
+                              label: 'Belly Circumference (cm)',
+                            ),
+                          ),
                         ),
-                        const SizedBox(height: 12),
-                        _buildInputField(
-                          controller: controller.bellyCircumferenceController,
-                          label: 'Belly Circumference (cm)',
+                        const SizedBox(height: 16),
+                        Center(
+                          child: Container(
+                            width: 600,
+                            child: _buildInputField(
+                              controller: controller.heartRateController,
+                              label: 'Heart Rate (bpm)',
+                            ),
+                          ),
                         ),
-                        const SizedBox(height: 12),
-                        _buildInputField(
-                          controller: controller.heartRateController,
-                          label: 'Heart Rate (bpm)',
+                        const SizedBox(height: 16),
+                        Center(
+                          child: Container(
+                            width: 600,
+                            child: _buildInputField(
+                              controller: controller.movementCountController,
+                              label: 'Movement Count',
+                            ),
+                          ),
                         ),
-                        const SizedBox(height: 12),
-                        _buildInputField(
-                          controller: controller.movementCountController,
-                          label: 'Movement Count',
+                        const SizedBox(height: 16),
+                        Center(
+                          child: Container(
+                            width: 600,
+                            child: _buildInputField(
+                              controller: controller.notesController,
+                              label: 'Notes',
+                              maxLines: 2,
+                            ),
+                          ),
                         ),
-                        const SizedBox(height: 12),
-                        _buildInputField(
-                          controller: controller.notesController,
-                          label: 'Notes',
-                          maxLines: 5,
-                        ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 24),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Expanded(
+                            SizedBox(
+                              width: 180,
                               child: CustomElevatedButton(
-                                onPressed: () =>
-                                    // Navigator.of(Get.context!).pop(),
-                                    Get.back(),
+                                onPressed: () => Get.back(),
                                 text: 'Cancel',
+                                isCancel: true,
                               ),
                             ),
                             const SizedBox(width: 20),
-                            Expanded(
+                            SizedBox(
+                              width: 180,
                               child: CustomElevatedButton(
                                 onPressed: () {
                                   controller.addFetalGrowthMeasurement();
@@ -173,7 +220,7 @@ class CreateFetalGrowthMeasurementScreen
               ),
             ),
             Expanded(
-              flex: 3,
+              flex: 1,
               child: Container(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
@@ -198,19 +245,17 @@ class CreateFetalGrowthMeasurementScreen
     BuildContext? context,
   }) {
     return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.green[50]!,
-            Colors.green[100]!,
-            Colors.green[200]!.withOpacity(0.5),
-            Colors.green[300]!.withOpacity(0.3),
-            Colors.green[400]!.withOpacity(0.2),
-          ],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(5),
+        color: Colors.white.withOpacity(0.7),
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: TextFormField(
         controller: controller,
@@ -228,9 +273,9 @@ class CreateFetalGrowthMeasurementScreen
                     return Theme(
                       data: Theme.of(context).copyWith(
                         colorScheme: const ColorScheme.light(
-                          primary: Colors.green,
+                          primary: Color(0xFFAD6E8C), // Mauve/dark pink
                           onPrimary: Colors.white,
-                          onSurface: Colors.black,
+                          onSurface: Color(0xFF8E6C88),
                         ),
                       ),
                       child: child!,
@@ -245,23 +290,15 @@ class CreateFetalGrowthMeasurementScreen
         decoration: InputDecoration(
           labelText: label,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide: BorderSide(color: Colors.green[300]!),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide: BorderSide(color: Colors.green[300]!),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(5),
-            borderSide: BorderSide(color: Colors.green[500]!),
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
           ),
           filled: true,
-          fillColor: Colors.transparent,
+          fillColor: Colors.white,
           contentPadding:
-              const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           suffixIcon: isDatePicker
-              ? const Icon(Icons.calendar_today, color: Colors.green)
+              ? const Icon(Icons.calendar_today, color: Color(0xFF8E6C88))
               : null,
         ),
       ),
