@@ -13,6 +13,7 @@ class SubscriptionPlanController extends GetxController {
   var userRole = ''.obs;
   var userId = 0.obs;
   var activeSubscriptionPlanList = <SubscriptionPlanModel>[].obs;
+  var currentPage = 0.obs;
 
   @override
   void onInit() {
@@ -55,6 +56,7 @@ class SubscriptionPlanController extends GetxController {
   }
 
   Future<void> getActiveSubscriptionPlanList() async {
+    currentPage.value = 0;
     isLoading.value = true;
     var response = await SubscriptionPlanRepository.getSubscriptionPlanList();
 
@@ -89,5 +91,21 @@ class SubscriptionPlanController extends GetxController {
 
   void getBack() {
     Get.back();
+  }
+
+  void nextPage() {
+    int totalPlans = activeSubscriptionPlanList.length;
+    int plansPerPage = 3;
+    int totalPages = (totalPlans / plansPerPage).ceil();
+
+    if (currentPage.value < totalPages - 1) {
+      currentPage.value++;
+    }
+  }
+
+  void prevPage() {
+    if (currentPage.value > 0) {
+      currentPage.value--;
+    }
   }
 }

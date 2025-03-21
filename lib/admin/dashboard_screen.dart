@@ -190,7 +190,7 @@ class DashboardScreen extends GetView<DashboardController> {
             const SizedBox(width: 16),
             Expanded(
               child: _buildStatCard(
-                title: 'Total Subscriptions',
+                title: 'Total User Subscriptions',
                 value: controller.dashboardTotalUserSubscription.value
                         .totalSubscriptions ??
                     0,
@@ -297,9 +297,10 @@ class DashboardScreen extends GetView<DashboardController> {
               child: _buildPieChart(),
             ),
             const SizedBox(width: 16),
-            Expanded(
-              child: _buildBarChart(),
-            ),
+
+            // Expanded(
+            //   child: _buildBarChart(),
+            // ),
           ],
         ),
       ],
@@ -428,100 +429,100 @@ class DashboardScreen extends GetView<DashboardController> {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Subscription Overview',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF614051),
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Monthly subscription trends',
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey[600],
-            ),
-          ),
-          const SizedBox(height: 20),
-          Expanded(
-            child: BarChart(
-              BarChartData(
-                alignment: BarChartAlignment.spaceAround,
-                maxY: 100,
-                barTouchData: BarTouchData(enabled: false),
-                titlesData: FlTitlesData(
-                  show: true,
-                  bottomTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      getTitlesWidget: (value, meta) {
-                        const titles = [
-                          'Jan',
-                          'Mar',
-                          'May',
-                          'Jul',
-                          'Sep',
-                          'Nov'
-                        ];
-                        final index = value.toInt();
-                        if (index >= 0 && index < titles.length) {
-                          return Text(
-                            titles[index],
-                            style: const TextStyle(fontSize: 10),
-                          );
-                        }
-                        return const Text('');
-                      },
-                    ),
-                  ),
-                  leftTitles: AxisTitles(
-                    sideTitles: SideTitles(
-                      showTitles: true,
-                      getTitlesWidget: (value, meta) {
-                        if (value % 20 == 0) {
-                          return Text(
-                            value.toInt().toString(),
-                            style: const TextStyle(fontSize: 10),
-                          );
-                        }
-                        return const Text('');
-                      },
-                    ),
-                  ),
-                  topTitles:
-                      AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                  rightTitles:
-                      AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                ),
-                gridData: FlGridData(
-                  show: true,
-                  horizontalInterval: 20,
-                  getDrawingHorizontalLine: (value) {
-                    return FlLine(
-                      color: Colors.grey[200],
-                      strokeWidth: 1,
-                    );
-                  },
-                ),
-                borderData: FlBorderData(show: false),
-                barGroups: [
-                  _buildBarGroup(0, 30),
-                  _buildBarGroup(1, 45),
-                  _buildBarGroup(2, 55),
-                  _buildBarGroup(3, 70),
-                  _buildBarGroup(4, 85),
-                  _buildBarGroup(5, 65),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+      // child: Column(
+      //   crossAxisAlignment: CrossAxisAlignment.start,
+      //   children: [
+      //     const Text(
+      //       'Subscription Overview',
+      //       style: TextStyle(
+      //         fontSize: 16,
+      //         fontWeight: FontWeight.bold,
+      //         color: Color(0xFF614051),
+      //       ),
+      //     ),
+      //     const SizedBox(height: 8),
+      //     Text(
+      //       'Monthly subscription trends',
+      //       style: TextStyle(
+      //         fontSize: 12,
+      //         color: Colors.grey[600],
+      //       ),
+      //     ),
+      //     const SizedBox(height: 20),
+      //     Expanded(
+      //       child: BarChart(
+      //         BarChartData(
+      //           alignment: BarChartAlignment.spaceAround,
+      //           maxY: 100,
+      //           barTouchData: BarTouchData(enabled: false),
+      //           titlesData: FlTitlesData(
+      //             show: true,
+      //             bottomTitles: AxisTitles(
+      //               sideTitles: SideTitles(
+      //                 showTitles: true,
+      //                 getTitlesWidget: (value, meta) {
+      //                   const titles = [
+      //                     'Jan',
+      //                     'Mar',
+      //                     'May',
+      //                     'Jul',
+      //                     'Sep',
+      //                     'Nov'
+      //                   ];
+      //                   final index = value.toInt();
+      //                   if (index >= 0 && index < titles.length) {
+      //                     return Text(
+      //                       titles[index],
+      //                       style: const TextStyle(fontSize: 10),
+      //                     );
+      //                   }
+      //                   return const Text('');
+      //                 },
+      //               ),
+      //             ),
+      //             leftTitles: AxisTitles(
+      //               sideTitles: SideTitles(
+      //                 showTitles: true,
+      //                 getTitlesWidget: (value, meta) {
+      //                   if (value % 20 == 0) {
+      //                     return Text(
+      //                       value.toInt().toString(),
+      //                       style: const TextStyle(fontSize: 10),
+      //                     );
+      //                   }
+      //                   return const Text('');
+      //                 },
+      //               ),
+      //             ),
+      //             topTitles:
+      //                 AxisTitles(sideTitles: SideTitles(showTitles: false)),
+      //             rightTitles:
+      //                 AxisTitles(sideTitles: SideTitles(showTitles: false)),
+      //           ),
+      //           gridData: FlGridData(
+      //             show: true,
+      //             horizontalInterval: 20,
+      //             getDrawingHorizontalLine: (value) {
+      //               return FlLine(
+      //                 color: Colors.grey[200],
+      //                 strokeWidth: 1,
+      //               );
+      //             },
+      //           ),
+      //           borderData: FlBorderData(show: false),
+      //           barGroups: [
+      //             _buildBarGroup(0, 30),
+      //             _buildBarGroup(1, 45),
+      //             _buildBarGroup(2, 55),
+      //             _buildBarGroup(3, 70),
+      //             _buildBarGroup(4, 85),
+      //             _buildBarGroup(5, 65),
+      //           ],
+      //         ),
+      //       ),
+      //     ),
+      //   ],
+      // ),
     );
   }
 

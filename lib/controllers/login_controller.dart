@@ -125,6 +125,15 @@ class LoginController extends GetxController {
         // Default to user sidebar
         Get.offAllNamed(AppRoutes.sidebarnar);
       }
+      // Save user role to SharedPreferences
+      if (userRole.isNotEmpty) {
+        try {
+          PrefUtils.setUserRole(userRole);
+        } catch (e) {
+          print('Error saving user role: $e');
+          // Xử lý lỗi nhưng không làm gián đoạn quy trình đăng nhập
+        }
+      }
     } else if (response.statusCode == 403) {
       errorString.value =
           'Your account has been banned. Please contact administrator for more information.';
@@ -227,6 +236,8 @@ class LoginController extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
         );
       } else {
+        print('response.statusCode: ${response.statusCode}');
+        print('response.body: ${response.body}');
         var errorData = json.decode(response.body);
         Get.snackbar(
           'Error',

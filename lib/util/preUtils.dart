@@ -54,6 +54,25 @@ class PrefUtils {
   static Future<bool>? setBool(String key, bool value) =>
       _sharedPreferences?.setBool(key, value);
 
+  // Thêm phương thức kiểm tra token
+  static bool isLoggedIn() {
+    final accessToken = getAccessToken();
+    return accessToken != null && accessToken.isNotEmpty;
+  }
+
+// Thêm phương thức lấy vai trò người dùng
+  static String? getUserRole() {
+    return _sharedPreferences!.getString(userRoleKey);
+  }
+
+// Thêm phương thức lưu vai trò người dùng
+  static void setUserRole(String userRole) {
+    _sharedPreferences!.setString(userRoleKey, userRole);
+  }
+
+// Thêm khóa cho vai trò
+  static String userRoleKey = 'user_role';
+
   Future<void> setThemeData(String value) {
     return _sharedPreferences!.setString('themeData', value);
   }

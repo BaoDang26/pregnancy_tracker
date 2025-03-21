@@ -6,6 +6,7 @@ import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'config/theme.dart';
 import 'routes/app_routes.dart';
 import 'util/initial_bindings.dart';
+import 'util/preUtils.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -30,7 +31,11 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: theme(),
       initialBinding: InitialBindings(),
-      initialRoute: AppRoutes.sidebarnarguest,
+      initialRoute: PrefUtils.isLoggedIn()
+          ? (PrefUtils.getUserRole()?.toUpperCase() == "ROLE_ADMIN"
+              ? AppRoutes.sidebarnaradmin
+              : AppRoutes.sidebarnar)
+          : AppRoutes.sidebarnarguest,
       getPages: AppRoutes.pages,
       // home: HomeScreen(),
     );

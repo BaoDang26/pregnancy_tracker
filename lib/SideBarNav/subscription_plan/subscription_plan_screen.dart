@@ -12,80 +12,98 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Subscription Plans'),
-        actions: [
-          ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white.withOpacity(0.85),
-              foregroundColor: Colors.green[700],
-            ),
-            icon: const Icon(Icons.refresh),
-            label: const Text('Refresh'),
-            onPressed: () {
-              // Call the method to refresh the subscription plans
-              controller
-                  .getActiveSubscriptionPlanList(); // Assuming this method exists
-            },
-          ),
-        ],
-      ),
       body: Obx(() {
         if (controller.isLoading.value) {
-          return Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFFE8F5E9),
-                  Color(0xFFC8E6C9),
-                ],
-              ),
-            ),
-            child: Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.green[700]!),
-              ),
+          return const Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF4CAF50)),
             ),
           );
         }
 
         return Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color(0xFFE8F5E9),
-                Color(0xFFC8E6C9),
-                const Color(0xFFB2DFDB),
-              ],
-            ),
-          ),
-          child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Header Section
-                _buildHeaderSection(context),
+          color: const Color(0xFFF5F7FA),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1200),
+              child: Column(
+                children: [
+                  // Website-style header
+                  _buildWebsiteHeader(),
 
-                // Info Banner
-                _buildInfoBanner(),
+                  // Main content with scrolling
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 30),
 
-                // Premium Features Section
-                _buildPremiumFeatures(),
+                            // Hero section
+                            _buildHeroSection(),
 
-                // Subscription Plans Section
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: controller.activeSubscriptionPlanList.isEmpty
-                        ? _buildEmptyState()
-                        : _buildPlansList(),
+                            const SizedBox(height: 50),
+
+                            // Premium features section
+                            _buildPremiumFeaturesSection(),
+
+                            const SizedBox(height: 50),
+
+                            // Pricing section title
+                            Center(
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'Choose Your Plan',
+                                    style: TextStyle(
+                                      fontSize: 32,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.grey[800],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 16, vertical: 6),
+                                    decoration: BoxDecoration(
+                                      color: Colors.indigo.shade800,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    'Select the plan that best fits your needs',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.grey[600],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+
+                            const SizedBox(height: 30),
+
+                            // Subscription plans section
+                            controller.activeSubscriptionPlanList.isEmpty
+                                ? _buildEmptyState()
+                                : _buildSubscriptionPlansGrid(),
+
+                            const SizedBox(height: 50),
+
+                            // FAQ section
+                            _buildFAQSection(),
+
+                            const SizedBox(height: 50),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
@@ -93,94 +111,61 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
     );
   }
 
-  Widget _buildHeaderSection(BuildContext context) {
+  // Website-style header with navigation
+  Widget _buildWebsiteHeader() {
     return Container(
-      padding: const EdgeInsets.fromLTRB(20, 20, 20, 15),
+      height: 70,
+      padding: const EdgeInsets.symmetric(horizontal: 24),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xFF66BB6A),
-            Color(0xFF4CAF50),
-          ],
-        ),
+        color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 3),
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(
-                      Icons.card_membership,
-                      color: Colors.white,
-                      size: 26,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  const Text(
-                    'Subscription Plans',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      letterSpacing: 0.5,
-                    ),
-                  ),
-                ],
+              Icon(
+                Icons.card_membership,
+                color: Colors.green[700],
+                size: 24,
               ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.85),
-                  borderRadius: BorderRadius.circular(8),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
-                      blurRadius: 4,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
-                ),
-                child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white.withOpacity(0.85),
-                    foregroundColor: Colors.green[700],
-                  ),
-                  icon: Icon(
-                    Icons.history,
-                    color: Colors.green[700],
-                  ),
-                  label: const Text('Subscription History'),
-                  onPressed: () {
-                    Get.toNamed(AppRoutes.usersubscription);
-                  },
+              const SizedBox(width: 12),
+              Text(
+                'Subscription Plans',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[800],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            'Enhance your pregnancy journey with premium features',
-            style: TextStyle(
-              fontSize: 15,
-              color: Colors.white.withOpacity(0.9),
-              fontStyle: FontStyle.italic,
+          const Spacer(),
+          ElevatedButton.icon(
+            icon: const Icon(Icons.refresh),
+            label: const Text('Refresh'),
+            onPressed: () => controller.getActiveSubscriptionPlanList(),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.green[700],
+              elevation: 0,
+              side: BorderSide(color: Colors.green[700]!),
+            ),
+          ),
+          const SizedBox(width: 16),
+          ElevatedButton.icon(
+            icon: const Icon(Icons.history),
+            label: const Text('Subscription History'),
+            onPressed: () => Get.toNamed(AppRoutes.usersubscription),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green[700],
+              foregroundColor: Colors.white,
             ),
           ),
         ],
@@ -188,369 +173,101 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
     );
   }
 
-  Widget _buildInfoBanner() {
+  // Hero section with headline and description
+  Widget _buildHeroSection() {
     return Container(
-      margin: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.all(40),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Colors.blue[50]!,
-            Colors.blue[100]!,
+            Colors.green[50]!,
+            Colors.green[100]!,
           ],
         ),
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-        border: Border.all(
-          color: Colors.blue[300]!.withOpacity(0.5),
-          width: 1,
-        ),
+        borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
         children: [
-          Icon(
-            Icons.info_outline,
-            color: Colors.blue[700],
-            size: 22,
-          ),
-          const SizedBox(width: 12),
           Expanded(
-            child: Text(
-              'Choose a subscription plan to access all premium features and content',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.blue[800],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildEmptyState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.payments_outlined,
-            size: 80,
-            color: Colors.grey[400],
-          ),
-          const SizedBox(height: 16),
-          Text(
-            'No subscription plans available',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[600],
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Please check back later',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey[500],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPlansList() {
-    return ListView.builder(
-      padding: const EdgeInsets.only(top: 8, bottom: 20),
-      itemCount: controller.activeSubscriptionPlanList.length,
-      itemBuilder: (context, index) {
-        final plan = controller.activeSubscriptionPlanList[index];
-        return _buildSubscriptionCard(plan, index, context);
-      },
-    );
-  }
-
-  Widget _buildSubscriptionCard(dynamic plan, int index, BuildContext context) {
-    // Define color schemes for different plans (alternating)
-    final List<Color> cardColors = [
-      Colors.blue[50]!,
-      Colors.purple[50]!,
-      Colors.amber[50]!,
-    ];
-
-    final List<Color> accentColors = [
-      Colors.blue[700]!,
-      Colors.purple[700]!,
-      Colors.amber[700]!,
-    ];
-
-    final Color cardColor = cardColors[index % cardColors.length];
-    final Color accentColor = accentColors[index % accentColors.length];
-
-    final bool isPopular =
-        index == 1; // Mark the second plan as popular for example
-
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.06),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: Column(
-          children: [
-            // Popular tag if applicable
-            if (isPopular)
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 6),
-                color: Colors.orange[400],
-                child: const Center(
-                  child: Text(
-                    'MOST POPULAR',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                      letterSpacing: 1,
-                    ),
+            flex: 3,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Enhance Your Pregnancy Journey',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    height: 1.2,
+                    color: Colors.green[800],
                   ),
                 ),
-              ),
-
-            // Card Content
-            Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    cardColor,
-                    Colors.white,
-                  ],
+                const SizedBox(height: 20),
+                Text(
+                  'Unlock premium features to track your baby\'s development, receive personalized advice, and connect with a supportive community of parents.',
+                  style: TextStyle(
+                    fontSize: 16,
+                    height: 1.5,
+                    color: Colors.grey[700],
+                  ),
                 ),
-              ),
-              child: Stack(
-                children: [
-                  // Decorative element
-                  Positioned(
-                    right: -20,
-                    top: -20,
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: accentColor.withOpacity(0.08),
-                        shape: BoxShape.circle,
+                const SizedBox(height: 24),
+                Row(
+                  children: [
+                    ElevatedButton.icon(
+                      icon: const Icon(Icons.star),
+                      label: const Text('Explore Premium Features'),
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green[700],
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 24,
+                          vertical: 16,
+                        ),
                       ),
                     ),
-                  ),
-
-                  // Main content
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Plan name and icon
-                        Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: accentColor.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Icon(
-                                _getIconForPlan(plan.name ?? ''),
-                                color: accentColor,
-                                size: 24,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    plan.name ?? 'Premium Plan',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.grey[800],
-                                    ),
-                                  ),
-                                  Text(
-                                    '${plan.duration} days access',
-                                    style: TextStyle(
-                                      fontSize: 13,
-                                      color: Colors.grey[600],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        const SizedBox(height: 16),
-
-                        // Price
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              '${NumberFormat('#,###').format((plan.price ?? 0).round())}',
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                                color: accentColor,
-                              ),
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              'VND',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: accentColor,
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        const SizedBox(height: 16),
-
-                        // Description
-                        Text(
-                          plan.description ?? 'No description available',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.grey[700],
-                            height: 1.4,
-                          ),
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-
-                        const SizedBox(height: 20),
-
-                        // Subscribe button
-                        Visibility(
-                          visible: !(controller.userRole.value ==
-                              'ROLE_USER_PREMIUM'),
-                          replacement: Container(
-                            width: double.infinity,
-                            height: 46,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            alignment: Alignment.center,
-                            child: Text(
-                              'Already Subscribed',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey[700],
-                              ),
-                            ),
-                          ),
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: 46,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                controller.goToSubscriptionPlanDetail(index);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: accentColor,
-                                foregroundColor: Colors.white,
-                                elevation: 2,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              child: const Text(
-                                'Choose Plan',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+                    const SizedBox(width: 16),
+                  ],
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          const SizedBox(width: 20),
+          Expanded(
+            flex: 2,
+            child: Image.network(
+              'https://res.cloudinary.com/dlipvbdwi/image/upload/v1741185671/qke7fwc44wla2vqkzavt.jpg',
+              fit: BoxFit.cover,
+              height: 250,
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  // Helper method to get appropriate icon based on plan name
-  IconData _getIconForPlan(String planName) {
-    final name = planName.toLowerCase();
-
-    if (name.contains('basic')) return Icons.star_outline;
-    if (name.contains('standard')) return Icons.star_half;
-    if (name.contains('premium')) return Icons.star;
-    if (name.contains('pro')) return Icons.workspace_premium;
-    if (name.contains('family')) return Icons.family_restroom;
-    if (name.contains('monthly')) return Icons.calendar_month;
-    if (name.contains('yearly')) return Icons.calendar_today;
-
-    // Default icon if no match
-    return Icons.card_membership;
-  }
-
-  Widget _buildPremiumFeatures() {
-    // List of premium features
-    final List<Map<String, dynamic>> premiumFeatures = [
+  // Premium features in a grid layout
+  Widget _buildPremiumFeaturesSection() {
+    final List<Map<String, dynamic>> features = [
       {
         'icon': Icons.favorite,
-        'color': Colors.redAccent,
+        'color': Colors.red[400]!,
         'title': 'Advanced Health Tracking',
         'description': 'Detailed monitoring of baby health metrics'
       },
-      // {
-      //   'icon': Icons.article,
-      //   'color': Colors.blueAccent,
-      //   'title': 'Expert Content Access',
-      //   'description': ''
-      // },
       {
         'icon': Icons.monitor,
-        'color': Colors.greenAccent[700]!,
+        'color': Colors.blue[400]!,
         'title': 'Fetal Growth Charts',
         'description':
             'Visual tracking of your baby\'s development week by week'
       },
       {
         'icon': Icons.calendar_month,
-        'color': Colors.teal,
+        'color': Colors.purple[400]!,
         'title': 'Doctor Appointment Reminders',
         'description':
             'Schedule and get notified about upcoming prenatal checkups'
@@ -562,112 +279,361 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
         'description':
             'Share your pregnancy experiences and insights with others'
       },
-      // {
-      //   'icon': Icons.show_chart,
-      //   'color': Colors.purpleAccent,
-      //   'title': 'Share Growth Charts',
-      //   'description':
-      //       'Easily share your baby\'s growth charts with family and friends'
-      // },
     ];
 
-    return Container(
-      margin: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.06),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Center(
+          child: Text(
+            'Premium Features',
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey[800],
+            ),
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color(0xFF81C784), // Light Green
-                  Color(0xFF388E3C), // Dark Green
+        ),
+        const SizedBox(height: 40),
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 24,
+            mainAxisSpacing: 24,
+            childAspectRatio: 2.5,
+          ),
+          itemCount: features.length,
+          itemBuilder: (context, index) {
+            final feature = features[index];
+            return Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 2),
+                  ),
                 ],
               ),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16),
-              ),
-            ),
-            child: const Row(
-              children: [
-                Icon(
-                  Icons.stars,
-                  color: Colors.white,
-                  size: 24,
-                ),
-                SizedBox(width: 10),
-                Text(
-                  'Premium Features',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    letterSpacing: 0.5,
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: feature['color'].withOpacity(0.1),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      feature['icon'],
+                      color: feature['color'],
+                      size: 26,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          feature['title'],
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.grey[800],
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          feature['description'],
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.grey[600],
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ],
+    );
+  }
 
-          // Features list
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: premiumFeatures.map((feature) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 12),
-                  child: Row(
+  // Subscription plans in a horizontal layout
+  Widget _buildSubscriptionPlansGrid() {
+    // Define the feature sets for each plan type
+    final Map<String, List<String>> featuresByPlanType = {
+      'basic': [
+        'Basic health tracking',
+        'Weekly tips and advice',
+        'Basic pregnancy calendar',
+        'View community posts',
+        'Essential pregnancy information',
+      ],
+      'standard': [
+        'Advanced health tracking',
+        'Fetal growth charts',
+        'Appointment reminders',
+        'Create community posts',
+        'Premium content access',
+      ],
+      'premium': [
+        'All standard features',
+        'Personalized pregnancy journey',
+        'Detailed health analytics',
+      ],
+    };
+
+    // Define color schemes for each plan
+    final List<Map<String, Color>> colorSchemes = [
+      {'bg': Colors.blue[50]!, 'accent': Colors.blue[700]!},
+      {'bg': Colors.purple[50]!, 'accent': Colors.purple[700]!},
+      {'bg': Colors.green[50]!, 'accent': Colors.green[700]!},
+    ];
+
+    // Determine the number of plans to show and the total pages
+    int totalPlans = controller.activeSubscriptionPlanList.length;
+    int plansPerPage = 3; // Hiển thị 3 gói mỗi trang
+    int totalPages = (totalPlans / plansPerPage).ceil();
+
+    // Sử dụng Obx để reactive với currentPage
+    return Obx(() {
+      // Tính toán các gói hiển thị trên trang hiện tại
+      int startIndex = controller.currentPage.value * plansPerPage;
+      int endIndex = startIndex + plansPerPage;
+      if (endIndex > totalPlans) endIndex = totalPlans;
+
+      int numPlans = endIndex - startIndex;
+
+      return Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: List.generate(numPlans, (index) {
+              final planIndex = startIndex + index;
+              final plan = controller.activeSubscriptionPlanList[planIndex];
+              final colorScheme = colorSchemes[planIndex % colorSchemes.length];
+
+              // Determine which feature set to use based on plan name
+              String planType = 'basic';
+              final planName = plan.name?.toLowerCase() ?? '';
+              if (planName.contains('premium')) {
+                planType = 'premium';
+              } else if (planName.contains('standard')) {
+                planType = 'standard';
+              }
+
+              final features =
+                  featuresByPlanType[planType] ?? featuresByPlanType['basic']!;
+              final bool isPopular =
+                  planType == 'standard'; // Mark the standard plan as popular
+
+              return Expanded(
+                child: Container(
+                  margin: EdgeInsets.only(
+                    left: index > 0 ? 8 : 0,
+                    right: index < numPlans - 1 ? 8 : 0,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                    border: Border.all(
+                      color: isPopular
+                          ? colorScheme['accent']!
+                          : Colors.transparent,
+                      width: isPopular ? 2 : 0,
+                    ),
+                  ),
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      // Plan header
                       Container(
-                        padding: const EdgeInsets.all(8),
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(24),
                         decoration: BoxDecoration(
-                          color: feature['color'].withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(10),
+                          color: colorScheme['bg'],
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(12),
+                            topRight: Radius.circular(12),
+                          ),
                         ),
-                        child: Icon(
-                          feature['icon'],
-                          color: feature['color'],
-                          size: 22,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (isPopular)
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 4,
+                                ),
+                                margin: const EdgeInsets.only(bottom: 12),
+                                decoration: BoxDecoration(
+                                  color: colorScheme['accent'],
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: const Text(
+                                  'MOST POPULAR',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            Text(
+                              plan.name ?? 'Subscription Plan',
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: colorScheme['accent'],
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  '${NumberFormat('#,###').format(plan.price)}',
+                                  style: TextStyle(
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.bold,
+                                    color: colorScheme['accent'],
+                                  ),
+                                ),
+                                const SizedBox(width: 4),
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 4),
+                                  child: Text(
+                                    'VND',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                      color: colorScheme['accent'],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Text(
+                              'for ${plan.duration} days',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey[700],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
+
+                      // Plan content
+                      Padding(
+                        padding: const EdgeInsets.all(24),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              feature['title'],
+                              plan.description ??
+                                  'Access premium features and enhance your pregnancy journey.',
                               style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                height: 1.5,
                                 color: Colors.grey[800],
                               ),
                             ),
-                            const SizedBox(height: 2),
-                            Text(
-                              feature['description'],
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.grey[600],
-                                height: 1.3,
+                            const SizedBox(height: 24),
+
+                            // Features list
+                            ...features.map((feature) => Padding(
+                                  padding: const EdgeInsets.only(bottom: 12),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Icon(
+                                        Icons.check_circle,
+                                        color: colorScheme['accent'],
+                                        size: 18,
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Text(
+                                          feature,
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey[700],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+
+                            const SizedBox(height: 24),
+
+                            // Subscribe button
+                            Visibility(
+                              visible: !(controller.userRole.value ==
+                                  'ROLE_USER_PREMIUM'),
+                              replacement: Container(
+                                width: double.infinity,
+                                height: 46,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                alignment: Alignment.center,
+                                child: Text(
+                                  'Already Subscribed',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey[700],
+                                  ),
+                                ),
+                              ),
+                              child: SizedBox(
+                                width: double.infinity,
+                                height: 46,
+                                child: ElevatedButton(
+                                  onPressed: () {
+                                    controller
+                                        .goToSubscriptionPlanDetail(planIndex);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: colorScheme['accent']!,
+                                    foregroundColor: Colors.white,
+                                    elevation: 2,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                  child: const Text(
+                                    'Choose Plan',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ],
@@ -675,12 +641,193 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
                       ),
                     ],
                   ),
-                );
-              }).toList(),
+                ),
+              );
+            }),
+          ),
+
+          // Thêm điều hướng trang nếu có nhiều hơn 3 gói
+          if (totalPages > 1)
+            Padding(
+              padding: const EdgeInsets.only(top: 24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Nút điều hướng trái
+                  IconButton(
+                    onPressed: controller.currentPage.value > 0
+                        ? () => controller.prevPage()
+                        : null,
+                    icon: const Icon(Icons.arrow_back_ios),
+                    color: Colors.grey[700],
+                    disabledColor: Colors.grey[300],
+                  ),
+
+                  // Hiển thị thông tin trang hiện tại
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      'Page ${controller.currentPage.value + 1} of $totalPages',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey[700],
+                      ),
+                    ),
+                  ),
+
+                  // Nút điều hướng phải
+                  IconButton(
+                    onPressed: controller.currentPage.value < totalPages - 1
+                        ? () => controller.nextPage()
+                        : null,
+                    icon: const Icon(Icons.arrow_forward_ios),
+                    color: Colors.grey[700],
+                    disabledColor: Colors.grey[300],
+                  ),
+                ],
+              ),
             ),
+        ],
+      );
+    });
+  }
+
+  // Empty state when no plans are available
+  Widget _buildEmptyState() {
+    return Container(
+      padding: const EdgeInsets.all(48),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.payments_outlined,
+              size: 80,
+              color: Colors.grey[400],
+            ),
+            const SizedBox(height: 24),
+            Text(
+              'No subscription plans available',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[700],
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              'Please check back later or contact our support team for assistance',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[600],
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 24),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.refresh),
+              label: const Text('Refresh'),
+              onPressed: () => controller.getActiveSubscriptionPlanList(),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green[700],
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                  vertical: 12,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // FAQ section
+  Widget _buildFAQSection() {
+    final List<Map<String, String>> faqs = [
+      {
+        'question': 'Can I subscribe to plans later?',
+        'answer': 'Yes, you can upgrade your subscription plan at any time.'
+      },
+      {
+        'question': 'How do I cancel my subscription?',
+        'answer':
+            'You can email us at support@pregnancytracker.com to cancel your subscription.'
+      },
+      {
+        'question': 'Is my payment information secure?',
+        'answer':
+            'Yes, all payments are processed securely, and we don\'t store your payment details on our servers. We use industry-standard encryption to protect your information.'
+      },
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Center(
+          child: Text(
+            'Frequently Asked Questions',
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey[800],
+            ),
+          ),
+        ),
+        const SizedBox(height: 30),
+        ...faqs
+            .map((faq) => Container(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: ExpansionTile(
+                    tilePadding: const EdgeInsets.all(16),
+                    title: Text(
+                      faq['question']!,
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.grey[800],
+                      ),
+                    ),
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                        child: Text(
+                          faq['answer']!,
+                          style: TextStyle(
+                            fontSize: 14,
+                            height: 1.5,
+                            color: Colors.grey[700],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ))
+            .toList(),
+      ],
     );
   }
 }

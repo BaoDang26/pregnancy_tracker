@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart'; // Nhập thư viện intl
+import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/pregnancy_profile_controller.dart';
 import '../util/app_export.dart';
@@ -11,597 +12,907 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFFE0F2E9),
-              Color(0xFFD5EED9),
-              Color(0xFFCAEAD0),
-            ],
-          ),
-        ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              _buildHeader(),
-              _buildInfoSection(),
-              const SizedBox(height: 16),
-              Expanded(
-                child: _buildProfilesSection(),
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xFFE8F5E9),
+                  Color(0xFFC8E6C9),
+                ],
               ),
-              const SizedBox(height: 16),
-            ],
+            ),
+            child: Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.green[700]!),
+              ),
+            ),
+          );
+        }
+
+        return Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xFFE8F5E9),
+                Color(0xFFC8E6C9),
+                Color(0xFFB2DFDB),
+              ],
+            ),
           ),
-        ),
-      ),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1200),
+              child: Column(
+                children: [
+                  // Website-style header
+                  _buildWebsiteHeader(),
+
+                  // Main content with scrolling
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 24),
+
+                            // Summary cards section
+                            _buildSummarySection(),
+
+                            const SizedBox(height: 32),
+
+                            // Info and action section
+                            _buildInfoAndActionSection(),
+
+                            const SizedBox(height: 32),
+
+                            // Profile section header
+                            _buildSectionHeader(
+                              "Your Pregnancy Profiles",
+                              "Manage all your pregnancy journeys in one place",
+                              controller.pregnancyProfileList.isNotEmpty &&
+                                  controller
+                                          .pregnancyProfileList.last.dueDate !=
+                                      null &&
+                                  controller.pregnancyProfileList.last.dueDate!
+                                      .isBefore(DateTime.now()),
+                              onAddPressed: () =>
+                                  controller.goToCreatePregnancyProfile(),
+                            ),
+
+                            const SizedBox(height: 16),
+
+                            // Profiles section
+                            controller.pregnancyProfileList.isEmpty
+                                ? _buildEmptyState()
+                                : _buildProfilesSection(),
+
+                            const SizedBox(height: 32),
+
+                            // Resources section
+                            _buildResourcesSection(),
+
+                            const SizedBox(height: 32),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      }),
     );
   }
 
-  Widget _buildHeader() {
+  // Website-style header with navigation
+  Widget _buildWebsiteHeader() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      height: 70,
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
       child: Row(
         children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.green.withOpacity(0.2),
-                  spreadRadius: 2,
-                  blurRadius: 6,
-                  offset: const Offset(0, 2),
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.green[50],
+                  shape: BoxShape.circle,
                 ),
-              ],
-            ),
-            child: Icon(
-              Icons.pregnant_woman_rounded,
-              size: 38,
-              color: Colors.green[700],
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Text(
-              "Pregnancy Profiles",
-              style: TextStyle(
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-                color: Colors.green[800],
-                letterSpacing: 0.5,
+                child: Icon(
+                  Icons.pregnant_woman_rounded,
+                  color: Colors.green[700],
+                  size: 24,
+                ),
               ),
-            ),
+              const SizedBox(width: 12),
+              Text(
+                'Pregnancy Profiles',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[800],
+                ),
+              ),
+            ],
           ),
-          ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white.withOpacity(0.85),
-              foregroundColor: Colors.green[700],
-            ),
-            icon: Icon(Icons.refresh, color: Colors.green[700]),
-            label: const Text('Refresh'),
-            onPressed: () {
-              // Call the method to refresh the pregnancy profiles
-              controller.getPregnancyProfileList();
-            },
+          const Spacer(),
+          Row(
+            children: [
+              const SizedBox(width: 8),
+              ElevatedButton.icon(
+                icon: const Icon(Icons.refresh),
+                label: const Text('Refresh'),
+                onPressed: () => controller.getPregnancyProfileList(),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green[700],
+                  foregroundColor: Colors.white,
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 
-  Widget _buildInfoSection() {
+  Widget _buildHeaderButton(IconData icon, String tooltip) {
+    return Tooltip(
+      message: tooltip,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Colors.grey[100],
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          icon,
+          color: Colors.grey[700],
+          size: 22,
+        ),
+      ),
+    );
+  }
+
+  // Summary cards with key statistics
+  Widget _buildSummarySection() {
+    // Calculate some stats for the summary cards
+    int activeProfiles = 0;
+    int completedProfiles = 0;
+    int earliestDays = 999;
+    String nearestProfile = "";
+
+    for (var profile in controller.pregnancyProfileList) {
+      if (profile.dueDate != null) {
+        if (profile.dueDate!.isBefore(DateTime.now())) {
+          completedProfiles++;
+        } else {
+          activeProfiles++;
+
+          int daysLeft = profile.dueDate!.difference(DateTime.now()).inDays;
+          if (daysLeft < earliestDays) {
+            earliestDays = daysLeft;
+            nearestProfile = profile.nickName ?? "Unknown";
+          }
+        }
+      } else {
+        activeProfiles++;
+      }
+    }
+
+    return Row(
+      children: [
+        _buildSummaryCard(
+          'Active Profiles',
+          activeProfiles.toString(),
+          Icons.favorite,
+          Colors.green[600]!,
+        ),
+        _buildSummaryCard(
+          'Completed Journeys',
+          completedProfiles.toString(),
+          Icons.check_circle,
+          Colors.blue[600]!,
+        ),
+        _buildSummaryCard(
+          nearestProfile.isNotEmpty ? 'Next Due Date' : 'Create Profile',
+          nearestProfile.isNotEmpty ? '$earliestDays days left' : 'Get Started',
+          nearestProfile.isNotEmpty ? Icons.event : Icons.add_circle,
+          Colors.orange[600]!,
+        ),
+        _buildSummaryCard(
+          'Total Profiles',
+          controller.pregnancyProfileList.length.toString(),
+          Icons.people,
+          Colors.purple[600]!,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSummaryCard(
+      String title, String value, IconData icon, Color color) {
+    return Expanded(
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: color.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(
+                icon,
+                color: color,
+                size: 28,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    value,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[800],
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Info and action section
+  Widget _buildInfoAndActionSection() {
+    // Kiểm tra điều kiện hiển thị phần Quick Actions
+    bool showQuickActions = controller.pregnancyProfileList.isEmpty ||
+        (controller.pregnancyProfileList.isNotEmpty &&
+            controller.pregnancyProfileList.last.dueDate != null &&
+            (controller.pregnancyProfileList.last.dueDate!
+                    .compareTo(DateTime.now()) <=
+                0));
+
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 24),
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Colors.green[50]!,
+            Colors.green[100]!,
+          ],
+        ),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.green.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            flex: showQuickActions ? 3 : 1,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Track Your Pregnancy Journey',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green[800],
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  'Create a pregnancy profile to track fetal development, manage doctor appointments, record growth measurements, and get personalized information throughout your journey.',
+                  style: TextStyle(
+                    fontSize: 16,
+                    height: 1.5,
+                    color: Colors.grey[700],
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Wrap(
+                  spacing: 16,
+                  runSpacing: 12,
+                  children: [
+                    _buildFeatureChip('Weekly Updates', Icons.update),
+                    _buildFeatureChip('Growth Tracking', Icons.show_chart),
+                    _buildFeatureChip(
+                        'Appointment Reminders', Icons.event_note),
+                    _buildFeatureChip(
+                        'Health Monitoring', Icons.favorite_border),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          // Chỉ hiển thị phần Quick Actions khi thỏa mãn điều kiện
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFeatureChip(String label, IconData icon) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
-            spreadRadius: 1,
-            blurRadius: 10,
-            offset: const Offset(0, 5),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
-      child: Column(
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
+          Icon(
+            icon,
+            size: 16,
+            color: Colors.green[700],
+          ),
+          const SizedBox(width: 8),
+          Text(
+            label,
+            style: TextStyle(
+              color: Colors.grey[800],
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildActionButton(
+      String text, IconData icon, Color color, VoidCallback onPressed) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton.icon(
+        onPressed: onPressed,
+        icon: Icon(icon),
+        label: Text(text),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(vertical: 12),
+          alignment: Alignment.centerLeft,
+        ),
+      ),
+    );
+  }
+
+  // Section header with optional add button
+  Widget _buildSectionHeader(String title, String subtitle, bool showAddButton,
+      {VoidCallback? onAddPressed}) {
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: Colors.pink[50],
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(
-                  Icons.info_outline,
-                  color: Colors.pink[400],
-                  size: 30,
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[800],
                 ),
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Do you have a Pregnancy Profile yet?",
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.pink[800],
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'You can manage multiple Pregnancy Profiles in case of multiple pregnancies. If you don\'t have a Pregnancy Profile yet, create one for yourself and start tracking your pregnancy journey!',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey[700],
-                        height: 1.5,
-                      ),
-                    ),
-                  ],
+              const SizedBox(height: 4),
+              Text(
+                subtitle,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[600],
                 ),
               ),
             ],
           ),
-        ],
-      ),
+        ),
+        if (showAddButton && onAddPressed != null)
+          ElevatedButton.icon(
+            onPressed: onAddPressed,
+            icon: const Icon(Icons.add),
+            label: const Text('Add Profile'),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green[700],
+              foregroundColor: Colors.white,
+            ),
+          ),
+      ],
     );
   }
 
-  Widget _buildProfilesSection() {
-    return Obx(() {
-      if (controller.isLoading.value) {
-        return Center(
-          child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.green[700]!),
-            strokeWidth: 4,
+  // Empty state when no profiles exist
+  Widget _buildEmptyState() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 60),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
-        );
-      } else if (controller.pregnancyProfileList.isEmpty) {
-        // Nếu không có profile, chỉ hiện nút thêm
-        return _buildEmptyState();
-      } else {
-        // Có profiles rồi, hiển thị grid và kiểm tra xem có cần hiện nút thêm không
-        bool showAddButton = false;
-
-        // Kiểm tra xem profile gần nhất có dueDate trước ngày hôm nay không
-        if (controller.pregnancyProfileList.last.dueDate != null &&
-            controller.pregnancyProfileList.last.dueDate!
-                .isBefore(DateTime.now())) {
-          showAddButton = true;
-        }
-
-        return Column(
+        ],
+      ),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Your Profiles",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green[800],
-                    ),
-                  ),
-                  if (showAddButton)
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        controller.goToCreatePregnancyProfile();
-                      },
-                      icon: const Icon(Icons.add_circle_outline, size: 24),
-                      label: const Text(
-                        "Add New Profile",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green[700],
-                        foregroundColor: Colors.white,
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 12),
-                      ),
-                    ),
-                ],
+            Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                color: Colors.green[50],
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.pregnant_woman_rounded,
+                size: 80,
+                color: Colors.green[300],
               ),
             ),
-            Expanded(
-              child: controller.pregnancyProfileList.isEmpty
-                  ? _buildEmptyState()
-                  : _buildProfileGrid(),
+            const SizedBox(height: 24),
+            Text(
+              "No Pregnancy Profiles Yet",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.grey[800],
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              "Create your first profile to start tracking your pregnancy journey",
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey[600],
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 32),
+            SizedBox(
+              width: 200,
+              child: ElevatedButton.icon(
+                onPressed: () => controller.goToCreatePregnancyProfile(),
+                icon: const Icon(Icons.add_circle_outline),
+                label: const Text('Create Profile'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green[700],
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                ),
+              ),
             ),
           ],
-        );
-      }
-    });
-  }
-
-  Widget _buildEmptyState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 180,
-            height: 180,
-            decoration: BoxDecoration(
-              color: Colors.green[50],
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.green.withOpacity(0.1),
-                  spreadRadius: 1,
-                  blurRadius: 20,
-                  offset: const Offset(0, 10),
-                ),
-              ],
-            ),
-            child: Icon(
-              Icons.add_rounded,
-              size: 100,
-              color: Colors.green[300],
-            ),
-          ),
-          const SizedBox(height: 24),
-          Text(
-            "Create Your First Profile",
-            style: TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.green[800],
-            ),
-          ),
-          const SizedBox(height: 12),
-          Text(
-            "Start tracking your pregnancy journey",
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.grey[600],
-            ),
-          ),
-          const SizedBox(height: 30),
-          SizedBox(
-            width: 220,
-            height: 60,
-            child: ElevatedButton.icon(
-              onPressed: () {
-                controller.goToCreatePregnancyProfile();
-              },
-              icon: const Icon(Icons.add_circle_outline, size: 28),
-              label: const Text(
-                "Add Profile",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green[700],
-                foregroundColor: Colors.white,
-                elevation: 3,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildProfileGrid() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: GridView.builder(
-        padding: const EdgeInsets.all(8.0),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 4,
-          crossAxisSpacing: 12.0,
-          mainAxisSpacing: 12.0,
-          childAspectRatio: 0.75,
         ),
-        itemCount: controller.pregnancyProfileList.length,
-        itemBuilder: (context, index) {
-          final profile = controller.pregnancyProfileList[index];
-          return _buildProfileCard(profile, index);
-        },
       ),
     );
   }
 
-  Widget _buildProfileCard(dynamic profile, int index) {
-    // Kiểm tra nếu dueDate đã qua hay chưa
-    bool isPastDue =
-        profile.dueDate != null && profile.dueDate!.isBefore(DateTime.now());
-
-    // Tính số ngày còn lại đến dueDate
-    int daysRemaining = 0;
-    if (profile.dueDate != null) {
-      daysRemaining = profile.dueDate!.difference(DateTime.now()).inDays;
-    }
-
+  // Profiles organized in a more detailed table/list view
+  Widget _buildProfilesSection() {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08),
-            spreadRadius: 1,
+            color: Colors.black.withOpacity(0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
         ],
       ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: () {
-              controller.goToPregnancyProfileDetail(index);
-            },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: Column(
+        children: [
+          // Table header
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            decoration: BoxDecoration(
+              color: Colors.green[50],
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
+            ),
+            child: Row(
               children: [
-                // Header
-                Container(
-                  height: 6,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: isPastDue
-                          ? [Colors.orange[300]!, Colors.orange[400]!]
-                          : [Colors.green[300]!, Colors.green[400]!],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
-                  ),
+                const SizedBox(width: 50),
+                Expanded(flex: 3, child: _buildTableHeader('Baby\'s Name')),
+                Expanded(flex: 2, child: _buildTableHeader('Status')),
+                Expanded(flex: 2, child: _buildTableHeader('Week')),
+                Expanded(flex: 2, child: _buildTableHeader('Due Date')),
+                Expanded(flex: 2, child: _buildTableHeader('Time Left')),
+                const SizedBox(width: 100),
+              ],
+            ),
+          ),
+
+          // Table rows
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: controller.pregnancyProfileList.length,
+            separatorBuilder: (context, index) => Divider(
+              height: 1,
+              color: Colors.grey[200],
+            ),
+            itemBuilder: (context, index) {
+              final profile = controller.pregnancyProfileList[index];
+              return _buildProfileRow(profile, index);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTableHeader(String text) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+        color: Colors.grey[700],
+      ),
+    );
+  }
+
+  Widget _buildProfileRow(dynamic profile, int index) {
+    bool isPastDue =
+        profile.dueDate != null && profile.dueDate!.isBefore(DateTime.now());
+    int daysRemaining = profile.dueDate != null
+        ? profile.dueDate!.difference(DateTime.now()).inDays
+        : 0;
+
+    return InkWell(
+      onTap: () => controller.goToPregnancyProfileDetail(index),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+        color: index % 2 == 0 ? Colors.white : Colors.grey[50],
+        child: Row(
+          children: [
+            // Profile image
+            Container(
+              width: 50,
+              height: 50,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: isPastDue ? Colors.orange[100] : Colors.green[100],
+                image: const DecorationImage(
+                  image: AssetImage("assets/images/pregnancy.png"),
+                  fit: BoxFit.cover,
                 ),
+              ),
+            ),
 
-                // Profile Image
-                Stack(
-                  alignment: Alignment.center,
+            // Baby name
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      height: 80,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: isPastDue
-                              ? [Colors.orange[50]!, Colors.white]
-                              : [Colors.green[50]!, Colors.white],
-                        ),
+                    Text(
+                      profile.nickName ?? 'Unnamed Baby',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey[800],
                       ),
                     ),
-                    Container(
-                      width: 82,
-                      height: 82,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(0, 3),
-                          ),
-                        ],
-                        image: const DecorationImage(
-                          image: AssetImage("assets/images/pregnancy.png"),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-
-                    // Buttons container for Edit and Delete
-                    Positioned(
-                      top: 4,
-                      right: 4,
-                      child: Row(
-                        children: [
-                          // Edit Button
-                          Container(
-                            margin: const EdgeInsets.only(right: 6),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.08),
-                                  spreadRadius: 1,
-                                  blurRadius: 5,
-                                ),
-                              ],
-                            ),
-                            child: IconButton(
-                              icon: Icon(Icons.edit,
-                                  color: isPastDue
-                                      ? Colors.orange[700]
-                                      : Colors.green[700],
-                                  size: 18),
-                              onPressed: () {
-                                controller.goToUpdatePregnancyProfile(index);
-                              },
-                              constraints: const BoxConstraints.tightFor(
-                                  width: 32, height: 32),
-                              padding: EdgeInsets.zero,
-                            ),
-                          ),
-
-                          // Delete Button
-                          Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.08),
-                                  spreadRadius: 1,
-                                  blurRadius: 5,
-                                ),
-                              ],
-                            ),
-                            child: IconButton(
-                              icon: const Icon(Icons.delete,
-                                  color: Colors.red, size: 18),
-                              onPressed: () {
-                                // Show confirmation dialog
-                                _showDeleteConfirmationDialog(index);
-                              },
-                              constraints: const BoxConstraints.tightFor(
-                                  width: 32, height: 32),
-                              padding: EdgeInsets.zero,
-                            ),
-                          ),
-                        ],
+                    Text(
+                      'Created on ${DateFormat('MMM d, yyyy').format(DateTime.now().subtract(const Duration(days: 120)))}',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey[600],
                       ),
                     ),
                   ],
                 ),
+              ),
+            ),
 
-                // Profile Info
-                Expanded(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Baby's nickname: ${profile.nickName}",
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey[800],
-                          ),
-                          textAlign: TextAlign.center,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        const SizedBox(height: 6),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.calendar_today,
-                              size: 16,
-                              color: isPastDue
-                                  ? Colors.orange[700]
-                                  : Colors.green[700],
-                            ),
-                            const SizedBox(width: 4),
-                            Flexible(
-                              child: Text(
-                                "Week ${profile.pregnancyWeek}",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.grey[700],
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 4),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              isPastDue
-                                  ? Icons.event_available
-                                  : Icons.event_note,
-                              size: 16,
-                              color: isPastDue
-                                  ? Colors.orange[700]
-                                  : Colors.green[700],
-                            ),
-                            const SizedBox(width: 4),
-                            Flexible(
-                              child: Text(
-                                profile.dueDate != null
-                                    ? isPastDue
-                                        ? "Born ${DateFormat('MMM d').format(profile.dueDate!)}"
-                                        : "${daysRemaining} days left"
-                                    : "No due date",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.grey[700],
-                                ),
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+            // Status
+            Expanded(
+              flex: 2,
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: isPastDue
+                      ? Colors.orange.withOpacity(0.1)
+                      : Colors.green.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(16),
                 ),
-
-                // Status Indicator
-                Container(
-                  padding: const EdgeInsets.symmetric(vertical: 6),
-                  decoration: BoxDecoration(
-                    color: isPastDue ? Colors.orange[50] : Colors.green[50],
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(16),
-                      bottomRight: Radius.circular(16),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(
+                      isPastDue ? Icons.check_circle : Icons.access_time,
+                      size: 16,
+                      color: isPastDue ? Colors.orange[700] : Colors.green[700],
                     ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        isPastDue ? Icons.check_circle : Icons.play_circle_fill,
-                        size: 16,
+                    const SizedBox(width: 6),
+                    Text(
+                      isPastDue ? 'Completed' : 'Active',
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
                         color:
                             isPastDue ? Colors.orange[700] : Colors.green[700],
                       ),
-                      const SizedBox(width: 4),
-                      Text(
-                        isPastDue ? "Completed" : "Active",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: isPastDue
-                              ? Colors.orange[700]
-                              : Colors.green[700],
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
+
+            // Week
+            Expanded(
+              flex: 2,
+              child: Text(
+                'Week ${profile.pregnancyWeek ?? 'N/A'}',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey[800],
+                ),
+              ),
+            ),
+
+            // Due date
+            Expanded(
+              flex: 2,
+              child: Text(
+                profile.dueDate != null
+                    ? DateFormat('MMM d, yyyy').format(profile.dueDate!)
+                    : 'Not set',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey[800],
+                ),
+              ),
+            ),
+
+            // Time left
+            Expanded(
+              flex: 2,
+              child: Text(
+                profile.dueDate != null
+                    ? isPastDue
+                        ? 'Completed'
+                        : '$daysRemaining days left'
+                    : 'N/A',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: isPastDue ? FontWeight.bold : FontWeight.normal,
+                  color: isPastDue ? Colors.orange[700] : Colors.grey[800],
+                ),
+              ),
+            ),
+
+            // Actions
+            SizedBox(
+              width: 100,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: Icon(
+                      Icons.edit,
+                      color: Colors.blue[700],
+                      size: 20,
+                    ),
+                    onPressed: () =>
+                        controller.goToUpdatePregnancyProfile(index),
+                    tooltip: 'Edit',
+                  ),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                      size: 20,
+                    ),
+                    onPressed: () => _showDeleteConfirmationDialog(index),
+                    tooltip: 'Delete',
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  // Add this method to show the delete confirmation dialog
+  // Resources section
+  Widget _buildResourcesSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildSectionHeader(
+          'Helpful Resources',
+          'Articles and tools to help you during your pregnancy',
+          false,
+        ),
+        const SizedBox(height: 16),
+        Row(
+          children: [
+            Expanded(
+                child: _buildResourceCard(
+              'Pregnancy Week by Week',
+              'Track fetal development each week',
+              Colors.blue[700]!,
+              Icons.calendar_today,
+            )),
+            Expanded(
+                child: _buildResourceCard(
+              'Nutrition Guidelines',
+              'Recommended diet for pregnant women',
+              Colors.green[700]!,
+              Icons.restaurant_menu,
+            )),
+            Expanded(
+                child: _buildResourceCard(
+              'Exercise Tips',
+              'Safe workouts during pregnancy',
+              Colors.orange[700]!,
+              Icons.fitness_center,
+            )),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildResourceCard(
+      String title, String description, Color color, IconData icon) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  icon,
+                  color: color,
+                  size: 24,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[800],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            description,
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey[600],
+            ),
+          ),
+          const SizedBox(height: 16),
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton.icon(
+              onPressed: () {
+                launchUrl(Uri.parse(
+                    'https://www.babycenter.com/pregnancy/diet-and-fitness#subtopic-pregnancy-nutrients'));
+              },
+              icon: Icon(
+                Icons.arrow_forward,
+                color: color,
+                size: 16,
+              ),
+              label: Text(
+                'Learn More',
+                style: TextStyle(
+                  color: color,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Delete confirmation dialog
   void _showDeleteConfirmationDialog(int index) {
     Get.dialog(
       AlertDialog(

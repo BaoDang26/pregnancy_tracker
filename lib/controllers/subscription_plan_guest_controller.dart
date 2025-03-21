@@ -9,6 +9,9 @@ class SubscriptionPlanGuestController extends GetxController {
   var subscriptionPlanList = <SubscriptionPlanModel>[].obs;
   var subscriptionPlanModel = SubscriptionPlanModel().obs;
 
+  // Biến theo dõi trang hiện tại
+  var currentPage = 0.obs;
+
   @override
   Future<void> onInit() async {
     await getSubscriptionPlanGuestList();
@@ -17,12 +20,10 @@ class SubscriptionPlanGuestController extends GetxController {
 
   Future<void> getSubscriptionPlanGuestList() async {
     isLoading.value = true;
+    currentPage.value = 0; // Reset về trang đầu tiên khi load lại
+
     var response =
         await SubscriptionPlanRepository.getSubscriptionGuestPlanList();
-
-    // Log the response status and body
-    print("Response Status: ${response.statusCode}");
-    print("Response Body: ${response.body}");
 
     if (response.statusCode == 200) {
       String jsonResult = utf8.decode(response.bodyBytes);
@@ -38,6 +39,24 @@ class SubscriptionPlanGuestController extends GetxController {
     }
     isLoading.value = false;
     update();
+  }
+
+  // Phương thức chuyển sang trang tiếp theo
+  void nextPage() {
+    int totalPlans = subscriptionPlanList.length;
+    int plansPerPage = 3;
+    int totalPages = (totalPlans / plansPerPage).ceil();
+
+    if (currentPage.value < totalPages - 1) {
+      currentPage.value++;
+    }
+  }
+
+  // Phương thức quay lại trang trước
+  void prevPage() {
+    if (currentPage.value > 0) {
+      currentPage.value--;
+    }
   }
 
   void goToLogin() {
