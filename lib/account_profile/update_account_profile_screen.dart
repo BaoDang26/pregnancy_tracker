@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:dvhcvn/dvhcvn.dart' as dvhcvn;
 
 import '../controllers/update_account_profile_controller.dart';
 
@@ -74,8 +75,8 @@ class UpdateAccountProfileScreen
                             ),
                             const Spacer(),
                             TextButton.icon(
-                              icon: Icon(Icons.home_outlined),
-                              label: Text('Home'),
+                              icon: const Icon(Icons.home_outlined),
+                              label: const Text('Home'),
                               onPressed: () => Get.back(),
                               style: TextButton.styleFrom(
                                 foregroundColor: Colors.purple[700],
@@ -83,8 +84,8 @@ class UpdateAccountProfileScreen
                             ),
                             const SizedBox(width: 8),
                             TextButton.icon(
-                              icon: Icon(Icons.person_outline),
-                              label: Text('Profile'),
+                              icon: const Icon(Icons.person_outline),
+                              label: const Text('Profile'),
                               onPressed: () {},
                               style: TextButton.styleFrom(
                                 foregroundColor: Colors.purple[700],
@@ -286,17 +287,358 @@ class UpdateAccountProfileScreen
                                                     value ?? ''),
                                           ),
                                           const SizedBox(height: 20),
-                                          _buildFormField(
-                                            controller:
-                                                controller.addressController,
-                                            label: 'Address',
-                                            icon: Icons.home,
-                                            hint: 'Enter your address',
-                                            validator: (String? value) =>
-                                                controller.validateAddress(
-                                                    value ?? ''),
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Address',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w600,
+                                                  color: Colors.grey[700],
+                                                ),
+                                              ),
+                                              const SizedBox(height: 8),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.purple
+                                                          .withOpacity(0.05),
+                                                      blurRadius: 4,
+                                                      offset:
+                                                          const Offset(0, 2),
+                                                    ),
+                                                  ],
+                                                ),
+                                                child: DropdownButtonFormField<
+                                                    dvhcvn.Level1>(
+                                                  decoration: InputDecoration(
+                                                    labelText: 'Province/City',
+                                                    labelStyle: TextStyle(
+                                                        color:
+                                                            Colors.purple[400]),
+                                                    border:
+                                                        const OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  12)),
+                                                      borderSide:
+                                                          BorderSide.none,
+                                                    ),
+                                                    contentPadding:
+                                                        const EdgeInsets
+                                                            .symmetric(
+                                                            horizontal: 16,
+                                                            vertical: 8),
+                                                    filled: true,
+                                                    fillColor: Colors.white,
+                                                  ),
+                                                  icon: Icon(
+                                                      Icons.location_city,
+                                                      color:
+                                                          Colors.purple[400]),
+                                                  value: controller
+                                                      .selectedLevel1.value,
+                                                  onChanged: (dvhcvn.Level1?
+                                                      newValue) {
+                                                    if (newValue != null) {
+                                                      controller.selectedLevel1
+                                                          .value = newValue;
+                                                    }
+                                                  },
+                                                  items: () {
+                                                    var sorted =
+                                                        dvhcvn.level1s.toList();
+                                                    sorted.sort((a, b) => a.name
+                                                        .compareTo(b.name));
+                                                    return sorted.map<
+                                                            DropdownMenuItem<
+                                                                dvhcvn.Level1>>(
+                                                        (dvhcvn.Level1 value) {
+                                                      return DropdownMenuItem<
+                                                          dvhcvn.Level1>(
+                                                        value: value,
+                                                        child: Text(
+                                                            '${value.name} (${value.type.name})'),
+                                                      );
+                                                    }).toList();
+                                                  }(),
+                                                  validator: (_) => controller
+                                                      .validateAddress(
+                                                          controller
+                                                              .addressController
+                                                              .text),
+                                                ),
+                                              ),
+                                              const SizedBox(height: 16),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.purple
+                                                          .withOpacity(0.05),
+                                                      blurRadius: 4,
+                                                      offset:
+                                                          const Offset(0, 2),
+                                                    ),
+                                                  ],
+                                                ),
+                                                child: DropdownButtonFormField<
+                                                    dvhcvn.Level2>(
+                                                  decoration: InputDecoration(
+                                                    labelText:
+                                                        'District/County',
+                                                    labelStyle: TextStyle(
+                                                        color:
+                                                            Colors.purple[400]),
+                                                    border:
+                                                        const OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  12)),
+                                                      borderSide:
+                                                          BorderSide.none,
+                                                    ),
+                                                    contentPadding:
+                                                        const EdgeInsets
+                                                            .symmetric(
+                                                            horizontal: 16,
+                                                            vertical: 8),
+                                                    filled: true,
+                                                    fillColor: Colors.white,
+                                                  ),
+                                                  icon: Icon(Icons.location_on,
+                                                      color:
+                                                          Colors.purple[400]),
+                                                  value: controller
+                                                      .selectedLevel2.value,
+                                                  onChanged: controller
+                                                              .selectedLevel1
+                                                              .value ==
+                                                          null
+                                                      ? null
+                                                      : (dvhcvn.Level2?
+                                                          newValue) {
+                                                          if (newValue !=
+                                                              null) {
+                                                            controller
+                                                                .selectedLevel2
+                                                                .value = newValue;
+                                                          }
+                                                        },
+                                                  items: controller.level2List
+                                                      .map<
+                                                              DropdownMenuItem<
+                                                                  dvhcvn
+                                                                  .Level2>>(
+                                                          (dvhcvn.Level2
+                                                              value) {
+                                                    return DropdownMenuItem<
+                                                        dvhcvn.Level2>(
+                                                      value: value,
+                                                      child: Text(
+                                                          '${value.name} (${value.type.name})'),
+                                                    );
+                                                  }).toList(),
+                                                  validator: (_) => controller
+                                                      .validateAddress(
+                                                          controller
+                                                              .addressController
+                                                              .text),
+                                                ),
+                                              ),
+                                              const SizedBox(height: 16),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.purple
+                                                          .withOpacity(0.05),
+                                                      blurRadius: 4,
+                                                      offset:
+                                                          const Offset(0, 2),
+                                                    ),
+                                                  ],
+                                                ),
+                                                child: DropdownButtonFormField<
+                                                    dvhcvn.Level3>(
+                                                  decoration: InputDecoration(
+                                                    labelText: 'Ward/Commune',
+                                                    labelStyle: TextStyle(
+                                                        color:
+                                                            Colors.purple[400]),
+                                                    border:
+                                                        const OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  12)),
+                                                      borderSide:
+                                                          BorderSide.none,
+                                                    ),
+                                                    contentPadding:
+                                                        const EdgeInsets
+                                                            .symmetric(
+                                                            horizontal: 16,
+                                                            vertical: 8),
+                                                    filled: true,
+                                                    fillColor: Colors.white,
+                                                  ),
+                                                  icon: Icon(Icons.place,
+                                                      color:
+                                                          Colors.purple[400]),
+                                                  value: controller
+                                                      .selectedLevel3.value,
+                                                  onChanged: controller
+                                                              .selectedLevel2
+                                                              .value ==
+                                                          null
+                                                      ? null
+                                                      : (dvhcvn.Level3?
+                                                          newValue) {
+                                                          if (newValue !=
+                                                              null) {
+                                                            controller
+                                                                .selectedLevel3
+                                                                .value = newValue;
+                                                          }
+                                                        },
+                                                  items: controller.level3List
+                                                      .map<
+                                                              DropdownMenuItem<
+                                                                  dvhcvn
+                                                                  .Level3>>(
+                                                          (dvhcvn.Level3
+                                                              value) {
+                                                    return DropdownMenuItem<
+                                                        dvhcvn.Level3>(
+                                                      value: value,
+                                                      child: Text(
+                                                          '${value.name} (${value.type.name})'),
+                                                    );
+                                                  }).toList(),
+                                                  validator: (_) => controller
+                                                      .validateAddress(
+                                                          controller
+                                                              .addressController
+                                                              .text),
+                                                ),
+                                              ),
+                                              const SizedBox(height: 16),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color: Colors.purple
+                                                          .withOpacity(0.05),
+                                                      blurRadius: 4,
+                                                      offset:
+                                                          const Offset(0, 2),
+                                                    ),
+                                                  ],
+                                                ),
+                                                child: TextFormField(
+                                                  controller: controller
+                                                      .streetAddressController,
+                                                  onChanged: (value) {
+                                                    controller.streetAddress
+                                                        .value = value;
+                                                    controller
+                                                        .updateFullAddress();
+                                                  },
+                                                  decoration: InputDecoration(
+                                                    hintText:
+                                                        'Enter house number, street name',
+                                                    prefixIcon: Icon(
+                                                      Icons
+                                                          .drive_file_rename_outline,
+                                                      color: Colors.purple[400],
+                                                      size: 20,
+                                                    ),
+                                                    filled: true,
+                                                    fillColor: Colors.white,
+                                                    border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Colors.purple[200]!,
+                                                        width: 1,
+                                                      ),
+                                                    ),
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Colors.purple[100]!,
+                                                        width: 1,
+                                                      ),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8),
+                                                      borderSide: BorderSide(
+                                                        color:
+                                                            Colors.purple[400]!,
+                                                        width: 2,
+                                                      ),
+                                                    ),
+                                                    contentPadding:
+                                                        const EdgeInsets
+                                                            .symmetric(
+                                                      vertical: 16,
+                                                      horizontal: 16,
+                                                    ),
+                                                  ),
+                                                  validator: (_) => controller
+                                                      .validateAddress(
+                                                          controller
+                                                              .addressController
+                                                              .text),
+                                                ),
+                                              ),
+                                              const SizedBox(height: 8),
+                                              Container(
+                                                margin: const EdgeInsets.only(
+                                                    top: 8),
+                                                padding:
+                                                    const EdgeInsets.all(8),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.purple[50],
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                child: Text(
+                                                  'Full address: ${controller.addressController.text}',
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.purple[700],
+                                                    fontStyle: FontStyle.italic,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          const SizedBox(height: 20),
+                                          const SizedBox(height: 24),
                                           Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,

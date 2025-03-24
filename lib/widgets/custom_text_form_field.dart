@@ -16,6 +16,7 @@ class CustomTextFormField extends StatelessWidget {
   bool? enable;
   double? borderRadius;
   Color fillColor;
+  void Function(String?)? onChanged;
 
   // bool isObscure;
 
@@ -34,6 +35,7 @@ class CustomTextFormField extends StatelessWidget {
     this.enable,
     this.borderRadius = 15,
     this.fillColor = const Color(0xfff5f5f5),
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -46,6 +48,7 @@ class CustomTextFormField extends StatelessWidget {
       // inputFormatters: <TextInputFormatter>[
       //   FilteringTextInputFormatter.digitsOnly
       // ],
+      onChanged: onChanged,
       onSaved: onSaved,
       validator: validator,
       controller: controller,

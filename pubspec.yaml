@@ -52,6 +52,7 @@ dependencies:
   url_launcher: 6.3.0
   flutter_svg: 2.0.9
   image_picker: 1.1.2
+  dvhcvn: 2.1.20250301
 
 dev_dependencies:
   flutter_test:

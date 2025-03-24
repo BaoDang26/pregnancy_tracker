@@ -6,9 +6,20 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:pregnancy_tracker/controllers/account_profile_controller.dart';
+import 'package:dvhcvn/dvhcvn.dart' as dvhcvn;
 
 import '../models/account_profile_model.dart';
 import '../repositories/account_profile_repository.dart';
+
+// Extension for custom firstOrNull
+extension CustomListExtensions<T> on List<T> {
+  T? firstOrNull(bool Function(T) test) {
+    for (var element in this) {
+      if (test(element)) return element;
+    }
+    return null;
+  }
+}
 
 class UpdateAccountProfileController extends GetxController {
   final GlobalKey<FormState> accountProfileFormKey = GlobalKey<FormState>();
@@ -16,6 +27,7 @@ class UpdateAccountProfileController extends GetxController {
   late TextEditingController fullNameController;
   late TextEditingController addressController;
   late TextEditingController dateOfBirthController;
+  late TextEditingController streetAddressController;
 
   late int userId;
 
@@ -23,11 +35,19 @@ class UpdateAccountProfileController extends GetxController {
   RxString errorMessage = ''.obs;
   Rx<AccountProfileModel> accountProfileModel = AccountProfileModel().obs;
 
+  var selectedLevel1 = Rxn<dvhcvn.Level1>();
+  var selectedLevel2 = Rxn<dvhcvn.Level2>();
+  var selectedLevel3 = Rxn<dvhcvn.Level3>();
+  var streetAddress = ''.obs;
+  var level2List = <dvhcvn.Level2>[].obs;
+  var level3List = <dvhcvn.Level3>[].obs;
+
   @override
   Future<void> onInit() async {
     fullNameController = TextEditingController();
     addressController = TextEditingController();
     dateOfBirthController = TextEditingController();
+    streetAddressController = TextEditingController();
     super.onInit();
 
     // Safely check arguments
@@ -56,6 +76,36 @@ class UpdateAccountProfileController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+
+    // Thiết lập ever listeners cho các thay đổi địa chỉ
+    ever(selectedLevel1, (level1) {
+      if (level1 != null) {
+        // Lấy danh sách quận/huyện và sắp xếp theo tên A-Z
+        var sortedLevel2 = level1.children.toList();
+        sortedLevel2.sort((a, b) => a.name.compareTo(b.name));
+        level2List.value = sortedLevel2;
+
+        selectedLevel2.value = null;
+        selectedLevel3.value = null;
+        level3List.clear();
+        updateFullAddress();
+      }
+    });
+
+    ever(selectedLevel2, (level2) {
+      if (level2 != null) {
+        // Lấy danh sách phường/xã và sắp xếp theo tên A-Z
+        var sortedLevel3 = level2.children.toList();
+        sortedLevel3.sort((a, b) => a.name.compareTo(b.name));
+        level3List.value = sortedLevel3;
+
+        selectedLevel3.value = null;
+        updateFullAddress();
+      }
+    });
+
+    ever(selectedLevel3, (_) => updateFullAddress());
+    ever(streetAddress, (_) => updateFullAddress());
   }
 
   void findAccountProfileFromId() {
@@ -98,7 +148,16 @@ class UpdateAccountProfileController extends GetxController {
 
     // Fill values into controllers
     fullNameController.text = accountProfile.fullName ?? '';
-    addressController.text = accountProfile.address ?? '';
+
+    // Xử lý địa chỉ - phân tích từ chuỗi thành các thành phần
+    if (accountProfile.address != null && accountProfile.address!.isNotEmpty) {
+      try {
+        parseAndSetAddress(accountProfile.address!);
+      } catch (e) {
+        // Nếu không thể phân tích, chỉ hiển thị địa chỉ đầy đủ
+        addressController.text = accountProfile.address ?? '';
+      }
+    }
 
     //format date of birth
     if (accountProfile.dateOfBirth != null) {
@@ -107,13 +166,138 @@ class UpdateAccountProfileController extends GetxController {
     }
   }
 
+  void parseAndSetAddress(String fullAddress) {
+    try {
+      // Giả sử địa chỉ có định dạng: "Số nhà đường, Xã (Phường), Huyện (Quận), Tỉnh (Thành phố)"
+      final parts = fullAddress.split(',').map((e) => e.trim()).toList();
+
+      if (parts.isEmpty) return;
+
+      // Bước 1: Tìm và thiết lập Province/City (chạy từ cuối lên)
+      String? provinceStr;
+      String? districtStr;
+      String? wardStr;
+      String? streetStr;
+
+      if (parts.length >= 1) {
+        provinceStr = parts.last;
+        final provinceName = provinceStr.split(' (').first.trim();
+
+        // Sắp xếp danh sách tỉnh/thành phố theo A-Z trước khi tìm kiếm
+        var sortedLevel1 = dvhcvn.level1s.toList();
+        sortedLevel1.sort((a, b) => a.name.compareTo(b.name));
+
+        final province = sortedLevel1.firstOrNull(
+          (province) =>
+              province.name.toLowerCase().contains(provinceName.toLowerCase()),
+        );
+
+        if (province != null) {
+          selectedLevel1.value = province;
+
+          // Sắp xếp và cập nhật danh sách quận/huyện theo tỉnh/thành phố đã chọn
+          var sortedLevel2 = province.children.toList();
+          sortedLevel2.sort((a, b) => a.name.compareTo(b.name));
+          level2List.value = sortedLevel2;
+
+          // Bước 2: Tìm và thiết lập District nếu có
+          if (parts.length >= 2) {
+            districtStr = parts[parts.length - 2];
+            final districtName = districtStr.split(' (').first.trim();
+
+            // Tìm kiếm trong danh sách quận/huyện đã được cập nhật và sắp xếp
+            final district = level2List.firstOrNull(
+              (district) => district.name
+                  .toLowerCase()
+                  .contains(districtName.toLowerCase()),
+            );
+
+            if (district != null) {
+              selectedLevel2.value = district;
+
+              // Sắp xếp và cập nhật danh sách xã/phường
+              var sortedLevel3 = district.children.toList();
+              sortedLevel3.sort((a, b) => a.name.compareTo(b.name));
+              level3List.value = sortedLevel3;
+
+              // Bước 3: Tìm và thiết lập Ward nếu có
+              if (parts.length >= 3) {
+                wardStr = parts[parts.length - 3];
+                final wardName = wardStr.split(' (').first.trim();
+
+                // Tìm kiếm trong danh sách xã/phường đã được cập nhật và sắp xếp
+                final ward = level3List.firstOrNull(
+                  (ward) =>
+                      ward.name.toLowerCase().contains(wardName.toLowerCase()),
+                );
+
+                if (ward != null) {
+                  selectedLevel3.value = ward;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // Bước 4: Thiết lập địa chỉ đường nếu có
+      if (parts.length >= 4) {
+        streetStr = parts[0];
+        streetAddress.value = streetStr;
+        streetAddressController.text = streetStr;
+      }
+
+      // Tự động cập nhật địa chỉ đầy đủ sau khi phân tích
+      updateFullAddress();
+    } catch (e) {
+      print('Error parsing address: $e');
+    }
+  }
+
+  void updateFullAddress() {
+    List<String> addressParts = [];
+
+    if (streetAddress.value.isNotEmpty) {
+      addressParts.add(streetAddress.value);
+    }
+
+    if (selectedLevel3.value != null) {
+      addressParts.add(
+          '${selectedLevel3.value!.name} (${selectedLevel3.value!.type.name})');
+    }
+
+    if (selectedLevel2.value != null) {
+      addressParts.add(
+          '${selectedLevel2.value!.name} (${selectedLevel2.value!.type.name})');
+    }
+
+    if (selectedLevel1.value != null) {
+      addressParts.add(
+          '${selectedLevel1.value!.name} (${selectedLevel1.value!.type.name})');
+    }
+
+    String fullAddress = addressParts.join(', ');
+    addressController.text = fullAddress;
+  }
+
   String? validateFullName(String value) {
     if (value.isEmpty) return "Full name is required";
     return null;
   }
 
   String? validateAddress(String value) {
-    if (value.isEmpty) return "Address is required";
+    if (selectedLevel1.value == null) {
+      return "Please select province/city";
+    }
+    if (selectedLevel2.value == null) {
+      return "Please select district/county";
+    }
+    if (selectedLevel3.value == null) {
+      return "Please select ward/commune";
+    }
+    if (streetAddress.value.isEmpty) {
+      return "Please enter house number, street name";
+    }
     return null;
   }
 
@@ -461,6 +645,12 @@ class UpdateAccountProfileController extends GetxController {
   Future<void> updateAccountProfile() async {
     try {
       isLoading.value = true;
+      // Đảm bảo cập nhật streetAddress từ controller
+      streetAddress.value = streetAddressController.text;
+
+      // Đảm bảo địa chỉ được cập nhật mới nhất
+      updateFullAddress();
+
       final isValid = accountProfileFormKey.currentState!.validate();
       if (!isValid) {
         isLoading.value = false;
@@ -559,5 +749,12 @@ class UpdateAccountProfileController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  @override
+  void onClose() {
+    // Giữ nguyên code hiện có và thêm
+    streetAddressController.dispose();
+    super.onClose();
   }
 }
