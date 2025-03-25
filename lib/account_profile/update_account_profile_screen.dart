@@ -364,8 +364,7 @@ class UpdateAccountProfileScreen
                                                       return DropdownMenuItem<
                                                           dvhcvn.Level1>(
                                                         value: value,
-                                                        child: Text(
-                                                            '${value.name} (${value.type.name})'),
+                                                        child: Text(value.name),
                                                       );
                                                     }).toList();
                                                   }(),
@@ -446,8 +445,7 @@ class UpdateAccountProfileScreen
                                                     return DropdownMenuItem<
                                                         dvhcvn.Level2>(
                                                       value: value,
-                                                      child: Text(
-                                                          '${value.name} (${value.type.name})'),
+                                                      child: Text(value.name),
                                                     );
                                                   }).toList(),
                                                   validator: (_) => controller
@@ -526,8 +524,7 @@ class UpdateAccountProfileScreen
                                                     return DropdownMenuItem<
                                                         dvhcvn.Level3>(
                                                       value: value,
-                                                      child: Text(
-                                                          '${value.name} (${value.type.name})'),
+                                                      child: Text(value.name),
                                                     );
                                                   }).toList(),
                                                   validator: (_) => controller

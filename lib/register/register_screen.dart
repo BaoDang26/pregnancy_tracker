@@ -232,8 +232,7 @@ class RegisterScreen extends GetView<RegisterController> {
                                               (dvhcvn.Level1 value) {
                                         return DropdownMenuItem<dvhcvn.Level1>(
                                           value: value,
-                                          child: Text(
-                                              '${value.name} (${value.type.name})'),
+                                          child: Text(value.name),
                                         );
                                       }).toList();
                                     }(),
@@ -278,8 +277,7 @@ class RegisterScreen extends GetView<RegisterController> {
                                             (dvhcvn.Level2 value) {
                                       return DropdownMenuItem<dvhcvn.Level2>(
                                         value: value,
-                                        child: Text(
-                                            '${value.name} (${value.type.name})'),
+                                        child: Text(value.name),
                                       );
                                     }).toList(),
                                     validator: (_) =>
@@ -323,8 +321,7 @@ class RegisterScreen extends GetView<RegisterController> {
                                             (dvhcvn.Level3 value) {
                                       return DropdownMenuItem<dvhcvn.Level3>(
                                         value: value,
-                                        child: Text(
-                                            '${value.name} (${value.type.name})'),
+                                        child: Text(value.name),
                                       );
                                     }).toList(),
                                     validator: (_) =>

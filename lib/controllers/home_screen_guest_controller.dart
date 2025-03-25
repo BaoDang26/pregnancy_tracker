@@ -14,7 +14,26 @@ class HomeScreenGuestController extends GetxController {
   @override
   Future<void> onInit() async {
     await getSubscriptionPlanGuestList();
+    goToSideBarNavOrSideBarNavAdmin();
     super.onInit();
+  }
+
+  void goToSideBarNavOrSideBarNavAdmin() {
+    if (PrefUtils.getAccessToken() != null) {
+      // Lấy role người dùng từ SharedPreferences
+      String? userRole = PrefUtils.getUserRole();
+
+      // Kiểm tra role và điều hướng tương ứng
+      if (userRole?.toUpperCase() == "ROLE_ADMIN") {
+        // Nếu là admin thì vào giao diện admin
+        Get.offAllNamed(AppRoutes.sidebarnaradmin);
+      } else {
+        // Nếu là user thường hoặc user premium thì vào giao diện user
+        Get.offAllNamed(AppRoutes.sidebarnar);
+      }
+      return;
+    }
+    // Không có token, user chưa đăng nhập nên ở lại màn hình hiện tại
   }
 
   Future<void> getSubscriptionPlanGuestList() async {

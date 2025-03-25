@@ -21,6 +21,7 @@ class PregnancyProfileDetailsController extends GetxController {
   Future<void> onInit() async {
     pregnancyProfileModel.value = Get.arguments;
     pregnancyId = pregnancyProfileModel.value.id!;
+
     super.onInit();
   }
 

@@ -85,6 +85,7 @@ class CreateSubscriptionPlanController extends GetxController {
 
     final isValid = subscriptionPlanFormKey.currentState!.validate();
     if (!isValid) {
+      isLoading.value = false;
       return;
     }
     subscriptionPlanFormKey.currentState!.save();
@@ -100,9 +101,21 @@ class CreateSubscriptionPlanController extends GetxController {
     var response = await SubscriptionPlanRepository.createSubscriptionPlan(
         subscriptionPlanModel);
     if (response.statusCode == 200) {
-      Get.snackbar('Success', 'Subscription plan created successfully');
-
       Get.back();
+      Get.snackbar(
+        'Success',
+        'Subscription plan created successfully',
+        snackStyle: SnackStyle.FLOATING,
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.green,
+        colorText: Colors.white,
+      );
+
+      nameController.clear();
+      priceController.clear();
+      durationController.clear();
+      descriptionController.clear();
+
       Get.find<ManageSubscriptionPlanController>().getSubscriptionPlanList();
     } else {
       Get.snackbar("Error server ${response.statusCode}",

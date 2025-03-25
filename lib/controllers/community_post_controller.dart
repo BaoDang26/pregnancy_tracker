@@ -102,7 +102,7 @@ class CommunityPostController extends GetxController {
     } else if (response.statusCode == 401) {
       Get.snackbar("Error", "Unauthorized");
     } else if (response.statusCode == 403) {
-      Get.snackbar("Not found", "No post found");
+      var errorData = jsonDecode(response.body);
     } else {
       Get.snackbar("Error server ${response.statusCode}",
           jsonDecode(response.body)['message']);

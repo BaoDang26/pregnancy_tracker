@@ -341,87 +341,83 @@ class CreateSubscriptionPlanScreen
       // If loading is false and no error, it means success
       if (!controller.isLoading.value && controller.errorString.isEmpty) {
         // Clear the form
-        controller.nameController.clear();
-        controller.priceController.clear();
-        controller.durationController.clear();
-        controller.descriptionController.clear();
 
         // Show success dialog
-        Get.dialog(
-          Dialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Container(
-              padding: const EdgeInsets.all(24),
-              width: 400,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(
-                    Icons.check_circle,
-                    color: Colors.green,
-                    size: 64,
-                  ),
-                  const SizedBox(height: 24),
-                  const Text(
-                    'Subscription Plan Created',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF614051),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    'The subscription plan has been successfully created.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey[700],
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          Get.back(); // Close dialog
-                          Get.back(); // Go back to subscription plan list
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF8E6C88),
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 24, vertical: 12),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        child: const Text('Return to List'),
-                      ),
-                      const SizedBox(width: 16),
-                      OutlinedButton(
-                        onPressed: () => Get.back(), // Close dialog only
-                        style: OutlinedButton.styleFrom(
-                          foregroundColor: const Color(0xFF8E6C88),
-                          side: const BorderSide(color: Color(0xFF8E6C88)),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 24, vertical: 12),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        child: const Text('Create Another'),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        );
+        // Get.dialog(
+        //   Dialog(
+        //     shape: RoundedRectangleBorder(
+        //       borderRadius: BorderRadius.circular(16),
+        //     ),
+        //     child: Container(
+        //       padding: const EdgeInsets.all(24),
+        //       width: 400,
+        //       child: Column(
+        //         mainAxisSize: MainAxisSize.min,
+        //         children: [
+        //           const Icon(
+        //             Icons.check_circle,
+        //             color: Colors.green,
+        //             size: 64,
+        //           ),
+        //           const SizedBox(height: 24),
+        //           const Text(
+        //             'Subscription Plan Created',
+        //             style: TextStyle(
+        //               fontSize: 20,
+        //               fontWeight: FontWeight.bold,
+        //               color: Color(0xFF614051),
+        //             ),
+        //           ),
+        //           const SizedBox(height: 16),
+        //           Text(
+        //             'The subscription plan has been successfully created.',
+        //             textAlign: TextAlign.center,
+        //             style: TextStyle(
+        //               fontSize: 16,
+        //               color: Colors.grey[700],
+        //             ),
+        //           ),
+        //           const SizedBox(height: 24),
+        //           Row(
+        //             mainAxisAlignment: MainAxisAlignment.center,
+        //             children: [
+        //               ElevatedButton(
+        //                 onPressed: () {
+        //                   Get.back(); // Close dialog
+        //                   Get.back(); // Go back to subscription plan list
+        //                 },
+        //                 style: ElevatedButton.styleFrom(
+        //                   backgroundColor: const Color(0xFF8E6C88),
+        //                   foregroundColor: Colors.white,
+        //                   padding: const EdgeInsets.symmetric(
+        //                       horizontal: 24, vertical: 12),
+        //                   shape: RoundedRectangleBorder(
+        //                     borderRadius: BorderRadius.circular(8),
+        //                   ),
+        //                 ),
+        //                 child: const Text('Return to List'),
+        //               ),
+        //               const SizedBox(width: 16),
+        //               OutlinedButton(
+        //                 onPressed: () => Get.back(), // Close dialog only
+        //                 style: OutlinedButton.styleFrom(
+        //                   foregroundColor: const Color(0xFF8E6C88),
+        //                   side: const BorderSide(color: Color(0xFF8E6C88)),
+        //                   padding: const EdgeInsets.symmetric(
+        //                       horizontal: 24, vertical: 12),
+        //                   shape: RoundedRectangleBorder(
+        //                     borderRadius: BorderRadius.circular(8),
+        //                   ),
+        //                 ),
+        //                 child: const Text('Create Another'),
+        //               ),
+        //             ],
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ),
+        // );
       }
     });
   }

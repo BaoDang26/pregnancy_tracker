@@ -756,8 +756,8 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
               width: 200,
               child: ElevatedButton.icon(
                 onPressed: () => Get.back(),
-                icon: const Icon(Icons.add_circle_outline),
-                label: const Text('Browse Plans'),
+                icon: const Icon(Icons.subdirectory_arrow_left),
+                label: const Text('Subscribe Now'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green[700],
                   foregroundColor: Colors.white,

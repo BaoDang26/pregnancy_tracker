@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_interceptor/http_interceptor.dart';
 
@@ -37,6 +38,12 @@ class JwtInterceptor implements InterceptorContract {
         }
       } catch (e) {
         print('Failed refresh token');
+        logout();
+      }
+    } else if (data.statusCode == 403) {
+      print('Account is not active');
+      var errorData = jsonDecode(data.body!);
+      if (errorData['message'] == 'User account is disabled') {
         logout();
       }
     }

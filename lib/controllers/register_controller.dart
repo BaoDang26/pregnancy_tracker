@@ -113,18 +113,15 @@ class RegisterController extends GetxController {
     }
 
     if (selectedLevel3.value != null) {
-      addressParts.add(
-          '${selectedLevel3.value!.name} (${selectedLevel3.value!.type.name})');
+      addressParts.add(selectedLevel3.value!.name);
     }
 
     if (selectedLevel2.value != null) {
-      addressParts.add(
-          '${selectedLevel2.value!.name} (${selectedLevel2.value!.type.name})');
+      addressParts.add(selectedLevel2.value!.name);
     }
 
     if (selectedLevel1.value != null) {
-      addressParts.add(
-          '${selectedLevel1.value!.name} (${selectedLevel1.value!.type.name})');
+      addressParts.add(selectedLevel1.value!.name);
     }
 
     address = addressParts.join(', ');

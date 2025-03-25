@@ -110,12 +110,12 @@ class CreatePregnancyProfileController extends GetxController {
 
     // Tạo PregnancyProfileModel với DateTime được parse trực tiếp
     PregnancyProfileModel pregnancyProfileModel = PregnancyProfileModel(
-      nickName: nickName,
+      nickName: nickNameController.text,
       dueDate: DateTime.parse(
           dueDateController.text), // Sử dụng DateTime.parse trực tiếp
       lastPeriodDate: DateTime.parse(
           lastPeriodDateController.text), // Sử dụng DateTime.parse trực tiếp
-      notes: notes,
+      notes: notesController.text,
     );
 
     var response = await PregnancyProfileRepository.createPregnancyProfile(

@@ -43,6 +43,7 @@ class PregnancyProfileController extends GetxController {
   }
 
   void goToPregnancyProfileDetail(int index) {
+    // PrefUtils.setString('pregnancyId', pregnancyProfileList[index].id.toString());
     Get.toNamed(AppRoutes.pregnancyprofiledetails,
         arguments: pregnancyProfileList[index]);
   }
