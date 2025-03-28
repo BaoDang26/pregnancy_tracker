@@ -205,7 +205,7 @@ class CreateFetalGrowthMeasurementScreen
                         const SizedBox(height: 16),
                         _buildInputField(
                           controller: controller.movementCountController,
-                          label: 'Movement Count',
+                          label: 'Movement Count (times/hour)',
                           icon: Icons.directions_run,
                         ),
                         const SizedBox(height: 16),

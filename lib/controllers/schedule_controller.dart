@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../models/schedule_model.dart';
 import '../routes/app_routes.dart';
+import '../controllers/account_profile_controller.dart';
 
 class ScheduleController extends GetxController {
   var isLoading = true.obs;
@@ -17,8 +18,17 @@ class ScheduleController extends GetxController {
   var searchQuery = ''.obs;
   var allSchedules = <ScheduleModel>[].obs;
 
+  RxBool isRegularUser = false.obs;
+
   @override
   void onInit() async {
+    // Đảm bảo AccountProfileController được khởi tạo
+    if (!Get.isRegistered<AccountProfileController>()) {
+      await Get.put(AccountProfileController()).onInit();
+    }
+
+    pregnancyId = Get.arguments;
+    await checkUserRole(); // Thêm await ở đây
     await getScheduleList();
     searchController.addListener(_onSearchChanged);
     super.onInit();
@@ -52,11 +62,9 @@ class ScheduleController extends GetxController {
 
   Future<void> getScheduleList() async {
     isLoading.value = true;
-    var response = await ScheduleRepository.getScheduleList();
+    var response = await ScheduleRepository.getScheduleList(pregnancyId);
 
     // Log thông tin response để debug
-    print("Response Status: ${response.statusCode}");
-    print("Response Body: ${response.body}");
 
     if (response.statusCode == 200) {
       String jsonResult = utf8.decode(response.bodyBytes);
@@ -72,12 +80,10 @@ class ScheduleController extends GetxController {
           .where((schedule) => schedule.status?.toUpperCase() == 'ACTIVE')
           .toList();
 
+      //sort schedule by date
+      allSchedules.sort((a, b) => a.eventDate!.compareTo(b.eventDate!));
       // Khởi tạo danh sách hiển thị
       scheduleList.value = allSchedules;
-
-      // Log số lượng schedule đã lọc
-      print("Total schedules: ${allSchedulesFromApi.length}");
-      print("Active schedules: ${allSchedules.length}");
     } else {
       Get.snackbar("Error server ${response.statusCode}",
           jsonDecode(response.body)['message']);
@@ -136,5 +142,23 @@ class ScheduleController extends GetxController {
 
   void getBack() {
     Get.back();
+  }
+
+  Future<void> checkUserRole() async {
+    try {
+      final accountController = Get.find<AccountProfileController>();
+      // Đảm bảo dữ liệu profile đã được tải
+      if (accountController.accountProfileModel.value.roleName == null) {
+        await accountController.getAccountProfile();
+      }
+      isRegularUser.value = accountController.isRegularUser();
+      print(
+          "User role checked: isRegularUser = ${isRegularUser.value}"); // Debug log
+      print(
+          "Current role: ${accountController.accountProfileModel.value.roleName}"); // Thêm log
+    } catch (e) {
+      print("Error checking user role: $e");
+      isRegularUser.value = true; // Default to regular user if there's an error
+    }
   }
 }

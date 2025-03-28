@@ -255,9 +255,6 @@ class CreateFetalGrowthMeasurementController extends GetxController {
     var response = await FetalGrowthMeasurementRepository
         .getHeightFetalGrowthMeasurementList(pregnancyId);
 
-    print('Height measurements response: ${response.statusCode}');
-    print('Height response body: ${response.body}');
-
     if (response.statusCode == 200) {
       var heightDataList = heightSummaryModelFromJson(response.body);
       print('Height data list: $heightDataList');

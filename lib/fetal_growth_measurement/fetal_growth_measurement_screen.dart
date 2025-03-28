@@ -119,6 +119,25 @@ class FetalGrowthMeasurementScreen
             children: [
               ElevatedButton.icon(
                 style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue[700],
+                  foregroundColor: Colors.white,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                icon: const Icon(Icons.pregnant_woman, color: Colors.white),
+                label: const Text('Pregnancy Profile Details',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                onPressed: () {
+                  Get.back();
+                },
+              ),
+              const SizedBox(width: 12),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
                   foregroundColor: Colors.blue[700],
                   padding:
@@ -130,7 +149,7 @@ class FetalGrowthMeasurementScreen
                   ),
                 ),
                 icon: Icon(Icons.refresh, color: Colors.blue[700]),
-                label: const Text('Refresh Data',
+                label: const Text('Refresh',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 onPressed: () {
                   controller.getFetalGrowthMeasurement(controller.pregnancyId);
@@ -352,8 +371,8 @@ class FetalGrowthMeasurementScreen
           ),
           const SizedBox(height: 16),
           SizedBox(
-            height: 650,
-            width: 1000,
+            height: 800,
+            width: double.infinity,
             child: Obx(() {
               if (controller.weightData.isEmpty) {
                 return const Center(
@@ -374,7 +393,8 @@ class FetalGrowthMeasurementScreen
               }
               return SfCartesianChart(
                 plotAreaBorderWidth: 0,
-                margin: const EdgeInsets.all(16),
+                margin: const EdgeInsets.all(32),
+                plotAreaBackgroundColor: Colors.transparent,
                 title: ChartTitle(
                   text: 'Weight Over Gestational Weeks',
                   textStyle: const TextStyle(fontWeight: FontWeight.bold),
@@ -393,12 +413,14 @@ class FetalGrowthMeasurementScreen
                   interval: 5,
                   majorGridLines:
                       const MajorGridLines(width: 0.5, color: Colors.grey),
+                  plotOffset: 20,
                 ),
                 primaryYAxis: NumericAxis(
                   title: AxisTitle(text: 'Weight (g)'),
                   labelStyle: const TextStyle(fontWeight: FontWeight.normal),
                   majorGridLines:
                       const MajorGridLines(width: 0.5, color: Colors.grey),
+                  plotOffset: 20,
                 ),
                 series: <CartesianSeries>[
                   LineSeries<WeightData, num>(
@@ -428,8 +450,8 @@ class FetalGrowthMeasurementScreen
                     markerSettings: const MarkerSettings(
                       isVisible: true,
                       shape: DataMarkerType.circle,
-                      height: 8,
-                      width: 8,
+                      height: 5,
+                      width: 5,
                       borderWidth: 2,
                       borderColor: Color(0xFF2E7D32),
                     ),
@@ -513,8 +535,8 @@ class FetalGrowthMeasurementScreen
           ),
           const SizedBox(height: 16),
           SizedBox(
-            height: 650,
-            width: 1000,
+            height: 700,
+            width: double.infinity,
             child: Obx(() {
               if (controller.heightData.isEmpty) {
                 return const Center(
@@ -535,7 +557,8 @@ class FetalGrowthMeasurementScreen
               }
               return SfCartesianChart(
                 plotAreaBorderWidth: 0,
-                margin: const EdgeInsets.all(16),
+                margin: const EdgeInsets.all(32),
+                plotAreaBackgroundColor: Colors.transparent,
                 title: ChartTitle(
                   text: 'Height Over Gestational Weeks',
                   textStyle: const TextStyle(fontWeight: FontWeight.bold),
@@ -554,12 +577,14 @@ class FetalGrowthMeasurementScreen
                   interval: 5,
                   majorGridLines:
                       const MajorGridLines(width: 0.5, color: Colors.grey),
+                  plotOffset: 20,
                 ),
                 primaryYAxis: NumericAxis(
                   title: AxisTitle(text: 'Height (cm)'),
                   labelStyle: const TextStyle(fontWeight: FontWeight.normal),
                   majorGridLines:
                       const MajorGridLines(width: 0.5, color: Colors.grey),
+                  plotOffset: 20,
                 ),
                 series: <CartesianSeries>[
                   LineSeries<HeightData, num>(
@@ -589,8 +614,8 @@ class FetalGrowthMeasurementScreen
                     markerSettings: const MarkerSettings(
                       isVisible: true,
                       shape: DataMarkerType.circle,
-                      height: 8,
-                      width: 8,
+                      height: 5,
+                      width: 5,
                       borderWidth: 2,
                       borderColor: Color(0xFF7B1FA2),
                     ),
@@ -639,16 +664,7 @@ class FetalGrowthMeasurementScreen
                             ),
                           );
                         }
-                        return Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              'Week: ${data.week}',
-                              style: const TextStyle(fontSize: 10),
-                            ),
-                            Text(data.height.toStringAsFixed(1)),
-                          ],
-                        );
+                        return const SizedBox.shrink();
                       },
                     ),
                   ),
@@ -978,7 +994,7 @@ class FetalGrowthMeasurementScreen
                                   ),
                                 ),
                                 Text(
-                                  DateFormat('MMM dd, yyyy')
+                                  DateFormat('yyyy-MM-dd')
                                       .format(measurement.measurementDate!),
                                   style: TextStyle(
                                     fontSize: 14,
@@ -994,33 +1010,45 @@ class FetalGrowthMeasurementScreen
                               children: [
                                 _buildMeasurementDetail(
                                   Icons.monitor_weight,
-                                  'Weight',
-                                  '${measurement.weight} g',
+                                  'Weight (g)',
+                                  '${measurement.weight}',
                                   Colors.green,
                                 ),
                                 _buildMeasurementDetail(
                                   Icons.height,
-                                  'Height',
-                                  '${measurement.height} cm',
+                                  'Height (cm)',
+                                  '${measurement.height}',
                                   Colors.purple,
                                 ),
                                 _buildMeasurementDetail(
                                   Icons.roundabout_left,
-                                  'Head',
-                                  '${measurement.headCircumference} cm',
+                                  'Head circumference (cm)',
+                                  '${measurement.headCircumference}',
                                   Colors.blue,
                                 ),
                                 _buildMeasurementDetail(
                                   Icons.circle_outlined,
-                                  'Belly',
-                                  '${measurement.bellyCircumference} cm',
+                                  'Belly circumference (cm)',
+                                  '${measurement.bellyCircumference}',
                                   Colors.orange,
                                 ),
                                 _buildMeasurementDetail(
                                   Icons.favorite,
-                                  'Heart Rate',
-                                  '${measurement.heartRate} bpm',
+                                  'Heart Rate (bpm)',
+                                  '${measurement.heartRate}',
                                   Colors.red,
+                                ),
+                                _buildMeasurementDetail(
+                                  Icons.directions_run,
+                                  'Movement count (times/hour)',
+                                  '${measurement.movementCount}/hour',
+                                  Colors.purple,
+                                ),
+                                _buildMeasurementDetail(
+                                  Icons.note,
+                                  'Notes',
+                                  '${measurement.notes}',
+                                  Colors.purple,
                                 ),
                               ],
                             ),
@@ -1128,23 +1156,6 @@ class FetalGrowthMeasurementScreen
       ),
     );
   }
-
-  // List<WeightData> getWeightData() {
-  //   return [
-  //     WeightData('Week 1', 14),
-  //     WeightData('Week 2', 20),
-  //     WeightData('Week 3', 30),
-  //     WeightData('Week 4', 50),
-  //     WeightData('Week 5', 70),
-  //     WeightData('Week 6', 100),
-  //     WeightData('Week 7', 150),
-  //     WeightData('Week 8', 200),
-  //     WeightData('Week 9', 300),
-  //     WeightData('Week 10', 400),
-
-  //     // Add more data as needed
-  //   ];
-  // }
 
   List<HeightData> getHeightData() {
     return [
@@ -1267,9 +1278,4 @@ class HeightData {
   HeightData(this.week, this.height);
   final int week;
   final double height;
-
-  @override
-  String toString() {
-    return 'HeightData(week: $week, height: $height)';
-  }
 }

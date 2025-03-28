@@ -629,7 +629,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
     int daysRemaining = profile.dueDate != null
         ? profile.dueDate!.difference(DateTime.now()).inDays
         : 0;
-
+    DateTime createdDate = profile.createdDate ?? DateTime.now();
     return InkWell(
       onTap: () => controller.goToPregnancyProfileDetail(index),
       child: Container(
@@ -668,7 +668,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                       ),
                     ),
                     Text(
-                      'Created on ${DateFormat('MMM d, yyyy').format(DateTime.now().subtract(const Duration(days: 120)))}',
+                      'Created on ${DateFormat('yyyy-MM-dd').format(createdDate)}',
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey[600],
@@ -731,7 +731,7 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
               flex: 2,
               child: Text(
                 profile.dueDate != null
-                    ? DateFormat('MMM d, yyyy').format(profile.dueDate!)
+                    ? DateFormat('yyyy-MM-dd').format(profile.dueDate!)
                     : 'Not set',
                 style: TextStyle(
                   fontSize: 14,

@@ -257,7 +257,7 @@ class ScheduleScreen extends GetView<ScheduleController> {
         _buildStatCard(
           'Next Appointment',
           nextAppointmentDate != null
-              ? DateFormat('MMM d').format(nextAppointmentDate)
+              ? DateFormat('yyyy-MM-dd').format(nextAppointmentDate)
               : 'None',
           Icons.calendar_today,
           Colors.purple[600]!,
@@ -410,7 +410,7 @@ class ScheduleScreen extends GetView<ScheduleController> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            DateFormat('MMMM yyyy').format(DateTime.now()),
+                            DateFormat('yyyy-MM-dd').format(DateTime.now()),
                             style: TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
@@ -610,7 +610,7 @@ class ScheduleScreen extends GetView<ScheduleController> {
                         const SizedBox(width: 4),
                         Text(
                           appointment.eventDate != null
-                              ? DateFormat('MMM d, yyyy')
+                              ? DateFormat('yyyy-MM-dd')
                                   .format(appointment.eventDate!)
                               : 'No date',
                           style: TextStyle(
@@ -650,41 +650,74 @@ class ScheduleScreen extends GetView<ScheduleController> {
   // Section header with optional add button
   Widget _buildSectionHeader(String title, String subtitle, bool showAddButton,
       {VoidCallback? onAddPressed}) {
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.grey[800],
+        Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[800],
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    subtitle,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            if (showAddButton &&
+                onAddPressed != null &&
+                !controller.isRegularUser.value)
+              ElevatedButton.icon(
+                onPressed: onAddPressed,
+                icon: const Icon(Icons.add),
+                label: const Text('New Appointment'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue[700],
+                  foregroundColor: Colors.white,
                 ),
               ),
-              const SizedBox(height: 4),
-              Text(
-                subtitle,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[600],
-                ),
-              ),
-            ],
-          ),
+          ],
         ),
-        if (showAddButton && onAddPressed != null)
-          ElevatedButton.icon(
-            onPressed: onAddPressed,
-            icon: const Icon(Icons.add),
-            label: const Text('New Appointment'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue[700],
-              foregroundColor: Colors.white,
+        if (showAddButton && controller.isRegularUser.value) ...[
+          const SizedBox(height: 16),
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: Colors.blue[50],
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: Colors.blue[200]!),
+            ),
+            child: Row(
+              children: [
+                Icon(Icons.info_outline, color: Colors.blue[700], size: 20),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    'To add, edit, or delete appointments, please subscribe to our premium plan to access all features of our service.',
+                    style: TextStyle(
+                      color: Colors.blue[700],
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
+        ],
       ],
     );
   }
@@ -799,20 +832,56 @@ class ScheduleScreen extends GetView<ScheduleController> {
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 32),
-            SizedBox(
-              width: 200,
-              child: ElevatedButton.icon(
-                onPressed: () => controller.goToCreateSchedule(),
-                icon: const Icon(Icons.add_circle_outline),
-                label: const Text('Add Appointment'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[700],
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+            if (controller.isRegularUser.value) ...[
+              const SizedBox(height: 24),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 32),
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.blue[50],
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.blue[200]!),
+                ),
+                child: Column(
+                  children: [
+                    Icon(Icons.star, color: Colors.blue[700], size: 32),
+                    const SizedBox(height: 12),
+                    Text(
+                      'Upgrade Your Membership',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue[700],
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      'To add, edit, or delete appointments, please subscribe to our premium plan to access all features of our service.',
+                      style: TextStyle(
+                        color: Colors.blue[700],
+                        fontSize: 14,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
               ),
-            ),
+            ] else ...[
+              const SizedBox(height: 32),
+              SizedBox(
+                width: 200,
+                child: ElevatedButton.icon(
+                  onPressed: () => controller.goToCreateSchedule(),
+                  icon: const Icon(Icons.add_circle_outline),
+                  label: const Text('Add Appointment'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue[700],
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
       ),
@@ -895,7 +964,7 @@ class ScheduleScreen extends GetView<ScheduleController> {
 
     String formattedDate = "N/A";
     if (appointment.eventDate != null) {
-      formattedDate = DateFormat('MMM d, yyyy').format(appointment.eventDate!);
+      formattedDate = DateFormat('yyyy-MM-dd').format(appointment.eventDate!);
     }
 
     return Container(
@@ -1007,29 +1076,45 @@ class ScheduleScreen extends GetView<ScheduleController> {
           // Actions
           SizedBox(
             width: 100,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.edit,
-                    color: Colors.blue[700],
-                    size: 20,
+            child: controller.isRegularUser.value
+                ? Tooltip(
+                    message:
+                        'Upgrade membership to edit or delete appointments',
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Icon(
+                          Icons.lock_outline,
+                          color: Colors.grey[400],
+                          size: 20,
+                        ),
+                      ],
+                    ),
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        icon: Icon(
+                          Icons.edit,
+                          color: Colors.blue[700],
+                          size: 20,
+                        ),
+                        onPressed: () => controller.goToUpdateSchedule(index),
+                        tooltip: 'Edit',
+                      ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                          size: 20,
+                        ),
+                        onPressed: () =>
+                            _showDeleteConfirmationDialog(appointment),
+                        tooltip: 'Delete',
+                      ),
+                    ],
                   ),
-                  onPressed: () => controller.goToUpdateSchedule(index),
-                  tooltip: 'Edit',
-                ),
-                IconButton(
-                  icon: const Icon(
-                    Icons.delete,
-                    color: Colors.red,
-                    size: 20,
-                  ),
-                  onPressed: () => _showDeleteConfirmationDialog(appointment),
-                  tooltip: 'Delete',
-                ),
-              ],
-            ),
           ),
         ],
       ),
@@ -1172,7 +1257,9 @@ class ScheduleScreen extends GetView<ScheduleController> {
   // Hàm tính số ngày còn lại
   String _getDaysRemaining(DateTime eventDate) {
     final now = DateTime.now();
-    final difference = eventDate.difference(now).inDays;
+    final today = DateTime(now.year, now.month, now.day);
+    final eventDay = DateTime(eventDate.year, eventDate.month, eventDate.day);
+    final difference = eventDay.difference(today).inDays;
 
     if (difference == 0) {
       return "Today";

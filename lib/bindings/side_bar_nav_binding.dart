@@ -13,8 +13,9 @@ class SideBarNavBinding extends Bindings {
     Get.lazyPut(() => PregnancyProfileController());
     Get.lazyPut(() => SubscriptionPlanController());
     Get.lazyPut(() => HomeScreenController());
-    Get.lazyPut(() => AccountProfileController());
+
     Get.lazyPut(() => CommunityPostController());
+    Get.lazyPut(() => AccountProfileController());
 
     // Khởi tạo dịch vụ Firebase Messaging và đăng ký với GetX
     // final firebaseMessagingService = FirebaseMessagingService();

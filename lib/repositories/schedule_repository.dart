@@ -7,7 +7,7 @@ import 'dart:async';
 import '../util/app_export.dart';
 
 class ScheduleRepository {
-  static Future<http.Response> getScheduleList() async {
+  static Future<http.Response> getScheduleList(int pregnancyId) async {
     http.Response response;
 
     Map<String, String> header = {
@@ -15,7 +15,7 @@ class ScheduleRepository {
     };
     response = await interceptedClient
         .get(
-          BuildServer.buildUrl("schedules/all"),
+          BuildServer.buildUrl("schedules/by-pregnancy-profile/$pregnancyId"),
           headers: header,
         )
         .timeout(const Duration(seconds: 30));

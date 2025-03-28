@@ -26,7 +26,7 @@ class PregnancyProfileDetailsController extends GetxController {
   }
 
   Future<void> goToSchedule() async {
-    var response = await ScheduleRepository.getScheduleList();
+    var response = await ScheduleRepository.getScheduleList(pregnancyId);
     if (response.statusCode == 200) {
       scheduleModel.value = scheduleModelFromJson(response.body);
       Get.toNamed(AppRoutes.schedule, arguments: pregnancyId);
@@ -35,57 +35,6 @@ class PregnancyProfileDetailsController extends GetxController {
       if (message.contains("JWT token is expired")) {
         Get.snackbar('Session Expired', 'Please login again');
       }
-    } else if (response.statusCode == 403) {
-      Get.dialog(
-        AlertDialog(
-          title: Text(
-            'Premium Feature',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.blue[800],
-            ),
-          ),
-          content: const Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.lock,
-                size: 50,
-                color: Colors.amber,
-              ),
-              SizedBox(height: 16),
-              Text(
-                'This feature is only available for premium members.',
-                style: const TextStyle(fontSize: 16),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Get.back(),
-              child: const Text('Cancel'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // Chuyển về sidebar và chọn tab subscription plan
-                Get.offAllNamed(AppRoutes.sidebarnar,
-                    arguments: {'selectedIndex': 3});
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green[600],
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              ),
-              child: const Text(
-                'Go to Subscription Plans',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
-        ),
-        barrierDismissible: false,
-      );
     } else if (response.statusCode == 404) {
       // Get.snackbar(
       //   "Fetal growth measurement not found",
