@@ -13,6 +13,12 @@ List<CommunityPostModel> communityPostModelFromJson(String str) =>
 String communityPostModelToJson(List<CommunityPostModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+CommunityPostModel communityPostByIdModelFromJson(String str) =>
+    CommunityPostModel.fromJson(json.decode(str));
+
+String communityPostByIdModelToJson(CommunityPostModel data) =>
+    json.encode(data.toJson());
+
 class CommunityPostModel {
   int? id;
   int? userId;

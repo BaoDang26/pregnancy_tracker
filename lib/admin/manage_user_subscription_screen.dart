@@ -17,11 +17,6 @@ class ManageUserSubscriptionScreen
         backgroundColor: const Color(0xFFE5D1E8),
         elevation: 0,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () => controller.getAllUserSubscription(),
-            tooltip: 'Refresh Data',
-          ),
           const SizedBox(width: 16),
         ],
       ),
@@ -272,17 +267,17 @@ class ManageUserSubscriptionScreen
                     DataCell(Text('${subscription.id}')),
                     DataCell(Text(subscription.subscriptionPlanName ?? 'N/A')),
                     DataCell(Text(subscription.startDate != null
-                        ? DateFormat('dd/MM/yyyy')
+                        ? DateFormat('yyyy-MM-dd')
                             .format(subscription.startDate!)
                         : 'N/A')),
                     DataCell(Text(subscription.endDate != null
-                        ? DateFormat('dd/MM/yyyy').format(subscription.endDate!)
+                        ? DateFormat('yyyy-MM-dd').format(subscription.endDate!)
                         : 'N/A')),
                     DataCell(Text(NumberFormat('#,###')
                         .format(subscription.amount ?? 0))),
                     DataCell(_buildStatusBadge(subscription.status ?? 'N/A')),
                     DataCell(Text(subscription.paymentDate != null
-                        ? DateFormat('dd/MM/yyyy')
+                        ? DateFormat('yyyy-MM-dd')
                             .format(subscription.paymentDate!)
                         : 'N/A')),
                     DataCell(Row(
@@ -401,21 +396,21 @@ class ManageUserSubscriptionScreen
                   _buildDetailItem(
                       'Start Date',
                       subscription.startDate != null
-                          ? DateFormat('dd/MM/yyyy')
+                          ? DateFormat('yyyy-MM-dd')
                               .format(subscription.startDate!)
                           : 'N/A',
                       Icons.calendar_today),
                   _buildDetailItem(
                       'End Date',
                       subscription.endDate != null
-                          ? DateFormat('dd/MM/yyyy')
+                          ? DateFormat('yyyy-MM-dd')
                               .format(subscription.endDate!)
                           : 'N/A',
                       Icons.event),
                   _buildDetailItem(
                       'Payment Date',
                       subscription.paymentDate != null
-                          ? DateFormat('dd/MM/yyyy')
+                          ? DateFormat('yyyy-MM-dd')
                               .format(subscription.paymentDate!)
                           : 'N/A',
                       Icons.payment),
@@ -432,7 +427,7 @@ class ManageUserSubscriptionScreen
                   _buildDetailItem(
                       'Created Date',
                       subscription.createdDate != null
-                          ? DateFormat('dd/MM/yyyy HH:mm')
+                          ? DateFormat('yyyy-MM-dd HH:mm')
                               .format(subscription.createdDate!)
                           : 'N/A',
                       Icons.access_time),

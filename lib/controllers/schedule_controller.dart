@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../models/schedule_model.dart';
 import '../routes/app_routes.dart';
 import '../controllers/account_profile_controller.dart';
+import '../util/app_export.dart';
 
 class ScheduleController extends GetxController {
   var isLoading = true.obs;
@@ -22,13 +23,8 @@ class ScheduleController extends GetxController {
 
   @override
   void onInit() async {
-    // Đảm bảo AccountProfileController được khởi tạo
-    if (!Get.isRegistered<AccountProfileController>()) {
-      await Get.put(AccountProfileController()).onInit();
-    }
+    pregnancyId = int.parse(Get.parameters['pregnancyId']!);
 
-    pregnancyId = Get.arguments;
-    await checkUserRole(); // Thêm await ở đây
     await getScheduleList();
     searchController.addListener(_onSearchChanged);
     super.onInit();
@@ -37,7 +33,7 @@ class ScheduleController extends GetxController {
   @override
   void onClose() {
     searchController.removeListener(_onSearchChanged);
-    searchController.dispose();
+
     super.onClose();
   }
 
@@ -68,8 +64,6 @@ class ScheduleController extends GetxController {
 
     if (response.statusCode == 200) {
       String jsonResult = utf8.decode(response.bodyBytes);
-      // Log kết quả JSON
-      print("JSON Result: $jsonResult");
 
       // Chuyển đổi từ JSON sang model
       List<ScheduleModel> allSchedulesFromApi =
@@ -84,6 +78,9 @@ class ScheduleController extends GetxController {
       allSchedules.sort((a, b) => a.eventDate!.compareTo(b.eventDate!));
       // Khởi tạo danh sách hiển thị
       scheduleList.value = allSchedules;
+
+      //áp dụng search
+      searchController.addListener(_onSearchChanged);
     } else {
       Get.snackbar("Error server ${response.statusCode}",
           jsonDecode(response.body)['message']);
@@ -92,18 +89,23 @@ class ScheduleController extends GetxController {
     update();
   }
 
-  void goToCreateSchedule() {
-    pregnancyId = Get.arguments;
-    Get.toNamed(AppRoutes.createSchedule, arguments: pregnancyId);
-    print("goToCreateSchedule: $pregnancyId");
+  void goToCreateSchedule() async {
+    final result = await Get.toNamed(AppRoutes.createSchedule, parameters: {
+      'pregnancyId': pregnancyId.toString(),
+    });
+    if (result == true) {
+      await getScheduleList();
+    }
   }
 
-  void goToUpdateSchedule(int index) {
-    var schedule = scheduleList[index];
-    pregnancyId = Get.arguments;
-    Get.toNamed(AppRoutes.updateSchedule,
-        arguments: {'scheduleId': schedule.id, 'pregnancyId': pregnancyId});
-    print("goToUpdateSchedule: $pregnancyId and $schedule.id");
+  void goToUpdateSchedule(int index) async {
+    final result = await Get.toNamed(AppRoutes.updateSchedule, parameters: {
+      'scheduleId': scheduleList[index].id.toString(),
+      'pregnancyId': pregnancyId.toString()
+    });
+    if (result == true) {
+      await getScheduleList();
+    }
   }
 
   // void goToScheduleDetail(int index) {
@@ -129,7 +131,9 @@ class ScheduleController extends GetxController {
 
     if (response.statusCode == 200) {
       Get.snackbar("Success", "Schedule deleted successfully");
-      await getScheduleList(); // Cập nhật lại danh sách
+      Get.offAllNamed(AppRoutes.schedule, parameters: {
+        'pregnancyId': pregnancyId.toString(),
+      }); // Cập nhật lại danh sách
     } else {
       Get.snackbar(
           "Error ${response.statusCode}", jsonDecode(response.body)['message']);
@@ -144,21 +148,10 @@ class ScheduleController extends GetxController {
     Get.back();
   }
 
-  Future<void> checkUserRole() async {
-    try {
-      final accountController = Get.find<AccountProfileController>();
-      // Đảm bảo dữ liệu profile đã được tải
-      if (accountController.accountProfileModel.value.roleName == null) {
-        await accountController.getAccountProfile();
-      }
-      isRegularUser.value = accountController.isRegularUser();
-      print(
-          "User role checked: isRegularUser = ${isRegularUser.value}"); // Debug log
-      print(
-          "Current role: ${accountController.accountProfileModel.value.roleName}"); // Thêm log
-    } catch (e) {
-      print("Error checking user role: $e");
-      isRegularUser.value = true; // Default to regular user if there's an error
+  bool checkRegularUser() {
+    if (PrefUtils.getUserRole() == 'ROLE_USER') {
+      return true;
     }
+    return false;
   }
 }

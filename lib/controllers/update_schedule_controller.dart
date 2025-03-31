@@ -32,33 +32,11 @@ class UpdateScheduleController extends GetxController {
     descriptionController = TextEditingController();
     eventDateController = TextEditingController();
 
-    // Safely check arguments
-    try {
-      // Handle if arguments is Map
-      if (Get.arguments is Map<String, dynamic>) {
-        final args = Get.arguments as Map<String, dynamic>;
-        // Get scheduleId from arguments with default value 0 if not found
-        scheduleId = args['scheduleId'] ?? 0;
-        pregnancyProfileId = args['pregnancyProfileId'] ?? 0;
-      }
-      // Handle if arguments is a single value (assuming it's scheduleId)
-      else if (Get.arguments != null) {
-        scheduleId = Get.arguments is int ? Get.arguments : 0;
-        pregnancyProfileId = Get.arguments['pregnancyId'] ?? 0;
-      }
-
-      // If we have a valid scheduleId, find the data
-      if (scheduleId > 0) {
-        findScheduleFromId();
-      } else {
-        print('Warning: Invalid scheduleId: $scheduleId');
-        // You could set an error message here
-      }
-    } catch (e) {
-      print('Error in onInit: $e');
-      errorMessage.value = 'Failed to initialize data';
-    } finally {
-      isLoading.value = false;
+    //lấy thông tin từ parameter
+    if (Get.parameters != null) {
+      scheduleId = int.parse(Get.parameters['scheduleId']!);
+      pregnancyProfileId = int.parse(Get.parameters['pregnancyId']!);
+      findScheduleFromId();
     }
   }
 
@@ -105,6 +83,25 @@ class UpdateScheduleController extends GetxController {
       print('Error in findScheduleFromId: $e');
     }
   }
+
+  // Future<void> findScheduleFromId() async {
+  //   isLoading.value = true;
+  //   try {
+  //     var response =
+  //         await ScheduleRepository.getScheduleById(scheduleId);
+  //     if (response.statusCode == 200) {
+  //       String jsonResult = utf8.decode(response.bodyBytes);
+  //       final decodedData = json.decode(jsonResult);
+  //       scheduleModel.value = ScheduleModel.fromJson(decodedData);
+  //       populateFormFields();
+  //     } else {
+  //       errorMessage.value = 'Failed to load schedule details';
+  //     }
+  //   } catch (e) {
+  //     print('Error in findScheduleFromId: $e');
+  //   }
+  //   isLoading.value = false;
+  // }
 
   void populateFormFields() {
     final schedule = scheduleModel.value;
@@ -216,7 +213,7 @@ class UpdateScheduleController extends GetxController {
   Future<void> updateSchedule() async {
     try {
       isLoading.value = true;
-      pregnancyProfileId = Get.arguments['pregnancyId'];
+      pregnancyProfileId = int.parse(Get.parameters['pregnancyId']!);
       // Validate form
       final isValid = scheduleFormKey.currentState!.validate();
       if (!isValid) {
@@ -248,7 +245,7 @@ class UpdateScheduleController extends GetxController {
         'description': descriptionController.text,
         'eventDate': eventDateController
             .text, // Send as string to avoid JSON encoding issues
-        'pregnancyProfileId': Get.arguments['pregnancyId'],
+        'pregnancyProfileId': pregnancyProfileId,
       };
 
       print('Updating schedule with data: $scheduleData');
@@ -259,7 +256,9 @@ class UpdateScheduleController extends GetxController {
 
       if (response.statusCode == 200) {
         // Navigate back with success result
-        Get.back(result: true);
+        Get.offAllNamed(AppRoutes.schedule, parameters: {
+          'pregnancyId': pregnancyProfileId.toString(),
+        });
 
         // Show success dialog
         await showDialog(
@@ -296,9 +295,6 @@ class UpdateScheduleController extends GetxController {
             );
           },
         );
-
-        // Refresh schedule list
-        Get.find<ScheduleController>().getScheduleList();
       } else if (response.statusCode == 401) {
         String message = jsonDecode(response.body)['message'];
         if (message.contains("JWT token is expired")) {

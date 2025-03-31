@@ -156,9 +156,9 @@ class LoginController extends GetxController {
     Get.dialog(
       AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Row(
+        title: const Row(
           children: [
-            Icon(Icons.password_rounded, color: const Color(0xFFAD6E8C)),
+            Icon(Icons.password_rounded, color: Color(0xFFAD6E8C)),
             SizedBox(width: 10),
             Text('Forgot Password'),
           ],
@@ -172,7 +172,7 @@ class LoginController extends GetxController {
                 'Enter your email address and we\'ll send you a link to reset your password.',
                 style: TextStyle(color: Colors.grey[700], fontSize: 14),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               TextFormField(
                 controller: emailController,
                 decoration: InputDecoration(
@@ -180,7 +180,7 @@ class LoginController extends GetxController {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
-                  prefixIcon: Icon(Icons.email, color: const Color(0xFF8E6C88)),
+                  prefixIcon: const Icon(Icons.email, color: Color(0xFF8E6C88)),
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty || !value.contains('@')) {
@@ -214,7 +214,7 @@ class LoginController extends GetxController {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: Text('Send Reset Link'),
+            child: const Text('Send Reset Link'),
           ),
         ],
       ),
@@ -233,7 +233,7 @@ class LoginController extends GetxController {
           'Password reset link has been sent to your email',
           backgroundColor: Colors.green[100],
           colorText: Colors.green[800],
-          snackPosition: SnackPosition.BOTTOM,
+          snackPosition: SnackPosition.TOP,
         );
       } else {
         print('response.statusCode: ${response.statusCode}');

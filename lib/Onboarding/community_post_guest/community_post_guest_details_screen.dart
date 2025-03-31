@@ -170,9 +170,13 @@ class CommunityPostGuestDetailsScreen
       ),
       child: Row(
         children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back, color: Color(0xFFAD6E8C)),
-            onPressed: () => Get.back(),
+          TextButton.icon(
+            icon: const Icon(Icons.home_outlined),
+            label: const Text('Home'),
+            onPressed: () => controller.navigateToHome(),
+            style: TextButton.styleFrom(
+              foregroundColor: const Color(0xFF8E6C88),
+            ),
           ),
           const SizedBox(width: 16),
           const Row(
@@ -195,14 +199,7 @@ class CommunityPostGuestDetailsScreen
           ),
           const Spacer(),
           // Menu điều hướng
-          TextButton.icon(
-            icon: const Icon(Icons.home_outlined),
-            label: const Text('Home'),
-            onPressed: () => Get.back(),
-            style: TextButton.styleFrom(
-              foregroundColor: const Color(0xFF8E6C88),
-            ),
-          ),
+
           const SizedBox(width: 16),
           // Button đăng nhập dành cho guest
           TextButton.icon(
@@ -224,7 +221,7 @@ class CommunityPostGuestDetailsScreen
     return Row(
       children: [
         TextButton(
-          onPressed: () => Get.back(),
+          onPressed: () => controller.navigateToHome(),
           child: const Text('Community'),
           style: TextButton.styleFrom(
             foregroundColor: Colors.grey[700],
@@ -761,7 +758,7 @@ class CommunityPostGuestDetailsScreen
                 icon: Icons.forum_outlined,
                 title: 'Posts',
                 subtitle: 'View all community posts',
-                onTap: () => Get.back(),
+                onTap: () => controller.navigateToHome(),
               ),
               const SizedBox(height: 12),
               _buildSidebarItem(

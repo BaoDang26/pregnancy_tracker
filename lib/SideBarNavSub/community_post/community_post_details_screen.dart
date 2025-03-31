@@ -73,7 +73,10 @@ class CommunityPostDetailsScreen
                           ),
                         const SizedBox(height: 24),
                         ElevatedButton.icon(
-                          onPressed: () => Get.back(),
+                          onPressed: () =>
+                              Get.offAllNamed(AppRoutes.sidebarnar, arguments: {
+                            'selectedIndex': 1,
+                          }),
                           icon: const Icon(Icons.arrow_back),
                           label: const Text('Go Back'),
                           style: ElevatedButton.styleFrom(
@@ -165,9 +168,15 @@ class CommunityPostDetailsScreen
       ),
       child: Row(
         children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back, color: Color(0xFFAD6E8C)),
-            onPressed: () => Get.back(),
+          TextButton.icon(
+            icon: const Icon(Icons.home_outlined),
+            label: const Text('Home'),
+            onPressed: () => Get.offAllNamed(AppRoutes.sidebarnar, arguments: {
+              'selectedIndex': 1,
+            }),
+            style: TextButton.styleFrom(
+              foregroundColor: const Color(0xFF8E6C88),
+            ),
           ),
           const SizedBox(width: 16),
           const Row(
@@ -190,14 +199,7 @@ class CommunityPostDetailsScreen
           ),
           const Spacer(),
           // Menu điều hướng
-          TextButton.icon(
-            icon: const Icon(Icons.home_outlined),
-            label: const Text('Home'),
-            onPressed: () => Get.back(),
-            style: TextButton.styleFrom(
-              foregroundColor: const Color(0xFF8E6C88),
-            ),
-          ),
+
           const SizedBox(width: 16),
           // TextButton.icon(
           //   icon: Icon(Icons.people_outline),
@@ -218,7 +220,9 @@ class CommunityPostDetailsScreen
     return Row(
       children: [
         TextButton(
-          onPressed: () => Get.back(),
+          onPressed: () => Get.offAllNamed(AppRoutes.sidebarnar, arguments: {
+            'selectedIndex': 1,
+          }),
           child: const Text('Community'),
           style: TextButton.styleFrom(
             foregroundColor: Colors.grey[700],
@@ -903,7 +907,9 @@ class CommunityPostDetailsScreen
                 icon: Icons.forum_outlined,
                 title: 'Posts',
                 subtitle: 'View all community posts',
-                onTap: () => Get.back(),
+                onTap: () => Get.offAllNamed(AppRoutes.sidebarnar, arguments: {
+                  'selectedIndex': 1,
+                }),
               ),
               // const SizedBox(height: 12),
               // _buildSidebarItem(

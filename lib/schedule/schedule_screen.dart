@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:pregnancy_tracker/controllers/schedule_controller.dart';
 import 'package:pregnancy_tracker/widgets/custom_elevated_button.dart';
 
+import '../routes/app_routes.dart';
+
 class ScheduleScreen extends GetView<ScheduleController> {
   const ScheduleScreen({Key? key}) : super(key: key);
 
@@ -129,6 +131,19 @@ class ScheduleScreen extends GetView<ScheduleController> {
         children: [
           Row(
             children: [
+              ElevatedButton.icon(
+                icon: const Icon(Icons.pregnant_woman),
+                label: const Text('Pregnancy Profile'),
+                onPressed: () => Get.offAllNamed(
+                    AppRoutes.pregnancyprofiledetails,
+                    parameters: {
+                      'pregnancyId': controller.pregnancyId.toString(),
+                    }),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue[700],
+                  foregroundColor: Colors.white,
+                ),
+              ),
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
@@ -153,29 +168,6 @@ class ScheduleScreen extends GetView<ScheduleController> {
             ],
           ),
           const Spacer(),
-          Row(
-            children: [
-              ElevatedButton.icon(
-                icon: const Icon(Icons.pregnant_woman),
-                label: const Text('Pregnancy Profile'),
-                onPressed: () => Get.back(),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[700],
-                  foregroundColor: Colors.white,
-                ),
-              ),
-              const SizedBox(width: 8),
-              ElevatedButton.icon(
-                icon: const Icon(Icons.refresh),
-                label: const Text('Refresh'),
-                onPressed: () => controller.getScheduleList(),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[700],
-                  foregroundColor: Colors.white,
-                ),
-              ),
-            ],
-          ),
         ],
       ),
     );
@@ -680,7 +672,7 @@ class ScheduleScreen extends GetView<ScheduleController> {
             ),
             if (showAddButton &&
                 onAddPressed != null &&
-                !controller.isRegularUser.value)
+                !controller.checkRegularUser())
               ElevatedButton.icon(
                 onPressed: onAddPressed,
                 icon: const Icon(Icons.add),
@@ -692,7 +684,7 @@ class ScheduleScreen extends GetView<ScheduleController> {
               ),
           ],
         ),
-        if (showAddButton && controller.isRegularUser.value) ...[
+        if (showAddButton && controller.checkRegularUser()) ...[
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(12),
@@ -832,7 +824,7 @@ class ScheduleScreen extends GetView<ScheduleController> {
               ),
               textAlign: TextAlign.center,
             ),
-            if (controller.isRegularUser.value) ...[
+            if (controller.checkRegularUser()) ...[
               const SizedBox(height: 24),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 32),
@@ -1076,7 +1068,7 @@ class ScheduleScreen extends GetView<ScheduleController> {
           // Actions
           SizedBox(
             width: 100,
-            child: controller.isRegularUser.value
+            child: controller.checkRegularUser()
                 ? Tooltip(
                     message:
                         'Upgrade membership to edit or delete appointments',

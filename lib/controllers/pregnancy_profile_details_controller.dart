@@ -6,6 +6,7 @@ import 'package:pregnancy_tracker/models/pregnancy_profile_model.dart';
 import '../models/fetal_growth_measurement_model.dart';
 import '../models/schedule_model.dart';
 import '../repositories/fetal_growth_measurement_repository.dart';
+import '../repositories/pregnancy_profile_repository.dart';
 import '../repositories/schedule_repository.dart';
 import '../util/app_export.dart';
 
@@ -19,17 +20,29 @@ class PregnancyProfileDetailsController extends GetxController {
 
   @override
   Future<void> onInit() async {
-    pregnancyProfileModel.value = Get.arguments;
-    pregnancyId = pregnancyProfileModel.value.id!;
+    pregnancyId = int.parse(Get.parameters['pregnancyId']!);
+    getPregnancyProfileById();
 
     super.onInit();
+  }
+
+  Future<void> getPregnancyProfileById() async {
+    var response =
+        await PregnancyProfileRepository.getPregnancyProfileById(pregnancyId);
+    if (response.statusCode == 200) {
+      String jsonResult = utf8.decode(response.bodyBytes);
+      pregnancyProfileModel.value =
+          pregnancyProfileByIdModelFromJson(jsonResult);
+    }
   }
 
   Future<void> goToSchedule() async {
     var response = await ScheduleRepository.getScheduleList(pregnancyId);
     if (response.statusCode == 200) {
       scheduleModel.value = scheduleModelFromJson(response.body);
-      Get.toNamed(AppRoutes.schedule, arguments: pregnancyId);
+      Get.toNamed(AppRoutes.schedule, parameters: {
+        'pregnancyId': pregnancyId.toString(),
+      });
     } else if (response.statusCode == 401) {
       String message = jsonDecode(response.body)['message'];
       if (message.contains("JWT token is expired")) {
@@ -108,13 +121,12 @@ class PregnancyProfileDetailsController extends GetxController {
         await FetalGrowthMeasurementRepository.getFetalGrowthMeasurementList(
             pregnancyId);
 
-    print('General measurements response: ${response.statusCode}');
-    print('Response body: ${response.body}');
-
     if (response.statusCode == 200) {
       fetalGrowthMeasurementModel.value =
           fetalGrowthMeasurementModelFromJson(response.body);
-      Get.toNamed(AppRoutes.fetalgrowthmeasurement, arguments: pregnancyId);
+      Get.toNamed(AppRoutes.fetalgrowthmeasurement, parameters: {
+        'pregnancyId': pregnancyId.toString(),
+      });
     } else if (response.statusCode == 401) {
       String message = jsonDecode(response.body)['message'];
       if (message.contains("JWT token is expired")) {

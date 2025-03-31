@@ -39,50 +39,15 @@ class CommunityPostDetailsController extends GetxController {
     commentController = TextEditingController();
     updateCommentController = TextEditingController();
 
-    // Lấy thông tin bài viết từ arguments
-    if (Get.arguments != null) {
+    // Lấy thông tin bài viết từ parameters
+    if (Get.parameters != null) {
+      // Gán trực tiếp model từ parameter
+      // Lấy postId từ parameter
+      postId = int.parse(Get.parameters['postId']!);
+
+      // Luôn fetch lại comments từ API để đảm bảo dữ liệu mới nhất
+      fetchPostDetails();
       // Lấy CommunityPostModel trực tiếp từ arguments
-      if (Get.arguments is CommunityPostModel) {
-        // Gán trực tiếp model từ argument
-        communityPost.value = Get.arguments as CommunityPostModel;
-        postId = communityPost.value!.id!;
-
-        // Luôn fetch lại comments từ API để đảm bảo dữ liệu mới nhất
-        fetchPostDetails();
-      }
-      // Lấy từ map nếu được truyền dưới dạng map
-      else if (Get.arguments is Map) {
-        final args = Get.arguments as Map;
-
-        // Nếu có postId
-        if (args.containsKey('postId')) {
-          postId = args['postId'];
-
-          // Nếu có model
-          if (args.containsKey('post') && args['post'] is CommunityPostModel) {
-            communityPost.value = args['post'] as CommunityPostModel;
-
-            // Luôn fetch lại dữ liệu mới nhất
-            fetchPostDetails();
-          } else {
-            // Không có model, quay về màn hình trước
-            errorMessage.value = 'Post data is missing';
-            Get.back();
-          }
-        } else {
-          // Không có postId, quay về màn hình trước
-          errorMessage.value = 'Post ID is missing';
-          Get.back();
-        }
-      } else {
-        // Không đúng định dạng, quay về màn hình trước
-        errorMessage.value = 'Invalid arguments format';
-        Get.back();
-      }
-    } else {
-      // Không có arguments, quay về màn hình trước
-      errorMessage.value = 'No arguments provided';
-      Get.back();
     }
   }
 
@@ -90,6 +55,7 @@ class CommunityPostDetailsController extends GetxController {
   void onClose() {
     commentController.dispose();
     updateCommentController.dispose();
+
     super.onClose();
   }
 
@@ -133,12 +99,15 @@ class CommunityPostDetailsController extends GetxController {
 
   // Kiểm tra xem user có quyền bình luận không
   bool canComment() {
-    final accountController = Get.find<AccountProfileController>();
+    // final accountController = Get.find<AccountProfileController>();
 
     // Nếu là ROLE_USER, không cho phép bình luận
-    if (accountController.isRegularUser()) {
+    if (PrefUtils.getUserRole() == 'ROLE_USER') {
       return false;
     }
+    // if (accountController.isRegularUser()) {
+    //   return false;
+    // }
 
     // Các role khác được phép bình luận
     return true;
@@ -148,15 +117,14 @@ class CommunityPostDetailsController extends GetxController {
   @override
   bool canEditComment(CommentModel comment) {
     // Lấy ID người dùng từ session/preferences
-    final accountController = Get.find<AccountProfileController>();
-    final userId = accountController.accountProfileModel.value.id;
+    final userId = PrefUtils.getInt('userId');
 
     // Nếu là ROLE_USER, không được phép chỉnh sửa comment
-    if (accountController.isRegularUser()) {
+    if (PrefUtils.getUserRole() == 'ROLE_USER') {
       return false;
     }
 
-    // Các role khác được phép chỉnh sửa comment của mình
+    // Các role khác chỉ được chỉnh sửa bài viết của mình
     return userId != null && comment.userId == userId;
   }
 
@@ -164,17 +132,11 @@ class CommunityPostDetailsController extends GetxController {
   @override
   bool canEditPost() {
     // Lấy ID người dùng từ session/preferences
-    final accountController = Get.find<AccountProfileController>();
-    final userId = accountController.accountProfileModel.value.id;
+    final userId = PrefUtils.getInt('userId');
 
     // Nếu là ROLE_USER, không được phép chỉnh sửa bài viết
-    if (accountController.isRegularUser()) {
+    if (PrefUtils.getUserRole() == 'ROLE_USER') {
       return false;
-    }
-
-    // Admin và Moderator có thể chỉnh sửa mọi bài viết
-    if (accountController.canModerateContent()) {
-      return true;
     }
 
     // Các role khác chỉ được chỉnh sửa bài viết của mình
@@ -200,8 +162,7 @@ class CommunityPostDetailsController extends GetxController {
       errorMessage.value = '';
 
       // Lấy ID người dùng từ session/preferences
-      final accountController = Get.find<AccountProfileController>();
-      final userId = accountController.accountProfileModel.value.id;
+      final userId = PrefUtils.getInt('userId');
 
       if (userId == null) {
         errorMessage.value = 'User is not logged in';
@@ -304,8 +265,7 @@ class CommunityPostDetailsController extends GetxController {
       errorMessage.value = '';
 
       // Lấy ID người dùng từ session/preferences
-      final accountController = Get.find<AccountProfileController>();
-      final userId = accountController.accountProfileModel.value.id;
+      final userId = PrefUtils.getInt('userId');
 
       if (userId == null) {
         errorMessage.value = 'User is not logged in';
@@ -769,8 +729,7 @@ class CommunityPostDetailsController extends GetxController {
   // Phương thức cập nhật bài viết
   void goToUpdateCommunityPost(int index) {
     // Lấy thông tin userId từ user info hiện tại
-    final accountProfileController = Get.find<AccountProfileController>();
-    final userId = accountProfileController.accountProfileModel.value.id;
+    final userId = PrefUtils.getInt('userId');
 
     // Kiểm tra quyền sở hữu bài viết
     //   if (userId == null || userId != communityPost.value?.userId) {
@@ -785,8 +744,9 @@ class CommunityPostDetailsController extends GetxController {
     // }
 
     // Chuyển trang và truyền dữ liệu
-    Get.toNamed(AppRoutes.updatecommunitypost, arguments: communityPost.value)
-        ?.then((value) {
+    Get.toNamed(AppRoutes.updatecommunitypost, parameters: {
+      'postId': postId.toString(),
+    })?.then((value) {
       // Làm mới danh sách khi cập nhật thành công
       if (value != null && value == true) {
         fetchPostDetails();

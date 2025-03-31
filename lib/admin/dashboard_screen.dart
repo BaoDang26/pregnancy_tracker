@@ -13,16 +13,7 @@ class DashboardScreen extends GetView<DashboardController> {
       appBar: AppBar(
         title: const Text('Admin Dashboard'),
         backgroundColor: const Color(0xFFE5D1E8),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () {
-              controller.getDashboardTotalUser();
-              controller.getDashboardTotalUserSubscription();
-            },
-            tooltip: 'Refresh Data',
-          ),
-        ],
+        actions: [],
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -126,7 +117,7 @@ class DashboardScreen extends GetView<DashboardController> {
                 const Icon(Icons.calendar_today, color: Colors.white, size: 16),
                 const SizedBox(width: 4),
                 Text(
-                  DateFormat('MMM d, yyyy').format(DateTime.now()),
+                  DateFormat('yyyy-MM-dd').format(DateTime.now()),
                   style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

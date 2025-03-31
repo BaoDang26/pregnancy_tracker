@@ -44,33 +44,11 @@ class UpdateFetalGrowthMeasurementController extends GetxController {
     notesController = TextEditingController();
     measurementDateController = TextEditingController();
 
-    // Kiểm tra arguments một cách an toàn
-    try {
-      // Xử lý nếu arguments là Map
-      if (Get.arguments is Map<String, dynamic>) {
-        final args = Get.arguments as Map<String, dynamic>;
-        // Lấy measurementId từ arguments với giá trị mặc định 0 nếu không tìm thấy
-        measurementId = args['measurementId'] ?? 0;
-        pregnancyId = args['pregnancyId'] ?? 0;
-      }
-      // Xử lý nếu arguments là một giá trị đơn (giả sử là measurementId)
-      else if (Get.arguments != null) {
-        measurementId = Get.arguments is int ? Get.arguments : 0;
-        pregnancyId = Get.arguments is int ? Get.arguments : 0;
-      }
-
-      // Nếu có measurementId hợp lệ, tìm dữ liệu
-      if (measurementId > 0) {
-        findMeasurementFromId();
-      } else {
-        print('Warning: Invalid measurementId: $measurementId');
-        // Có thể đặt thông báo lỗi ở đây
-      }
-    } catch (e) {
-      print('Error in onInit: $e');
-      errorMessage.value = 'Failed to initialize data';
-    } finally {
-      isLoading.value = false;
+    //lấy thông tin từ parameter
+    if (Get.parameters != null) {
+      measurementId = int.parse(Get.parameters['measurementId']!);
+      pregnancyId = int.parse(Get.parameters['pregnancyId']!);
+      findMeasurementFromId();
     }
   }
 
@@ -87,41 +65,25 @@ class UpdateFetalGrowthMeasurementController extends GetxController {
     super.onClose();
   }
 
-  void findMeasurementFromId() {
+  Future<void> findMeasurementFromId() async {
+    isLoading.value = true;
     try {
-      // Kiểm tra xem controller đã được đăng ký chưa
-      if (!Get.isRegistered<FetalGrowthMeasurementController>()) {
-        print('FetalGrowthMeasurementController is not registered');
-        return;
-      }
-
-      // Lấy controller chứa danh sách measurements
-      final fetalController = Get.find<FetalGrowthMeasurementController>();
-
-      // Kiểm tra danh sách đã được khởi tạo chưa
-      if (fetalController.fetalGrowthMeasurementModel == null ||
-          fetalController.fetalGrowthMeasurementModel.isEmpty) {
-        print('Measurement list is empty');
-        return;
-      }
-
-      // Tìm measurement dựa trên ID, với giá trị mặc định nếu không tìm thấy
-      final measurement = fetalController.fetalGrowthMeasurementModel
-          .firstWhere((m) => m.id == measurementId,
-              orElse: () => FetalGrowthMeasurementModel());
-
-      // Kiểm tra kết quả tìm kiếm
-      if (measurement.id != null) {
-        measurementModel.value = measurement;
-
-        // Điền dữ liệu vào form
+      var response =
+          await FetalGrowthMeasurementRepository.getFetalGrowthMeasurementById(
+              measurementId);
+      if (response.statusCode == 200) {
+        String jsonResult = utf8.decode(response.bodyBytes);
+        final decodedData = json.decode(jsonResult);
+        measurementModel.value =
+            FetalGrowthMeasurementModel.fromJson(decodedData);
         populateFormFields();
       } else {
-        print('Measurement not found with ID: $measurementId');
+        errorMessage.value = 'Failed to load measurement details';
       }
     } catch (e) {
       print('Error in findMeasurementFromId: $e');
     }
+    isLoading.value = false;
   }
 
   void populateFormFields() {
@@ -167,6 +129,34 @@ class UpdateFetalGrowthMeasurementController extends GetxController {
       return "Weight must be a number";
     double? number = double.tryParse(value);
     if (number == null || number <= 0) return "Weight must be greater than 0";
+    return null;
+  }
+
+  String? validateHeartRate(String value) {
+    if (value.isEmpty) return null;
+    if (!RegExp(r'^\d*\.?\d+$').hasMatch(value))
+      return "Heart rate must be a number";
+    return null;
+  }
+
+  String? validateBellyCircumference(String value) {
+    if (value.isEmpty) return null;
+    if (!RegExp(r'^\d*\.?\d+$').hasMatch(value))
+      return "Belly circumference must be a number";
+    return null;
+  }
+
+  String? validateHeadCircumference(String value) {
+    if (value.isEmpty) return null;
+    if (!RegExp(r'^\d*\.?\d+$').hasMatch(value))
+      return "Head circumference must be a number";
+    return null;
+  }
+
+  String? validateMovementCount(String value) {
+    if (value.isEmpty) return null;
+    if (!RegExp(r'^\d*\.?\d+$').hasMatch(value))
+      return "Movement count must be a number";
     return null;
   }
 
@@ -239,7 +229,7 @@ class UpdateFetalGrowthMeasurementController extends GetxController {
         // Cập nhật dữ liệu ở màn hình danh sách
         // Get.find<FetalGrowthMeasurementController>()
         //     .fetchFetalGrowthMeasurementData();
-        Get.back(result: true);
+
         // Hiển thị dialog thành công
         await showDialog(
           context: Get.context!,
@@ -275,8 +265,11 @@ class UpdateFetalGrowthMeasurementController extends GetxController {
             );
           },
         );
-        Get.find<FetalGrowthMeasurementController>()
-            .fetchFetalGrowthMeasurementData();
+
+        Get.offAllNamed(AppRoutes.fetalgrowthmeasurement, parameters: {
+          'pregnancyId': pregnancyId.toString(),
+        });
+
         // Quay lại màn hình danh sách
       } else if (response.statusCode == 401) {
         String message = jsonDecode(response.body)['message'];

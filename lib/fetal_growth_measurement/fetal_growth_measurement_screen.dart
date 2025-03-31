@@ -79,6 +79,28 @@ class FetalGrowthMeasurementScreen
         children: [
           Row(
             children: [
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue[700],
+                  foregroundColor: Colors.white,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  elevation: 2,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                icon: const Icon(Icons.subdirectory_arrow_left,
+                    color: Colors.white),
+                label: const Text('Pregnancy Profile Details',
+                    style: TextStyle(fontWeight: FontWeight.bold)),
+                onPressed: () {
+                  Get.offAllNamed(AppRoutes.pregnancyprofiledetails,
+                      parameters: {
+                        'pregnancyId': controller.pregnancyId.toString(),
+                      });
+                },
+              ),
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
@@ -128,53 +150,14 @@ class FetalGrowthMeasurementScreen
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                icon: const Icon(Icons.pregnant_woman, color: Colors.white),
-                label: const Text('Pregnancy Profile Details',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                onPressed: () {
-                  Get.back();
-                },
-              ),
-              const SizedBox(width: 12),
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.blue[700],
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    side: BorderSide(color: Colors.blue[700]!),
-                  ),
-                ),
-                icon: Icon(Icons.refresh, color: Colors.blue[700]),
-                label: const Text('Refresh',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                onPressed: () {
-                  controller.getFetalGrowthMeasurement(controller.pregnancyId);
-                  controller.getHeightMeasurements(controller.pregnancyId);
-                  controller.getWeightMeasurements(controller.pregnancyId);
-                },
-              ),
-              const SizedBox(width: 12),
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[700],
-                  foregroundColor: Colors.white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
                 icon: const Icon(Icons.add, color: Colors.white),
                 label: const Text('Add New Measurement',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 onPressed: () {
                   Get.toNamed(AppRoutes.createfetalgrowthmeasurement,
-                      arguments: controller.pregnancyId);
+                      parameters: {
+                        'pregnancyId': controller.pregnancyId.toString(),
+                      });
                 },
               ),
             ],
@@ -887,7 +870,9 @@ class FetalGrowthMeasurementScreen
                 TextButton.icon(
                   onPressed: () {
                     Get.toNamed(AppRoutes.createfetalgrowthmeasurement,
-                        arguments: controller.pregnancyId);
+                        parameters: {
+                          'pregnancyId': controller.pregnancyId.toString(),
+                        });
                   },
                   icon: const Icon(Icons.add, size: 18),
                   label: const Text('Add New'),

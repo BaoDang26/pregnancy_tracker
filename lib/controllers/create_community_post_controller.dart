@@ -36,7 +36,7 @@ class CreateCommunityPostController extends GetxController {
     isLoading.value = true;
 
     // Lấy userId từ arguments
-    userId = Get.arguments['userId'];
+    userId = int.parse(Get.parameters['userId']!);
 
     // Khởi tạo các controller
     titleController = TextEditingController();

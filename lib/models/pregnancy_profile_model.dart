@@ -11,6 +11,12 @@ List<PregnancyProfileModel> pregnancyProfileModelFromJson(String str) =>
 String pregnancyProfileModelToJson(List<PregnancyProfileModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+PregnancyProfileModel pregnancyProfileByIdModelFromJson(String str) =>
+    PregnancyProfileModel.fromJson(json.decode(str));
+
+String pregnancyProfileByIdModelToJson(PregnancyProfileModel data) =>
+    json.encode(data.toJson());
+
 class PregnancyProfileModel {
   int? id;
   String? nickName;

@@ -7,6 +7,7 @@ import 'package:pregnancy_tracker/controllers/account_profile_controller.dart';
 import '../models/community_post_model.dart';
 import '../repositories/community_post_repository.dart';
 import '../routes/app_routes.dart';
+import '../util/app_export.dart';
 
 class CommunityPostController extends GetxController {
   var isLoading = true.obs;
@@ -27,6 +28,7 @@ class CommunityPostController extends GetxController {
   Future<void> onInit() async {
     // Set up search controller listener
     searchController.addListener(_onSearchChanged);
+
     await getCommunityPostList();
     super.onInit();
   }
@@ -34,7 +36,7 @@ class CommunityPostController extends GetxController {
   @override
   void onClose() {
     searchController.removeListener(_onSearchChanged);
-    searchController.dispose();
+
     super.onClose();
   }
 
@@ -99,8 +101,12 @@ class CommunityPostController extends GetxController {
 
       // Apply filters after loading
       applyFilters();
+      searchController.addListener(_onSearchChanged);
     } else if (response.statusCode == 401) {
-      Get.snackbar("Error", "Unauthorized");
+      String message = jsonDecode(response.body)['message'];
+      if (message.contains("JWT token is expired")) {
+        Get.snackbar('Session Expired', 'Please login again');
+      }
     } else if (response.statusCode == 403) {
       var errorData = jsonDecode(response.body);
     } else {
@@ -111,17 +117,17 @@ class CommunityPostController extends GetxController {
     update();
   }
 
-  void goToCommunityPostOfUser() {
-    // Get.toNamed(AppRoutes.communitypostofuser);
-  }
-
   void goToCommunityPostDetail(int index) async {
     final result = await Get.toNamed(
       AppRoutes.communitypostdetails,
-      arguments: {
-        'postId': activePostList[index].id,
-        'post': activePostList[index],
+      parameters: {
+        'postId': activePostList[index].id.toString(),
+        'post': activePostList[index].toString(),
       },
+      // arguments: {
+      //   'postId': activePostList[index].id,
+      //   'post': activePostList[index],
+      // },
     );
 
     // Nếu result là true (khi xóa bài viết), làm mới danh sách
@@ -130,30 +136,11 @@ class CommunityPostController extends GetxController {
     }
   }
 
-  void goToCreateCommunityPost() {
-    // Lấy thông tin từ user info hiện tại
-    final accountProfileController = Get.find<AccountProfileController>();
-    final userId = accountProfileController.accountProfileModel.value.id;
-
-    // Kiểm tra nếu đã đăng nhập
-    if (userId == null) {
-      Get.dialog(
-        AlertDialog(
-          title: const Text("Warning"),
-          content: const Text("Please login to create a post"),
-          actions: [
-            TextButton(
-              onPressed: () => Get.back(),
-              child: const Text("OK"),
-            ),
-          ],
-        ),
-      );
-      return;
-    }
-
+  void goToCreateCommunityPost() async {
+    final accountProfile = Get.find<AccountProfileController>();
+    final userId = accountProfile.accountProfileModel.value.id;
     // Kiểm tra role - chặn ROLE_USER không cho tạo post
-    if (accountProfileController.isRegularUser()) {
+    if (PrefUtils.getUserRole() == 'ROLE_USER') {
       Get.dialog(
         AlertDialog(
           title: const Text("Permission Denied"),
@@ -171,19 +158,23 @@ class CommunityPostController extends GetxController {
     }
 
     // Nếu không phải ROLE_USER, cho phép tạo post
-    Get.toNamed(AppRoutes.createcommunitypost, arguments: {'userId': userId})
-        ?.then((value) => {
-              if (value != null && value) {getCommunityPostList()}
-            });
+    final result = await Get.toNamed(
+      AppRoutes.createcommunitypost,
+      parameters: {
+        'userId': userId.toString(),
+      },
+    );
+    if (result == true) {
+      await getCommunityPostList();
+    }
   }
 
-  void goToUpdateCommunityPost(CommunityPostModel post) {
-    // Lấy thông tin từ user info hiện tại
-    final accountProfileController = Get.find<AccountProfileController>();
-    final currentUserId = accountProfileController.accountProfileModel.value.id;
+  void goToUpdateCommunityPost(CommunityPostModel post) async {
+    final accountProfile = Get.find<AccountProfileController>();
+    final userId = accountProfile.accountProfileModel.value.id;
 
     // Kiểm tra nếu người dùng hiện tại là tác giả của bài viết
-    if (post.userId != currentUserId) {
+    if (post.userId != userId) {
       Get.dialog(
         AlertDialog(
           title: const Text("Permission Denied"),
@@ -200,22 +191,27 @@ class CommunityPostController extends GetxController {
     }
 
     // Chuyển đến màn hình cập nhật bài viết
-    Get.toNamed(AppRoutes.updatecommunitypost, arguments: post)
-        ?.then((value) => {
-              if (value != null && value) {getCommunityPostList()}
-            });
+    final result =
+        await Get.toNamed(AppRoutes.updatecommunitypost, parameters: {
+      'postId': post.id.toString(),
+      'post': post.toString(),
+      'userId': userId.toString(),
+    });
+    if (result == true) {
+      await getCommunityPostList();
+    }
   }
 
   void showDeleteConfirmation(int postId) {
     // Lấy thông tin từ user info hiện tại
-    final accountProfileController = Get.find<AccountProfileController>();
-    final currentUserId = accountProfileController.accountProfileModel.value.id;
+    final accountProfile = Get.find<AccountProfileController>();
+    final userId = accountProfile.accountProfileModel.value.id;
 
     // Tìm bài viết với ID tương ứng
     final post = filteredPostList.firstWhere((post) => post.id == postId);
 
     // Kiểm tra nếu người dùng hiện tại là tác giả của bài viết
-    if (post.userId != currentUserId) {
+    if (post.userId != userId) {
       Get.dialog(
         AlertDialog(
           title: const Text("Permission Denied"),
@@ -247,7 +243,6 @@ class CommunityPostController extends GetxController {
           ),
           TextButton(
             onPressed: () {
-              Get.back();
               deleteCommunityPost(postId);
             },
             style: TextButton.styleFrom(
@@ -272,18 +267,17 @@ class CommunityPostController extends GetxController {
           "Post has been deleted successfully",
           backgroundColor: Colors.green[100],
           colorText: Colors.green[800],
-          snackPosition: SnackPosition.BOTTOM,
+          snackPosition: SnackPosition.TOP,
         );
 
-        // Refresh the list after deletion
-        await getCommunityPostList();
+        Get.offAllNamed(AppRoutes.sidebarnar, arguments: {'selectedIndex': 1});
       } else {
         Get.snackbar(
           "Error",
           "Failed to delete post: ${jsonDecode(response.body)['message'] ?? 'Unknown error'}",
           backgroundColor: Colors.red[100],
           colorText: Colors.red[800],
-          snackPosition: SnackPosition.BOTTOM,
+          snackPosition: SnackPosition.TOP,
         );
       }
     } catch (e) {
@@ -292,7 +286,7 @@ class CommunityPostController extends GetxController {
         "An error occurred: $e",
         backgroundColor: Colors.red[100],
         colorText: Colors.red[800],
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
       );
     } finally {
       isLoading.value = false;

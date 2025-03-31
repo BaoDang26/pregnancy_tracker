@@ -29,8 +29,6 @@ class UpdateAccountProfileController extends GetxController {
   late TextEditingController dateOfBirthController;
   late TextEditingController streetAddressController;
 
-  late int userId;
-
   var isLoading = false.obs;
   RxString errorMessage = ''.obs;
   Rx<AccountProfileModel> accountProfileModel = AccountProfileModel().obs;
@@ -48,34 +46,10 @@ class UpdateAccountProfileController extends GetxController {
     addressController = TextEditingController();
     dateOfBirthController = TextEditingController();
     streetAddressController = TextEditingController();
+    getAccountProfile();
     super.onInit();
 
-    // Safely check arguments
-    try {
-      // Handle if arguments is Map
-      if (Get.arguments is Map<String, dynamic>) {
-        final args = Get.arguments as Map<String, dynamic>;
-        // Get scheduleId from arguments with default value 0 if not found
-        userId = args['userId'] ?? 0;
-      }
-      // Handle if arguments is a single value (assuming it's scheduleId)
-      else if (Get.arguments != null) {
-        userId = Get.arguments is int ? Get.arguments : 0;
-      }
-
-      // If we have a valid scheduleId, find the data
-      if (userId > 0) {
-        findAccountProfileFromId();
-      } else {
-        print('Warning: Invalid scheduleId: $userId');
-        // You could set an error message here
-      }
-    } catch (e) {
-      print('Error in onInit: $e');
-      errorMessage.value = 'Failed to initialize data';
-    } finally {
-      isLoading.value = false;
-    }
+    // Thiết lập ever listeners cho các thay đổi địa chỉ
 
     // Thiết lập ever listeners cho các thay đổi địa chỉ
     ever(selectedLevel1, (level1) {
@@ -108,38 +82,12 @@ class UpdateAccountProfileController extends GetxController {
     ever(streetAddress, (_) => updateFullAddress());
   }
 
-  void findAccountProfileFromId() {
-    try {
-      // Check if controller is registered
-      if (!Get.isRegistered<AccountProfileController>()) {
-        print('AccountProfileController is not registered');
-        return;
-      }
-
-      // Get controller with user
-      final accountProfileController = Get.find<AccountProfileController>();
-
-      // Check if list has been initialized
-      if (accountProfileController.accountProfileModel == null) {
-        print('AccountProfileModel list is empty');
-        return;
-      }
-
-      // Find user based on ID, with default value if not found
-      final accountProfileId =
-          accountProfileController.accountProfileModel.value.id;
-
-      // Check search result
-      if (accountProfileId != null) {
-        accountProfileModel.value =
-            accountProfileController.accountProfileModel.value;
-        // Fill data into form
-        populateFormFields();
-      } else {
-        print('AccountProfile not found with ID: $userId');
-      }
-    } catch (e) {
-      print('Error in findAccountProfileFromId: $e');
+  Future<void> getAccountProfile() async {
+    final response = await AccountProfileRepository.getAccountProfile();
+    if (response.statusCode == 200) {
+      String jsonResult = utf8.decode(response.bodyBytes);
+      accountProfileModel.value = accountProfileModelFromJson(jsonResult);
+      populateFormFields();
     }
   }
 
@@ -195,6 +143,7 @@ class UpdateAccountProfileController extends GetxController {
         if (province != null) {
           selectedLevel1.value = province;
 
+          print('selectedLevel1: ${selectedLevel1.value}');
           // Sắp xếp và cập nhật danh sách quận/huyện theo tỉnh/thành phố đã chọn
           var sortedLevel2 = province.children.toList();
           sortedLevel2.sort((a, b) => a.name.compareTo(b.name));

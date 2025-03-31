@@ -20,51 +20,9 @@ class CommunityPostGuestDetailsController extends GetxController {
   void onInit() {
     super.onInit();
 
-    // Lấy thông tin bài viết từ arguments
-    if (Get.arguments != null) {
-      // Lấy CommunityPostModel trực tiếp từ arguments
-      if (Get.arguments is CommunityPostModel) {
-        // Gán trực tiếp model từ argument
-        communityPost.value = Get.arguments as CommunityPostModel;
-        postId = communityPost.value.id!;
+    postId = int.parse(Get.parameters['postId']!);
 
-        // Luôn fetch lại comments từ API để đảm bảo dữ liệu mới nhất
-        fetchPostDetails();
-      }
-      // Lấy từ map nếu được truyền dưới dạng map
-      else if (Get.arguments is Map) {
-        final args = Get.arguments as Map;
-
-        // Nếu có postId
-        if (args.containsKey('postId')) {
-          postId = args['postId'];
-
-          // Nếu có model
-          if (args.containsKey('post') && args['post'] is CommunityPostModel) {
-            communityPost.value = args['post'] as CommunityPostModel;
-
-            // Luôn fetch lại dữ liệu mới nhất
-            fetchPostDetails();
-          } else {
-            // Không có model, quay về màn hình trước
-            errorMessage.value = 'Post data is missing';
-            Get.back();
-          }
-        } else {
-          // Không có postId, quay về màn hình trước
-          errorMessage.value = 'Post ID is missing';
-          Get.back();
-        }
-      } else {
-        // Không đúng định dạng, quay về màn hình trước
-        errorMessage.value = 'Invalid arguments format';
-        Get.back();
-      }
-    } else {
-      // Không có arguments, quay về màn hình trước
-      errorMessage.value = 'No arguments provided';
-      Get.back();
-    }
+    fetchPostDetails();
   }
 
   // Thêm phương thức để fetch lại toàn bộ thông tin bài viết
@@ -234,5 +192,10 @@ class CommunityPostGuestDetailsController extends GetxController {
   // Phương thức để hiển thị khi người dùng muốn thêm comment
   void promptToAddComment() {
     showLoginPromptDialog();
+  }
+
+  void navigateToHome() {
+    // Giữ lại trạng thái tìm kiếm nếu cần
+    Get.offAllNamed(AppRoutes.sidebarnarguest, arguments: {'selectedIndex': 1});
   }
 }

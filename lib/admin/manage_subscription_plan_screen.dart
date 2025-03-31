@@ -14,13 +14,7 @@ class ManageSubscriptionPlanScreen
       appBar: AppBar(
         title: const Text('Subscription Plans Management'),
         backgroundColor: const Color(0xFFE5D1E8),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () => controller.getSubscriptionPlanList(),
-            tooltip: 'Refresh Plans',
-          ),
-        ],
+        actions: [],
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -417,7 +411,7 @@ class ManageSubscriptionPlanScreen
                         DataCell(
                           Text(
                             plan.createdDate != null
-                                ? DateFormat('dd/MM/yyyy')
+                                ? DateFormat('yyyy-MM-dd')
                                     .format(plan.createdDate!)
                                 : 'N/A',
                           ),
@@ -829,7 +823,7 @@ class ManageSubscriptionPlanScreen
               _buildDetailItem(
                 'Created Date',
                 plan.createdDate != null
-                    ? DateFormat('dd/MM/yyyy').format(plan.createdDate!)
+                    ? DateFormat('yyyy-MM-dd').format(plan.createdDate!)
                     : 'N/A',
               ),
               _buildDetailItem('Description',

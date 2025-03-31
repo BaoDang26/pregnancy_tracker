@@ -14,18 +14,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
         title: const Text('User Management'),
         backgroundColor: const Color(0xFF8E6C88),
         elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () => controller.getListUser(),
-            tooltip: 'Refresh',
-          ),
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () => controller.logOut(),
-            tooltip: 'Logout',
-          ),
-        ],
+        actions: [],
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -411,7 +400,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
                         DataCell(Text(user.address ?? 'N/A')),
                         DataCell(Text(
                           user.dateOfBirth != null
-                              ? DateFormat('dd/MM/yyyy')
+                              ? DateFormat('yyyy-MM-dd')
                                   .format(user.dateOfBirth!)
                               : 'N/A',
                         )),
@@ -658,7 +647,7 @@ class ManageUserScreen extends GetView<ManageUserController> {
               _buildDetailItem(
                 'Date of Birth',
                 user.dateOfBirth != null
-                    ? DateFormat('dd/MM/yyyy').format(user.dateOfBirth!)
+                    ? DateFormat('yyyy-MM-dd').format(user.dateOfBirth!)
                     : 'N/A',
               ),
               const SizedBox(height: 24),

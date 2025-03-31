@@ -190,24 +190,32 @@ class UpdateFetalGrowthMeasurementScreen
                         _buildInputField(
                           controller: controller.headCircumferenceController,
                           label: 'Head Circumference (cm)',
+                          validator: (value) =>
+                              controller.validateHeadCircumference(value!),
                           icon: Icons.face,
                         ),
                         const SizedBox(height: 16),
                         _buildInputField(
                           controller: controller.bellyCircumferenceController,
                           label: 'Belly Circumference (cm)',
+                          validator: (value) =>
+                              controller.validateBellyCircumference(value!),
                           icon: Icons.pregnant_woman,
                         ),
                         const SizedBox(height: 16),
                         _buildInputField(
                           controller: controller.heartRateController,
                           label: 'Heart Rate (bpm)',
+                          validator: (value) =>
+                              controller.validateHeartRate(value!),
                           icon: Icons.favorite,
                         ),
                         const SizedBox(height: 16),
                         _buildInputField(
                           controller: controller.movementCountController,
                           label: 'Movement Count',
+                          validator: (value) =>
+                              controller.validateMovementCount(value!),
                           icon: Icons.directions_run,
                         ),
                         const SizedBox(height: 16),
@@ -227,7 +235,12 @@ class UpdateFetalGrowthMeasurementScreen
                               child: SizedBox(
                                 height: 50,
                                 child: OutlinedButton(
-                                  onPressed: () => Get.back(),
+                                  onPressed: () => Get.offAllNamed(
+                                      AppRoutes.fetalgrowthmeasurement,
+                                      parameters: {
+                                        'pregnancyId':
+                                            controller.pregnancyId.toString(),
+                                      }),
                                   style: OutlinedButton.styleFrom(
                                     foregroundColor:
                                         const Color(0xFF8E6C88), // Tím nhạt

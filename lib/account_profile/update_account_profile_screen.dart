@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:dvhcvn/dvhcvn.dart' as dvhcvn;
 
 import '../controllers/update_account_profile_controller.dart';
+import '../routes/app_routes.dart';
 
 class UpdateAccountProfileScreen
     extends GetView<UpdateAccountProfileController> {
@@ -49,24 +50,21 @@ class UpdateAccountProfileScreen
                         ),
                         child: Row(
                           children: [
-                            IconButton(
-                              onPressed: () => Get.back(),
-                              icon: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.purple[50],
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Icon(
-                                  Icons.arrow_back_ios_new,
-                                  size: 16,
-                                  color: Colors.purple[800],
-                                ),
+                            TextButton.icon(
+                              icon: const Icon(Icons.home_outlined),
+                              label: const Text('Home'),
+                              onPressed: () => Get.offAllNamed(
+                                  AppRoutes.sidebarnar,
+                                  arguments: {
+                                    'selectedIndex': 4,
+                                  }),
+                              style: TextButton.styleFrom(
+                                foregroundColor: Colors.purple[700],
                               ),
                             ),
                             const SizedBox(width: 16),
                             Text(
-                              'Edit Profile',
+                              'Update Profile',
                               style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.bold,
@@ -74,24 +72,6 @@ class UpdateAccountProfileScreen
                               ),
                             ),
                             const Spacer(),
-                            TextButton.icon(
-                              icon: const Icon(Icons.home_outlined),
-                              label: const Text('Home'),
-                              onPressed: () => Get.back(),
-                              style: TextButton.styleFrom(
-                                foregroundColor: Colors.purple[700],
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            TextButton.icon(
-                              icon: const Icon(Icons.person_outline),
-                              label: const Text('Profile'),
-                              onPressed: () {},
-                              style: TextButton.styleFrom(
-                                foregroundColor: Colors.purple[700],
-                                backgroundColor: Colors.purple[50],
-                              ),
-                            ),
                           ],
                         ),
                       ),
@@ -733,7 +713,12 @@ class UpdateAccountProfileScreen
                                                 MainAxisAlignment.end,
                                             children: [
                                               _buildActionButton(
-                                                onPressed: () => Get.back(),
+                                                onPressed: () =>
+                                                    Get.offAllNamed(
+                                                        AppRoutes.sidebarnar,
+                                                        arguments: {
+                                                      'selectedIndex': 4,
+                                                    }),
                                                 label: 'Cancel',
                                                 icon: Icons.close,
                                                 gradient: LinearGradient(

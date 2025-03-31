@@ -15,7 +15,6 @@ class UpdateCommunityPostController extends GetxController {
   final GlobalKey<FormState> communityPostFormKey = GlobalKey<FormState>();
 
   // Biến lưu thông tin bài viết hiện tại
-  final postId = Rx<int>(0);
   final post = Rx<CommunityPostModel>(CommunityPostModel());
 
   // Controllers cho form
@@ -35,28 +34,22 @@ class UpdateCommunityPostController extends GetxController {
   // Thêm biến cho Flutter Web
   Rx<Uint8List?> webImage = Rx<Uint8List?>(null);
 
+  late int userId;
+  late int postId;
+
   @override
   void onInit() {
     super.onInit();
     isLoading.value = true;
+    userId = int.parse(Get.parameters['userId']!);
+    postId = int.parse(Get.parameters['postId']!);
     // postId.value = Get.arguments['id'];
     // Khởi tạo các controller
     titleController = TextEditingController();
     contentController = TextEditingController();
     attachmentUrlController = TextEditingController();
 
-    // Lấy dữ liệu từ arguments
-    if (Get.arguments != null) {
-      if (Get.arguments is CommunityPostModel) {
-        post.value = Get.arguments as CommunityPostModel;
-        postId.value = post.value.id ?? 0;
-        _initFormValues();
-      } else if (Get.arguments is Map && Get.arguments['post'] != null) {
-        post.value = Get.arguments['post'];
-        postId.value = post.value.id ?? 0;
-        _initFormValues();
-      }
-    }
+    getCommunityPostById();
 
     isLoading.value = false;
   }
@@ -67,6 +60,15 @@ class UpdateCommunityPostController extends GetxController {
     contentController.dispose();
     attachmentUrlController.dispose();
     super.onClose();
+  }
+
+  Future<void> getCommunityPostById() async {
+    final response = await CommunityPostRepository.getCommunityPostById(postId);
+    if (response.statusCode == 200) {
+      String jsonResult = utf8.decode(response.bodyBytes);
+      post.value = communityPostByIdModelFromJson(jsonResult);
+      _initFormValues();
+    }
   }
 
   // Khởi tạo giá trị cho form từ bài viết
@@ -222,8 +224,8 @@ class UpdateCommunityPostController extends GetxController {
       );
 
       // Gọi API để cập nhật bài đăng
-      final response = await CommunityPostRepository.updateCommunityPost(
-          postData, postId.value);
+      final response =
+          await CommunityPostRepository.updateCommunityPost(postData, postId);
 
       // Xử lý kết quả
       if (response.statusCode == 200) {

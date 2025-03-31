@@ -15,14 +15,6 @@ class CreateSubscriptionPlanScreen
         backgroundColor: const Color(0xFFE5D1E8),
         elevation: 0,
         actions: [
-          TextButton.icon(
-            onPressed: () => Get.back(),
-            icon: Icon(Icons.cancel_outlined, color: Colors.red[700]),
-            label: Text(
-              'Cancel',
-              style: TextStyle(color: Colors.red[700]),
-            ),
-          ),
           const SizedBox(width: 16),
         ],
       ),
@@ -191,38 +183,68 @@ class CreateSubscriptionPlanScreen
             ),
             const SizedBox(height: 40),
 
-            // Submit Button
-            Center(
-              child: Obx(
-                () => controller.isLoading.value
-                    ? const CircularProgressIndicator(
-                        valueColor:
-                            AlwaysStoppedAnimation<Color>(Color(0xFF8E6C88)),
-                      )
-                    : SizedBox(
-                        width: 300,
-                        height: 50,
-                        child: ElevatedButton.icon(
-                          onPressed: _submitForm,
-                          icon: const Icon(Icons.check_circle_outline),
-                          label: const Text(
-                            'Create Subscription Plan',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF8E6C88),
-                            foregroundColor: Colors.white,
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
+            // Submit Button & Cancel Button
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: 250,
+                  height: 50,
+                  child: ElevatedButton.icon(
+                    onPressed: () => Get.offAllNamed(AppRoutes.sidebarnaradmin,
+                        arguments: {'selectedIndex': 2}),
+                    icon: const Icon(Icons.cancel_outlined),
+                    label: const Text(
+                      'Cancel',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
-              ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF8E6C88),
+                      foregroundColor: Colors.white,
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 16),
+                Center(
+                  child: Obx(
+                    () => controller.isLoading.value
+                        ? const CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                Color(0xFF8E6C88)),
+                          )
+                        : SizedBox(
+                            width: 250,
+                            height: 50,
+                            child: ElevatedButton.icon(
+                              onPressed: _submitForm,
+                              icon: const Icon(Icons.check_circle_outline),
+                              label: const Text(
+                                'Create Subscription Plan',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF8E6C88),
+                                foregroundColor: Colors.white,
+                                elevation: 2,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                          ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 16),
           ],

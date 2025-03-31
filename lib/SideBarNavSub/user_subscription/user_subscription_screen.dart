@@ -126,6 +126,18 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
         children: [
           Row(
             children: [
+              ElevatedButton.icon(
+                icon: const Icon(Icons.subdirectory_arrow_left),
+                label: const Text('Subscription Plans'),
+                onPressed: () =>
+                    Get.offAllNamed(AppRoutes.sidebarnar, arguments: {
+                  'selectedIndex': 3,
+                }), // Go back to subscription plans
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green[700],
+                  foregroundColor: Colors.white,
+                ),
+              ),
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
@@ -150,30 +162,6 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
             ],
           ),
           const Spacer(),
-          Row(
-            children: [
-              const SizedBox(width: 8),
-              ElevatedButton.icon(
-                icon: const Icon(Icons.refresh),
-                label: const Text('Refresh'),
-                onPressed: () => controller.getUserSubscriptionList(),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green[700],
-                  foregroundColor: Colors.white,
-                ),
-              ),
-              const SizedBox(width: 8),
-              ElevatedButton.icon(
-                icon: const Icon(Icons.subdirectory_arrow_left),
-                label: const Text('Subscription Plans'),
-                onPressed: () => Get.back(), // Go back to subscription plans
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green[700],
-                  foregroundColor: Colors.white,
-                ),
-              ),
-            ],
-          ),
         ],
       ),
     );
@@ -1194,6 +1182,11 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
                     Icons.payments,
                   ),
                   _buildDetailItem(
+                    'Payment Date',
+                    _formatDateDetailed(subscription.paymentDate),
+                    Icons.date_range,
+                  ),
+                  _buildDetailItem(
                     'Start Date',
                     _formatDateDetailed(subscription.startDate),
                     Icons.calendar_today,
@@ -1204,24 +1197,19 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
                     Icons.event,
                   ),
                   _buildDetailItem(
-                    'Payment Date',
-                    _formatDateDetailed(subscription.paymentDate),
-                    Icons.date_range,
-                  ),
-                  _buildDetailItem(
                     'Subscription Code',
                     subscription.subscriptionCode ?? 'No information',
                     Icons.confirmation_number,
                   ),
                   _buildDetailItem(
-                    'Bank Code',
-                    subscription.bankCode ?? 'No information',
-                    Icons.account_balance,
-                  ),
-                  _buildDetailItem(
                     'Transaction Number',
                     subscription.transactionNo ?? 'No information',
                     Icons.receipt_long,
+                  ),
+                  _buildDetailItem(
+                    'Bank Code',
+                    subscription.bankCode ?? 'No information',
+                    Icons.account_balance,
                   ),
                 ],
               ),
@@ -1349,6 +1337,6 @@ class UserSubscriptionScreen extends GetView<UserSubscriptionController> {
 
   String _formatDateDetailed(DateTime? date) {
     if (date == null) return 'No information';
-    return DateFormat('dd/MM/yyyy').format(date);
+    return DateFormat('yyyy-MM-dd').format(date);
   }
 }

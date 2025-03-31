@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:pregnancy_tracker/controllers/create_schedule_controller.dart';
 import 'package:pregnancy_tracker/widgets/custom_elevated_button.dart';
 
+import '../routes/app_routes.dart';
+
 class CreateScheduleScreen extends GetView<CreateScheduleController> {
   const CreateScheduleScreen({Key? key}) : super(key: key);
 
@@ -273,7 +275,13 @@ class CreateScheduleScreen extends GetView<CreateScheduleController> {
                                   children: [
                                     Expanded(
                                       child: OutlinedButton(
-                                        onPressed: () => Get.back(),
+                                        onPressed: () => Get.offAllNamed(
+                                            AppRoutes.schedule,
+                                            parameters: {
+                                              'pregnancyId': controller
+                                                  .pregnancyProfileId
+                                                  .toString(),
+                                            }),
                                         style: OutlinedButton.styleFrom(
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 16),

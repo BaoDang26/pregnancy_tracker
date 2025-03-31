@@ -147,17 +147,6 @@ class SubscriptionPlan extends GetView<SubscriptionPlanController> {
             ],
           ),
           const Spacer(),
-          ElevatedButton.icon(
-            icon: const Icon(Icons.refresh),
-            label: const Text('Refresh'),
-            onPressed: () => controller.getActiveSubscriptionPlanList(),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.green[700],
-              elevation: 0,
-              side: BorderSide(color: Colors.green[700]!),
-            ),
-          ),
           const SizedBox(width: 16),
           ElevatedButton.icon(
             icon: const Icon(Icons.history),

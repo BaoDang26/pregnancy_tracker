@@ -85,14 +85,6 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                           color: const Color(0xFF8E6C88),
                           onTap: () => controller.goToCreateCommunityPost(),
                         ),
-                      const SizedBox(width: 16),
-                      // Refresh button
-                      _buildActionButton(
-                        icon: Icons.refresh,
-                        label: 'Refresh',
-                        color: const Color(0xFF6F9EAF), // Soft blue/teal
-                        onTap: () => controller.getCommunityPostList(),
-                      ),
                     ],
                   ),
                   const SizedBox(height: 15),

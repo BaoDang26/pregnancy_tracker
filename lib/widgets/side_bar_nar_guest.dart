@@ -29,6 +29,24 @@ class _SideBarNavGuestScreenState extends State<SideBarNavGuestScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+
+    // Đợi đến khi widget được build hoàn chỉnh
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Nhận tham số và cập nhật selectedIndex
+      if (Get.arguments != null && Get.arguments is Map) {
+        final args = Get.arguments as Map;
+        if (args.containsKey('selectedIndex')) {
+          setState(() {
+            _selectedIndex = args['selectedIndex'];
+          });
+        }
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Row(

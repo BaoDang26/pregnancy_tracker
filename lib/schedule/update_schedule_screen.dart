@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:pregnancy_tracker/controllers/update_schedule_controller.dart';
 import 'package:pregnancy_tracker/widgets/custom_elevated_button.dart';
 
+import '../routes/app_routes.dart';
+
 class UpdateScheduleScreen extends GetView<UpdateScheduleController> {
   const UpdateScheduleScreen({Key? key}) : super(key: key);
 
@@ -297,7 +299,13 @@ class UpdateScheduleScreen extends GetView<UpdateScheduleController> {
                                           // Cancel Button
                                           Expanded(
                                             child: OutlinedButton(
-                                              onPressed: () => Get.back(),
+                                              onPressed: () => Get.offAllNamed(
+                                                  AppRoutes.schedule,
+                                                  parameters: {
+                                                    'pregnancyId': controller
+                                                        .pregnancyProfileId
+                                                        .toString(),
+                                                  }),
                                               style: OutlinedButton.styleFrom(
                                                 padding:
                                                     const EdgeInsets.symmetric(

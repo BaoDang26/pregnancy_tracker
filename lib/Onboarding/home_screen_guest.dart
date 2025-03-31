@@ -94,7 +94,7 @@ class HomeScreenGuest extends GetView<HomeScreenGuestController> {
               Container(
                 width: double.infinity,
                 height: 500,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -114,7 +114,7 @@ class HomeScreenGuest extends GetView<HomeScreenGuestController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               'Your Pregnancy\nJourney Starts Here',
                               style: TextStyle(
                                 color: Colors.white,
@@ -126,7 +126,7 @@ class HomeScreenGuest extends GetView<HomeScreenGuestController> {
                             const SizedBox(height: 20),
                             Container(
                               width: 400,
-                              child: Text(
+                              child: const Text(
                                 'Every step of your beautiful journey matters. Track your baby\'s growth, monitor your health, and prepare for the big day.',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -142,13 +142,13 @@ class HomeScreenGuest extends GetView<HomeScreenGuestController> {
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.white,
                                     foregroundColor: Colors.pink[700],
-                                    padding: EdgeInsets.symmetric(
+                                    padding: const EdgeInsets.symmetric(
                                         horizontal: 30, vertical: 15),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(4),
                                     ),
                                   ),
-                                  child: Text(
+                                  child: const Text(
                                     'Get Started',
                                     style: TextStyle(
                                       fontSize: 16,
@@ -596,7 +596,7 @@ class HomeScreenGuest extends GetView<HomeScreenGuestController> {
               Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 60, horizontal: 100),
-                color: Color(0xFFFFF8E1),
+                color: const Color(0xFFFFF8E1),
                 child: Row(
                   children: [
                     Expanded(
@@ -634,13 +634,13 @@ class HomeScreenGuest extends GetView<HomeScreenGuestController> {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.pink[400],
                                 foregroundColor: Colors.white,
-                                padding: EdgeInsets.symmetric(
+                                padding: const EdgeInsets.symmetric(
                                     horizontal: 40, vertical: 20),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(4),
                                 ),
                               ),
-                              child: Text(
+                              child: const Text(
                                 'Create Account',
                                 style: TextStyle(
                                   fontSize: 18,
@@ -691,7 +691,7 @@ class HomeScreenGuest extends GetView<HomeScreenGuestController> {
                                     size: 30,
                                   ),
                                   const SizedBox(width: 10),
-                                  Text(
+                                  const Text(
                                     'Mommy\'s Journey',
                                     style: TextStyle(
                                       color: Colors.white,
@@ -734,9 +734,9 @@ class HomeScreenGuest extends GetView<HomeScreenGuestController> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Pages',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -756,7 +756,7 @@ class HomeScreenGuest extends GetView<HomeScreenGuestController> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Features',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -778,7 +778,7 @@ class HomeScreenGuest extends GetView<HomeScreenGuestController> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 'Contact',
                                 style: TextStyle(
                                   color: Colors.white,

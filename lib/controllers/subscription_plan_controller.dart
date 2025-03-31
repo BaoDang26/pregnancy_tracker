@@ -68,9 +68,6 @@ class SubscriptionPlanController extends GetxController {
       // Lọc chỉ lấy các plan có status = "Active"
       activeSubscriptionPlanList.value =
           allPlans.where((plan) => plan.status == 'Active').toList();
-
-      print("Total plans: ${allPlans.length}");
-      print("Active plans: ${activeSubscriptionPlanList.length}");
     } else {
       Get.snackbar(
         "Error",

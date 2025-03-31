@@ -114,10 +114,15 @@ class PregnancyProfileDetailsScreen
       ),
       child: Row(
         children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back,
-                color: Color(0xFF66BB6A), size: 24),
-            onPressed: () => Get.back(),
+          TextButton.icon(
+            icon: Icon(Icons.home_outlined),
+            label: Text('Home'),
+            onPressed: () => Get.offAllNamed(AppRoutes.sidebarnar, arguments: {
+              'selectedIndex': 2,
+            }),
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.green[700],
+            ),
           ),
           const SizedBox(width: 12),
           Icon(
@@ -135,16 +140,6 @@ class PregnancyProfileDetailsScreen
                 ),
               )),
           Spacer(),
-          // Navigation menu items
-          TextButton.icon(
-            icon: Icon(Icons.home_outlined),
-            label: Text('Home'),
-            onPressed: () => Get.toNamed(AppRoutes.sidebarnar),
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.green[700],
-            ),
-          ),
-          const SizedBox(width: 16),
         ],
       ),
     );

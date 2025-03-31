@@ -318,12 +318,11 @@ class AccountProfileController extends GetxController {
     isLoading.value = true;
     var response = await AccountProfileRepository.getAccountProfile();
     // Log thông tin response để debug
-    print("Response Status: ${response.statusCode}");
-    print("Response Body: ${response.body}");
+
     if (response.statusCode == 200) {
       String jsonResult = utf8.decode(response.bodyBytes);
       // Log kết quả JSON
-      print("JSON Result: $jsonResult");
+
       //chuyển đổi từ JSON sang model
       accountProfileModel.value = accountProfileModelFromJson(jsonResult);
     } else {
@@ -337,8 +336,7 @@ class AccountProfileController extends GetxController {
   void goToUpdateAccountProfile() {
     var userId = accountProfileModel.value.id;
 
-    Get.toNamed(AppRoutes.updateAccountProfile, arguments: userId);
-    print("goToUpdateAccountProfile: $userId");
+    Get.toNamed(AppRoutes.updateAccountProfile);
   }
 
   Future<void> logout() async {

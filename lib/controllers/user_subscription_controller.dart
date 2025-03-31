@@ -20,8 +20,6 @@ class UserSubscriptionController extends GetxController {
     isLoading.value = true;
     var response = await UserSubscriptionRepository.getUserSubscriptionList();
 
-    print("Response Status: ${response.statusCode}");
-    print("Response Body: ${response.body}");
     if (response.statusCode == 200) {
       String jsonResult = utf8.decode(response.bodyBytes);
       // Log the JSON result

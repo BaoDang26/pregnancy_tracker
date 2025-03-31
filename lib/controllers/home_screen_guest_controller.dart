@@ -42,13 +42,10 @@ class HomeScreenGuestController extends GetxController {
         await SubscriptionPlanRepository.getSubscriptionGuestPlanList();
 
     // Log the response status and body
-    print("Response Status: ${response.statusCode}");
-    print("Response Body: ${response.body}");
 
     if (response.statusCode == 200) {
       String jsonResult = utf8.decode(response.bodyBytes);
       // Log the JSON result
-      print("JSON Result: $jsonResult");
 
       // Convert JSON to model
       subscriptionPlanList.value = subscriptionPlanModelFromJson(jsonResult);

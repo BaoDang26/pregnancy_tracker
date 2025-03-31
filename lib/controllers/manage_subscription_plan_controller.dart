@@ -49,7 +49,6 @@ class ManageSubscriptionPlanController extends GetxController {
   @override
   void onClose() {
     searchController.removeListener(_onSearchChanged);
-    searchController.dispose();
 
     // Dispose update controllers
     updateNameController.dispose();
@@ -73,14 +72,18 @@ class ManageSubscriptionPlanController extends GetxController {
       subscriptionPlanList.value = subscriptionPlanModelFromJson(jsonResult);
 
       // Initialize filtered list with all items
-      filteredSubscriptionPlanList.value = subscriptionPlanList;
+      applyFilters();
+      searchController.addListener(_onSearchChanged);
     }
     isLoading.value = false;
     update();
   }
 
-  void goToCreateSubscriptionPlan() {
-    Get.toNamed(AppRoutes.createSubscriptionPlan);
+  Future<void> goToCreateSubscriptionPlan() async {
+    final result = await Get.toNamed(AppRoutes.createSubscriptionPlan);
+    if (result == true) {
+      await getSubscriptionPlanList();
+    }
   }
 
   // Set status filter
@@ -196,7 +199,7 @@ class ManageSubscriptionPlanController extends GetxController {
           'Subscription plan updated successfully',
           backgroundColor: Colors.green[100],
           colorText: Colors.green[800],
-          snackPosition: SnackPosition.BOTTOM,
+          snackPosition: SnackPosition.TOP,
         );
 
         // Refresh danh sách để hiển thị dữ liệu mới

@@ -50,7 +50,7 @@ class CreateFetalGrowthMeasurementController extends GetxController {
   void onInit() {
     super.onInit();
     isLoading.value = true;
-    pregnancyId = Get.arguments;
+    pregnancyId = int.parse(Get.parameters['pregnancyId']!);
     // Khởi tạo các controller
     heightController = TextEditingController();
     weightController = TextEditingController();
@@ -150,7 +150,7 @@ class CreateFetalGrowthMeasurementController extends GetxController {
   Future<void> fetchFetalGrowthMeasurementData() async {
     try {
       isLoading.value = true;
-      pregnancyId = Get.arguments;
+      pregnancyId = int.parse(Get.parameters['pregnancyId']!);
 
       // Fetch tất cả dữ liệu cần thiết
       await Future.wait([
@@ -182,12 +182,10 @@ class CreateFetalGrowthMeasurementController extends GetxController {
         await FetalGrowthMeasurementRepository.getFetalGrowthMeasurementList(
             pregnancyId);
 
-    print('General measurements response: ${response.statusCode}');
-    print('Response body: ${response.body}');
-
     if (response.statusCode == 200) {
+      String jsonResult = utf8.decode(response.bodyBytes);
       fetalGrowthMeasurementModel.value =
-          fetalGrowthMeasurementModelFromJson(response.body);
+          fetalGrowthMeasurementModelFromJson(jsonResult);
     } else if (response.statusCode == 401) {
       String message = jsonDecode(response.body)['message'];
       if (message.contains("JWT token is expired")) {
@@ -256,14 +254,13 @@ class CreateFetalGrowthMeasurementController extends GetxController {
         .getHeightFetalGrowthMeasurementList(pregnancyId);
 
     if (response.statusCode == 200) {
-      var heightDataList = heightSummaryModelFromJson(response.body);
-      print('Height data list: $heightDataList');
+      String jsonResult = utf8.decode(response.bodyBytes);
+      var heightDataList = heightSummaryModelFromJson(jsonResult);
 
       // Update existing measurements with height data
       for (var heightMeasurement in heightDataList) {
         heightData.add(HeightData(heightMeasurement.weekNumber!,
             heightMeasurement.height!.toDouble()));
-        print('Height data: $heightData');
       }
 
       print('Height data: $heightData');
@@ -290,12 +287,9 @@ class CreateFetalGrowthMeasurementController extends GetxController {
     var response = await FetalGrowthMeasurementRepository
         .getWeightFetalGrowthMeasurementList(pregnancyId);
 
-    print('Weight measurements response: ${response.statusCode}');
-    print('Weight response body: ${response.body}');
-
     if (response.statusCode == 200) {
-      var weightDataList = weightSummaryModelFromJson(response.body);
-      print('Weight data list: $weightDataList');
+      String jsonResult = utf8.decode(response.bodyBytes);
+      var weightDataList = weightSummaryModelFromJson(jsonResult);
 
       // Update existing measurements with weight data
       for (var weightMeasurement in weightDataList) {
@@ -389,7 +383,7 @@ class CreateFetalGrowthMeasurementController extends GetxController {
 
       if (response.statusCode == 200) {
         clearFormFields();
-        Get.back(result: true);
+
         // Đưa result về true để màn hình trước biết là đã tạo thành công
         await showDialog(
           context: Get.context!,
@@ -426,8 +420,9 @@ class CreateFetalGrowthMeasurementController extends GetxController {
           },
         );
 
-        Get.find<FetalGrowthMeasurementController>()
-            .fetchFetalGrowthMeasurementData();
+        Get.offAllNamed(AppRoutes.fetalgrowthmeasurement, parameters: {
+          'pregnancyId': pregnancyId.toString(),
+        });
       } else if (response.statusCode == 401) {
         handleUnauthorized(response as Response<dynamic>);
       } else if (response.statusCode == 400) {

@@ -24,6 +24,22 @@ class FetalGrowthMeasurementRepository {
     return response;
   }
 
+  static Future<http.Response> getFetalGrowthMeasurementById(
+      int fetalGrowthMeasurementId) async {
+    http.Response response;
+
+    Map<String, String> header = {
+      "Content-type": "application/json",
+    };
+    response = await interceptedClient
+        .get(
+          BuildServer.buildUrl("fetal-growth/$fetalGrowthMeasurementId"),
+          headers: header,
+        )
+        .timeout(const Duration(seconds: 30));
+    return response;
+  }
+
   static Future<http.Response> getWeightFetalGrowthMeasurementList(
       int pregnancyId) async {
     http.Response response;

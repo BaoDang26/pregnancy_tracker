@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import '../../controllers/update_community_post_controller.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
+import '../../routes/app_routes.dart';
+
 class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
   const UpdateCommunityPostScreen({super.key});
 
@@ -91,20 +93,27 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
       ),
       child: Row(
         children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back, color: Color(0xFFAD6E8C)),
-            onPressed: () => Get.back(),
+          TextButton.icon(
+            icon: const Icon(Icons.home_outlined),
+            label: const Text('Home'),
+            onPressed: () => Get.offAllNamed(
+              AppRoutes.sidebarnar,
+              arguments: {'selectedIndex': 1},
+            ),
+            style: TextButton.styleFrom(
+              foregroundColor: const Color(0xFF8E6C88),
+            ),
           ),
           const SizedBox(width: 16),
-          Row(
+          const Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.edit_note,
                 color: Color(0xFFAD6E8C),
                 size: 24,
               ),
-              const SizedBox(width: 8),
-              const Text(
+              SizedBox(width: 8),
+              Text(
                 'Update Community Post',
                 style: TextStyle(
                   fontSize: 22,
@@ -115,24 +124,6 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
             ],
           ),
           const Spacer(),
-          // Menu điều hướng
-          TextButton.icon(
-            icon: const Icon(Icons.home_outlined),
-            label: const Text('Home'),
-            onPressed: () => Get.back(),
-            style: TextButton.styleFrom(
-              foregroundColor: const Color(0xFF8E6C88),
-            ),
-          ),
-          const SizedBox(width: 16),
-          TextButton.icon(
-            icon: const Icon(Icons.forum_outlined),
-            label: const Text('Community'),
-            onPressed: () => Get.back(),
-            style: TextButton.styleFrom(
-              foregroundColor: const Color(0xFF8E6C88),
-            ),
-          ),
         ],
       ),
     );
@@ -143,7 +134,8 @@ class UpdateCommunityPostScreen extends GetView<UpdateCommunityPostController> {
     return Row(
       children: [
         TextButton(
-          onPressed: () => Get.back(),
+          onPressed: () => Get.offAllNamed(AppRoutes.sidebarnar,
+              arguments: {'selectedIndex': 1}),
           child: const Text('Community'),
           style: TextButton.styleFrom(
             foregroundColor: Colors.grey[700],

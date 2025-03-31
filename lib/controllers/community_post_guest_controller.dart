@@ -20,6 +20,7 @@ class CommunityPostGuestController extends GetxController {
   Future<void> onInit() async {
     // Thêm listener cho search controller
     searchController.addListener(_onSearchChanged);
+
     await getCommunityPostGuestList();
     super.onInit();
   }
@@ -28,7 +29,7 @@ class CommunityPostGuestController extends GetxController {
   void onClose() {
     // Dọn dẹp resources
     searchController.removeListener(_onSearchChanged);
-    searchController.dispose();
+
     super.onClose();
   }
 
@@ -51,13 +52,16 @@ class CommunityPostGuestController extends GetxController {
         .where((post) => post.status?.toLowerCase() == 'active')
         .toList();
 
+    // Đảm bảo searchQuery được cập nhật từ controller
+    final currentQuery = searchController.text.toLowerCase();
+
     // Áp dụng bộ lọc tìm kiếm nếu có
-    if (searchQuery.value.isNotEmpty) {
-      final query = searchQuery.value.toLowerCase();
+    if (currentQuery.isNotEmpty) {
       result = result.where((post) {
-        final titleMatch = post.title?.toLowerCase().contains(query) ?? false;
+        final titleMatch =
+            post.title?.toLowerCase().contains(currentQuery) ?? false;
         final contentMatch =
-            post.content?.toLowerCase().contains(query) ?? false;
+            post.content?.toLowerCase().contains(currentQuery) ?? false;
         return titleMatch || contentMatch;
       }).toList();
     }
@@ -76,8 +80,12 @@ class CommunityPostGuestController extends GetxController {
         break;
     }
 
+    // Đảm bảo cập nhật searchQuery
+    searchQuery.value = currentQuery;
+
     // Cập nhật danh sách đã lọc
     filteredPostList.value = result;
+    update();
   }
 
   Future<void> getCommunityPostGuestList() async {
@@ -93,6 +101,7 @@ class CommunityPostGuestController extends GetxController {
 
       // Áp dụng bộ lọc sau khi lấy dữ liệu
       applyFilters();
+      searchController.addListener(_onSearchChanged);
     }
     isLoading.value = false;
   }
@@ -100,9 +109,8 @@ class CommunityPostGuestController extends GetxController {
   void goToCommunityPostDetail(int index) async {
     final result = await Get.toNamed(
       AppRoutes.communitypostguestdetails,
-      arguments: {
-        'postId': filteredPostList[index].id,
-        'post': filteredPostList[index],
+      parameters: {
+        'postId': filteredPostList[index].id.toString(),
       },
     );
 
@@ -117,6 +125,17 @@ class CommunityPostGuestController extends GetxController {
 
   void navigateToSignUp() {
     Get.toNamed(AppRoutes.register);
+  }
+
+  void navigateToHome() {
+    // Lưu trạng thái tìm kiếm hiện tại vào arguments
+    Get.offAllNamed(
+      AppRoutes.sidebarnarguest,
+      arguments: {
+        'selectedIndex': 1,
+        'searchQuery': searchController.text,
+      },
+    );
   }
 
   List<CommunityPostModel> get activePostList => filteredPostList;

@@ -157,20 +157,6 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
             ],
           ),
           const Spacer(),
-          Row(
-            children: [
-              const SizedBox(width: 8),
-              ElevatedButton.icon(
-                icon: const Icon(Icons.refresh),
-                label: const Text('Refresh'),
-                onPressed: () => controller.getPregnancyProfileList(),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green[700],
-                  foregroundColor: Colors.white,
-                ),
-              ),
-            ],
-          ),
         ],
       ),
     );
@@ -667,13 +653,13 @@ class PregnancyProfileScreen extends GetView<PregnancyProfileController> {
                         color: Colors.grey[800],
                       ),
                     ),
-                    Text(
-                      'Created on ${DateFormat('yyyy-MM-dd').format(createdDate)}',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                      ),
-                    ),
+                    // Text(
+                    //   'Created on ${DateFormat('yyyy-MM-dd').format(createdDate)}',
+                    //   style: TextStyle(
+                    //     fontSize: 12,
+                    //     color: Colors.grey[600],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

@@ -225,7 +225,12 @@ class CreateFetalGrowthMeasurementScreen
                               child: SizedBox(
                                 height: 50,
                                 child: OutlinedButton(
-                                  onPressed: () => Get.back(),
+                                  onPressed: () => Get.offAllNamed(
+                                      AppRoutes.fetalgrowthmeasurement,
+                                      parameters: {
+                                        'pregnancyId':
+                                            controller.pregnancyId.toString(),
+                                      }),
                                   style: OutlinedButton.styleFrom(
                                     foregroundColor:
                                         const Color(0xFF8E6C88), // Tím nhạt

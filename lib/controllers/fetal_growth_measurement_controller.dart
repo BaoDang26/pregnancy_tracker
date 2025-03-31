@@ -49,7 +49,7 @@ class FetalGrowthMeasurementController extends GetxController {
   void onInit() {
     super.onInit();
     isLoading.value = true;
-    pregnancyId = Get.arguments;
+    pregnancyId = int.parse(Get.parameters['pregnancyId']!);
     // Khởi tạo các controller
     weekNumberController = TextEditingController();
     heightController = TextEditingController();
@@ -167,7 +167,7 @@ class FetalGrowthMeasurementController extends GetxController {
   Future<void> fetchFetalGrowthMeasurementData() async {
     try {
       isLoading.value = true;
-      pregnancyId = Get.arguments;
+      pregnancyId = int.parse(Get.parameters['pregnancyId']!);
 
       // Fetch tất cả dữ liệu cần thiết
       await Future.wait([
@@ -379,9 +379,7 @@ class FetalGrowthMeasurementController extends GetxController {
         // Trigger refresh
 
         clearFormFields(); // Thêm hàm này để clear form
-        Get.back(result: true);
-        Get.snackbar('Success', 'Fetal growth measurement added successfully');
-        await fetchFetalGrowthMeasurementData();
+        Get.offAllNamed(AppRoutes.fetalgrowthmeasurement);
       } else if (response.statusCode == 401) {
         handleUnauthorized(response as Response<dynamic>);
       } else {
@@ -400,9 +398,9 @@ class FetalGrowthMeasurementController extends GetxController {
     var measurement = fetalGrowthMeasurementModel[index];
     Get.toNamed(
       AppRoutes.updatefetalgrowthmeasurement,
-      arguments: {
-        'measurementId': measurement.id,
-        // 'pregnancyId': pregnancyId,
+      parameters: {
+        'measurementId': measurement.id.toString(),
+        'pregnancyId': pregnancyId.toString(),
       },
     );
   }
@@ -415,9 +413,6 @@ class FetalGrowthMeasurementController extends GetxController {
       var response =
           await FetalGrowthMeasurementRepository.deleteFetalGrowthMeasurement(
               measurementId);
-
-      print('Delete measurement response: ${response.statusCode}');
-      print('Delete measurement response body: ${response.body}');
 
       if (response.statusCode == 200) {
         // Trigger refresh sau khi xóa

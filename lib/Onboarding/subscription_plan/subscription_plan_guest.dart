@@ -148,17 +148,6 @@ class SubscriptionPlanGuestScreen
             ],
           ),
           const Spacer(),
-          ElevatedButton.icon(
-            icon: const Icon(Icons.refresh),
-            label: const Text('Refresh'),
-            onPressed: () => controller.getSubscriptionPlanGuestList(),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.green[700],
-              elevation: 0,
-              side: BorderSide(color: Colors.green[700]!),
-            ),
-          ),
         ],
       ),
     );

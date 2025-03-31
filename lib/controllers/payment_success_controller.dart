@@ -7,7 +7,6 @@ class PaymentSuccessController extends GetxController {
 
   @override
   void onInit() {
-    print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
     if (Get.arguments != null) {
       print("Get.arguments is not null");
       isPaymentSuccess.value = true;

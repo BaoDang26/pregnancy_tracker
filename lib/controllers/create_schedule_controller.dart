@@ -25,8 +25,8 @@ class CreateScheduleController extends GetxController {
     super.onInit();
     isLoading.value = true;
 
-    // Lấy pregnancyProfileId từ arguments
-    // pregnancyProfileId = Get.arguments;
+    // Lấy pregnancyProfileId từ parameter
+    pregnancyProfileId = int.parse(Get.parameters['pregnancyId']!);
 
     // Khởi tạo các controller
     titleController = TextEditingController();
@@ -74,8 +74,8 @@ class CreateScheduleController extends GetxController {
   Future<void> addSchedule() async {
     try {
       isLoading.value = true;
-      // Lấy pregnancyProfileId từ arguments
-      pregnancyProfileId = Get.arguments;
+      // Lấy pregnancyProfileId từ parameter
+      pregnancyProfileId = int.parse(Get.parameters['pregnancyId']!);
       print("pregnancyProfileId: $pregnancyProfileId");
 
       // Xác thực form
@@ -152,13 +152,9 @@ class CreateScheduleController extends GetxController {
           },
         );
 
-        // Refresh danh sách ở màn hình chính
-        if (Get.isRegistered<ScheduleController>()) {
-          Get.find<ScheduleController>().getScheduleList();
-        }
-
-        // Quay lại màn hình danh sách
-        Get.back(result: true);
+        Get.offAllNamed(AppRoutes.schedule, parameters: {
+          'pregnancyId': pregnancyProfileId.toString(),
+        });
       } else if (response.statusCode == 401) {
         String message = jsonDecode(response.body)['message'];
         if (message.contains("JWT token is expired")) {
