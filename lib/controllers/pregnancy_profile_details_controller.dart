@@ -225,7 +225,7 @@ class PregnancyProfileDetailsController extends GetxController {
               onPressed: () {
                 // Get.back();
                 Get.offNamed(AppRoutes.createfetalgrowthmeasurement,
-                    arguments: pregnancyId);
+                    parameters: {'pregnancyId': pregnancyId.toString()});
                 // Get.back();
               },
               style: ElevatedButton.styleFrom(

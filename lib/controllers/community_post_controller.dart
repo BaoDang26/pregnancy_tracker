@@ -122,8 +122,8 @@ class CommunityPostController extends GetxController {
       AppRoutes.communitypostdetails,
       parameters: {
         'postId': activePostList[index].id.toString(),
-        'post': activePostList[index].toString(),
       },
+
       // arguments: {
       //   'postId': activePostList[index].id,
       //   'post': activePostList[index],
@@ -295,6 +295,10 @@ class CommunityPostController extends GetxController {
 
   void getBack() {
     Get.back();
+  }
+
+  bool checkRegularUser() {
+    return PrefUtils.getUserRole()?.toUpperCase() == 'ROLE_USER';
   }
 
   List<CommunityPostModel> get activePostList => filteredPostList;

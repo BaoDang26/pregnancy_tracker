@@ -13,7 +13,6 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
 
   @override
   Widget build(BuildContext context) {
-    final accountController = Get.find<AccountProfileController>();
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -78,7 +77,7 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                       // Get the account controller
 
                       // Only show Create Post button if user is not a regular user
-                      if (!accountController.isRegularUser())
+                      if (!controller.checkRegularUser())
                         _buildActionButton(
                           icon: Icons.add_circle_outline,
                           label: 'Create Post',

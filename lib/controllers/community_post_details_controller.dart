@@ -30,6 +30,7 @@ class CommunityPostDetailsController extends GetxController {
 
   // ID của bài viết hiện tại
   late int postId;
+  late int userId;
 
   @override
   void onInit() {
@@ -116,9 +117,10 @@ class CommunityPostDetailsController extends GetxController {
   // Kiểm tra xem user có quyền chỉnh sửa comment không
   @override
   bool canEditComment(CommentModel comment) {
-    // Lấy ID người dùng từ session/preferences
-    final userId = PrefUtils.getInt('userId');
-
+    // Lấy ID người dùng từ account controller
+    AccountProfileController accountProfileController =
+        Get.find<AccountProfileController>();
+    userId = accountProfileController.accountProfileModel.value.id!;
     // Nếu là ROLE_USER, không được phép chỉnh sửa comment
     if (PrefUtils.getUserRole() == 'ROLE_USER') {
       return false;
@@ -131,8 +133,7 @@ class CommunityPostDetailsController extends GetxController {
   // Kiểm tra xem user có quyền chỉnh sửa bài viết không
   @override
   bool canEditPost() {
-    // Lấy ID người dùng từ session/preferences
-    final userId = PrefUtils.getInt('userId');
+    // Lấy ID người dùng từ parameter
 
     // Nếu là ROLE_USER, không được phép chỉnh sửa bài viết
     if (PrefUtils.getUserRole() == 'ROLE_USER') {
@@ -161,8 +162,10 @@ class CommunityPostDetailsController extends GetxController {
       isSubmittingComment.value = true;
       errorMessage.value = '';
 
-      // Lấy ID người dùng từ session/preferences
-      final userId = PrefUtils.getInt('userId');
+      // Lấy ID người dùng từ controller
+      AccountProfileController accountProfileController =
+          Get.find<AccountProfileController>();
+      userId = accountProfileController.accountProfileModel.value.id!;
 
       if (userId == null) {
         errorMessage.value = 'User is not logged in';
@@ -192,8 +195,6 @@ class CommunityPostDetailsController extends GetxController {
           communityPost.value!.commentCount =
               (communityPost.value!.commentCount ?? 0) + 1;
         }
-
-        Get.find<CommunityPostController>().getCommunityPostList();
 
         // Hiển thị thông báo thành công
         // _showSuccessDialog('Comment posted successfully');
@@ -264,8 +265,10 @@ class CommunityPostDetailsController extends GetxController {
       isUpdatingComment.value = true;
       errorMessage.value = '';
 
-      // Lấy ID người dùng từ session/preferences
-      final userId = PrefUtils.getInt('userId');
+      // Lấy ID người dùng từ controller
+      AccountProfileController accountProfileController =
+          Get.find<AccountProfileController>();
+      userId = accountProfileController.accountProfileModel.value.id!;
 
       if (userId == null) {
         errorMessage.value = 'User is not logged in';
@@ -356,8 +359,6 @@ class CommunityPostDetailsController extends GetxController {
           communityPost.value!.commentCount =
               (communityPost.value!.commentCount ?? 1) - 1;
         }
-
-        Get.find<CommunityPostController>().getCommunityPostList();
 
         // Hiển thị thông báo thành công bằng dialog
         // _showSuccessDialog('Comment deleted successfully');
@@ -729,7 +730,6 @@ class CommunityPostDetailsController extends GetxController {
   // Phương thức cập nhật bài viết
   void goToUpdateCommunityPost(int index) {
     // Lấy thông tin userId từ user info hiện tại
-    final userId = PrefUtils.getInt('userId');
 
     // Kiểm tra quyền sở hữu bài viết
     //   if (userId == null || userId != communityPost.value?.userId) {

@@ -378,18 +378,17 @@ class AccountProfileController extends GetxController {
 
   // Kiểm tra nếu user có role là ROLE_USER
   bool isRegularUser() {
-    return accountProfileModel.value.roleName?.toUpperCase() == 'ROLE_USER';
+    return PrefUtils.getUserRole()?.toUpperCase() == 'ROLE_USER';
   }
 
   //Kiểm tra nếu user có role là ROLE_USER_PREMIUM
   bool isPremiumUser() {
-    return accountProfileModel.value.roleName?.toUpperCase() ==
-        'ROLE_USER_PREMIUM';
+    return PrefUtils.getUserRole()?.toUpperCase() == 'ROLE_USER_PREMIUM';
   }
 
   // Kiểm tra nếu user có thể quản lý nội dung (ROLE_ADMIN hoặc ROLE_MODERATOR)
   bool canModerateContent() {
-    final role = accountProfileModel.value.roleName?.toUpperCase();
+    final role = PrefUtils.getUserRole()?.toUpperCase();
     return role == 'ROLE_ADMIN';
   }
 

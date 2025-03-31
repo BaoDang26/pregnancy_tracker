@@ -22,6 +22,21 @@ class ScheduleRepository {
     return response;
   }
 
+  static Future<http.Response> getScheduleById(int scheduleId) async {
+    http.Response response;
+
+    Map<String, String> header = {
+      "Content-type": "application/json",
+    };
+    response = await interceptedClient
+        .get(
+          BuildServer.buildUrl("schedules/$scheduleId"),
+          headers: header,
+        )
+        .timeout(const Duration(seconds: 30));
+    return response;
+  }
+
   static Future<http.Response> createSchedule(
       ScheduleModel scheduleModel) async {
     http.Response response;

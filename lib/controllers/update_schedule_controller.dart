@@ -48,60 +48,23 @@ class UpdateScheduleController extends GetxController {
     super.onClose();
   }
 
-  void findScheduleFromId() {
+  Future<void> findScheduleFromId() async {
+    isLoading.value = true;
     try {
-      // Check if controller is registered
-      if (!Get.isRegistered<ScheduleController>()) {
-        print('ScheduleController is not registered');
-        return;
-      }
-
-      // Get controller with schedule list
-      final scheduleController = Get.find<ScheduleController>();
-
-      // Check if list has been initialized
-      if (scheduleController.scheduleList == null ||
-          scheduleController.scheduleList.isEmpty) {
-        print('Schedule list is empty');
-        return;
-      }
-
-      // Find schedule based on ID, with default value if not found
-      final schedule = scheduleController.scheduleList
-          .firstWhere((s) => s.id == scheduleId, orElse: () => ScheduleModel());
-
-      // Check search result
-      if (schedule.id != null) {
-        scheduleModel.value = schedule;
-        pregnancyProfileId = schedule.pregnancyProfileId ?? 0;
-        // Fill data into form
+      var response = await ScheduleRepository.getScheduleById(scheduleId);
+      if (response.statusCode == 200) {
+        String jsonResult = utf8.decode(response.bodyBytes);
+        final decodedData = json.decode(jsonResult);
+        scheduleModel.value = ScheduleModel.fromJson(decodedData);
         populateFormFields();
       } else {
-        print('Schedule not found with ID: $scheduleId');
+        errorMessage.value = 'Failed to load schedule details';
       }
     } catch (e) {
       print('Error in findScheduleFromId: $e');
     }
+    isLoading.value = false;
   }
-
-  // Future<void> findScheduleFromId() async {
-  //   isLoading.value = true;
-  //   try {
-  //     var response =
-  //         await ScheduleRepository.getScheduleById(scheduleId);
-  //     if (response.statusCode == 200) {
-  //       String jsonResult = utf8.decode(response.bodyBytes);
-  //       final decodedData = json.decode(jsonResult);
-  //       scheduleModel.value = ScheduleModel.fromJson(decodedData);
-  //       populateFormFields();
-  //     } else {
-  //       errorMessage.value = 'Failed to load schedule details';
-  //     }
-  //   } catch (e) {
-  //     print('Error in findScheduleFromId: $e');
-  //   }
-  //   isLoading.value = false;
-  // }
 
   void populateFormFields() {
     final schedule = scheduleModel.value;

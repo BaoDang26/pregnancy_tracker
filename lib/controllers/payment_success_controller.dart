@@ -17,7 +17,11 @@ class PaymentSuccessController extends GetxController {
 
   void goToHomeScreen() {
     if (PrefUtils.getAccessToken() != null) {
-      Get.offAllNamed(AppRoutes.sidebarnar);
+      PrefUtils.setUserRole("ROLE_USER_PREMIUM");
+
+      Future.delayed(const Duration(milliseconds: 300), () {
+        Get.offAllNamed(AppRoutes.sidebarnar);
+      });
       return;
     }
 
