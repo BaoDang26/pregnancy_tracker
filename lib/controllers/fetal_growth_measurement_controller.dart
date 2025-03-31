@@ -10,6 +10,7 @@ import '../models/height_summary_model.dart';
 import '../models/pregnancy_profile_model.dart';
 import '../models/weight_summary_model.dart';
 import '../repositories/fetal_growth_measurement_repository.dart';
+import '../repositories/pregnancy_profile_repository.dart';
 import '../util/app_export.dart';
 
 class FetalGrowthMeasurementController extends GetxController {
@@ -45,6 +46,8 @@ class FetalGrowthMeasurementController extends GetxController {
   // Thêm một RxBool để theo dõi trạng thái refresh
   RxBool needsRefresh = false.obs;
 
+  RxBool isAfterDueDate = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -60,6 +63,9 @@ class FetalGrowthMeasurementController extends GetxController {
     movementCountController = TextEditingController();
     notesController = TextEditingController();
     measurementDateController = TextEditingController();
+
+    // Kiểm tra Due Date
+    checkDueDate();
 
     // Fetch dữ liệu ban đầu
     fetchFetalGrowthMeasurementData();
@@ -458,5 +464,31 @@ class FetalGrowthMeasurementController extends GetxController {
       "Error ${response.statusCode}",
       jsonDecode(response.body)['message'],
     );
+  }
+
+  // Thêm hàm kiểm tra Due Date
+  Future<void> checkDueDate() async {
+    try {
+      // Lấy dữ liệu pregnancy profile
+      var response =
+          await PregnancyProfileRepository.getPregnancyProfileById(pregnancyId);
+
+      if (response.statusCode == 200) {
+        String jsonResult = utf8.decode(response.bodyBytes);
+        pregnancyProfileModel.value =
+            pregnancyProfileByIdModelFromJson(jsonResult);
+
+        // Kiểm tra nếu dueDate đã qua
+        if (pregnancyProfileModel.value.dueDate != null) {
+          DateTime dueDate = pregnancyProfileModel.value.dueDate!;
+          DateTime today = DateTime.now();
+
+          // Nếu ngày hiện tại sau Due Date thì ẩn các nút
+          isAfterDueDate.value = today.isAfter(dueDate);
+        }
+      }
+    } catch (e) {
+      print('Error checking due date: $e');
+    }
   }
 }

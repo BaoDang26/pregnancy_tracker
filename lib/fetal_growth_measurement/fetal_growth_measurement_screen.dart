@@ -139,26 +139,31 @@ class FetalGrowthMeasurementScreen
           ),
           Row(
             children: [
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[700],
-                  foregroundColor: Colors.white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                icon: const Icon(Icons.add, color: Colors.white),
-                label: const Text('Add New Measurement',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
-                onPressed: () {
-                  Get.toNamed(AppRoutes.createfetalgrowthmeasurement,
-                      parameters: {
-                        'pregnancyId': controller.pregnancyId.toString(),
-                      });
-                },
+              Obx(
+                () => controller.isAfterDueDate.value
+                    ? Container()
+                    : ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue[700],
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        icon: const Icon(Icons.add, color: Colors.white),
+                        label: const Text('Add New Measurement',
+                            style: TextStyle(fontWeight: FontWeight.bold)),
+                        onPressed: () {
+                          Get.toNamed(AppRoutes.createfetalgrowthmeasurement,
+                              parameters: {
+                                'pregnancyId':
+                                    controller.pregnancyId.toString(),
+                              });
+                        },
+                      ),
               ),
             ],
           ),
@@ -867,18 +872,23 @@ class FetalGrowthMeasurementScreen
                     ),
                   ],
                 ),
-                TextButton.icon(
-                  onPressed: () {
-                    Get.toNamed(AppRoutes.createfetalgrowthmeasurement,
-                        parameters: {
-                          'pregnancyId': controller.pregnancyId.toString(),
-                        });
-                  },
-                  icon: const Icon(Icons.add, size: 18),
-                  label: const Text('Add New'),
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.blue[700],
-                  ),
+                Obx(
+                  () => controller.isAfterDueDate.value
+                      ? Container()
+                      : TextButton.icon(
+                          onPressed: () {
+                            Get.toNamed(AppRoutes.createfetalgrowthmeasurement,
+                                parameters: {
+                                  'pregnancyId':
+                                      controller.pregnancyId.toString(),
+                                });
+                          },
+                          icon: const Icon(Icons.add, size: 18),
+                          label: const Text('Add New'),
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.blue[700],
+                          ),
+                        ),
                 ),
               ],
             ),
@@ -907,24 +917,28 @@ class FetalGrowthMeasurementScreen
                         style: TextStyle(fontSize: 18, color: Colors.grey[600]),
                       ),
                       const SizedBox(height: 8),
-                      Text(
-                        'Add your first measurement to begin tracking',
-                        style: TextStyle(fontSize: 14, color: Colors.grey[500]),
-                      ),
-                      const SizedBox(height: 24),
-                      ElevatedButton.icon(
-                        onPressed: () {
-                          Get.toNamed(AppRoutes.createfetalgrowthmeasurement,
-                              arguments: controller.pregnancyId);
-                        },
-                        icon: const Icon(Icons.add),
-                        label: const Text('Add First Measurement'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue[700],
-                          foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 12),
-                        ),
+                      Obx(
+                        () => controller.isAfterDueDate.value
+                            ? Text(
+                                'Pregnancy completed. Measurements are now read-only.',
+                                style: TextStyle(
+                                    color: Colors.grey[600], fontSize: 14),
+                              )
+                            : ElevatedButton.icon(
+                                onPressed: () {
+                                  Get.toNamed(
+                                      AppRoutes.createfetalgrowthmeasurement,
+                                      arguments: controller.pregnancyId);
+                                },
+                                icon: const Icon(Icons.add),
+                                label: const Text('Add First Measurement'),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blue[700],
+                                  foregroundColor: Colors.white,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16, vertical: 12),
+                                ),
+                              ),
                       ),
                     ],
                   ),
@@ -1072,45 +1086,54 @@ class FetalGrowthMeasurementScreen
                       const SizedBox(width: 16),
                       Column(
                         children: [
-                          IconButton(
-                            icon: const Icon(Icons.edit_outlined,
-                                color: Colors.blue),
-                            onPressed: () =>
-                                controller.navigateToUpdateMeasurement(index),
-                            tooltip: 'Edit',
-                            splashRadius: 24,
+                          Obx(
+                            () => controller.isAfterDueDate.value
+                                ? Container()
+                                : IconButton(
+                                    icon: const Icon(Icons.edit_outlined,
+                                        color: Colors.blue),
+                                    onPressed: () => controller
+                                        .navigateToUpdateMeasurement(index),
+                                    tooltip: 'Edit',
+                                    splashRadius: 24,
+                                  ),
                           ),
-                          IconButton(
-                            icon: const Icon(Icons.delete_outline,
-                                color: Colors.red),
-                            onPressed: () {
-                              Get.dialog(
-                                AlertDialog(
-                                  title: const Text('Confirm Deletion'),
-                                  content: const Text(
-                                      'Are you sure you want to delete this measurement?'),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () => Get.back(),
-                                      child: const Text('Cancel'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        Get.back();
-                                        controller
-                                            .deleteMeasurement(measurement.id!);
-                                      },
-                                      child: const Text(
-                                        'Delete',
-                                        style: TextStyle(color: Colors.red),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                            tooltip: 'Delete',
-                            splashRadius: 24,
+                          Obx(
+                            () => controller.isAfterDueDate.value
+                                ? Container()
+                                : IconButton(
+                                    icon: const Icon(Icons.delete_outline,
+                                        color: Colors.red),
+                                    onPressed: () {
+                                      Get.dialog(
+                                        AlertDialog(
+                                          title: const Text('Confirm Deletion'),
+                                          content: const Text(
+                                              'Are you sure you want to delete this measurement?'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () => Get.back(),
+                                              child: const Text('Cancel'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () {
+                                                Get.back();
+                                                controller.deleteMeasurement(
+                                                    measurement.id!);
+                                              },
+                                              child: const Text(
+                                                'Delete',
+                                                style: TextStyle(
+                                                    color: Colors.red),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                    tooltip: 'Delete',
+                                    splashRadius: 24,
+                                  ),
                           ),
                         ],
                       ),
