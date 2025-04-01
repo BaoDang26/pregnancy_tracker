@@ -120,6 +120,7 @@ class UpdateFetalGrowthMeasurementController extends GetxController {
       return "Height must be a number";
     double? number = double.tryParse(value);
     if (number == null || number <= 0) return "Height must be greater than 0";
+    if (number > 9999) return "Height cannot exceed 9999 cm";
     return null;
   }
 
@@ -129,6 +130,7 @@ class UpdateFetalGrowthMeasurementController extends GetxController {
       return "Weight must be a number";
     double? number = double.tryParse(value);
     if (number == null || number <= 0) return "Weight must be greater than 0";
+    if (number > 9999) return "Weight cannot exceed 9999 g";
     return null;
   }
 
@@ -136,6 +138,10 @@ class UpdateFetalGrowthMeasurementController extends GetxController {
     if (value.isEmpty) return null;
     if (!RegExp(r'^\d*\.?\d+$').hasMatch(value))
       return "Heart rate must be a number";
+    int? number = int.tryParse(value);
+    if (number == null) return "Heart rate must be a valid number";
+    if (number < 90 || number > 170)
+      return "Heart rate must be between 90 and 170 bpm";
     return null;
   }
 
@@ -143,6 +149,11 @@ class UpdateFetalGrowthMeasurementController extends GetxController {
     if (value.isEmpty) return null;
     if (!RegExp(r'^\d*\.?\d+$').hasMatch(value))
       return "Belly circumference must be a number";
+    double? number = double.tryParse(value);
+    if (number != null && number < 0)
+      return "Belly circumference must be greater than 0";
+    if (number != null && number > 50)
+      return "Belly circumference cannot exceed 50 cm";
     return null;
   }
 
@@ -150,6 +161,11 @@ class UpdateFetalGrowthMeasurementController extends GetxController {
     if (value.isEmpty) return null;
     if (!RegExp(r'^\d*\.?\d+$').hasMatch(value))
       return "Head circumference must be a number";
+    double? number = double.tryParse(value);
+    if (number != null && number < 0)
+      return "Head circumference must be greater than 0";
+    if (number != null && number > 50)
+      return "Head circumference cannot exceed 50 cm";
     return null;
   }
 
@@ -157,6 +173,10 @@ class UpdateFetalGrowthMeasurementController extends GetxController {
     if (value.isEmpty) return null;
     if (!RegExp(r'^\d*\.?\d+$').hasMatch(value))
       return "Movement count must be a number";
+    int? number = int.tryParse(value);
+    if (number != null && number < 0)
+      return "Movement count must be at least 0";
+    if (number != null && number > 10) return "Movement count cannot exceed 10";
     return null;
   }
 

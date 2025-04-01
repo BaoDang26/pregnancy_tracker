@@ -171,9 +171,7 @@ class CommunityPostDetailsScreen
           TextButton.icon(
             icon: const Icon(Icons.home_outlined),
             label: const Text('Home'),
-            onPressed: () => Get.offAllNamed(AppRoutes.sidebarnar, arguments: {
-              'selectedIndex': 1,
-            }),
+            onPressed: () => Get.offAllNamed(AppRoutes.sidebarnar),
             style: TextButton.styleFrom(
               foregroundColor: const Color(0xFF8E6C88),
             ),

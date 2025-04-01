@@ -461,49 +461,95 @@ class CreatePregnancyProfileScreen
 
                         const SizedBox(height: 28),
 
-                        // Create profile button
+                        // Create profile button & Cancel button
                         Center(
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: 50,
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                if (controller
-                                    .pregnancyProfileFormKey.currentState!
-                                    .validate()) {
-                                  controller
-                                      .pregnancyProfileFormKey.currentState!
-                                      .save();
-                                  await controller.createPregnancyProfile();
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor:
-                                    const Color(0xFFAD6E8C), // Mauve/hồng đậm
-                                foregroundColor: Colors.white,
-                                elevation: 4,
-                                shadowColor:
-                                    const Color(0xFFAD6E8C).withOpacity(0.4),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25),
-                                ),
-                              ),
-                              child: const Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Icons.save),
-                                  SizedBox(width: 8),
-                                  Text(
-                                    'Create Profile',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
+                          child: Row(
+                            children: [
+                              // Nút Cancel
+                              Expanded(
+                                child: SizedBox(
+                                  height: 50,
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      Get.back(); // Quay lại màn hình trước đó
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.grey[300],
+                                      foregroundColor: Colors.grey[800],
+                                      elevation: 2,
+                                      shadowColor: Colors.grey.withOpacity(0.4),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
+                                    ),
+                                    child: const Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.cancel),
+                                        SizedBox(width: 8),
+                                        Text(
+                                          'Cancel',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
+                              const SizedBox(
+                                  width: 16), // Khoảng cách giữa 2 nút
+                              // Nút Create Profile (đã có sẵn)
+                              Expanded(
+                                child: SizedBox(
+                                  height: 50,
+                                  child: ElevatedButton(
+                                    onPressed: () async {
+                                      if (controller
+                                          .pregnancyProfileFormKey.currentState!
+                                          .validate()) {
+                                        controller.pregnancyProfileFormKey
+                                            .currentState!
+                                            .save();
+                                        await controller
+                                            .createPregnancyProfile();
+                                      }
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(
+                                          0xFFAD6E8C), // Mauve/hồng đậm
+                                      foregroundColor: Colors.white,
+                                      elevation: 4,
+                                      shadowColor: const Color(0xFFAD6E8C)
+                                          .withOpacity(0.4),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
+                                    ),
+                                    child: const Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.save),
+                                        SizedBox(width: 8),
+                                        Text(
+                                          'Create Profile',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],

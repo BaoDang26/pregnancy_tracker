@@ -13,149 +13,150 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFFF8F0F8), // Soft pink/lavender background
-              Colors.white,
-            ],
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Header section with beautiful gradient
-            Container(
-              padding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
-              decoration: BoxDecoration(
-                gradient: const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color(0xFFF5E1EB), // Soft pink
-                    Color(0xFFE5D1E8), // Soft lavender
-                  ],
-                ),
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.forum_rounded,
-                        size: 36,
-                        color:
-                            Color(0xFFAD6E8C), // Mauve/pink for pregnancy theme
-                      ),
-                      const SizedBox(width: 15),
-                      const Text(
-                        'COMMUNITY POSTS',
-                        style: TextStyle(
-                          fontSize: 36,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFFAD6E8C), // Matching mauve color
-                          letterSpacing: 1,
-                        ),
-                      ),
-                      const Spacer(),
-                      // Get the account controller
-
-                      // Only show Create Post button if user is not a regular user
-                      if (!controller.checkRegularUser())
-                        _buildActionButton(
-                          icon: Icons.add_circle_outline,
-                          label: 'Create Post',
-                          color: const Color(0xFF8E6C88),
-                          onTap: () => controller.goToCreateCommunityPost(),
-                        ),
-                    ],
-                  ),
-                  const SizedBox(height: 15),
-                  Text(
-                    'The community post is a place to share your journey, connect with other expecting parents, and find support.',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: const Color(0xFF8E6C88).withOpacity(0.8),
-                    ),
-                  ),
+    return Obx(() => Scaffold(
+          body: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xFFF8F0F8), // Soft pink/lavender background
+                  Colors.white,
                 ],
               ),
             ),
-
-            // Search and filter row
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 45,
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Icons.search,
-                            color: Color(0xFF8E6C88),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: TextField(
-                              controller: controller.searchController,
-                              decoration: InputDecoration(
-                                hintText: 'Search community posts...',
-                                border: InputBorder.none,
-                                hintStyle: TextStyle(color: Colors.grey[400]),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 15),
-                  Container(
-                    height: 45,
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          blurRadius: 5,
-                          offset: const Offset(0, 2),
-                        ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header section with beautiful gradient
+                Container(
+                  padding: const EdgeInsets.fromLTRB(30, 30, 30, 20),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        Color(0xFFF5E1EB), // Soft pink
+                        Color(0xFFE5D1E8), // Soft lavender
                       ],
                     ),
-                    child: DropdownButtonHideUnderline(
-                      child: Obx(() => DropdownButton<String>(
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.forum_rounded,
+                            size: 36,
+                            color: Color(
+                                0xFFAD6E8C), // Mauve/pink for pregnancy theme
+                          ),
+                          const SizedBox(width: 15),
+                          const Text(
+                            'COMMUNITY POSTS',
+                            style: TextStyle(
+                              fontSize: 36,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFFAD6E8C), // Matching mauve color
+                              letterSpacing: 1,
+                            ),
+                          ),
+                          const Spacer(),
+                          // Get the account controller
+
+                          // Only show Create Post button if user is not a regular user
+                          if (!controller.checkRegularUser())
+                            _buildActionButton(
+                              icon: Icons.add_circle_outline,
+                              label: 'Create Post',
+                              color: const Color(0xFF8E6C88),
+                              onTap: () => controller.goToCreateCommunityPost(),
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: 15),
+                      Text(
+                        'The community post is a place to share your journey, connect with other expecting parents, and find support.',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: const Color(0xFF8E6C88).withOpacity(0.8),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Search and filter row
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 45,
+                          padding: const EdgeInsets.symmetric(horizontal: 15),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.05),
+                                blurRadius: 5,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.search,
+                                color: Color(0xFF8E6C88),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: TextField(
+                                  controller: controller.searchController,
+                                  decoration: InputDecoration(
+                                    hintText: 'Search community posts...',
+                                    border: InputBorder.none,
+                                    hintStyle:
+                                        TextStyle(color: Colors.grey[400]),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 15),
+                      Container(
+                        height: 45,
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.05),
+                              blurRadius: 5,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: DropdownButtonHideUnderline(
+                          child: DropdownButton<String>(
                             value: controller.selectedFilter.value,
                             icon: const Icon(Icons.filter_list,
                                 color: Color(0xFF8E6C88)),
@@ -171,91 +172,75 @@ class CommunityPostScreen extends GetView<CommunityPostController> {
                                 controller.setFilter(newValue);
                               }
                             },
-                          )),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            // Thêm sau phần search bar
-            Obx(() {
-              if (controller.searchQuery.value.isNotEmpty) {
-                return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Row(
-                    children: [
-                      Text('Search results for: ',
-                          style: TextStyle(color: Colors.grey[700])),
-                      Text('"${controller.searchQuery.value}"',
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFFAD6E8C))),
-                      const Spacer(),
-                      TextButton.icon(
-                        icon: const Icon(Icons.clear, size: 16),
-                        label: const Text('Clear'),
-                        onPressed: () => controller.searchController.clear(),
-                        style: TextButton.styleFrom(
-                            foregroundColor: Colors.grey[600]),
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                );
-              }
-              return const SizedBox.shrink();
-            }),
+                ),
 
-            // Grid of community posts
-            Expanded(
-              child: Obx(() {
-                if (controller.isLoading.value) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      valueColor:
-                          AlwaysStoppedAnimation<Color>(Color(0xFFAD6E8C)),
+                // Thêm sau phần search bar
+                if (controller.searchQuery.value.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    child: Row(
+                      children: [
+                        Text('Search results for: ',
+                            style: TextStyle(color: Colors.grey[700])),
+                        Text('"${controller.searchQuery.value}"',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xFFAD6E8C))),
+                        const Spacer(),
+                        TextButton.icon(
+                          icon: const Icon(Icons.clear, size: 16),
+                          label: const Text('Clear'),
+                          onPressed: () => controller.searchController.clear(),
+                          style: TextButton.styleFrom(
+                              foregroundColor: Colors.grey[600]),
+                        ),
+                      ],
                     ),
-                  );
-                }
-
-                if (controller.filteredPostList.isEmpty) {
-                  return _buildEmptyState();
-                }
-
-                return Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: GridView.builder(
-                    padding: const EdgeInsets.all(5),
-                    scrollDirection: Axis.vertical,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 20.0,
-                      mainAxisSpacing: 20.0,
-                      childAspectRatio: 0.85,
-                    ),
-                    itemCount: controller.filteredPostList.length,
-                    itemBuilder: (context, index) {
-                      final post = controller.filteredPostList[index];
-                      return _buildPostCard(context, post, index);
-                    },
                   ),
-                );
-              }),
+
+                // Grid of community posts
+                Expanded(
+                  child: controller.isLoading.value
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                Color(0xFFAD6E8C)),
+                          ),
+                        )
+                      : controller.filteredPostList.isEmpty
+                          ? _buildEmptyState()
+                          : Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: GridView.builder(
+                                padding: const EdgeInsets.all(5),
+                                scrollDirection: Axis.vertical,
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  crossAxisSpacing: 20.0,
+                                  mainAxisSpacing: 20.0,
+                                  childAspectRatio: 0.85,
+                                ),
+                                itemCount: controller.filteredPostList.length,
+                                itemBuilder: (context, index) {
+                                  final post =
+                                      controller.filteredPostList[index];
+                                  return _buildPostCard(context, post, index);
+                                },
+                              ),
+                            ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
-      // Floating action button for quick post creation
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () => controller.goToCreateCommunityPost(),
-      //   backgroundColor: Color(0xFFAD6E8C),
-      //   child: Icon(Icons.add, color: Colors.white),
-      //   tooltip: 'Create New Post',
-      // ),
-    );
+          ),
+        ));
   }
 
   // Helper method to build action buttons

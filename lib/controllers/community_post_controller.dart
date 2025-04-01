@@ -30,6 +30,7 @@ class CommunityPostController extends GetxController {
     searchController.addListener(_onSearchChanged);
 
     await getCommunityPostList();
+    checkRegularUser();
     super.onInit();
   }
 
